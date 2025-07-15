@@ -195,8 +195,8 @@
                     class="absolute left-0 w-full top-28 w-56 z-50 rounded-b-2xl bg-white shadow-lg  ring-black/5"
                     x-cloak
                 >
-                    <div class="flex relative gap-y-5 px-10 py-5">
-                       <div class="small-cards w-[55%] flex flex-wrap gap-10 ">
+                    <div class="flex relative gap-y-5 px-16 py-5">
+                        <div class="small-cards w-[55%] flex flex-wrap gap-10 ">
                            @for ($i = 0; $i < 5; $i++)
                                <div class="small-cart-container group relative cursor-pointer grid justify-between bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all rounded-2xl p-10 w-[200px] h-[200px]">
                                    <div class="small-cart_img_container">
@@ -236,7 +236,19 @@
                         <div class="w-[45%] h-full absolute right-0 bottom-0 rounded-br-2xl flex flex-col justify-between"
                             style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
                             <div class="bg-filter absolute rounded-br-2xl inset-0 bg-black/40"></div>
+                            <div class="absolute bottom-8 grid justify-center w-full">
+                                <p class="text-center text-white text-[40px]">Ready for summer</p>
+                                <p class="text-center text-white">Buy 4 products and get 30% off your cart</p>
+                                <div class="button flex gap-5 items-center bg-olive justify-center w-fit mx-auto py-5 px-10 my-5 rounded-2xl text-white">
+                                    Shop now
 
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
