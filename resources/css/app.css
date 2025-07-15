@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+[x-cloak] {
+    display: none !important;
+}
+@theme {
+
+    --color-light-orange: #F8F7F2;
+    --color-light-green: #A8BA66;
+    --color-olive: #A8BA66;
+
+
+}
+@utility container {
+    padding-inline: 10px;
+    margin-inline: auto;
+    max-width: 100vw;
+    @variant sm {
+        padding-inline: 20px;
+    }
+
+    @variant lg {
+        padding-inline: 50px;
+    }
+
+    @variant xl {
+        padding-inline: 70px;
+
+    }
+}
+
