@@ -198,7 +198,7 @@
                     <div class="flex relative gap-y-5 px-16 py-5">
                         <div class="small-cards w-[55%] flex flex-wrap gap-10 ">
                            @for ($i = 0; $i < 5; $i++)
-                               <div class="small-cart-container group relative cursor-pointer grid justify-between bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all rounded-2xl p-10 w-[200px] h-[200px]">
+                               <div class="small-cart-container group relative cursor-pointer grid justify-between bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all rounded-2xl p-10 w-2/7 h-[200px]">
                                    <div class="small-cart_img_container">
                                        <svg class="text-olive group-hover:text-white duration-700 " width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                            <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -239,7 +239,7 @@
                             <div class="absolute bottom-8 grid justify-center w-full">
                                 <p class="text-center text-white text-[40px]">Ready for summer</p>
                                 <p class="text-center text-white">Buy 4 products and get 30% off your cart</p>
-                                <div class="button flex gap-5 items-center bg-olive justify-center w-fit mx-auto py-5 px-10 my-5 rounded-2xl text-white">
+                                <div class="button cursor-pointer border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit mx-auto py-5 px-10 my-5 rounded-2xl text-white ">
                                     Shop now
 
                                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
