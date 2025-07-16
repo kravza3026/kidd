@@ -17,8 +17,10 @@
        <main class="bg-white">
            <x-layout.home-page />
        </main>
+        <x-layout.footer />
         <div class="backdrop fixed inset-0 bg-black/70 z-[2]"
              x-data
+             x-cloak
              x-show="$store.dropdown.open"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 scale-95 "

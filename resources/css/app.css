@@ -8,14 +8,17 @@
 [x-cloak] {
     display: none !important;
 }
+
 @theme {
 
     --color-light-orange: #F8F7F2;
+    --color-dark: #22222280;
     --color-card-bg: #F6F6F6;
     --color-olive: #A8BA66;
     --color-dark-olive: #94A652;
     --color-danger: #FD3333;
     --color-charcoal: #020202;
+    --color-light-charcoal: #F8F7F2;
 
 }
 @utility container {
@@ -31,6 +34,7 @@
     }
 
     @variant xl {
+        max-width: 1422px;
         padding-inline: 80px;
 
     }

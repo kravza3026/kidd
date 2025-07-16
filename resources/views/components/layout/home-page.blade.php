@@ -1,50 +1,55 @@
 <div class="pageContent">
     {{-- Hero Section --}}
-    <section class="big-slider relative w-full">
-        <img src="{{ Vite::asset('resources/images/home-page/bigBanner.jpg') }}" alt="banner" class="w-full">
+    <section class="big-slider relative w-full h-[400px] md:h-[754px]"
+     style="background-image: url({{ Vite::asset('resources/images/home-page/bigBanner.jpg') }}); background-size: cover; background-position: center; background-repeat: no-repeat;"
+    >
+{{--        <img src="{{ Vite::asset('resources/images/home-page/bigBanner.jpg') }}" alt="banner" class="w-full">--}}
         <div class="absolute z-1 inset-0 grid place-items-end">
-            <div class="container w-full text-white ">
-                <h1 class="text-[64px] font-bold">
+            <div class="container w-full text-white md:mb-16">
+                <h1 class="text-[30px] md:text-[64px] font-bold">
                     Discover adorable <br> outfits for your little joy!
                 </h1>
                 <p>
                     From cozy onesies to trendy outfits, we have everything you <br>
                     need to keep your baby stylish, comfortable and oh-so-cute
                 </p>
-                <x-button>Explore outfits</x-button>
+                <div class="mt-5 md:mt-20">
+                    <x-button >Explore outfits</x-button>
+                </div>
             </div>
         </div>
     </section>
 
     {{-- Repeat Section --}}
-    <section class="container py-10 mt-10 flex justify-between gap-5">
-        @for ($i = 1; $i <= 4; $i++)
-            <x-category-card
-                title="Jumpsuits"
-                background-image="{{ asset('assets/images/categories/category_' . $i . '.svg') }}"
-                link="/categories/jumpsuits"
-            />
-        @endfor
-
+    <section class="container mt-14 ">
+        <div class="flex justify-between overflow-x-scroll md:overflow-hidden w-full gap-5">
+            @for ($i = 1; $i <= 4; $i++)
+                <x-category-card
+                    title="Jumpsuits"
+                    background-image="{{ asset('assets/images/categories/category_' . $i . '.svg') }}"
+                    link="/categories/jumpsuits"
+                />
+            @endfor
+        </div>
     </section>
 
-    <section class="container py-10 ">
-        <h2 class="section-title text-[48px] font-[700] py-5">New arrivals</h2>
-        <div class="p-5 font-[700] flex justify-between">
-            <ul class="flex gap-16">
-                <li>Preemie</li>
-                <li>0-3M</li>
-                <li>3-6M</li>
-                <li>6-9M</li>
-                <li>9-12M</li>
-                <li>12-18M</li>
-                <li>18-24M</li>
-                <li>2Y</li>
-                <li>3-4Y</li>
+    <section class="container mt-7 ">
+        <h2 class="section-title text-[30px] md:text-[48px] font-[700] pb-5">New arrivals</h2>
+        <div class="py-5 font-[700] flex justify-between overflow-x-auto md:overflow-hidden">
+            <ul class="flex gap-2 2xl:gap-6 cursor-pointer">
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">Preemie</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">0-3M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">3-6M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">6-9M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">9-12M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">12-18M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">18-24M</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">2Y</li>
+                <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">3-4Y</li>
             </ul>
-            <p class="text-olive text-[14px]">View all products</p>
+            <p class="text-olive flex items-center text-nowrap text-[14px] mx-2">View all products</p>
         </div>
-        <div class="flex justify-between gap-2">
+        <div class="flex justify-between overflow-x-scroll md:overflow-hidden gap-2">
             @for ($i = 1; $i <= 3; $i++)
                 <x-product-card
                     title="Unisex Cotton Jumpsuit"
@@ -72,22 +77,50 @@
                 />
         </div>
     </section>
-    <section>
-        <div class="flex items-center relative justify-between bg-olive  h-fit">
-            <div class="w-4/7 pl-[80px] relative h-full grid items-center content-center">
-                <h2 class="section-title text-white text-[40px] font-[700] px-15 py-5">Subscribe to newsletter and get 25% off your first order</h2>
-                <p class="text-white px-15">
-                    Receive the latest updates and take advantage of great offers
-                </p>
-                <form class="mt-10 w-11/12 px-15">
-                    <div class="relative">
-                        <input class="w-full bg-white rounded-xl p-5" type="text" value="" placeholder="Your e-mail address">
-                        <button class="absolute cursor-pointer right-1 top-2 text-white font-bold border-b-2 border-b-olive hover:bg-olive bg-charcoal rounded-xl py-3 px-7 duration-700">Subscribe</button>
-                    </div>
-                </form>
+    <section class="mt-7">
+        <div class="grid grid-cols-1 md:flex items-center relative justify-start bg-olive  h-fit min-h-[380px] xl:min-h-[560px]">
+            <div class="container order-2 md:order-1 pb-7 md:pb-0 relative h-full grid items-center content-center">
+                <div class="md:max-w-6/12">
+                    <h2 class="section-title text-white md:text-[24px] xl:text-[40px] xl:leading-12 font-[700] py-5">Subscribe to newsletter and
+                        <br> get 25% off your first order</h2>
+                    <p class="text-white">
+                        Receive the latest updates and take advantage of great offers
+                    </p>
+                    <form class="mt-10 ">
+                        <div class="relative">
+                            <input class="w-full focus:outline-hidden bg-white rounded-xl p-5" type="text" value="" placeholder="Your e-mail address">
+                            <button class="absolute cursor-pointer right-2 top-2 text-white font-bold border-b-2 border-b-olive hover:bg-olive bg-charcoal rounded-xl py-3 px-7 duration-700">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <img class="relative right-0 top-0" src="{{ asset('assets/images/subscribe_bg.jpg') }}" alt="">
+            <img class="md:absolute order-1 md:order-2 md:max-w-5/12 min-h-[380px] xl:min-h-[560px] right-0 top-0" src="{{ asset('assets/images/subscribe_bg.jpg') }}" alt="kidd">
         </div>
 
+    </section>
+    <section class="mt-7">
+        <div class="container md:flex justify-between py-10">
+            <div class="w-full md:w-1/2 relative">
+                <img class="relative w-full rounded-2xl md:rounded-l-2xl md:rounded-r-none right-0 top-0" src="{{ asset('assets/images/gender_1.jpg') }}" alt="">
+                <div class="absolute inset-0 grid items-end">
+                    <div class="bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-11/12 mx-auto  p-4 bg-opacity-60">
+                        <h3 class="text-white text-[24px] md:text-[40px] font-bold">Sweets for little princesses</h3>
+                        <p class="text-white text-base">Discover a variety of vibrant colours, playful patterns, and trendy
+                            designs that will make your baby girl shine.</p>
+                        <x-button >Shop now</x-button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 relative mt-7 md:mt-0">
+                <img class="relative w-full  rounded-2xl md:rounded-r-2xl md:rounded-l-none right-0 top-0" src="{{ asset('assets/images/gender_2.jpg') }}" alt="">
+                <div class="absolute inset-0 grid items-end">
+                    <div class="bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-11/12 mx-auto  p-4 bg-opacity-60">
+                        <h3 class="text-white text-[24px] md:text-[40px] font-bold">Adorable style for little men</h3>
+                        <p class="text-white text-base">Shop our selection of durable and high-quality clothing, designed to  keep up with your baby boy's active lifestyle.</p>
+                        <x-button >Shop now</x-button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>

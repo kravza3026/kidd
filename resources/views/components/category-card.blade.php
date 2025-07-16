@@ -1,5 +1,5 @@
 <a href="{{ $link ?? '#' }}"
-   class="category-card group rounded-2xl w-1/4 overflow-hidden h-[480px] grid items-end"
+   class="category-card group rounded-2xl w-1/2 min-w-2/3 md:min-w-1/5 md:w-1/4 overflow-hidden h-[240px] xl:h-[480px] grid items-end"
    style="background-image: url('{{ $backgroundImage ?? '/default-image.jpg' }}'); background-size: cover; background-position: center;">
     <div class="card-title grid text-center bg-gradient-to-t from-gray-900/80 to-slate-50/0  p-4 bg-opacity-60 ">
         <p class="font-semibold relative bottom-0 group-hover:bottom-7 text-white text-[20px] duration-500 transition-all ease-in-out">{{ $title ?? 'Default Title' }}</p>
