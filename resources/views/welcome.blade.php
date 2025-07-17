@@ -18,7 +18,7 @@
            <x-layout.home-page />
        </main>
         <x-layout.footer />
-        <div class="menu xl:hidden fixed z-50 bottom-0 w-full pb-3 bg-white">
+        <div class="menu lg:hidden fixed z-50 bottom-0 w-full pb-3 bg-white">
             <div class="bg-white py-1 border-y-1 border-gray-200 ">
                 <div class="flex">
                     <div class="flex-1 group">
