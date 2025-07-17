@@ -1,4 +1,5 @@
-<footer class="bg-charcoal mt-7 py-10">
+
+<footer class="bg-charcoal mt-7 pt-10 pb-[95px]">
 
     <div class="container ">
         <div class="grid grid-cols-1 xl:flex xl:justify-between space-y-2">
@@ -124,11 +125,15 @@
 
         <hr class="xl:mt-7 border border-dark">
         <div class="flex text-white justify-between items-center text-[12px] mt-7">
-            <p class="opacity-25 py-1 ">© 2023 KIDD. <span class="invisible xl:visible"> All Rights Reserved</span></p>
-            <ul class="flex gap-x-5">
-                <li class="opacity-25 py-1"><a href="#">Privacy Terms</a></li>
-                <li class="opacity-25 py-1"><a href="#">Cookies Policy</a></li>
+            <div class="flex items-center py-1 w-3/12 xl:w-auto">
+                <p class="opacity-25">© 2023 KIDD. <span class="hidden xl:block"> All Rights Reserved</span></p>
+            </div>
+
+            <ul class="flex gap-x-2 w-6/12 py-1 xl:w-auto">
+                <li class="opacity-25"><a href="#">Privacy Terms</a></li>
+                <li class="opacity-25"><a href="#">Cookies Policy</a></li>
             </ul>
+
         </div>
     </div>
 
