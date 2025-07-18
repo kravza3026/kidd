@@ -1,6 +1,6 @@
 <header class="relative z-10 bg-white">
     <div class="bg-light-orange hidden lg:block">
-        <div class="container py-2  flex justify-between">
+        <div class="container   flex justify-between">
             <div class="flex-1 flex items-center gap-5">
                 <a href="#" class="text-[13px] font-[500]">Pickup locations</a>
                 <a href="#" class="text-[13px] font-[500]">Careers</a>
@@ -50,14 +50,14 @@
                                     </div>
                                     <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">
                                 </a>
-                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700  rounded-lg" role="menuitem">
+                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700  rounded-lg hover:bg-light-charcoal animated" role="menuitem">
                                     <div class="flex gap-x-2">
                                         <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_rom.svg') }}" alt="flag">
                                         <span class="font-bold">Română</span>
                                     </div>
 {{--                                    <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">--}}
                                 </a>
-                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 " role="menuitem">
+                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 rounded-lg hover:bg-light-charcoal animated" role="menuitem">
                                     <div class="flex gap-x-2">
                                         <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_ru.svg') }}" alt="flag">
                                         <span class="font-bold">Русский</span>
@@ -162,14 +162,14 @@
                                     </div>
                                     <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">
                                 </a>
-                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700  rounded-lg" role="menuitem">
+                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 hover:bg-light-charcoal animated  rounded-lg" role="menuitem">
                                     <div class="flex gap-x-2">
                                         <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_rom.svg') }}" alt="flag">
                                         <span class="font-bold">Română</span>
                                     </div>
                                     {{--                                    <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">--}}
                                 </a>
-                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 " role="menuitem">
+                                <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 hover:bg-light-charcoal animated " role="menuitem">
                                     <div class="flex gap-x-2">
                                         <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_ru.svg') }}" alt="flag">
                                         <span class="font-bold">Русский</span>
@@ -251,48 +251,49 @@
 
         {{--    mobile menu    --}}
 
-        <div class="hidden lg:flex w-2/12 2lg:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
+        <div class="hidden lg:flex w-2/12 lg:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
 
             <div data-vue-component="CartDropdown"></div>
-            <div class="user relative cursor-pointer group">
-                <img class="w-[24px] h-[24px]" src="{{asset('assets/images/user.svg')}}" alt="user">
-                <div class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    Account
-                    <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
-                </div>
-            </div>
-        </div>
-        <div
-            x-data
-            x-cloak
-            x-show="$store.dropdown.open"
-            x-effect="document.body.classList.toggle('overflow-hidden', $store.dropdown.open)"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95 "
-            x-transition:enter-end="opacity-100 "
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 "
-            x-transition:leave-end="opacity-0  "
-            @click.outside="$store.dropdown.close()"
-            class="absolute left-0 w-full top-[calc(100%+1px)] h-[calc(100vh-100px)] lg:h-fit  z-50 rounded-b-2xl bg-white shadow-lg  ring-black/5"
+            <div data-vue-component="UserDropdown"></div>
 
-        >
-            <div class="grid lg:flex relative  gap-y-5 px-5 lg:px-16 py-5">
-                <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
-                <div class="small-cards lg:w-[55%] flex flex-wrap lg:gap-6 2lg:gap-10 border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
-                    @for ($i = 0; $i < 5; $i++)
+        </div>
+
+    </nav>
+    <div class="container flex justify-start relative">
+       <div class="w-8/11 -left-13 mx-auto relative ">
+{{--           <div id="search-results-container" class="left-0 pl-5 pr-12 w-full z-40"></div>--}}
+       </div>
+    </div>
+    <div
+        x-data
+        x-cloak
+        x-show="$store.dropdown.open"
+        x-effect="document.body.classList.toggle('overflow-hidden', $store.dropdown.open)"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95 "
+        x-transition:enter-end="opacity-100 "
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 "
+        x-transition:leave-end="opacity-0  "
+        @click.outside="$store.dropdown.close()"
+        id="megaMenu"
+        class="absolute left-0 w-full top-[calc(100%+1px)] h-[calc(100vh-100px)] lg:h-fit  z-50 rounded-b-2xl bg-white shadow-lg  ring-black/5">
+        <div class="container grid lg:flex relative  gap-y-5 px-5 lg:px-16 py-14">
+            <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
+            <div class="small-cards lg:w-[55%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
+                @for ($i = 0; $i < 5; $i++)
                         <a href="#"
-                            class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl p-3 lg:p-4 2lg:p-10 w-full lg:w-2/7 lg:h-[150px] 2lg:h-[200px]
+                           class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl m-2 p-3 lg:p-10   lg:h-[200px]
                             @if ($i!== 4) border-b border-light-border @endif
                             ">
                             <div class="small-cart_img_container">
-                                <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] h:w-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
 
                             </div>
                             <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
-                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out 2lg:text-[20px]">Jumpsuits</p>
+                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">Jumpsuits</p>
                             </div>
                             <i class="small-cart-arrow absolute right-0 lg:top-0 p-3 group-hover:p-2  duration-500 ease-in-out transition-all">
                                 <svg
@@ -316,30 +317,26 @@
 
                             </i>
                         </a>
-                    @endfor
 
-                </div>
-                <div class="w-full lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
-                     style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
-                    <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-black/40"></div>
-                    <div class="absolute bottom-8 grid justify-center w-full">
-                        <p class="text-center text-white text-[30px] lg:text-[40px]">Ready for summer</p>
-                        <p class="text-center text-white font-normal">Buy 4 products and get 30% off your cart</p>
-                        <x-button class="mx-auto">Shop now</x-button>
-                    </div>
-                </div>
-                <div class="close hidden lg:block absolute cursor-pointer bottom-[-100px] bg-white/20 rounded-full p-5 left-1/2"
-                     @click="$store.dropdown.close()"
-                >
-                    <img src="{{asset('assets/images/icons/close.svg')}}" alt="close">
-                </div>
+                @endfor
+
+            </div>
+
+            <div class="close hidden lg:block absolute cursor-pointer bottom-[-100px] bg-white/20 rounded-full p-5 left-1/2"
+                 @click="$store.dropdown.close()"
+            >
+                <img src="{{asset('assets/images/icons/close.svg')}}" alt="close">
             </div>
         </div>
-    </nav>
-    <div class="container flex justify-start relative">
-       <div class="w-8/11 -left-13 mx-auto relative ">
-{{--           <div id="search-results-container" class="left-0 pl-5 pr-12 w-full z-40"></div>--}}
-       </div>
+        <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
+             style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
+            <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-black/40"></div>
+            <div class="absolute bottom-8 grid justify-center w-full">
+                <p class="text-center text-white text-[30px] lg:text-[40px]">Ready for summer</p>
+                <p class="text-center text-white font-normal">Buy 4 products and get 30% off your cart</p>
+                <x-button class="mx-auto">Shop now</x-button>
+            </div>
+        </div>
     </div>
 </header>
 

@@ -65,3 +65,9 @@
 .animated{
     @apply transition-all ease-in-out duration-500
 }
+
+.add_favorite:hover{
+   .tooltip{
+        opacity: 1;
+    }
+}

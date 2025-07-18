@@ -11,7 +11,7 @@
 ])
 
 <div class="cursor-pointer group p-1 min-w-3/5 md:min-w-1/5">
-    <div class="bg-card-bg group-hover:bg-white border border-transparent group-hover:border-black/10 duration-700 transition-all ease-in-out rounded-xl py-4 px-2 relative overflow-hidden">
+    <div class="bg-card-bg group-hover:bg-white border border-transparent group-hover:border-black/10 duration-700 transition-all ease-in-out rounded-xl py-4 px-2 relative ">
         <div class="relative flex">
             @if($discount || $isNew)
                 <div class="absolute top-1 md:top-2 left-1 md:left-2 flex items-center gap-2  ">
@@ -59,8 +59,12 @@
             @endforeach
 
         </div>
-        <div class="absolute bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-7 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4  duration-500 transition-all ease-in-out">
-            <img class="xl:opacity-0  group-hover:opacity-100 duration-1000"  src="{{ asset('assets/images/icons/add_fav.svg') }}" alt="add to favorite">
+        <div class="absolute add_favorite z-20  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-7 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4  xl:opacity-0  group-hover:opacity-100 duration-1000 transition-all ease-in-out">
+            <img class=""  src="{{ asset('assets/images/icons/add_fav.svg') }}" alt="add to favorite">
+            <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0  transition-opacity duration-300 z-10">
+                Save to Favorites
+                <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
+            </div>
         </div>
     </div>
 

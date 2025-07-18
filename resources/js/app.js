@@ -5,16 +5,20 @@ import Alpine from 'alpinejs';
 // import HomePage from './pages/HomePage.vue';
 import Search from './components/Search.vue';
 import CartDropdown from './components/CartDropdown.vue';
+import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
-
+import SimpleButton from './components/SimpleButton.vue';
+import.meta.glob('../images/**/*');
 window.Alpine = Alpine;
 
 
 // Масив компонентів
 const components = {
     Search,
-    CartDropdown,
-    Button
+    CartDropdown,UserDropdown,
+    Button,SimpleButton,
+
+
 };
 
 // Шукаємо всі елементи з data-vue-компонентом

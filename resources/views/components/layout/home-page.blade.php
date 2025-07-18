@@ -47,9 +47,9 @@
                 <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">2Y</li>
                 <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">3-4Y</li>
             </ul>
-            <a href="#" class="text-olive light_border px-4 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px]  mx-2">View all products</a>
+            <a href="#" class="text-olive light_border px-4 py-2 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px]  mx-2">View all products</a>
         </div>
-        <div class="flex justify-between overflow-x-scroll md:overflow-hidden gap-2">
+        <div class="flex justify-between overflow-x-scroll md:overflow-visible gap-0">
             @for ($i = 1; $i <= 3; $i++)
                 <x-product-card
                     title="Unisex Cotton Jumpsuit"

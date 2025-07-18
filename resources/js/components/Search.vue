@@ -41,21 +41,53 @@
                             stroke-linejoin="round"
                         />
                     </svg>
-                    <div v-if="filteredResults.length > 0" class="w-full absolute left-0 top-22  mx-auto -mt-3 mb-4 bg-white border border-light-border rounded-md shadow p-4">
-                        <ul>
+                    <div v-if="filteredResults.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md shadow p-4">
+                        <ul  class="relative mt-2 w-full z-50">
                             <li
-                                v-for="(result, index) in filteredResults"
-                                :key="index"
-                                class="py-2 border-b last:border-b-0 hover:bg-gray-100 cursor-pointer"
+                                v-for="item in filteredResults"
+                                :key="item.id"
+                                class="p-4  hover:bg-gray-100 flex justify-between items-center gap-4"
                             >
-                                {{ result }}
+                                <a href="#" class="flex gap-x-2">
+                                    <img :src="item.image" alt="" class="w-10 h-10 object-cover rounded-md" />
+                                    <div>
+                                        <div class="flex items-center gap-x-2">
+                                            <p v-html="highlightMatch(item.name)" class="font-normal text-[20px]"></p>
+                                            <img class="w-[20px] h-[20px] " v-if="item.gender" :src="gender" alt="unisex">
+                                        </div>
+                                        <div class="flex">
+                                            <p
+                                                v-for="(color, index) in item.colors"
+                                                :key="color"
+                                                class="text-[16px] opacity-40 font-normal pr-2"
+                                            >
+                                                {{ color }}<span v-if="index < item.colors.length - 1">,</span>
+                                            </p>
+
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                                <p class="text-sm text-olive font-bold">{{ item.price.toFixed(2) }} lei</p>
+
+
                             </li>
                         </ul>
                     </div>
+                    <div v-else-if="hasSearchNoResults" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md shadow p-4">
+                        <div>
+                            <p class="text-[14px]">No relevant results found</p>
+                            <p class="text-[14px] opacity-60 font-normal">You can change your query or choose from suggested search options</p>
+                            <div class="flex  flex-wrap gap-x-6 gap-y-2 mt-4">
+                                <div v-for="item in recommended" class="flex items-center gap-x-2">
+                                    <img class="opacity-60" :src="loop" alt="recommended">
+                                    <p class="text-[14px]">{{item}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Результати пошуку -->
-
 
 
             </div>
@@ -64,25 +96,74 @@
 </template>
 <script>
 import searchIcon from '@img/search.svg';
-
+import loop from '@img/icons/loop.svg'
+import img1 from '@img/products/product_3.png'
+import img2 from '@img/products/product_2.png'
+import gender from '@img/icons/unisex.svg'
 export default {
     name: 'Search',
     data() {
         return {
             open: false,
             searchQuery: '',
-            searchIcon,
-            items: ['apple', 'banana', 'carrot', 'cherry', 'grape', 'orange'], // приклад
+            searchIcon,loop,gender,
+            items: [
+                {
+                    id: 1,
+                    name: 'Summer Cotton Jumpsuit',
+                    colors: ['Beige', 'Pink', 'White', 'Gray', 'Ivory'],
+                    image: img1,
+                    price: 240,
+                    size:['0–12M', '0–8M'],
+                    gender:true
+                },
+                {
+                    id: 2,
+                    name: 'Fleece Jumpsuit',
+                    colors: ['Beige', 'Pink', 'White', 'Gray',],
+                    image: img2,
+                    price: 236,
+                    size:['0–12M'],
+                    gender:false
+                },
+                {
+                    id: 3,
+                    name: 'Elegant Jumpsuit',
+                    colors: ['White', 'Gray',],
+                    image: img1,
+                    price: 435,
+                    size:['0–12M'],
+                    gender:true
+                },
+                {
+                    id: 4,
+                    name: 'Cotton Jumpsuit',
+                    colors: ['White', 'Gray',],
+                    image: img1,
+                    price: 315,
+                    size:['0–12M'],
+                    gender:true
+                },
+
+            ],
+            recommended:['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress']
         };
     },
     computed: {
         filteredResults() {
             if (!this.searchQuery.trim()) return [];
+
             const query = this.searchQuery.trim().toLowerCase();
+
             return this.items.filter(item =>
-                item.toLowerCase().includes(query)
+                item.name.toLowerCase().includes(query) ||
+                item.colors.some(color => color.toLowerCase().includes(query)) ||
+                item.size.some(size => size.toLowerCase().includes(query))
             );
         },
+        hasSearchNoResults() {
+            return this.searchQuery.trim() !== '' && this.filteredResults.length === 0;
+        }
     },
     methods: {
         handleClickOutside(event) {
@@ -94,6 +175,15 @@ export default {
             ) {
                 this.closeSearch();
             }
+        },
+        highlightMatch(text) {
+            const query = this.searchQuery.trim();
+            if (!query) return text;
+
+            const escapedQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); // escape спец. символи
+            const regex = new RegExp(`(${escapedQuery})`, 'gi');
+
+            return text.replace(regex, '<strong class="font-bold">$1</strong>');
         },
         closeSearch() {
             this.open = false;

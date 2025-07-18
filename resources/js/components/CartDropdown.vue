@@ -13,7 +13,7 @@
        </div>
 
         <!-- full dropdown cart menu -->
-        <transition name="slide-fade">
+        <transition name="slide-fade" @click.stop>
             <div
                 v-if="open"
                 class="absolute light_border -right-10 top-full mt-4 w-100 bg-white shadow-xl rounded-md z-50 "
@@ -26,7 +26,7 @@
                         <p class="font-bold text-[14px] opacity-40">3 products</p>
                     </div>
                     <ul  class="p-4 space-y-3 border-b border-b-light-border max-h-[40vh] overflow-y-auto">
-                        <li v-for="item in cartItems" :key="item.id" class="flex justify-between gap-4 ">
+                        <li v-for="item in cartItems" :key="item.id" class="flex justify-between gap-4 mb-6">
                             <div class="flex gap-x-2">
                                 <div class="bg-card-bg p-1 rounded-2xl">
                                     <img class="w-[54px] h-[54px]" :src="item.img" :alt="item.name">
