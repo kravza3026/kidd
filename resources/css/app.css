@@ -19,7 +19,19 @@
     --color-danger: #FD3333;
     --color-charcoal: #020202;
     --color-light-charcoal: #F8F7F2;
+    --color-light-border: #EEEEEE;
 
+}
+@utility pt-section {
+    padding-top: 50px;
+
+    @variant sm {
+        padding-top: 80px;
+    }
+
+    @variant lg {
+        padding-top: 100px;
+    }
 }
 @utility container {
     padding-inline: 10px;
@@ -44,4 +56,12 @@
     font-family: "Onest", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+}
+
+.light_border{
+    @apply border border-light-border rounded-2xl
+}
+
+.animated{
+    @apply transition-all ease-in-out duration-500
 }

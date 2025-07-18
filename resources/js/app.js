@@ -2,16 +2,19 @@
 import { createApp } from 'vue';
 import Alpine from 'alpinejs';
 
-import HomePage from './pages/HomePage.vue';
+// import HomePage from './pages/HomePage.vue';
+import Search from './components/Search.vue';
+import CartDropdown from './components/CartDropdown.vue';
 import Button from './components/Button.vue';
 
 window.Alpine = Alpine;
-Alpine.start();
+
 
 // Масив компонентів
 const components = {
-    HomePage,
-    ExampleComponent: Button,
+    Search,
+    CartDropdown,
+    Button
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
@@ -23,3 +26,16 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
         createApp(components[name], props).mount(el);
     }
 });
+
+
+document.addEventListener('alpine:init', () => {
+    Alpine.store('dropdown', {
+        open: false,
+        toggle() { this.open = !this.open },
+        close() { this.open = false }
+    });
+
+});
+
+
+Alpine.start();

@@ -21,7 +21,7 @@
     </section>
 
     {{-- Repeat Section --}}
-    <section class="container mt-14 ">
+    <section class="container pt-section ">
         <div class="flex justify-between overflow-x-scroll md:overflow-hidden w-full gap-5">
             @for ($i = 1; $i <= 4; $i++)
                 <x-category-card
@@ -33,7 +33,7 @@
         </div>
     </section>
 
-    <section class="container mt-7 ">
+    <section class="container pt-section ">
         <h2 class="section-title text-[30px] md:text-[48px] font-[700] pb-5">New arrivals</h2>
         <div class="py-5 font-[700] flex justify-between overflow-x-auto md:overflow-hidden">
             <ul class="flex gap-2 2xl:gap-6 cursor-pointer">
@@ -47,7 +47,7 @@
                 <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">2Y</li>
                 <li class="w-fit border border-black/20 rounded-full flex items-center px-4 py-2 text-[14px] text-nowrap">3-4Y</li>
             </ul>
-            <p class="text-olive flex items-center text-nowrap text-[14px] mx-2">View all products</p>
+            <a href="#" class="text-olive light_border px-4 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px]  mx-2">View all products</a>
         </div>
         <div class="flex justify-between overflow-x-scroll md:overflow-hidden gap-2">
             @for ($i = 1; $i <= 3; $i++)
@@ -77,7 +77,7 @@
                 />
         </div>
     </section>
-    <section class="mt-7">
+    <section class="pt-section">
         <div class="grid grid-cols-1 md:flex items-center relative justify-start bg-olive  h-fit min-h-[380px] xl:min-h-[560px]">
             <div class="container order-2 md:order-1 pb-7 md:pb-0 relative h-full grid items-center content-center">
                 <div class="md:max-w-6/12">
@@ -89,7 +89,7 @@
                     <form class="mt-10 ">
                         <div class="relative">
                             <input class="w-full focus:outline-hidden bg-white rounded-xl p-5" type="text" value="" placeholder="Your e-mail address">
-                            <button class="absolute cursor-pointer right-2 top-2 text-white font-bold border-b-2 border-b-olive hover:bg-olive bg-charcoal rounded-xl py-3 px-7 duration-700">Subscribe</button>
+                            <button class="absolute cursor-pointer right-2 top-2 text-white font-bold border-b-2 border-b-olive hover:bg-olive bg-charcoal rounded-xl py-3 px-7 animated">Subscribe</button>
                         </div>
                     </form>
                 </div>
@@ -98,12 +98,12 @@
         </div>
 
     </section>
-    <section class="mt-7">
-        <div class="container md:flex justify-between py-10">
+    <section class="pt-section">
+        <div class="container md:flex justify-between">
             <div class="w-full md:w-1/2 relative">
                 <img class="relative w-full rounded-2xl md:rounded-l-2xl md:rounded-r-none right-0 top-0" src="{{ asset('assets/images/gender_1.jpg') }}" alt="">
                 <div class="absolute inset-0 grid items-end">
-                    <div class="bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-full mx-auto md:px-10  p-4 bg-opacity-60">
+                    <div class="rounded-2xl md:rounded-l-2xl md:rounded-r-none bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-full mx-auto md:px-10  p-4 bg-opacity-60">
                         <h3 class="text-white text-[24px] md:text-[40px] font-bold">Sweets for little princesses</h3>
                         <p class="text-white text-base">Discover a variety of vibrant colours, playful patterns, and trendy
                             designs that will make your baby girl shine.</p>
@@ -114,7 +114,7 @@
             <div class="w-full md:w-1/2 relative mt-7 md:mt-0">
                 <img class="relative w-full  rounded-2xl md:rounded-r-2xl md:rounded-l-none right-0 top-0" src="{{ asset('assets/images/gender_2.jpg') }}" alt="">
                 <div class="absolute inset-0 grid items-end">
-                    <div class="bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-full px-10 mx-auto  p-4 bg-opacity-60">
+                    <div class="rounded-2xl md:rounded-r-2xl md:rounded-l-none bg-gradient-to-t from-gray-900/10 to-slate-50/0 w-full px-10 mx-auto  p-4 bg-opacity-60">
                         <h3 class="text-white text-[24px] md:text-[40px] font-bold">Adorable style for little men</h3>
                         <p class="text-white text-base">Shop our selection of durable and high-quality clothing, designed to  keep up with your baby boy's active lifestyle.</p>
                         <x-button >Shop now</x-button>

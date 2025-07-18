@@ -10,7 +10,7 @@
     'colors' => [],
 ])
 
-<div class="cursor-pointer group p-1 min-w-1/2 md:min-w-1/4">
+<div class="cursor-pointer group p-1 min-w-3/5 md:min-w-1/5">
     <div class="bg-card-bg group-hover:bg-white border border-transparent group-hover:border-black/10 duration-700 transition-all ease-in-out rounded-xl py-4 px-2 relative overflow-hidden">
         <div class="relative flex">
             @if($discount || $isNew)
