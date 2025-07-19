@@ -182,12 +182,13 @@
         @click.outside="$store.dropdown.close()"
         id="megaMenu"
         class="absolute left-0 w-full top-[calc(100%+1px)] h-[calc(100vh-100px)] lg:h-fit  z-50 rounded-b-2xl bg-white shadow-lg  ring-black/5">
-        <div class="container grid lg:flex relative  gap-y-5 px-5 lg:px-16 py-14">
+        <div class="container grid lg:flex relative  gap-y-5 px-5 lg:px-[64px] py-[60px]">
             <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
-            <div class="small-cards lg:w-[55%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
+            <div class="small-cards lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
                 @for ($i = 0; $i < 5; $i++)
                     <a href="#"
-                       class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl m-2 p-3 lg:p-10   lg:h-[200px]
+                       class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
+                       lg:rounded-2xl m-2 p-3 lg:p-5 lg:h-[200px]
                             @if ($i!== 4) border-b border-light-border @endif
                             ">
                         <div class="small-cart_img_container">

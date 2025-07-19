@@ -2,7 +2,7 @@
     'product',
 ])
 
-<div class="cursor-pointer group p-1 min-w-3/5 md:min-w-1/5">
+<div class="cursor-pointer group p-1 ">
     <div class="bg-card-bg group-hover:bg-white border border-transparent group-hover:border-black/10 duration-200 transition-all ease-in-out rounded-xl py-4 px-2 relative ">
         <div class="relative flex">
             @if($product->is_new || $product->has_discount)
@@ -19,7 +19,7 @@
                     @endif
                 </div>
             @endif
-            <div class="absolute top-1 right-1 hidden xl:flex items-center gap-1  bg-opacity-90 rounded-full px-2 py-1 text-xs">
+            <div class="absolute top-1 right-1 flex sm:hidden xl:flex items-center gap-1  bg-opacity-90 rounded-full px-2 py-1 text-xs">
                 <div class="flex items-center gap-2">
                     <div class="shadow-md size-6 p-1  {{ $product->gender->bg_color }} rounded-3xl justify-center items-center flex">
                         <div class="w-4 justify-center items-center flex">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="text-start px-4 mt-4">
-        <div class="flex xl:hidden items-center gap-1  bg-opacity-90 rounded-full py-1 text-[10px]">
+        <div class="hidden sm:flex xl:hidden items-center gap-1  bg-opacity-90 rounded-full py-1 text-[10px]">
 {{--                <img src="{{ $genderIcon }}" alt="gender" class="w-[24px] h-[24px]" />--}}
             <div class="shadow-md size-6 p-1  {{ $product->gender->bg_color }} rounded-3xl justify-center items-center flex">
                 <div class="w-4 justify-center items-center flex">
