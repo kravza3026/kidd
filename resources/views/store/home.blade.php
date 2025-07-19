@@ -4,7 +4,6 @@
         <section class="big-slider relative w-full h-[400px] md:h-[754px]"
                  style="background-image: url({{ Vite::image('home-page/bigBanner.jpg') }}); background-size: cover; background-position: center; background-repeat: no-repeat;"
         >
-            {{--        <img src="{{ Vite::asset('resources/images/home-page/bigBanner.jpg') }}" alt="banner" class="w-full">--}}
             <div class="absolute z-1 inset-0 grid place-items-end">
                 <div class="container w-full text-white md:mb-16">
                     <h1 class="text-[30px] md:text-[64px] font-bold">
@@ -50,12 +49,15 @@
                 </ul>
                 <a href="#" class="text-olive light_border px-4 py-2 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px]  mx-2">View all products</a>
             </div>
-            <div class="flex justify-between overflow-x-scroll md:overflow-visible gap-0">
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-5 sm:gap-y-12 mt-5">
+                {{-- Product cards --}}
                 @foreach($products as $product)
                     <x-product-card :$product />
                 @endforeach
             </div>
         </section>
+
         <section class="pt-section">
             <div class="grid grid-cols-1 md:flex items-center relative justify-start bg-olive  h-fit min-h-[380px] xl:min-h-[560px]">
                 <div class="container order-2 md:order-1 pb-7 md:pb-0 relative h-full grid items-center content-center">
@@ -76,8 +78,8 @@
                 </div>
                 <img class="md:absolute order-1 md:order-2 md:max-w-5/12 min-h-[380px] xl:min-h-[560px] right-0 top-0" src="{{ asset('assets/images/subscribe_bg.jpg') }}" alt="kidd">
             </div>
-
         </section>
+
         <section class="pt-section">
             <div class="container md:flex justify-between">
                 <div class="w-full md:w-1/2 relative">
@@ -103,5 +105,6 @@
                 </div>
             </div>
         </section>
+
     </div>
 </x-app-layout>

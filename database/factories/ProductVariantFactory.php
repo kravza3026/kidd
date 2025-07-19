@@ -43,18 +43,18 @@ class ProductVariantFactory extends Factory
             'price_shipping' => new Money(fake()->randomNumber(4), new Currency('MDL')), // Shipping cost
 
             'images' => json_encode([
-                'image_1' => 'product-'.rand(1, 9).'.png',
-                'image_2' => 'product-'.rand(1, 9).'.png',
-                'image_3' => 'product-'.rand(1, 9).'.png',
-                'image_4' => 'product-'.rand(1, 9).'.png',
-                'image_5' => 'product-'.rand(1, 9).'.png',
+                'image_1' => 'products/product_'.rand(1, 9).'.png',
+                'image_2' => 'products/product_'.rand(1, 9).'.png',
+                'image_3' => 'products/product_'.rand(1, 9).'.png',
+                'image_4' => 'products/product_'.rand(1, 9).'.png',
+                'image_5' => 'products/product_'.rand(1, 9).'.png',
             ]), // Images
             'videos' => json_encode([
-                'video_1' => 'product-'.rand(1, 9).'.mp4',
-                'video_2' => 'product-'.rand(1, 9).'.mp4',
-                'video_3' => 'product-'.rand(1, 9).'.mp4',
-                'video_4' => 'product-'.rand(1, 9).'.mp4',
-                'video_5' => 'product-'.rand(1, 9).'.mp4',
+                'video_1' => 'products/product_'.rand(1, 9).'.mp4',
+                'video_2' => 'products/product_'.rand(1, 9).'.mp4',
+                'video_3' => 'products/product_'.rand(1, 9).'.mp4',
+                'video_4' => 'products/product_'.rand(1, 9).'.mp4',
+                'video_5' => 'products/product_'.rand(1, 9).'.mp4',
             ]), // Videos
 
             'shipping_sizes' => json_encode([

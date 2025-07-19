@@ -11,7 +11,7 @@
         </div>
 
         <div class="mb-24 space-y-20">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 gap-y-14">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 gap-y-6">
                 <!-- Product grid -->
                 @forelse ($products as $product)
                     <x-product-card :product="$product" />

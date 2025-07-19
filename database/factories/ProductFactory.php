@@ -27,20 +27,20 @@ class ProductFactory extends Factory
             'fabric_id' => rand(1, 5),
 
             'name' => [
-                'ro' => fake('ro_RO')->sentence(rand(3, 5), false),
-                'ru' => fake('ru_RU')->sentence(rand(3, 5), false),
-                'en' => fake('en_US')->sentence(rand(3, 5), false),
+                'ro' => '(ro) ' . fake('ro_RO')->sentence(rand(2, 3), false),
+                'ru' => '(ru) ' . fake('ru_RU')->sentence(rand(2, 3), false),
+                'en' => '(en) ' . fake('en_US')->sentence(rand(2, 3), false),
             ],
             'description' => [
-                'ro' => fake('ro_RO')->paragraph(rand(2, 10)),
-                'ru' => fake('ru_RU')->paragraph(rand(2, 10)),
-                'en' => fake('en_US')->paragraph(rand(2, 10)),
+                'ro' => '(ro) ' . fake('ro_RO')->paragraph(rand(2, 10)),
+                'ru' => '(ru) ' . fake('ru_RU')->paragraph(rand(2, 10)),
+                'en' => '(en) ' . fake('en_US')->paragraph(rand(2, 10)),
             ],
 
-            'main_image' => 'products/product_'.rand(1, 4).'.png',
+            'main_image' => 'products/product_'.rand(1, 9).'.png',
 //            'cost' => new Money(fake()->randomNumber(4), new \Money\Currency('MDL')),
 
-            'rating' => rand(0, 6),
+            'rating' => rand(1, 5),
             'review_count' => fake()->randomNumber(rand(2, 3)),
 
             'is_new' => rand(0, 1),
