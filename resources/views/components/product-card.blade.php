@@ -3,7 +3,7 @@
     'price',
     'image',
     'discount' => null,
-    'oldPrice' => null,
+    'oldPrice' => 120 + rand(200,300),
     'isNew' => false,
     'genderIcon' => null,
     'ageLabel' => null,

@@ -55,10 +55,10 @@
                     <x-product-card
                         title="Unisex Cotton Jumpsuit"
                         price="265"
-                        image="{{ asset('assets/images/products/product_' . $i . '.png') }}"
+                        image="{{ Vite::image('products/product_' . $i . '.png') }}"
                         :is-new="true"
-                        gender-icon="{{ asset('assets/images/icons/unisex.svg') }}"
-                        age-label="0-12M"
+                        gender-icon="{{ Vite::image('icons/unisex.svg') }}"
+                        age-label="0-6M"
                         :colors="['#c5bfb4', '#f7e5e2', '#e5e8e0']"
 
                     />
@@ -69,9 +69,9 @@
                     price="240"
                     oldPrice="300"
                     discount="20%"
-                    image="{{ asset('assets/images/products/product_4.png') }}"
+                    image="{{ Vite::image('products/product_4.png') }}"
                     :is-new="true"
-                    gender-icon="{{ asset('assets/images/icons/unisex.svg') }}"
+                    gender-icon="{{ Vite::image('icons/unisex.svg') }}"
                     age-label="0-12M"
                     :colors="['#c5bfb4', '#f7e5e2']"
 
@@ -82,8 +82,9 @@
             <div class="grid grid-cols-1 md:flex items-center relative justify-start bg-olive  h-fit min-h-[380px] xl:min-h-[560px]">
                 <div class="container order-2 md:order-1 pb-7 md:pb-0 relative h-full grid items-center content-center">
                     <div class="md:max-w-6/12">
-                        <h2 class="section-title text-white md:text-[24px] xl:text-[40px] xl:leading-12 font-[700] py-5">Subscribe to newsletter and
-                            <br> get 25% off your first order</h2>
+                        <h2 class="section-title text-balance text-white md:text-[24px] xl:text-[40px] xl:leading-12 font-[700] py-5">
+                            Subscribe to newsletter and get 25% off your first order
+                        </h2>
                         <p class="text-white">
                             Receive the latest updates and take advantage of great offers
                         </p>

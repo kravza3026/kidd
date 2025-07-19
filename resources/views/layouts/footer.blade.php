@@ -12,10 +12,10 @@
                     <h5 class="text-white opacity-60 font-bold">Follow us on</h5>
                 </div>
                 <ul class="flex items-center gap-4 xl:mt-7">
-                    <li><a href="#"><img src="{{ asset('assets/images/icons/socials/facebook.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ asset('assets/images/icons/socials/ln.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ asset('assets/images/icons/socials/youtube_i.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ asset('assets/images/icons/socials/messenger.svg') }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ Vite::image('icons/socials/facebook.svg') }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ Vite::image('icons/socials/ln.svg') }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ Vite::image('icons/socials/messenger.svg') }}" alt=""></a></li>
                 </ul>
             </div>
 
@@ -28,7 +28,8 @@
                 <div class="flex flex-col gap-2 rounded-lg bg-black p-5 text-white">
                     <button type="button" @click="toggle(idx)" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
                         <h5 class="text-white opacity-60 font-bold " x-text="section.title" :class="{ 'opacity-100': open === idx }"></h5>
-                        <img class="w-3 transition-transform duration-500 xl:invisible opacity-60 -rotate-180" :class="{ 'rotate-0 opacity-100': open === idx }" src="{{ asset('assets/images/icons/accordion_arrow.png') }}" alt="">
+                        <img class="w-3 transition-transform duration-500 xl:invisible opacity-60 -rotate-180" :class="{ 'rotate-0 opacity-100': open === idx }" src="{{ Vite::image('icons/accordion_arrow
+                        .png') }}" alt="">
                     </button>
 
                     <div

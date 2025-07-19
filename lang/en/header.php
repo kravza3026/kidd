@@ -9,7 +9,6 @@ return [
     */
 
     'menu' => [
-        'home' => 'Home',
         'catalog' => 'Explore',
         'about' => 'About',
         'help' => 'Help',

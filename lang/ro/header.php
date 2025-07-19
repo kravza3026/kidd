@@ -9,8 +9,7 @@ return [
     */
 
     'menu' => [
-        'home' => 'Acasă',
-        'catalog' => 'Catalog',
+        'catalog' => 'Explorează',
         'about' => 'Despre',
         'help' => 'Ajutor',
         'contacts' => 'Contacte',

@@ -3,13 +3,12 @@ import { createApp } from 'vue';
 import Alpine from 'alpinejs';
 
 import.meta.glob('../images/**/*');
-// import HomePage from './pages/HomePage.vue';
+
 import Search from './components/Search.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
 import SimpleButton from './components/SimpleButton.vue';
-import.meta.glob('../images/**/*');
 window.Alpine = Alpine;
 
 

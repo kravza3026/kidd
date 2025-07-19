@@ -12,7 +12,7 @@ return [
         'catalog' => 'catalog',
         'about' => 'about-us',
         'help' => 'help',
-        'contact' => 'contacts',
+        'contacts' => 'contacts',
     ],
 
 ];

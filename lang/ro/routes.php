@@ -12,7 +12,7 @@ return [
         'catalog' => 'catalog',
         'about' => 'despre-noi',
         'help' => 'ajutor',
-        'contact' => 'contacte',
+        'contacts' => 'contacte',
     ],
 
 ];

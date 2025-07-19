@@ -3,13 +3,14 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/', [HomeController::class, 'home'])
+    ->name('home');
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localize', 'localizationRedirect', 'localeSessionRedirect']
 ], function () {
-
-    Route::get('/', [HomeController::class, 'home'])
-        ->name('home');
 
     Route::get(LaravelLocalization::transRoute('routes.menu.about'), [HomeController::class, 'about'])
         ->name('about');
