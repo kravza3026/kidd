@@ -8,6 +8,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
+    'topline' => [
+        'locations' => 'Pickup locations',
+        'careers' => 'Careers',
+        'terms' => 'Terms & conditions',
+    ],
+
     'menu' => [
         'catalog' => 'Explore',
         'about' => 'About',

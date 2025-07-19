@@ -1,60 +1,53 @@
 @props([
-    'title',
-    'price',
-    'image',
-    'discount' => null,
-    'oldPrice' => 120 + rand(200,300),
-    'isNew' => false,
-    'genderIcon' => null,
-    'ageLabel' => null,
-    'colors' => [],
+    'product',
 ])
 
 <div class="cursor-pointer group p-1 min-w-3/5 md:min-w-1/5">
     <div class="bg-card-bg group-hover:bg-white border border-transparent group-hover:border-black/10 duration-700 transition-all ease-in-out rounded-xl py-4 px-2 relative ">
         <div class="relative flex">
-            @if($discount || $isNew)
+            @if($product->is_new || $product->has_discount)
                 <div class="absolute top-1 md:top-2 left-1 md:left-2 flex items-center gap-2  ">
-                    @if ($discount)
+                    @if($product->has_discount)
                         <div class=" bg-danger text-white text-[10px] md:text-[12px] font-semibold rounded-full px-3 py-1">
-                            {{ $discount }}
+                            -{{ $product->variants->first()?->discount_display }}%
                         </div>
                     @endif
-                    @if ($isNew)
+                    @if ($product->is_new)
                         <div class=" bg-olive text-white text-[10px] md:text-[12px] font-semibold rounded-full px-3 py-1">
                             NEW
                         </div>
                     @endif
                 </div>
             @endif
-            @if ($genderIcon || $ageLabel)
-                <div class="absolute top-2 right-2 hidden xl:flex items-center gap-1  bg-opacity-90 rounded-full px-2 py-1 text-xs">
-                    @if ($genderIcon)
-                        <img src="{{ $genderIcon }}" alt="gender" class="w-[24px] h-[24px]" />
-                    @endif
-                    @if ($ageLabel)
-                        <div class="text-[12px] bg-white font-bold h-[24px] rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10">
-                            <img src="{{ asset('assets/images/icons/size.png') }}" alt="size">
-                            {{ $ageLabel }}
+            <div class="absolute top-2 right-2 hidden xl:flex items-center gap-1  bg-opacity-90 rounded-full px-2 py-1 text-xs">
+                <div class="flex items-center gap-2">
+                    <div class="shadow-md size-6 p-1  {{ $product->gender->bg_color }} rounded-3xl justify-center items-center flex">
+                        <div class="w-4 justify-center items-center flex">
+                            {!! $product->gender->svg !!}
                         </div>
-                    @endif
+                    </div>
+                    <div class=" pl-2.5 pr-3 py-1.5 bg-white rounded-3xl border border-black/10 justify-center items-center gap-1 flex">
+                        <div class="size-3">
+                            <img class="w-3" src="{{ Vite::image('icons/size.png')  }}" alt="size icon"/>
+                        </div>
+                        <div class="text-black text-xs font-bold leading-3">
+                            {{ $product->variants->min('size.min_age') }}-{{ $product->variants->max('size.max_age') }}M
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
 
-            <img src="{{ $image }}" alt="{{ $title }}" class="w-full object-contain aspect-[1/1]" />
+            <img src="{{ Vite::image($product->main_image) }}" alt="{{ $product->name }}" class="w-full object-contain aspect-[1/1]" />
         </div>
 
         <div class="flex justify-center items-center gap-2 mt-3">
-            @foreach ($colors as $color)
+            @foreach($product->variants as $variant)
                 @if ($loop->first)
                     <div class="border cursor-pointer p-0 w-4 h-4 rounded-full flex justify-center items-center border-gray-300 bg-white">
-            <span
-                class="w-2 h-2 rounded-full p-0"
-                style="background-color: {{ $color }}"
-            ></span>
+                        <span class="w-2 h-2 rounded-full p-0" style="background-color: {{ $variant->color->hex }}"></span>
                     </div>
                 @else
-                    <div class="cursor-pointer w-2 h-2 rounded-full" style="background-color: {{ $color }}"></div>
+                    <div class="cursor-pointer w-2 h-2 rounded-full" style="background-color: {{ $variant->color->hex }}"></div>
                 @endif
             @endforeach
 
@@ -69,23 +62,22 @@
     </div>
 
     <div class="text-start px-4 mt-4">
-        @if ($genderIcon || $ageLabel)
-            <div class="flex xl:hidden items-center gap-1  bg-opacity-90 rounded-full py-1 text-[10px]">
-                @if ($genderIcon)
-                    <img src="{{ $genderIcon }}" alt="gender" class="w-[24px] h-[24px]" />
-                @endif
-                @if ($ageLabel)
-                    <div class="text-[12px] bg-white font-bold h-[24px] rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10">
-                        <img src="{{ asset('assets/images/icons/size.png') }}" alt="size">
-                        {{ $ageLabel }}
-                    </div>
-                @endif
+        <div class="flex xl:hidden items-center gap-1  bg-opacity-90 rounded-full py-1 text-[10px]">
+{{--                <img src="{{ $genderIcon }}" alt="gender" class="w-[24px] h-[24px]" />--}}
+            {!! $product->gender->svg !!}
+            <div class="text-[12px] bg-white font-bold h-[24px] rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10">
+                <img src="{{ asset('assets/images/icons/size.png') }}" alt="size">
+                {{ $product->variants->min('size.min_age') }}-{{ $product->variants->max('size.max_age') }}M
             </div>
-        @endif
-        <p class="text-base text-charcoal text-[14px] md:text-[16px]">{{ $title }}</p>
-        <p class="font-bold text-charcoal text-[16px]">{{ $price }} lei
-            @if ($oldPrice)
-                <span class="text-[14px] line-through opacity-30">{{$oldPrice}}lei</span>
+        </div>
+        <p class="text-base text-charcoal text-[14px] md:text-[16px]">{{ $product->name }}</p>
+        <p class="font-bold text-charcoal text-[16px]">
+            {{ $product->variants()->min('price_final')/100 }}
+            <span class="line-through text-sm font-medium text-gray-400">{{ $product->variants()->min('price_online')/100 }}
+            @if ($product->has_discount)
+                <span class="text-[14px] line-through opacity-30">
+                {{ $product->variants()->min('price_online')/100 }}
+                </span>
             @endif
         </p>
     </div>

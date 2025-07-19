@@ -11,11 +11,27 @@
                 <div class="flex items-center justify-between">
                     <h5 class="text-white opacity-60 font-bold">Follow us on</h5>
                 </div>
-                <ul class="flex items-center gap-4 xl:mt-7">
-                    <li><a href="#"><img src="{{ Vite::image('icons/socials/facebook.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ Vite::image('icons/socials/ln.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ Vite::image('icons/socials/messenger.svg') }}" alt=""></a></li>
+                <ul class="flex group items-center gap-4 xl:mt-7">
+                    <li>
+                        <a href="#">
+                            <img src="{{ Vite::image('icons/socials/facebook.svg') }}" alt="facebook icon">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="{{ Vite::image('icons/socials/ln.svg') }}" alt="linkedin icon">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt="youtube icon">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="{{ Vite::image('icons/socials/messenger.svg') }}" alt="messenger icon">
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -28,12 +44,10 @@
                 <div class="flex flex-col gap-2 rounded-lg bg-black p-5 text-white">
                     <button type="button" @click="toggle(idx)" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
                         <h5 class="text-white opacity-60 font-bold " x-text="section.title" :class="{ 'opacity-100': open === idx }"></h5>
-                        <img class="w-3 transition-transform duration-500 xl:invisible opacity-60 -rotate-180" :class="{ 'rotate-0 opacity-100': open === idx }" src="{{ Vite::image('icons/accordion_arrow
-                        .png') }}" alt="">
+                        <img class="w-3 transition-transform duration-500 xl:invisible opacity-60 -rotate-180" :class="{ 'rotate-0 opacity-100': open === idx }" src="{{ Vite::image('icons/accordion_arrow.png') }}" alt="">
                     </button>
 
-                    <div
-                        class="overflow-hidden transition-all duration-500 xl:visible xl:max-h-screen xl:opacity-100"
+                    <div class="overflow-hidden transition-all duration-500 xl:visible xl:max-h-screen xl:opacity-100"
                         :class="{
                             'max-h-0 opacity-0 invisible': open !== idx,
                             'max-h-screen opacity-100 visible': open === idx
@@ -41,7 +55,9 @@
                     >
                         <ul class="mt-5">
                             <template x-for="item in section.items" :key="item">
-                                <li class="opacity-25 py-2"><a href="#" x-text="item"></a></li>
+                                <li class="opacity-25 hover:opacity-60 py-2">
+                                    <a href="#" x-text="item"></a>
+                                </li>
                             </template>
                         </ul>
                     </div>
@@ -67,10 +83,10 @@
         <hr class="xl:mt-7 border border-dark">
         <div class="flex text-white justify-between items-center text-[12px] mt-7">
             <div class="flex items-center py-1 w-3/12 xl:w-auto">
-                <p class="opacity-25">© 2023 KIDD. <span class="hidden xl:block">All Rights Reserved</span></p>
+                <p class="flex gap-2 opacity-25">&copy; 2023 KIDD. <span class="hidden xl:block">All Rights Reserved</span></p>
             </div>
 
-            <ul class="flex gap-x-2 w-6/12 py-1 xl:w-auto">
+            <ul class="flex justify-end gap-x-4 w-6/12 py-1 xl:w-auto">
                 <li class="opacity-25"><a href="#">Privacy Terms</a></li>
                 <li class="opacity-25"><a href="#">Cookies Policy</a></li>
             </ul>

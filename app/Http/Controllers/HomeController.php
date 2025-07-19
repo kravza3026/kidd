@@ -2,25 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
 class HomeController extends Controller
 {
-    public function home()
+    /**
+     * Handle the incoming request.
+     */
+    public function index(): View
     {
-        return view('home');
+
+        //TODO Home Page Display
+
+        $categories = Category::whereNull('parent_id')->get();
+
+        $categories = $categories->first()->subcategories()->paginate(4);
+        $products = $categories->first()->products()->limit(4)->get();
+
+        return view('store.home', compact('categories', 'products'));
     }
 
-    public function about()
+    /** @noinspection PhpUnhandledExceptionInspection */
+    public function search(Request $request)
     {
-        return view('static.about');
+        if($request->hasHeader('HX-Request')){
+            $results = Category::search($request->term)->get();
+            return view('shared.search.result', compact('results'))->render();
+        }
+
+        return view('shared.search.index');
     }
 
-    public function help()
-    {
-        return view('static.help');
-    }
-
-    public function contacts()
-    {
-        return view('static.contacts');
-    }
 }

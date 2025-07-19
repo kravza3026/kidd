@@ -80,6 +80,15 @@ return [
 
     'locale' => env('APP_LOCALE', 'ro'),
 
+    'locales' => [
+        'ro' => 'Română',
+        'ru' => 'Русский',
+        'en' => 'English',
+    ],
+
+    // Country for Currency formatting.
+    'locale_format' => 'ro_RO',
+
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ro'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'ro_RO'),

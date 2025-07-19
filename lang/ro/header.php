@@ -8,6 +8,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
+    'topline' => [
+        'locations' => 'Locații magazine',
+        'careers' => 'Cariere',
+        'terms' => 'Termeni și condiții',
+    ],
+
     'menu' => [
         'catalog' => 'Explorează',
         'about' => 'Despre',

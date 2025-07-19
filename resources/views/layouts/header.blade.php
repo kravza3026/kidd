@@ -2,27 +2,27 @@
     <div class="bg-light-orange hidden lg:block">
         <div class="container   flex justify-between">
             <div class="flex-1 flex items-center gap-5">
-                <a href="#" class="text-[13px] font-[500]">
-                    Pickup locations
+                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-[13px] font-[500]">
+                    {{ __('header.topline.locations') }}
                 </a>
-                <a href="#" class="text-[13px] font-[500]">
-                    Careers
+                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-[13px] font-[500]">
+                    {{ __('header.topline.careers') }}
                 </a>
-                <a href="#" class="text-[13px] font-[500]">
-                    Terms & Conditions
+                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-[13px] font-[500]">
+                    {{ __('header.topline.terms') }}
                 </a>
             </div>
             <div class="flex-1 flex justify-end gap-5 items-center">
                 @include('layouts.nav._lang_switcher')
-                <a href="tel:+37360559944" class="text-[13px] font-[500]">+373 (60) 394 474</a>
+                <a href="tel:+37360123456" class="text-[13px] font-[500]">+373 (60) 123 456</a>
             </div>
         </div>
     </div>
 
     <nav class="container relative z-10 h-[72px] lg:h-[88px] flex justify-between font-bold">
         <div class="flex items-center gap-10">
-            <a href="/" class="logo">
-                <img src="{{ asset('assets/images/logo.svg') }}" alt="">
+            <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'home') }}" class="logo">
+                <img src="{{ Vite::image('logo.svg') }}" alt="kidd.md Logo image">
             </a>
 
         </div>
@@ -50,7 +50,6 @@
                             </button>
                         </div>
 
-
                     </div>
                 </li>
                 <li class="h-full flex items-center border-transparent border-b-2">
@@ -76,68 +75,9 @@
         {{--    mobile menu    --}}
         <div class="flex lg:hidden items-center gap-x-2">
             <div class="dropdown border border-black/10 rounded-full ">
-                <div x-data="{ open: false }" class="relative inline-block text-left">
-                    <div>
-                        <button
-                            @click="open = !open"
-                            type="button"
-                            class="inline-flex items-center w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 ring-gray-300 ring-inset hover:bg-gray-50"
-                            id="menu-button"
-                            aria-expanded="true"
-                            aria-haspopup="true"
-                        >
-                            <img src="{{ asset('assets/images/flag.svg') }}" alt="flag">
-                            English
-                            <svg class="-mr-1 size-5 text-black" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div
-                        x-show="open"
-                        x-cloak
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-75"
-                        x-transition:leave-start="transform opacity-100 scale-100"
-                        x-transition:leave-end="transform opacity-0 scale-95"
-                        @click.outside="open = false"
-                        class="absolute  right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="menu-button"
-                        tabindex="-1"
-                    >
-                        <div class="p-1" role="none">
-                            <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 bg-light-charcoal rounded-lg" role="menuitem">
-                                <div class="flex gap-x-2">
-                                    <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_en.svg') }}" alt="flag">
-                                    <span class="font-bold">English</span>
-                                </div>
-                                <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">
-                            </a>
-                            <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 hover:bg-light-charcoal animated  rounded-lg" role="menuitem">
-                                <div class="flex gap-x-2">
-                                    <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_rom.svg') }}" alt="flag">
-                                    <span class="font-bold">Română</span>
-                                </div>
-                                {{--                                    <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">--}}
-                            </a>
-                            <a href="#" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700 hover:bg-light-charcoal animated " role="menuitem">
-                                <div class="flex gap-x-2">
-                                    <img width="24" height="24" src="{{ asset('assets/images/icons/flags/fl_ru.svg') }}" alt="flag">
-                                    <span class="font-bold">Русский</span>
-                                </div>
-                                {{--                                    <img src="{{ asset('assets/images/icons/checked_ol.svg') }}" alt="checked">--}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+                @include('layouts.nav._lang_switcher')
             </div>
-            <a class="p-2 w-[33px] h-[33px] flex items-center border border-black/10 rounded-full" href="#">
+            <a class="p-2 w-[33px] h-[33px] flex items-center border border-black/10 rounded-full" href="tel:+37360123456">
                 <img height="13" src="{{ asset('assets/images/icons/phone_i.svg') }}" alt="">
             </a>
             <div class="flex items-center relative" x-data="{ open: false }" x-effect="document.body.classList.toggle('overflow-hidden', open)">
@@ -194,10 +134,18 @@
                 >
                     <div class="bg-white grid items-center justify-center p-4 absolute top-0 right-0 w-screen h-full shadow-lg">
                         <ul class="mt-4 space-y-4 text-center">
-                            <li><a href="#" class="text-black text-[32px]">About</a></li>
-                            <li><a href="#" class="text-black text-[32px]">Locations</a></li>
-                            <li><a href="#" class="text-black text-[32px]">Careers</a></li>
-                            <li><a href="#" class="text-black text-[32px]">Terms</a></li>
+                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.about') }}" class="text-black text-[32px] hover:text-olive">
+                                    {{ __('header.menu.about') }}
+                                </a></li>
+                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-black text-[32px] hover:text-olive">
+                                    {{ __('header.topline.locations') }}
+                                </a></li>
+                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-black text-[32px] hover:text-olive">
+                                    {{ __('header.topline.careers') }}
+                                </a></li>
+                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-black text-[32px] hover:text-olive">
+                                    {{ __('header.topline.terms') }}
+                                </a></li>
                         </ul>
                     </div>
                 </div>

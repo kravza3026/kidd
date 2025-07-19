@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        Vite::prefetch(5);
+        Vite::prefetch(7);
         Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
