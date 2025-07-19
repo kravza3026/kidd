@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => env('SESSION_DRIVER', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    'lifetime' => (int) env('SESSION_LIFETIME', 1440),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'encrypt' => env('SESSION_ENCRYPT', false),
+    'encrypt' => env('SESSION_ENCRYPT', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => env('SESSION_CONNECTION', 'default'),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +101,7 @@ return [
     |
     */
 
-    'store' => env('SESSION_STORE'),
+    'store' => env('SESSION_STORE', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -129,7 +129,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::snake((string) env('APP_NAME', 'laravel')).'_session'
+        Str::snake((string) env('APP_NAME', 'kidd')).'_session'
     ),
 
     /*
@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => env('SESSION_DOMAIN', '.kidd.md'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE', true),
 
     /*
     |--------------------------------------------------------------------------

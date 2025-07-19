@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'ga4' => [
+        'measurement_id' => env('GA4_MEASUREMENT_ID'),
+        'api_secret' => env('GA4_API_SECRET'),
+    ],
+
+    'fb_pixel' => [
+        'pixel_id' => env('FB_PIXEL_ID'),
+        'access_token' => env('FB_PIXEL_ACCESS_TOKEN'),
+    ],
+
 ];

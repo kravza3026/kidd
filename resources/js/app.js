@@ -2,6 +2,7 @@
 import { createApp } from 'vue';
 import Alpine from 'alpinejs';
 
+import.meta.glob('../images/**/*');
 // import HomePage from './pages/HomePage.vue';
 import Search from './components/Search.vue';
 import CartDropdown from './components/CartDropdown.vue';
