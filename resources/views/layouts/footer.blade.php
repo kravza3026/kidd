@@ -7,7 +7,7 @@
     <div class="container">
         <div class="grid grid-cols-1 xl:flex xl:justify-between space-y-2">
             <!-- Follow Us -->
-            <div class="order-last xl:order-first flex justify-between xl:justify-start xl:flex-col items-center xl:items-start gap-2 bg-black p-5 text-white">
+            <div class="order-last xl:order-first flex justify-between xl:justify-start xl:flex-col items-center xl:items-start gap-2 bg-charcoal p-5 text-white">
                 <div class="flex items-center justify-between">
                     <h5 class="text-white opacity-60 font-bold">Follow us on</h5>
                 </div>
@@ -41,7 +41,7 @@
                 { title: 'Help', items: ['Frequent questions','Size chart','Return Policy','Delivery info','Contact us'] },
                 { title: 'Company', items: ['About us','Store locations','Careers','Terms & Conditions'] }
             ]" :key="idx">
-                <div class="flex flex-col gap-2 rounded-lg bg-black p-5 text-white">
+                <div class="flex flex-col gap-2 rounded-lg bg-charcoal p-5 text-white">
                     <button type="button" @click="toggle(idx)" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
                         <h5 class="text-white opacity-60 font-bold " x-text="section.title" :class="{ 'opacity-100': open === idx }"></h5>
                         <img class="w-3 transition-transform duration-500 xl:invisible opacity-60 -rotate-180" :class="{ 'rotate-0 opacity-100': open === idx }" src="{{ Vite::image('icons/accordion_arrow.png') }}" alt="">
@@ -65,7 +65,7 @@
             </template>
 
             <!-- Subscribe -->
-            <div class="flex flex-col gap-2 rounded-lg bg-black xl:min-w-4/12 p-5 text-white">
+            <div class="flex flex-col gap-2 rounded-lg bg-charcoal xl:min-w-4/12 p-5 text-white">
                 <div class="flex items-center justify-between">
                     <h5 class="text-white opacity-60 font-bold">Subscribe for newsletter</h5>
                 </div>
