@@ -32,11 +32,13 @@
                             href="#"
                             @click.prevent="toggleSearch"
                         >
-                            <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                            <span
+                                :class="{ 'text-olive': searchOpen }"
+                                class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                                 <img
-                                    :src="searchIcon"
+                                    :src="searchOpen ?  searchOpenIcon : searchIcon"
                                     alt="search"
-                                    class="mx-auto pb-1 opacity-65"
+                                    class="mx-auto pb-1 opacity-65 w-[24px] h-[24px]"
                                 />
                                 <span class="block text-[12px] pb-1">Search</span>
                             </span>
@@ -45,18 +47,22 @@
 
                     <!-- Cart -->
                     <div class="flex-1 group">
+
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
                             href="#"
+                            @click.prevent="toggleCart"
                         >
-                          <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                            <img
-                                :src="cartIcon"
-                                alt="cart"
-                                class="mx-auto pb-1 opacity-65"
-                            />
-                            <span class="block text-[12px] pb-1">Cart</span>
-                          </span>
+                          <div
+
+                              class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                           <div class="mx-auto w-fit pb-1">
+                            <CartDropdown></CartDropdown>
+                           </div>
+                            <span
+                                :class="{ 'text-olive': cartOpen }"
+                                class="block text-[12px] pb-1">Cart</span>
+                          </div>
                         </a>
                     </div>
 
@@ -82,15 +88,14 @@
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
                             href="#"
+                            @click.prevent="toggleUser"
                         >
-                          <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                            <img
-                                :src="userIcon"
-                                alt="account"
-                                class="mx-auto pb-1 opacity-65"
-                            />
+                          <div class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                           <div class="mx-auto w-fit pb-1">
+                               <UserDropdown   :user="user" :is-authenticated="isAuthenticated" />
+                           </div>
                             <span class="block text-[12px] pb-1">Account</span>
-                          </span>
+                          </div>
                         </a>
                     </div>
                 </div>
@@ -116,20 +121,36 @@ import Search from './Search.vue';
 import menuIcon from '@img/icons/menu.svg';
 import menuOpenIcon from '@img/icons/menuOpen.svg';
 import searchIcon from '@img/icons/search.svg';
-import cartIcon from '@img/icons/card.svg';
+import searchOpenIcon from '@img/icons/searchOpen.svg';
+import cartIcon from '@img/icons/cart.svg';
 import faqIcon from '@img/icons/faq.svg';
 import userIcon from '@img/icons/user.svg';
+import CartDropdown from "@/components/CartDropdown.vue";
+import UserDropdown from "@/components/UserDropdown.vue";
 
 export default {
     name: 'MobileMenu',
-    components: {Search},
+    props: {
+        isAuthenticated: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+    components: {UserDropdown, CartDropdown, Search},
     data() {
         return {
             exploreOpen: false,
             searchOpen: false,
+            cartOpen: false,
+            userOpen: false,
             menuIcon,
             menuOpenIcon,
             searchIcon,
+            searchOpenIcon,
             cartIcon,
             faqIcon,
             userIcon,
@@ -137,15 +158,24 @@ export default {
     },
     methods: {
         toggleExplore() {
+            // Закриваємо інші
+            this.searchOpen = false;
+            this.cartOpen = false;
+            this.userOpen = false;
+
             this.exploreOpen = !this.exploreOpen;
+
             if (window.Alpine?.store('dropdown')) {
                 window.Alpine.store('dropdown').toggle();
             }
+
+            document.body.classList.toggle('overflow-hidden', this.exploreOpen);
         },
         toggleSearch() {
-            if (this.exploreOpen) {
-                this.exploreOpen = false;
-            }
+            // Закриваємо інші
+            this.exploreOpen = false;
+            this.cartOpen = false;
+            this.userOpen = false;
 
             this.searchOpen = !this.searchOpen;
             document.body.classList.toggle('overflow-hidden', this.searchOpen);
@@ -156,11 +186,30 @@ export default {
                 });
             }
         },
+        toggleCart() {
+            // Закриваємо інші
+            this.exploreOpen = false;
+            this.searchOpen = false;
+            this.userOpen = false;
+
+            this.cartOpen = !this.cartOpen;
+            document.body.classList.toggle('overflow-hidden', this.cartOpen);
+        },
+        toggleUser() {
+            // Закриваємо інші
+            this.exploreOpen = false;
+            this.searchOpen = false;
+            this.cartOpen = false;
+
+            this.userOpen = !this.userOpen;
+            document.body.classList.toggle('overflow-hidden', this.userOpen);
+        },
         closeSearch() {
             this.searchOpen = false;
             document.body.classList.remove('overflow-hidden');
         },
-    },
+    }
+
 };
 </script>
 

@@ -1,4 +1,4 @@
-<header class="relative z-10 bg-white">
+<header class="lg:relative z-10 sticky top-0 bg-white">
     <div class="bg-light-orange hidden lg:block">
         <div class="container   flex justify-between">
             <div class="flex-1 flex items-center gap-5">
@@ -181,66 +181,74 @@
         x-transition:leave-end="opacity-0  "
         @click.outside="$store.dropdown.close()"
         id="megaMenu"
-        class="absolute left-0 w-full top-[calc(100%+1px)] h-[calc(100vh-100px)] lg:h-fit  z-50 rounded-b-2xl bg-white shadow-lg  ring-black/5">
-        <div class="container grid lg:flex relative  gap-y-5 px-5 lg:px-[64px] py-[60px]">
-            <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
-            <div class="small-cards lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
-                @for ($i = 0; $i < 5; $i++)
-                    <a href="#"
-                       class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
-                       lg:rounded-2xl m-2 p-3 lg:p-5 lg:h-[200px]
+        class="absolute overflow-auto   left-0 w-full top-[72px] lg:top-[calc(100%+1px)] h-[calc(100vh-161px)] lg:h-fit  z-50    ring-black/5">
+        <div class="bg-white shadow-lg relative lg:rounded-b-2xl min-h-fit h-full pb-5">
+            <div class="container  grid lg:flex relative  lg:gap-y-5 px-5 lg:px-[64px] py-5 lg:py-[60px]">
+                <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
+                <div class="small-cards  lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
+                    @for ($i = 0; $i < 5; $i++)
+                        <a href="#"
+                           class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl lg:m-2 p-3 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
+
                             @if ($i!== 4) border-b border-light-border @endif
                             ">
-                        <div class="small-cart_img_container">
-                            <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <div class="small-cart_img_container">
+                                <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
 
-                        </div>
-                        <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
-                            <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">Jumpsuits</p>
-                        </div>
-                        <i class="small-cart-arrow absolute right-0 lg:top-0 p-3 group-hover:p-2  duration-500 ease-in-out transition-all">
-                            <svg
-                                class="text-gray-300/80 group-hover:text-white transition-all duration-500 ease-in-out"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <g >
-                                    <path
-                                        d="M3.73334 2.66666H12.6667C13.0349 2.66666 13.3333 2.96513 13.3333 3.33332V12.2667M2.66667 13.3333L12.8 3.19999"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </g>
-                            </svg>
+                            </div>
+                            <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
+                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">Jumpsuits</p>
+                            </div>
+                            <i class="small-cart-arrow absolute right-0 lg:top-0 p-3 group-hover:p-2  duration-500 ease-in-out transition-all">
+                                <svg
+                                    class="text-gray-300/80 group-hover:text-white transition-all duration-500 ease-in-out"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <g >
+                                        <path
+                                            d="M3.73334 2.66666H12.6667C13.0349 2.66666 13.3333 2.96513 13.3333 3.33332V12.2667M2.66667 13.3333L12.8 3.19999"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </g>
+                                </svg>
 
-                        </i>
-                    </a>
+                            </i>
+                        </a>
 
-                @endfor
+                    @endfor
+
+                </div>
+
 
             </div>
-
-            <div class="close hidden lg:block absolute cursor-pointer bottom-[-100px] bg-white/20 rounded-full p-5 left-1/2"
-                 @click="$store.dropdown.close()"
-            >
-                <img src="{{asset('assets/images/icons/close.svg')}}" alt="close">
+            <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
+                 style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
+                <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-black/40"></div>
+                <div class="absolute bottom-8 grid justify-center w-full">
+                    <p class="text-center text-white text-[30px] lg:text-[40px]">Ready for summer</p>
+                    <p class="text-center text-white font-normal">Buy 4 products and get 30% off your cart</p>
+                    <x-ui.button class="mx-auto">Shop now</x-ui.button>
+                </div>
             </div>
         </div>
-        <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
-             style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
-            <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-black/40"></div>
-            <div class="absolute bottom-8 grid justify-center w-full">
-                <p class="text-center text-white text-[30px] lg:text-[40px]">Ready for summer</p>
-                <p class="text-center text-white font-normal">Buy 4 products and get 30% off your cart</p>
-                <x-ui.button class="mx-auto">Shop now</x-ui.button>
+        <div class="close relative hidden lg:block text-center w-6 h-6 cursor-pointer mt-10 bg-white/20 rounded-full p-5 mx-auto"
+             @click="$store.dropdown.close()"
+        >
+            <div class="absolute inset-0 flex items-center justify-center">
+                <svg class="" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.33337 14.6667L14.6667 1.33337M1.33337 1.33337L14.6667 14.6667" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
+
         </div>
     </div>
 </header>

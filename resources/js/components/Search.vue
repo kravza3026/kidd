@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="search hidden cursor-pointer w-full h-full md:flex items-center gap-x-5"
+            class="search hidden cursor-pointer w-full h-full lg:flex items-center gap-x-5"
             @click="open = true"
             ref="searchToggle"
         >
@@ -13,15 +13,15 @@
             <div
                 v-show="open || isMobile"
                 ref="searchWrapper"
-                class="search-input absolute md:bottom-[20px] right-0 bg-white flex flex-col h-auto w-full z-50"
+                class="search-input absolute lg:bottom-[20px] right-0 bg-white flex flex-col h-auto w-full z-50"
             >
                 <div class="relative flex items-center w-10/11 mx-auto pt-4">
-                    <img class="absolute md:hidden left-4 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
+                    <img class="absolute lg:hidden left-4 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
                     <input
                         ref="searchInput"
                         v-model="searchQuery"
                         type="text"
-                        class="w-full focus:outline-hidden h-[50px] pl-12 md:pl-5 pr-12 rounded-md bg-light-orange"
+                        class="w-full focus:outline-hidden h-[50px] pl-12 lg:pl-5 pr-12 rounded-md bg-light-orange"
                         placeholder=""
                         @keydown.esc="closeSearch"
                     />
@@ -94,6 +94,7 @@
 </template>
 <script>
 import searchIcon from '@img/search.svg';
+
 import loop from '@img/icons/loop.svg';
 import back from '@img/icons/back.svg';
 import img1 from '@img/products/product_3.png';
@@ -110,7 +111,7 @@ export default {
 
             searchQuery: '',
             searchIcon,loop,gender,back,
-            isMobile: window.innerWidth < 1021,
+            isMobile: window.innerWidth < 1024,
             items: [
                 {
                     id: 1,
@@ -223,7 +224,7 @@ export default {
             }, 300);
         },
         handleResize() {
-            this.isMobile = window.innerWidth < 1021;
+            this.isMobile = window.innerWidth < 1024;
         },
 
 
