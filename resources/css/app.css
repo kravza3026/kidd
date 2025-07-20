@@ -22,6 +22,20 @@
     --color-light-border: #EEEEEE;
     --color-light2-border: #DDDDDD;
 
+    /* Color Palette */
+    --color-snow: hsla(0, 0%, 100%, 1);
+    --color-light-snow: hsla(0, 0%, 98%, 1);
+    --color-dark-snow: hsla(0, 0%, 96%, 1);
+    --color-darkest-snow: hsla(0, 0%, 93%, 1);
+    --color-darken: hsla(0, 0%, 73%, 1);
+    --color-olive: hsla(73, 38%, 56%, 1);
+    --color-dark-olive: hsla(73, 34%, 49%, 1);
+    --color-secondary: hsla(50, 30%, 96%, 1);
+    --color-secondary-dark: hsla(70, 35%, 90%, 1);
+    --color-charcoal: hsla(0, 0%, 1%, 1);
+    --color-baby-eyes: hsla(213, 98%, 79%, 1);
+    --color-baby-pink: hsla(359, 49%, 84%, 1);
+
 }
 @utility pt-section {
     padding-top: 50px;

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'kidd.'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://kidd.md'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Chisinau',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,11 +78,20 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'ro'),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'locales' => [
+        'ro' => 'Română',
+        'ru' => 'Русский',
+        'en' => 'English',
+    ],
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    // Country for Currency formatting.
+    'locale_format' => 'ro_RO',
+
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ro'),
+
+    'faker_locale' => env('APP_FAKER_LOCALE', 'ro_RO'),
 
     /*
     |--------------------------------------------------------------------------

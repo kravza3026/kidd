@@ -1,0 +1,33 @@
+<section
+    class="rounded-xl border sm:border-dark-snow sm:border-0 p-4 sm:p-0 {{ ($user->family->count() > 0) ? 'bg-white' : 'sm:bg-none border-[#eeeeee]/50 bg-gradient-to-r from-olive/15 via-olive/25 to-olive/15' }}">
+    <header>
+        <h2 class="text-2xl font-bold text-gray-900">
+            {{ __('My Family Filters') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-balance text-gray-600">
+            {!! __("Filter clothing by predefined profiles of your children")  !!}
+        </p>
+    </header>
+
+    <div class="family_list my-6 flex flex-col flex-grow gap-y-4">
+        @foreach($user->family as $member)
+            @include('store.account.profile.partials.family-row')
+        @endforeach
+    </div>
+
+    {{--        <div>--}}
+    {{--            <x-input-label for="family" :value="__('First Name')"/>--}}
+    {{--            <x-text-input id="family" name="family" type="text" class="mt-1 block w-full"--}}
+    {{--                          :value="old('family', $user->family)"--}}
+    {{--                          required autocomplete="family"/>--}}
+    {{--            <x-input-error class="mt-2" :messages="$errors->get('family')"/>--}}
+    {{--        </div>--}}
+
+    <div class="items-center gap-4 flex">
+        <x-primary-button type="button" hx-get="{{ route('family.create') }}" hx-target="div.family_list" hx-swap="beforeend">
+            {{ __('+ Add child') }}
+        </x-primary-button>
+    </div>
+
+</section>

@@ -24,11 +24,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'company_id' => 1,
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'phone' => fake()->unique()->e164PhoneNumber(),
+            'phone_verified_at' => now(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'email_marketing' => true,
+            'sms_marketing' => true,
+            'default_locale' => fake()->randomElement(['ro', 'ru', 'en']),
         ];
     }
 
@@ -39,6 +46,26 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+            'phone_verified_at' => null,
+        ]);
+    }
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+    public function emailUnverified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+    public function phoneUnverified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'phone_verified_at' => null,
         ]);
     }
 }

@@ -127,7 +127,7 @@ export default {
                     colors: ['Beige', 'Pink', 'White', 'Gray',],
                     image: img2,
                     price: 236,
-                    size:['0–12M'],
+                    size:['0–12M', '0–8M'],
                     gender:false
                 },
                 {
@@ -145,7 +145,7 @@ export default {
                     colors: ['White', 'Gray',],
                     image: img1,
                     price: 315,
-                    size:['0–12M'],
+                    size:['0–12M', '0–8M'],
                     gender:true
                 },
 
