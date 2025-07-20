@@ -1,8 +1,9 @@
 <template>
     <div>
         <div
-            class="search cursor-pointer w-full h-full flex items-center gap-x-5"
+            class="search hidden cursor-pointer w-full h-full md:flex items-center gap-x-5"
             @click="open = true"
+            ref="searchToggle"
         >
             <img :src="searchIcon" alt="search" width="24" height="24" />
             <span>Search</span>
@@ -10,18 +11,17 @@
 
         <transition name="slide-fade" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
             <div
-                v-if="open"
+                v-show="open || isMobile"
                 ref="searchWrapper"
-                class="search-input absolute bottom-[20px] right-0 bg-white flex flex-col h-auto w-full z-50"
-                @click.self="closeSearch"
+                class="search-input absolute md:bottom-[20px] right-0 bg-white flex flex-col h-auto w-full z-50"
             >
-                <!-- Поле вводу -->
                 <div class="relative flex items-center w-10/11 mx-auto pt-4">
+                    <img class="absolute md:hidden left-4 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
                     <input
                         ref="searchInput"
                         v-model="searchQuery"
                         type="text"
-                        class="w-full focus:outline-hidden h-[50px] pl-5 pr-12 rounded-md bg-light-orange"
+                        class="w-full focus:outline-hidden h-[50px] pl-12 md:pl-5 pr-12 rounded-md bg-light-orange"
                         placeholder=""
                         @keydown.esc="closeSearch"
                     />
@@ -80,33 +80,37 @@
                             <p class="text-[14px]">No relevant results found</p>
                             <p class="text-[14px] opacity-60 font-normal">You can change your query or choose from suggested search options</p>
                             <div class="flex  flex-wrap gap-x-6 gap-y-2 mt-4">
-                                <div v-for="item in recommended" class="flex items-center gap-x-2">
+                                <a href="#" v-for="item in recommended" class="flex items-center gap-x-2">
                                     <img class="opacity-60" :src="loop" alt="recommended">
                                     <p class="text-[14px]">{{item}}</p>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </transition>
     </div>
 </template>
 <script>
 import searchIcon from '@img/search.svg';
-import loop from '@img/icons/loop.svg'
-import img1 from '@img/products/product_3.png'
-import img2 from '@img/products/product_2.png'
-import gender from '@img/icons/unisex.svg'
+import loop from '@img/icons/loop.svg';
+import back from '@img/icons/back.svg';
+import img1 from '@img/products/product_3.png';
+import img2 from '@img/products/product_2.png';
+import gender from '@img/icons/unisex.svg';
 export default {
     name: 'Search',
+    props: {
+        modelValue: Boolean
+    },
     data() {
         return {
             open: false,
+
             searchQuery: '',
-            searchIcon,loop,gender,
+            searchIcon,loop,gender,back,
+            isMobile: window.innerWidth < 1021,
             items: [
                 {
                     id: 1,
@@ -149,6 +153,7 @@ export default {
             recommended:['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress']
         };
     },
+
     computed: {
         filteredResults() {
             if (!this.searchQuery.trim()) return [];
@@ -165,13 +170,22 @@ export default {
             return this.searchQuery.trim() !== '' && this.filteredResults.length === 0;
         }
     },
+
     methods: {
+        openSearchFromOutside() {
+            this.$refs.searchInput?.focus();
+        },
+
         handleClickOutside(event) {
+
+            const wrapper = this.$refs.searchWrapper;
+            const toggle = this.$refs.searchToggle;
+
+
+            if (!this.open) return;
             if (
-                this.open &&
-                this.$refs.searchWrapper &&
-                !this.$refs.searchWrapper.contains(event.target) &&
-                !event.target.closest('.search')
+                wrapper && !wrapper.contains(event.target) &&
+                toggle && !toggle.contains(event.target)
             ) {
                 this.closeSearch();
             }
@@ -186,6 +200,7 @@ export default {
             return text.replace(regex, '<strong class="font-bold">$1</strong>');
         },
         closeSearch() {
+
             this.open = false;
         },
         onEnter(el) {
@@ -207,12 +222,22 @@ export default {
                 el.style.opacity = '';
             }, 300);
         },
+        handleResize() {
+            this.isMobile = window.innerWidth < 1021;
+        },
+
+
     },
+
     mounted() {
         document.addEventListener('click', this.handleClickOutside);
+        window.addEventListener('resize', this.handleResize);
+        window.addEventListener('toggle-mobile-search', this.openSearchFromOutside);
     },
     beforeUnmount() {
         document.removeEventListener('click', this.handleClickOutside);
+        window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('toggle-mobile-search',this.openSearchFromOutside);
     },
 };
 </script>

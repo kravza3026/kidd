@@ -59,7 +59,7 @@
             @endforeach
 
         </div>
-        <div class="absolute add_favorite z-20  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-7 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4  xl:opacity-0  group-hover:opacity-100 duration-1000 transition-all ease-in-out">
+        <div class="absolute add_favorite z-2  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-7 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4  xl:opacity-0  group-hover:opacity-100 duration-1000 transition-all ease-in-out">
             <img class=""  src="{{ asset('assets/images/icons/add_fav.svg') }}" alt="add to favorite">
             <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0  transition-opacity duration-300 z-10">
                 Save to Favorites

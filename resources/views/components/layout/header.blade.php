@@ -1,4 +1,4 @@
-<header class="relative z-10 bg-white">
+<header class="md:relative z-10 sticky top-0 bg-white">
     <div class="bg-light-orange hidden lg:block">
         <div class="container   flex justify-between">
             <div class="flex-1 flex items-center gap-5">
@@ -76,9 +76,9 @@
 
     <nav class="container relative z-10 h-[72px] lg:h-[88px] flex justify-between font-bold">
         <div class="flex items-center gap-10">
-            <div class="logo">
+            <a href="/" class="logo">
                 <img src="{{ asset('assets/images/logo.svg') }}" alt="">
-            </div>
+            </a>
 
         </div>
         <div class="w-full relative z-10   min-h-[60px] px-10 items-center justify-between hidden lg:flex">
@@ -93,7 +93,7 @@
                             <button
                                 @click="$store.dropdown.toggle()"
                                 type="button"
-                                class="inline-flex items-center w-full justify-center"
+                                class="inline-flex items-center w-full justify-center cursor-pointer"
                                 :class="{ 'text-olive': $store.dropdown.open }"
                                 id="menu-button"
                                 aria-expanded="true"
@@ -118,7 +118,7 @@
         </div>
 
         {{--    mobile menu    --}}
-            <div class="flex lg:hidden items-center gap-x-2">
+            <div class="flex  lg:hidden items-center gap-x-2">
                 <div class="dropdown border border-black/10 rounded-full ">
                     <div x-data="{ open: false }" class="relative inline-block text-left">
                         <div>
@@ -184,7 +184,7 @@
                 <a class="p-2 w-[33px] h-[33px] flex items-center border border-black/10 rounded-full" href="#">
                     <img height="13" src="{{ asset('assets/images/icons/phone_i.svg') }}" alt="">
                 </a>
-                <div class="flex items-center relative" x-data="{ open: false }" x-effect="document.body.classList.toggle('overflow-hidden', open)">
+                <div class="flex items-center relative"  x-effect="document.body.classList.toggle('overflow-hidden', open)">
                     <div @click="open = !open" class="menu-controll relative group z-50">
                         <div class="relative border border-black/10 flex overflow-hidden items-center justify-center rounded-full w-[33px] h-[33px] transform transition-all duration-200 ">
                             <div class="flex flex-col justify-between w-[15px] h-[15px] transform transition-all duration-300 origin-center overflow-hidden">
@@ -251,7 +251,7 @@
 
         {{--    mobile menu    --}}
 
-        <div class="hidden lg:flex w-2/12 lg:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
+        <div class="hidden lg:flex w-2/12 2xl:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
 
             <div data-vue-component="CartDropdown"></div>
             <div data-vue-component="UserDropdown"></div>
@@ -259,11 +259,7 @@
         </div>
 
     </nav>
-    <div class="container flex justify-start relative">
-       <div class="w-8/11 -left-13 mx-auto relative ">
-{{--           <div id="search-results-container" class="left-0 pl-5 pr-12 w-full z-40"></div>--}}
-       </div>
-    </div>
+
     <div
         x-data
         x-cloak
@@ -283,17 +279,18 @@
             <div class="small-cards lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
                 @for ($i = 0; $i < 5; $i++)
                         <a href="#"
-                           class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl m-2 p-3 lg:p-5   lg:h-[200px]
+                           class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl lg:m-2 p-3 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
                             @if ($i!== 4) border-b border-light-border @endif
+                            @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
                             ">
                             <div class="small-cart_img_container">
-                                <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] md:w-[30px] md:h-[30px] lg:w-[3vw] lg:h-[3vw] max-w-[42px] max-h-[42px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
 
                             </div>
                             <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
-                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">Jumpsuits</p>
+                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out md:text-[14px] xl:text-[20px]">Jumpsuits</p>
                             </div>
                             <i class="small-cart-arrow absolute right-0 lg:top-0 p-3 group-hover:p-2  duration-500 ease-in-out transition-all">
                                 <svg

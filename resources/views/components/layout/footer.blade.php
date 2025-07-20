@@ -1,4 +1,4 @@
-<footer class="bg-charcoal mt-7 pt-10 pb-[95px]" x-data="{
+<footer class="bg-charcoal mt-7 pt-5 pb-[95px] lg:pb-5" x-data="{
     open: null,
     toggle(idx) {
         this.open = this.open === idx ? null : idx;
@@ -66,7 +66,7 @@
         <hr class="xl:mt-7 border border-dark">
         <div class="flex text-white justify-between items-center text-[12px] mt-7">
             <div class="flex items-center py-1 w-3/12 xl:w-auto">
-                <p class="opacity-25">© 2023 KIDD. <span class="hidden xl:block">All Rights Reserved</span></p>
+                <p class="opacity-25 flex justify-between">© 2023 KIDD. <span class="hidden xl:block">All Rights Reserved</span></p>
             </div>
 
             <ul class="flex gap-x-2 w-6/12 py-1 xl:w-auto">
