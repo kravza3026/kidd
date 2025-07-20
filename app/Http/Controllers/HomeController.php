@@ -21,7 +21,7 @@ class HomeController extends Controller
         $categories = $categories->first()->subcategories()->paginate(4);
         $products = $categories->first()->products()->limit(12)->get();
 
-        return view('store.home', compact('categories', 'products'));
+        return view('store.pages.home.index', compact('categories', 'products'));
     }
 
     /** @noinspection PhpUnhandledExceptionInspection */

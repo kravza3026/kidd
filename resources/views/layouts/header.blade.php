@@ -155,7 +155,7 @@
 
         {{--    mobile menu    --}}
 
-        <div class="hidden lg:flex w-2/12 lg:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
+        <div class="hidden lg:flex w-3/12 lg:w-2/12 items-center gap-y-5 gap-x-10 justify-end">
 
             <div data-vue-component="CartDropdown"></div>
             <div data-vue-component="UserDropdown" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
@@ -183,14 +183,17 @@
         id="megaMenu"
         class="absolute overflow-auto   left-0 w-full top-[72px] lg:top-[calc(100%+1px)] h-[calc(100vh-161px)] lg:h-fit  z-50    ring-black/5">
         <div class="bg-white shadow-lg relative lg:rounded-b-2xl min-h-fit h-full pb-5">
-            <div class="container  grid lg:flex relative  lg:gap-y-5 px-5 lg:px-[64px] py-5 lg:py-[60px]">
-                <h2 class="text-[24px] opacity-80 font-bold lg:hidden">Explore</h2>
+            <div class="container  grid lg:flex relative  lg:gap-y-5 px-5 lg:px-[64px] py-5 lg:py-[60px] border-t border-t-light-border">
+                <h2 class="text-[24px] opacity-80 font-bold pb-2 lg:hidden">Explore</h2>
                 <div class="small-cards  lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
                     @for ($i = 0; $i < 5; $i++)
-                        <a href="#"
-                           class="small-cart-container group relative cursor-pointer flex items-center  lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl lg:m-2 p-3 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
 
+                        <a href="#"
+                           class="
+
+                           small-cart-container group relative cursor-pointer flex items-center   lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl lg:m-2 p-4 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
                             @if ($i!== 4) border-b border-light-border @endif
+                            @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
                             ">
                             <div class="small-cart_img_container">
                                 <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -232,10 +235,10 @@
             </div>
             <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
                  style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
-                <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-black/40"></div>
-                <div class="absolute bottom-8 grid justify-center w-full">
-                    <p class="text-center text-white text-[30px] lg:text-[40px]">Ready for summer</p>
-                    <p class="text-center text-white font-normal">Buy 4 products and get 30% off your cart</p>
+                <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-gradient-to-t from-charcoal/40 to-charcoal/10"></div>
+                <div class="absolute bottom-8 inset-0 grid justify-center items-end content-end align-end h-full w-full">
+                    <p class="text-center text-white text-[30px] lg:text-[40px] font-bold">Ready for summer</p>
+                    <p class="text-center text-white text-[14px] font-normal">Buy 4 products and get 30% off your cart</p>
                     <x-ui.button class="mx-auto">Shop now</x-ui.button>
                 </div>
             </div>

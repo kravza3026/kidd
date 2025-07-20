@@ -107,7 +107,7 @@
             <div
                 ref="mobileSearch"
                 v-if="searchOpen"
-                class="mobileMenuSearch container top-[72px] lg:hidden bg-white border-t border-t-light-border fixed z-50 w-full h-[calc(100%-162px)] left-0 overflow-auto"
+                class=" top-[72px] lg:hidden bg-white border-t border-t-light-border fixed z-50 w-full h-[calc(100%-162px)] left-0 overflow-auto"
             >
                 <Search ref="searchComponent" @close="closeSearch" />
             </div>

@@ -15,7 +15,7 @@
     <body>
         <x-layout.header />
        <main class="bg-white">
-           <x-layout.home-page />
+{{--           <x-layout.home-page />--}}
        </main>
         <x-layout.footer />
         <div  data-vue-component="mobileMenu"></div>

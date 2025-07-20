@@ -81,7 +81,6 @@
                 >
 
                 </div>
-{{--                <img class="md:absolute order-1 md:order-2 md:max-w-5/12 min-h-[380px] xl:min-h-[560px] right-0 top-0" src="{{ asset('assets/images/subscribe_bg.jpg') }}" alt="kidd">--}}
             </div>
         </section>
 

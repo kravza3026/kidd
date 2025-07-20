@@ -12,9 +12,9 @@
         <transition name="slide-fade" @click.stop>
             <div
                 v-if="open"
-                class="fixed inset-0 h-[calc(100%-162px)] md:h-fit md:inset-auto left-0 md:-right-10 w-full p-5 md:p-0  md:absolute cursor-auto border-t md:border-light-border  top-[72px] md:top-full md:mt-4 md:w-100 bg-white md:shadow-xl md:rounded-md z-50 "
+                class="fixed inset-0 h-[calc(100%-162px)] lg:h-fit lg:inset-auto left-0 lg:-right-10 w-full p-5 lg:p-0  lg:absolute cursor-auto border-t lg:border-light-border  top-[72px] lg:top-full lg:mt-4 lg:w-100 bg-white lg:shadow-xl lg:rounded-md z-50 "
             >
-                <i class="w-[15px] h-[15px] hidden md:block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
+                <i class="w-[15px] h-[15px] hidden lg:block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
 
                 <div v-if="!isAuthenticated" class="p-7">
                     <h3 class="text-xl">Sign in</h3>

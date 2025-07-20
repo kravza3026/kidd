@@ -15,13 +15,13 @@
                 ref="searchWrapper"
                 class="search-input absolute lg:bottom-[20px] right-0 bg-white flex flex-col h-auto w-full z-50"
             >
-                <div class="relative flex items-center w-10/11 mx-auto pt-4">
-                    <img class="absolute lg:hidden left-4 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
+                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-4">
+                    <img class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
                     <input
                         ref="searchInput"
                         v-model="searchQuery"
                         type="text"
-                        class="w-full focus:outline-hidden h-[50px] pl-12 lg:pl-5 pr-12 rounded-md bg-light-orange"
+                        class="w-full focus:outline-hidden h-[50px] m-2   pl-12 lg:pl-5 pr-12 rounded-md bg-light-orange"
                         placeholder=""
                         @keydown.esc="closeSearch"
                     />
@@ -41,35 +41,45 @@
                             stroke-linejoin="round"
                         />
                     </svg>
-                    <div v-if="filteredResults.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md shadow p-4">
+                    <div v-if="filteredResults.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-1 lg:p-4">
                         <ul  class="relative mt-2 w-full z-50">
                             <li
                                 v-for="item in filteredResults"
                                 :key="item.id"
-                                class="p-4  hover:bg-gray-100 flex justify-between items-center gap-4"
+                                class=" px-2 py-4 lg:p-4  hover:bg-gray-100 flex justify-between items-center gap-4 border-b border-b-light-border"
                             >
-                                <a href="#" class="flex gap-x-2">
-                                    <img :src="item.image" alt="" class="w-10 h-10 object-cover rounded-md" />
-                                    <div>
-                                        <div class="flex items-center gap-x-2">
-                                            <p v-html="highlightMatch(item.name)" class="font-normal text-[20px]"></p>
+                                <a href="#" class="flex gap-x-2 w-full">
+                                    <div class="bg-card-bg w-[56px] h-[56px] p-2 text-center flex items-center justify-center rounded-md">
+                                        <img :src="item.image" alt='product' class="max-w-[50px] max-h-[50px] object-cover rounded-md" />
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="flex justify-start w-full gap-x-1">
+                                            <p v-html="highlightMatch(item.name)" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-16px lg:text-[20px]"></p>
                                             <img class="w-[20px] h-[20px] " v-if="item.gender" :src="gender" alt="unisex">
                                         </div>
-                                        <div class="flex">
+                                        <div class="flex flex-wrap w-full">
                                             <p
                                                 v-for="(color, index) in item.colors"
                                                 :key="color"
-                                                class="text-[16px] opacity-40 font-normal pr-2"
+                                                class="text-[12px] lg:text-[16px] border-r border-r-light2-border pr-1  opacity-40 font-normal lg:pr-2 tracking-tighter"
                                             >
                                                 {{ color }}<span v-if="index < item.colors.length - 1">,</span>
                                             </p>
+                                            <p v-for="(size, index) in item.size"
+                                               key="size"
+                                                class="text-[12px] lg:text-[16px] opacity-40 font-normal pl-1 lg:pr-2"
+                                            > {{size}}</p>
 
 
                                         </div>
 
                                     </div>
+                                   <div class="grid align-top">
+                                       <p class="text-[16px] w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.price.toFixed(0) }} lei</p>
+                                       <p v-if="item.oldPrice" class="text-[12px] w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.oldPrice.toFixed(0) }} lei</p>
+                                   </div>
                                 </a>
-                                <p class="text-sm text-olive font-bold">{{ item.price.toFixed(2) }} lei</p>
+
 
 
                             </li>
@@ -116,11 +126,12 @@ export default {
                 {
                     id: 1,
                     name: 'Summer Cotton Jumpsuit',
-                    colors: ['Beige', 'Pink', 'White', 'Gray', 'Ivory'],
+                    colors: ['Beige','Pink','White','Gray','Ivory'],
                     image: img1,
                     price: 240,
-                    size:['0–12M', '0–8M'],
-                    gender:true
+                    oldPrice: null,
+                    size:['0–12M'],
+                    gender:false
                 },
                 {
                     id: 2,
@@ -128,7 +139,8 @@ export default {
                     colors: ['Beige', 'Pink', 'White', 'Gray',],
                     image: img2,
                     price: 236,
-                    size:['0–12M', '0–8M'],
+                    oldPrice: 240,
+                    size:['0–8M'],
                     gender:false
                 },
                 {
@@ -137,6 +149,7 @@ export default {
                     colors: ['White', 'Gray',],
                     image: img1,
                     price: 435,
+                    oldPrice: null,
                     size:['0–12M'],
                     gender:true
                 },
@@ -146,7 +159,8 @@ export default {
                     colors: ['White', 'Gray',],
                     image: img1,
                     price: 315,
-                    size:['0–12M', '0–8M'],
+                    oldPrice: null,
+                    size:['0–18M'],
                     gender:true
                 },
 
