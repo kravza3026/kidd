@@ -1,10 +1,6 @@
 <x-app-layout>
     <div class="bg-white sm:bg-transparent sm:pt-8 max-w-7xl mx-auto sm:px-4 lg:px-8 space-y-2 sm:space-y-6">
 
-        @if(session('success'))
-            @include('shared.alerts.success')
-        @endif
-
         <div class="bg-white h-full sm:rounded-lg">
             @include('store.account.nav')
             <form class="flex items-center justify-center mb-72" method="POST" action="{{ route('logout') }}">
@@ -16,7 +12,7 @@
                 </x-nav-link>
             </form>
         </div>
-        
+
     </div>
 
 </x-app-layout>

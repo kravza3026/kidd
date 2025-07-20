@@ -3,22 +3,23 @@ import { createApp } from 'vue';
 import Alpine from 'alpinejs';
 
 import.meta.glob('../images/**/*');
+import { default as IMask } from "imask";
+import * as htmx from "htmx.org";
 
 import Search from './components/Search.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
 import SimpleButton from './components/SimpleButton.vue';
-window.Alpine = Alpine;
 
+window.Alpine = Alpine;
+window.IMask = IMask;
 
 // Масив компонентів
 const components = {
     Search,
     CartDropdown,UserDropdown,
     Button,SimpleButton,
-
-
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
@@ -41,5 +42,30 @@ document.addEventListener('alpine:init', () => {
 
 });
 
-
 Alpine.start();
+
+htmx.defineExtension("ajax-header", {
+    onEvent: function (name, evt) {
+        if (name === "htmx:configRequest") {
+            evt.detail.headers["X-Requested-With"] = "XMLHttpRequest";
+        }
+    },
+});
+
+document.addEventListener("htmx:configRequest", function (event) {
+    event.detail.headers["X-CSRF-TOKEN"] = document.querySelector(
+        'meta[name="csrf-token"]',
+    ).content;
+    console.log("Htmx: Added CSRF token.");
+});
+
+window.addEventListener("load", function () {
+    let phone_element = document.getElementById("phone");
+    if (phone_element !== null) {
+        IMask(phone_element, {
+            mask: "+{373}(00)000000",
+            lazy: false, // make placeholder always visible
+            placeholderChar: "_", // defaults to '_'
+        });
+    }
+});

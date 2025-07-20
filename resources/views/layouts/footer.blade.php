@@ -1,4 +1,4 @@
-<footer class="bg-charcoal mt-7 pt-10 pb-[95px]" x-data="{
+<footer class="bg-charcoal mt-7 pt-10 pb-24 lg:pb-7" x-data="{
     open: null,
     toggle(idx) {
         this.open = this.open === idx ? null : idx;

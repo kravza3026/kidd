@@ -16,7 +16,7 @@
         <transition name="slide-fade" @click.stop>
             <div
                 v-if="open"
-                class="absolute light_border -right-10 top-full mt-4 w-100 bg-white shadow-xl rounded-md z-50 "
+                class="absolute cursor-auto light_border -right-10 top-full mt-4 w-100 bg-white shadow-xl rounded-md z-50 "
             >
                 <i class="w-[15px] h-[15px] block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
 

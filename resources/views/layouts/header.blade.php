@@ -158,7 +158,7 @@
         <div class="hidden lg:flex w-2/12 lg:w-1/12 items-center gap-y-5 gap-x-10 justify-end">
 
             <div data-vue-component="CartDropdown"></div>
-            <div data-vue-component="UserDropdown"></div>
+            <div data-vue-component="UserDropdown" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
 
         </div>
 

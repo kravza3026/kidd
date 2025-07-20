@@ -20,13 +20,13 @@
                 @can('update', $member)
                     <button class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
                             hx-trigger="click" hx-get="{{ route('family.edit', $member) }}">
-                        <img src="{{ Vite::image('edit.png') }}" alt="">
+                        <img src="{{ Vite::image('common/edit.svg') }}" alt="">
                     </button>
                 @endcan
                 @can('delete', $member)
                     <button class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
                             hx-trigger="click" hx-delete="{{ route('family.destroy', $member) }}">
-                        <img src="{{ Vite::image('trash.png') }}" alt="">
+                        <img src="{{ Vite::image('common/trash.svg') }}" alt="">
                     </button>
                 @endcan
             </div>

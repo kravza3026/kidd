@@ -21,7 +21,6 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, HasLocalePreference
-
 {
     use SoftDeletes, PhoneConfirmation, HasApiTokens, HasFactory, HasRoles, HasPermissions, Notifiable;
 
@@ -106,14 +105,14 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
      */
     public function preferredLocale()
     {
-        return $this->default_locale?->value ?? config('app.locale');
+        return $this->default_locale ?? config('app.locale');
     }
 
     public function name(): Attribute
     {
         return Attribute::make(
             get: fn(mixed $value, array $attributes) => ($attributes['first_name'].' '.$attributes['last_name']),
-        )->shouldCache(); //withoutObjectCaching();
+        )->shouldCache(); //withObjectCaching();
     }
 
     public function company(): belongsTo
@@ -135,19 +134,19 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     }
 
     /**
-     * Get all the user's shipping addresses.
-     */
-    public function shippingAddresses(): MorphMany
-    {
-        return $this->addresses()->type(AddressType::Shipping);
-    }
-
-    /**
      * Get all the user's addresses.
      */
     public function addresses(): MorphMany
     {
         return $this->morphMany(Address::class, 'addressable');
+    }
+
+    /**
+     * Get all the user's shipping addresses.
+     */
+    public function shippingAddresses(): MorphMany
+    {
+        return $this->addresses()->type(AddressType::Shipping);
     }
 
     /**

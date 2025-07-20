@@ -12,46 +12,44 @@
         <transition name="slide-fade" @click.stop>
             <div
                 v-if="open"
-                class="absolute light_border -right-10 top-full mt-4 w-100 bg-white shadow-xl rounded-md z-50 "
+                class="cursor-auto absolute light_border -right-10 top-full mt-4 min-w-80 w-auto bg-white shadow-xl rounded-md z-50 "
             >
                 <i class="w-[15px] h-[15px] block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
 
-                <div v-if="!isAuthenticated" class="p-[40px]">
-                    <p class="text-[32px]">Sign in</p>
+                <div v-if="!isAuthenticated" class="p-7">
+                    <h3 class="text-xl">Sign in</h3>
                     <div class="mt-4">
                         <form>
                             <div>
                                 <label class="text-[14px]" for="email">E-mail</label>
-                                <input type="text" name="email" id="email" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-4 border-2 rounded-xl border-light-border">
+                                <input type="text" name="email" id="email" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-3 border-1 rounded-xl border-light-border">
                             </div>
 
                             <div class="mt-4">
                                 <label class="text-[14px]" for="email">Password</label>
-                                <input type="text" name="email" id="password" placeholder="Enter account password" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-4 border-2 rounded-xl border-light-border">
+                                <input type="text" name="email" id="password" placeholder="*******" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-3 border-1 rounded-xl border-light-border">
                             </div>
 
                             <p class="text-olive mt-4 underline">Forgot password?</p>
                         </form>
                     </div>
 
-
-                        <SimpleButton customClass="mx-auto mt-4 w-full  text-white">Log in</SimpleButton>
-                        <p class="font-normal  text-center opacity-60 text-[14px]">New customer? <span class="underline cursor-pointer font-bold">Register now</span></p>
-
+                    <SimpleButton customClass="mx-auto mt-4 w-full  text-white">Log in</SimpleButton>
+                    <p class="font-normal  text-center opacity-60 text-[14px]">New customer? <span class="underline cursor-pointer font-bold">Register now</span></p>
 
                 </div>
                 <template v-else>
-                    <div class="p-[20px]">
-                        <p class="text-[32px]">Account</p>
+                    <div class="p-[15px]">
+                        <p class="text-lg">Account</p>
                         <div class="rounded-xl light_border mt-4">
-                            <div class="flex justify-between items-center rounded-t-xl  animated border-b border-b-light-border hover:bg-card-bg py-6 px-4  cursor-pointer">
+                            <div class="flex justify-between items-center rounded-t-xl  animated border-b border-b-light-border hover:bg-card-bg py-3 px-4  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Account" alt="arrow">
                                     <p class="text-[18px] font-normal">Profile</p>
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </div>
-                            <div class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-6 px-4  cursor-pointer">
+                            <div class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-4  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Favorite" alt="arrow">
                                     <p class="text-[18px] font-normal">Favorites</p>
@@ -59,7 +57,7 @@
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </div>
-                            <div class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-6 px-4  cursor-pointer">
+                            <div class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-4  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Order" alt="arrow">
                                     <p class="text-[18px] font-normal">Orders</p>
@@ -67,7 +65,7 @@
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </div>
-                            <div class="flex justify-between items-center rounded-b-xl animated  hover:bg-card-bg py-6 px-4  cursor-pointer">
+                            <div class="flex justify-between items-center rounded-b-xl animated  hover:bg-card-bg py-3 px-4  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Address" alt="arrow">
                                     <p class="text-[18px] font-normal">Addresses</p>
@@ -106,16 +104,24 @@ export default {
         SimpleButton,
 
     },
+    props: {
+        isAuthenticated: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
             open: false,
             cartIcon,arrow,Account,Favorite,Address,Order,logout,
-            isAuthenticated: true,
+            // isAuthenticated: false,
             favorites: 24,
             orders:2,
             addresses:2,
-
-
         };
     },
     methods: {

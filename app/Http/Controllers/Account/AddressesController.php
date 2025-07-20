@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Enums\AddressType;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Country;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Spatie\LaravelPdf\Facades\Pdf;
 
 class AddressesController extends Controller
 {
-
-    public function __construct(){
-        $this->authorizeResource(Address::class, 'address');
-    }
 
     /**
      * Display a listing of the resource.

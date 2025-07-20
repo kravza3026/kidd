@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'encrypt' => env('SESSION_ENCRYPT', true),
+    'encrypt' => env('SESSION_ENCRYPT', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,10 +127,7 @@ return [
     |
     */
 
-    'cookie' => env(
-        'SESSION_COOKIE',
-        Str::snake((string) env('APP_NAME', 'kidd')).'_session'
-    ),
+    'cookie' => 'kidd_session',
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +196,7 @@ return [
     |
     */
 
-    'same_site' => null,
+    'same_site' => 'lax',
 
     /*
     |--------------------------------------------------------------------------
