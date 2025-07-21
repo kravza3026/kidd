@@ -21,7 +21,7 @@
                 <div class="flex items-center gap-2">
                     @if($product->is_new || $product->has_discount)
                         @if($product->has_discount)
-                            <x-ui.badge class="bg-[#FD3333]">
+                            <x-ui.badge class="bg-danger">
                                 -{{ $product->variants->first()?->discount_display }}%
                             </x-ui.badge>
                         @endif

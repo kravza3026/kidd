@@ -13,8 +13,17 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-5 sm:gap-y-12 mt-5">
         {{-- Product cards --}}
+
         @foreach($products as $product)
-            <x-product-card :$product />
+
+{{--            <x-product-card :$product />--}}
+            <div data-vue-component="ProductCard"
+                 data-product='@json($product)'
+                 data-locale='{{app()->getLocale()}}'
+                 data-link="{{ $product->link() }}"
+
+            ></div>
+
         @endforeach
     </div>
 </section>

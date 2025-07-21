@@ -14,7 +14,14 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 gap-y-6">
                 <!-- Product grid -->
                 @forelse ($products as $product)
-                    <x-product-card :product="$product" />
+                    <div data-vue-component="ProductCard"
+                         data-product='@json($product)'
+                         data-locale='{{app()->getLocale()}}'
+                         data-link='{{ $product->link() }}'
+
+
+                    ></div>
+
 {{--                    @include('store.catalog.products._product-card')--}}
                 @empty
                     <p>No products found</p>

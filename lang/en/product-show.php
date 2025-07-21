@@ -14,7 +14,7 @@ return [
     */
 
     'new' => 'New',
-    'mdl' => 'mdl',
+    'mdl' => 'lei',
 
     'desc' => [
         'title' => 'Product description',

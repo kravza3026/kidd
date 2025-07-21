@@ -10,27 +10,54 @@ import mobileMenu from './components/mobileMenu.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
+import ProductCard from './components/productCart.vue';
+import ProductPageForm from './components/productPageForm.vue';
+import ProductSlider from './components/ui/productSlider.vue';
+import Tooltip from './components/ui/tooltip.vue';
 import SimpleButton from './components/SimpleButton.vue';
-
 window.Alpine = Alpine;
 window.IMask = IMask;
+
+import i18n from './i18n';
 
 // Масив компонентів
 const components = {
     Search,mobileMenu,
     CartDropdown,UserDropdown,
-    Button,SimpleButton,
+    Button,SimpleButton,Tooltip,
+    ProductCard,ProductSlider,ProductPageForm,
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
 document.querySelectorAll('[data-vue-component]').forEach((el) => {
     const name = el.dataset.vueComponent;
-    const props = el.dataset.vueProps ? JSON.parse(el.dataset.vueProps) : {};
+
+    let props = {};
+    if (el.dataset.vueProps) {
+        props = JSON.parse(el.dataset.vueProps);
+    } else if (el.dataset.product) {
+        props = { product: JSON.parse(el.dataset.product) };
+    }
+
+    // Додаємо locale, якщо він є в атрибутах
+    if (el.dataset.locale) {
+        props.locale = el.dataset.locale;
+    }
+
+    // Додаємо link, якщо він є в атрибутах
+    if (el.dataset.link) {
+        props.link = el.dataset.link;
+    }
 
     if (components[name]) {
-        createApp(components[name], props).mount(el);
+        const app = createApp(components[name], props);
+        app.use(i18n);
+        app.mount(el);
     }
 });
+
+
+
 
 
 document.addEventListener('alpine:init', () => {

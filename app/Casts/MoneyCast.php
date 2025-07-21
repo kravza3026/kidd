@@ -56,7 +56,9 @@ class MoneyCast implements CastsAttributes
             throw new InvalidArgumentException('The stored '.Currency::class.' value should be not-empty-sting');
         }
 
-        return new Money($value, new Currency($currencyCode))->getAmount();
+//        return new Money($value, new Currency($currencyCode))->getAmount();
+        $money = new Money($value, new Currency($currencyCode));
+        return $money->getAmount();
 //        $money = new Money($value, new Currency($currencyCode));
 //        $currencies = new ISOCurrencies();
 //

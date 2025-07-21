@@ -3,7 +3,7 @@
 ])
 
 <a href="{{ $product->link() }}" class="cursor-pointer group p-1 ">
-    <div class="bg-card-bg overflow-hidden group-hover:bg-white border border-transparent group-hover:border-black/10 duration-200 transition-all ease-in-out rounded-xl py-4 px-2 relative ">
+    <div class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 duration-200 transition-all ease-in-out rounded-xl py-4 px-2 relative ">
         <div class="relative flex">
             @if($product->is_new || $product->has_discount)
                 <div class="absolute top-1 md:top-2 left-1 md:left-2 flex items-center gap-2  ">
@@ -61,7 +61,7 @@
             @endforeach
         </div>
         <div class="absolute add_favorite z-20  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4  xl:opacity-0
-        group-hover:opacity-100 duration-1000 transition-all ease-in-out">
+        group-hover:opacity-100 duration-500 transition-all ease-in-out">
             <img class=""  src="{{ asset('assets/images/icons/add_fav.svg') }}" alt="add to favorite">
             <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0  transition-opacity duration-300 z-10">
                 Save to Favorites
