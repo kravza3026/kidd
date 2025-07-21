@@ -15,6 +15,7 @@ import ProductPageForm from './components/productPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
 import Tooltip from './components/ui/tooltip.vue';
 import SimpleButton from './components/SimpleButton.vue';
+import PrimaryButton from './components/PrimaryButton.vue';
 window.Alpine = Alpine;
 window.IMask = IMask;
 
@@ -24,7 +25,7 @@ import i18n from './i18n';
 const components = {
     Search,mobileMenu,
     CartDropdown,UserDropdown,
-    Button,SimpleButton,Tooltip,
+    Button,SimpleButton,PrimaryButton,Tooltip,
     ProductCard,ProductSlider,ProductPageForm,
 };
 
