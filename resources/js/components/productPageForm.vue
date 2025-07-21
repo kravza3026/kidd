@@ -149,7 +149,7 @@ import cartWhite from '@img/icons/cart_white.svg'
             required: true
         }
     })
-
+console.log(props.product)
     const { t, locale } = useI18n()
 
     const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)

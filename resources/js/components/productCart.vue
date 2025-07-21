@@ -1,7 +1,7 @@
 <template>
     <a :href="link" class="cursor-pointer group p-1">
         <div
-            class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 duration-200 transition-all ease-in-out rounded-xl py-4 px-2 relative"
+            class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
         >
             <div class="relative flex">
                 <div
@@ -79,7 +79,7 @@
             </div>
 
             <div
-                class="absolute add_favorite z-20 bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
+                class="absolute add_favorite  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
             >
                 <img :src="favIcon" alt="add to favorite" />
                 <div
