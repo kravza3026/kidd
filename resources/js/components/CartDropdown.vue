@@ -1,7 +1,7 @@
 <template>
     <div class="cart relative cursor-pointer " ref="dropdown" @click="toggle">
        <div class="group relative">
-           <img :src="open ? cartIconOpen : cartIcon" width="24" height="24" alt="cart" class="opacity-65 md:opacity-100">
+           <img :src="cartIcon" width="24" height="24" alt="cart" class="opacity-65 md:opacity-100">
             <div v-if="cartItems.length > 0" class="absolute flex items-center justify-center -top-2 -right-2 bg-olive rounded-full p-1 w-[16px] h-[16px]">
                 <span class="text-[10px] text-white">{{cartItems.length}}</span>
             </div>

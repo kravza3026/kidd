@@ -34,7 +34,7 @@
                         </form>
                     </div>
 
-                    <SimpleButton customClass="mx-auto mt-4 !w-full !shadow-none text-white">Log in</SimpleButton>
+                    <SimpleButton customClass="mx-auto mt-4 !w-full text-white">Log in</SimpleButton>
                     <p class="font-normal  text-center opacity-60 text-[14px]">New customer? <span class="underline cursor-pointer font-bold">Register now</span></p>
 
                 </div>
