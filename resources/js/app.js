@@ -4,7 +4,6 @@ import Alpine from 'alpinejs';
 
 import.meta.glob('../images/**/*');
 import { default as IMask } from "imask";
-import * as htmx from "htmx.org";
 
 import Search from './components/Search.vue';
 import mobileMenu from './components/mobileMenu.vue';
@@ -44,21 +43,6 @@ document.addEventListener('alpine:init', () => {
 });
 
 Alpine.start();
-
-htmx.defineExtension("ajax-header", {
-    onEvent: function (name, evt) {
-        if (name === "htmx:configRequest") {
-            evt.detail.headers["X-Requested-With"] = "XMLHttpRequest";
-        }
-    },
-});
-
-document.addEventListener("htmx:configRequest", function (event) {
-    event.detail.headers["X-CSRF-TOKEN"] = document.querySelector(
-        'meta[name="csrf-token"]',
-    ).content;
-    console.log("Htmx: Added CSRF token.");
-});
 
 window.addEventListener("load", function () {
     let phone_element = document.getElementById("phone");

@@ -18,7 +18,9 @@
         </main>
         @include('layouts.footer')
 
-        <div  data-vue-component="mobileMenu" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
+{{--        @include('layouts.nav.mobile')--}}
+        <div data-vue-component="mobileMenu" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
+
         <div class="backdrop fixed inset-0 bg-black/70 z-[2]"
              x-data
              x-cloak

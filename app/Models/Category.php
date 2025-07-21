@@ -85,7 +85,7 @@ class Category extends Model
         ];
     }
 
-    public function resolveRouteBindingQuery($query, $value, $field = null)
+    public function resolveRouteBindingQuery($query, $value, $field = null): Model|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder|\Illuminate\Contracts\Database\Eloquent\Builder
     {
         $field = $field ?? $this->getRouteKeyName();
 

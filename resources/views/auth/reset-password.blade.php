@@ -1,4 +1,5 @@
-<x-guest-layout>
+<x-app-layout>
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
@@ -36,4 +37,5 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</div>
+</x-app-layout>

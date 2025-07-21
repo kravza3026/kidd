@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class PhoneVerificationNotificationController extends Controller
     public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedPhone()) {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended('/');
         }
 
         $request->user()->sendPhoneVerificationNotification();

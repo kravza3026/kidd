@@ -37,14 +37,18 @@
 
         <div class="w-full py-8 flex-col md:flex-row justify-center items-center gap-12 inline-flex relative">
             <div class="md:min-w-[550px] w-full sm:p-10 bg-[#f6f6f6] rounded-xl md:sticky top-6 bottom-6 flex-col justify-center items-center gap-8 inline-flex">
-                <img class="w-full max-w-[520px] grow shrink aspect-1" src="{{ Vite::image('product-'.rand(1,4).'.png') }}" alt="Product image description"/>
+                <img class="w-full max-w-[520px] grow shrink aspect-1" src="{{ Vite::image('products/product_'.rand(1,4).'.png') }}" alt="Product image description"/>
                 {{--                    //TODO add alt attribute--}}
                 <div class=" justify-center items-center gap-3 inline-flex">
-                    <div class="w-2 h-2 bg-[#020202] rounded-full"></div>
-                    <div class="w-2 h-2 opacity-20 bg-[#020202] rounded-full"></div>
-                    <div class="w-2 h-2 opacity-20 bg-[#020202] rounded-full"></div>
-                    <div class="w-2 h-2 opacity-20 bg-[#020202] rounded-full"></div>
-                    <div class="w-2 h-2 opacity-20 bg-[#020202] rounded-full"></div>
+                        @foreach($product->variants as $variant)
+                            @if ($loop->first)
+                                <div class="border cursor-pointer p-0 size-6 rounded-full flex justify-center items-center border-gray-300 bg-white">
+                                    <span class="size-6 rounded-full p-0" style="background-color: {{ $variant->color->hex }}"></span>
+                                </div>
+                            @else
+                                <div class="cursor-pointer size-6 rounded-full" style="background-color: {{ $variant->color->hex }}"></div>
+                            @endif
+                        @endforeach
                 </div>
             </div>
             <div class=" pb-6 px-10 rounded-xl flex-col justify-start items-start inline-flex">
@@ -114,7 +118,7 @@
                             <div class="flex justify-between items-center w-full">
                                 <div class="text-[#020202] text-base font-normal  inline-flex">{{ __('product-show.desc.size') }}</div>
                                 <a href="#" class="justify-start items-center gap-1 inline-flex">
-                                    <img class="w-3" src="{{ Vite::image('size.png') }}" alt=""/>
+                                    <img class="w-3" src="{{ Vite::image('icons/size.png') }}" alt=""/>
                                     <span class="text-[#a8ba66] text-sm font-bold underline leading-[14px]">{{ __('product-show.desc.size_guide') }}</span>
                                 </a>
                             </div>

@@ -92,7 +92,7 @@
                         >
                           <div class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                            <div class="mx-auto w-fit pb-1">
-                               <UserDropdown   :user="user" :is-authenticated="isAuthenticated" />
+                               <UserDropdown :user="user" :is-authenticated="isAuthenticated" />
                            </div>
                             <span class="block text-[12px] pb-1">Account</span>
                           </div>

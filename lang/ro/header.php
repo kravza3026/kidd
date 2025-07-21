@@ -15,7 +15,7 @@ return [
     ],
 
     'menu' => [
-        'catalog' => 'Explorează',
+        'catalog' => 'Catalog',
         'about' => 'Despre',
         'help' => 'Ajutor',
         'contacts' => 'Contacte',

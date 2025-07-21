@@ -19,7 +19,7 @@ class HomeController extends Controller
         $categories = Category::whereNull('parent_id')->get();
 
         $categories = $categories->first()->subcategories()->paginate(4);
-        $products = $categories->first()->products()->limit(12)->get();
+        $products = $categories->first()->products()->limit(8)->get();
 
         return view('store.pages.home.index', compact('categories', 'products'));
     }

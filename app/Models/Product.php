@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
-class Product extends Model
+class Product extends Model implements LocalizedUrlRoutable
 {
     use Searchable, SoftDeletes, HasFactory, HasTranslations, HasTranslatableSlug;
 
@@ -100,7 +104,24 @@ class Product extends Model
         return $this->belongsTo(Fabric::class);
     }
 
-    public function resolveRouteBindingQuery($query, $value, $field = null): Model|\Illuminate\Database\Eloquent\Relations\Relation
+    public function link(): string
+    {
+        return LaravelLocalization::getURLFromRouteNameTranslated( app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+            'category' => $this->category->slug,
+            'product' => $this->slug,
+        ]);
+//        return route('products.show', [$this->category, $this]);
+    }
+
+    /**
+     * Resolve the route binding query for the model.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Builder|Builder|Model|Relation
+     */
+    public function resolveRouteBindingQuery($query, $value, $field = null): Model|Relation|\Illuminate\Database\Eloquent\Builder|Builder
     {
         $field = $field ?? $this->getRouteKeyName();
 
@@ -121,6 +142,11 @@ class Product extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getLocalizedRouteKey($locale): string
+    {
+        return $this->getSlugOptions()->slugField . '->' . $locale;
     }
 
     /**

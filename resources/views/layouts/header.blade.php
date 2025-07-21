@@ -1,37 +1,18 @@
 <header class="lg:relative z-10 sticky top-0 bg-white">
-    <div class="bg-light-orange hidden lg:block">
-        <div class="container   flex justify-between">
-            <div class="flex-1 flex items-center gap-5">
-                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-[13px] font-[500]">
-                    {{ __('header.topline.locations') }}
-                </a>
-                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-[13px] font-[500]">
-                    {{ __('header.topline.careers') }}
-                </a>
-                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-[13px] font-[500]">
-                    {{ __('header.topline.terms') }}
-                </a>
-            </div>
-            <div class="flex-1 flex justify-end gap-5 items-center">
-                @include('layouts.nav._lang_switcher')
-                <a href="tel:+37360123456" class="text-[13px] font-[500]">+373 (60) 123 456</a>
-            </div>
-        </div>
-    </div>
+    @include('layouts.nav.topline')
 
     <nav class="container relative z-10 h-[72px] lg:h-[88px] flex justify-between font-bold">
         <div class="flex items-center gap-10">
             <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'home') }}" class="logo">
                 <img src="{{ Vite::image('logo.svg') }}" alt="kidd.md Logo image">
             </a>
-
         </div>
+
         <div class="w-full relative z-10   min-h-[60px] px-10 items-center justify-between hidden lg:flex">
             <ul class="nav-items h-full flex justify-start items-center gap-y-5 gap-x-10 ">
                 <li class="dropdown relative h-full  flex items-center px-2 "
                     :class="{ 'border-olive border-b-2 ': $store.dropdown.open, 'border-transparent border-b-2 ': !$store.dropdown.open }"
-                    x-data
-                >
+                    x-data>
                     <div x-data="{ open: false }" class="relative inline-block text-left">
                         <div>
                             <button
@@ -69,97 +50,13 @@
                 </li>
             </ul>
             <div data-vue-component="Search"></div>
-
         </div>
 
-        {{--    mobile menu    --}}
-        <div class="flex lg:hidden items-center gap-x-2">
-            <div class="dropdown border border-black/10 rounded-full ">
-                @include('layouts.nav._lang_switcher')
-            </div>
-            <a class="p-2 w-[33px] h-[33px] flex items-center border border-black/10 rounded-full" href="tel:+37360123456">
-                <img height="13" src="{{ asset('assets/images/icons/phone_i.svg') }}" alt="">
-            </a>
-            <div class="flex items-center relative" x-data="{ open: false }" x-effect="document.body.classList.toggle('overflow-hidden', open)">
-                <div @click="open = !open" class="menu-controll relative group z-50">
-                    <div class="relative border border-black/10 flex overflow-hidden items-center justify-center rounded-full w-[33px] h-[33px] transform transition-all duration-200 ">
-                        <div class="flex flex-col justify-between w-[15px] h-[15px] transform transition-all duration-300 origin-center overflow-hidden">
-                            <!-- Верхня лінія -->
-                            <div
-                                class="bg-black h-[2px] w-6 transform transition-all duration-300 origin-left delay-100"
-                                :class="open ? 'translate-y-6 opacity-0' : ''"
-                            ></div>
-
-                            <!-- Середня лінія -->
-                            <div
-                                class="bg-black h-[2px] w-6 rounded transform transition-all duration-300 delay-75"
-                                :class="open ? 'translate-y-6 opacity-0' : ''"
-                            ></div>
-
-                            <!-- Нижня лінія -->
-                            <div
-                                class="bg-black h-[2px] w-6 transform transition-all duration-300 origin-left"
-                                :class="open ? 'translate-y-6 opacity-0' : ''"
-                            ></div>
-
-                            <!-- Хрестик -->
-                            <div
-                                class="absolute top-[7.5px] left-[7.5px] flex items-center justify-center opacity-0 w-0 h-0 transition-all duration-300"
-                                :class="open ? 'w-[17px] h-[17px] opacity-100' : ''"
-                            >
-                                <div
-                                    class="absolute bg-black h-[2px] w-[17px] transform rotate-45 transition-all duration-300"
-                                ></div>
-                                <div
-                                    class="absolute bg-black h-[2px] w-[17px] transform -rotate-45 transition-all duration-300"
-                                ></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Меню -->
-                <div
-                    id="mobile-menu"
-                    x-show="open"
-                    x-cloak
-                    x-transition:enter="transition duration-300 ease-out"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition duration-200 ease-in"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
-                    @click.outside="open = false"
-                    class="fixed top-[72px] inset-0 bg-black/50 z-30"
-                >
-                    <div class="bg-white grid items-center justify-center p-4 absolute top-0 right-0 w-screen h-full shadow-lg">
-                        <ul class="mt-4 space-y-4 text-center">
-                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.about') }}" class="text-black text-[32px] hover:text-olive">
-                                    {{ __('header.menu.about') }}
-                                </a></li>
-                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-black text-[32px] hover:text-olive">
-                                    {{ __('header.topline.locations') }}
-                                </a></li>
-                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-black text-[32px] hover:text-olive">
-                                    {{ __('header.topline.careers') }}
-                                </a></li>
-                            <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-black text-[32px] hover:text-olive">
-                                    {{ __('header.topline.terms') }}
-                                </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        {{--    mobile menu    --}}
+        @include('layouts.nav.mobile-header')
 
         <div class="hidden lg:flex w-3/12 lg:w-2/12 items-center gap-y-5 gap-x-10 justify-end">
-
             <div data-vue-component="CartDropdown"></div>
             <div data-vue-component="UserDropdown" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
-
         </div>
 
     </nav>
@@ -168,6 +65,7 @@
             {{--           <div id="search-results-container" class="left-0 pl-5 pr-12 w-full z-40"></div>--}}
         </div>
     </div>
+
     <div
         x-data
         x-cloak
@@ -189,9 +87,8 @@
                     @for ($i = 0; $i < 5; $i++)
 
                         <a href="#"
-                           class="
-
-                           small-cart-container group relative cursor-pointer flex items-center   lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all lg:rounded-2xl lg:m-2 p-4 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
+                           class="small-cart-container group relative cursor-pointer flex items-center lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
+                           lg:rounded-2xl lg:m-2 p-4 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
                             @if ($i!== 4) border-b border-light-border @endif
                             @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
                             ">
@@ -234,7 +131,7 @@
 
             </div>
             <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
-                 style="background-image: url('{{ asset('assets/images/dropdown_bg.png') }}'); background-size: cover; background-position: center;">
+                 style="background-image: url('{{ Vite::image('dropdown_bg.png') }}'); background-size: cover; background-position: center;">
                 <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-gradient-to-t from-charcoal/40 to-charcoal/10"></div>
                 <div class="absolute bottom-8 inset-0 grid justify-center items-end content-end align-end h-full w-full">
                     <p class="text-center text-white text-[30px] lg:text-[40px] font-bold">Ready for summer</p>

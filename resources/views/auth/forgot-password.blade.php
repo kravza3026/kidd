@@ -1,10 +1,8 @@
-<x-guest-layout>
+<x-app-layout>
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
@@ -22,4 +20,5 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</div>
+</x-app-layout>

@@ -1,8 +1,7 @@
 <x-app-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')"/>
+<div class="max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
 
-    <form method="POST" action="{{ \LaravelLocalization::localizeURL('/login') }}">
+    <form method="POST" action="{{ LaravelLocalization::localizeURL('/login') }}">
         @csrf
 
         <!-- Email Address -->
@@ -44,4 +43,5 @@
             </x-primary-button>
         </div>
     </form>
+</div>
 </x-app-layout>

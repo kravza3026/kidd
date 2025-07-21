@@ -45,13 +45,12 @@
             </div>
             <div class="flex-1 group">
                 <a href="#" class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500">
-                        <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                            <img class="mx-auto pb-1 opacity-65" src="{{ asset('assets/images/icons/user.svg') }}" alt="account">
-                            <span class="block text-[12px] pb-1">Account</span>
-                        </span>
+                    <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                        <img class="mx-auto pb-1 opacity-65" src="{{ asset('assets/images/icons/user.svg') }}" alt="account">
+                        <span class="block text-[12px] pb-1">Account</span>
+                    </span>
                 </a>
             </div>
         </div>
-
     </div>
 </div>

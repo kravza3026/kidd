@@ -10,8 +10,6 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Store\ProductsController;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localize', 'localizationRedirect', 'localeSessionRedirect']
@@ -35,7 +33,7 @@ Route::group([
         ->name('products.index');
     Route::get('catalog/{category}', [ProductsController::class, 'index'])
         ->name('products.category.index');
-    Route::get('catalog/{category}/{product}', [ProductsController::class, 'show'])->scopeBindings()
+    Route::get(LaravelLocalization::transRoute('catalog/{category}/{product}'), [ProductsController::class, 'show'])->scopeBindings()
         ->name('products.show');
 
     Route::group([

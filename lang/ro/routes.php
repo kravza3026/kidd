@@ -21,4 +21,9 @@ return [
         'contacts' => 'contacte',
     ],
 
+    'catalog' => [
+        '{category}' => 'catalog/{category}',
+        '{category}/{product}' => 'catalog/{category}/{product}',
+    ],
+
 ];
