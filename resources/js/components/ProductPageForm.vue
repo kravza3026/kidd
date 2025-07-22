@@ -1,6 +1,6 @@
 <template>
 
-    <div class=" flex-col justify-start items-start flex">
+    <div class=" flex-col relative justify-start items-start flex" ref="buttonWrapper" >
         <div class="pb-8 flex-col justify-start items-start gap-3 flex">
             <div class="justify-start items-start gap-4 inline-flex">
                 <div class="opacity-80 text-center text-[#020202] text-3xl font-bold leading-[62.40px] text-nowrap">
@@ -105,7 +105,7 @@
                             />
                             <span
                                 :class="{ 'opacity-40 cursor-not-allowed': !availableSizes.includes(size.id) }"
-                                class="px-5 py-[13px] bg-white rounded-[100px] border min-w-32 text-center border-[#eeeeee] peer-checked:border-olive"
+                                class="px-2 md:px-5 py-[5px] md:py-[13px] bg-white rounded-[100px] border min-w-16 md:min-w-32 text-center border-[#eeeeee] peer-checked:border-olive"
                             >
                               <span class="text-[#020202] text-sm font-bold leading-[14px]">
                                 {{ size.name[locale] }}
@@ -119,29 +119,32 @@
         </div>
 
         <!-- Кнопки -->
-        <div class="w-full py-6 border-t border-b border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
+        <div class="w-full py-6 border-t border-b  border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
             <div class="w-full md:flex flex-row justify-between items-center gap-4">
-                <Button buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-full md:w-5/12" >
+                <Button buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12" >
                     <img :src="favIcon" alt="">
                     Save to Favorites
-                </Button><Button customClass="text-white text-[16px] font-bold w-full md:w-7/12" >
-                    <img :src="cartWhite" alt="">
-                    Add to cart
                 </Button>
+                   <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12" :sticky-on-mobile="true">
+                       <img :src="cartWhite" alt="">
+                       Add to cart
+                   </Button>
+                <div id="sticky-trigger" class="h-[1px] absolute  -bottom-[110px]"></div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import sizeIcon from '@img/icons/size.svg'
 import favIcon from '@img/icons/fav_icon_active.svg'
 import cartWhite from '@img/icons/cart_white.svg'
 import Button from "@/components/Button.vue";
-    const showDescription = ref(false)
-    const showCareInstructions = ref(false)
+
+    const isSticky = ref(false);
+    const buttonWrapper = ref(null);
     const props = defineProps({
         product: {
             type: Object,
@@ -213,6 +216,18 @@ const discountPercent = computed(() => {
         // Якщо потрібна логіка перевірки знижки для вибраного варіанту, можна зробити так:
         return selectedVariant.value?.has_discount || props.product.has_discount
     })
+    const checkSticky = () => {
+        if (!buttonWrapper.value) return;
+        const rect = buttonWrapper.value.getBoundingClientRect();
+        isSticky.value = rect.bottom < window.innerHeight;
+    };
 
+    onMounted(() => {
+        window.addEventListener('scroll', checkSticky, { passive: true });
+        checkSticky(); // одразу перевірити
+    });
+    onUnmounted(() => {
+        window.removeEventListener('scroll', checkSticky);
+    });
 
 </script>

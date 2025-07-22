@@ -1,4 +1,4 @@
-<section class="bg-light-orange">
+<section class="bg-light-orange hidden lg:block">
     <div class="container  pb-16">
         <div class="text-center py-[60px] w-full">
             <h2 class="text-[42px]">Frequent questions</h2>

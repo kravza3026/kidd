@@ -30,7 +30,7 @@
                             class="group/gender rounded-full relative shadow-md size-6 p-1"
                             :class="product.gender.bg_color"
                         >
-                            <div class="w-4 flex justify-center items-center" v-html="product.gender.svg"></div>
+                            <div class="genderImg w-4 flex justify-center items-center" v-html="product.gender.svg"></div>
                             <div
                                 class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover/gender:opacity-100 transition-opacity duration-300 z-10"
                             >
@@ -101,10 +101,10 @@
                     class="shadow-md  size-6 p-1"
                     :class="product.gender.bg_color"
                 >
-                    <div class="w-4 flex justify-center  items-center" v-html="product.gender.svg"></div>
+                    <div class="w-4 flex justify-center  items-center rounded-2xl" v-html="product.gender.svg"></div>
                 </div>
                 <div
-                    class="text-[12px] bg-white font-bold h-[24px] rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10"
+                    class="text-[12px] bg-white font-bold h-[24px] text-nowrap rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10"
                 >
                     <img :src="sizeIcon" alt="size" />
                     {{ minAge }}-{{ maxAge }}M

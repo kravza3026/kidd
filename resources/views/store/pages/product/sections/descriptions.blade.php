@@ -1,14 +1,7 @@
 
-{{--<div data-vue-component="Accordion" class="w-full"--}}
-{{--     data-product='@json($product->variants->first()->sku)'--}}
-{{--     data-locale='{{app()->getLocale()}}'--}}
-{{--     data-title='title'--}}
-{{--     data-info='title info'--}}
 
-{{--></div>--}}
+<div  class="pb-4 w-full border-b border-zinc-100">
 
-<div class="pb-4 w-full border-b border-zinc-100"
->
     <div class="w-full flex justify-between items-center pt-8 pb-4">
         <div class="inline-flex text-black text-base font-medium ">
             {{ __('product-show.desc.title') }}
@@ -17,7 +10,7 @@
     </div>
 
     <div class="w-full py-4">
-        <div class="w-full sm:max-w-[568px] flex flex-col justify-center items-start gap-6">
+        <div class="w-full lg:max-w-1/2 xl:max-w-full flex flex-col justify-center items-start gap-6">
             <div class="w-full justify-between inline-flex">
                 <div class="inline-flex text-black/40 text-sm font-normal ">
                     {{ __('product-show.desc.article') }}

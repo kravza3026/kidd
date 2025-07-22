@@ -15,7 +15,7 @@
     768: {
       slidesPerView: 3,
     },
-    1024: {
+    1440: {
       slidesPerView: 4,
     }}"
         :modules="modules"
@@ -26,7 +26,7 @@
             v-for="(product, index) in products"
             :key="index"
         >
-            <ProductCard :product="product" />
+            <ProductCard :product="product" :link="product.link" />
         </swiper-slide>
 
     </swiper>
@@ -61,7 +61,7 @@ export default {
     },
 
     mounted() {
-        console.log('slides:', this.slides);
+        console.log('slides:', this.products);
     },
     setup() {
         return {

@@ -3,6 +3,7 @@
         :class="mergedClasses"
         @click="$emit('click')"
     >
+        <div v-if="stickyOnMobile && isSticky" class="h-[20px] md:hidden"></div>
         <slot />
 
             <svg
@@ -41,21 +42,51 @@ export default {
         buttonPrimary: {
             type: Boolean,
             default: false,
-        }
+        },
+        stickyOnMobile: {
+            type: Boolean,
+            default: false, // за замовчуванням не прилипати
+        },
+    },
+    data() {
+        return {
+            isSticky: false,
+            isMobile: window.innerWidth < 768,
+        };
     },
 
     computed: {
         mergedClasses() {
-            const commonClasses =
-                'cursor-pointer shadow-md hover:shadow-sm duration-500 transition-all ease-in-out flex gap-5 items-center justify-center py-3 md:py-4 my-5 rounded-[12px]';
-
-            const conditionalClasses = this.buttonPrimary
+            const base = 'cursor-pointer shadow-md hover:shadow-sm duration-500 transition-all ease-in-out flex gap-5 items-center justify-center py-3 md:py-4 my-5 rounded-[12px]';
+            const variant = this.buttonPrimary
                 ? 'shadow-light-border border-b-4 border-1 bg-light-orange hover:bg-light-border border-light-border'
                 : 'shadow-olive border-b-4 hover:bg-dark-olive border-dark-olive bg-olive px-10 text-white';
 
-            return [commonClasses, conditionalClasses, this.customClass].join(' ');
+            const sticky = (this.stickyOnMobile && this.isSticky)
+                ? 'fixed bottom-[88px]    z-10 md:static'
+                : 'md:static';
+
+            return [base, variant, sticky, this.customClass].join(' ');
         }
-    }
+    },
+    mounted() {
+        if (this.stickyOnMobile && window.innerWidth < 768) {
+            window.addEventListener('scroll', this.handleScroll);
+        }
+    },
+    beforeUnmount() {
+        if (this.stickyOnMobile && window.innerWidth < 768) {
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+    },
+    methods: {
+        handleScroll() {
+            const trigger = document.getElementById('sticky-trigger');
+            if (!trigger) return;
+            const triggerBottom = trigger.getBoundingClientRect().bottom;
+            this.isSticky = triggerBottom < window.innerHeight;
+        },
+    },
 
 
 };

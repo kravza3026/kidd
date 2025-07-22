@@ -1,5 +1,5 @@
 
-<div class="container pb-6 px-10 rounded-xl flex-col justify-start items-start inline-flex">
+<div class="max-w-full lg:max-w-1/2 pb-6 rounded-xl flex-col justify-start items-start inline-flex">
     <div data-vue-component="ProductPageForm"
          data-product='@json($product)'
          data-locale='{{app()->getLocale()}}'

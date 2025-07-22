@@ -11,7 +11,7 @@
         <a href="{{ route('products.index') }}" class="text-olive light_border px-4 py-2 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px] mx-2">View all products</a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-5 sm:gap-y-12 mt-5">
+    <div class=" mt-5">
         {{-- Product cards --}}
         <div class="w-full"
              data-vue-component="ProductsCardsSlider"

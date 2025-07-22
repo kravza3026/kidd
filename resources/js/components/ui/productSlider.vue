@@ -1,6 +1,6 @@
 <template>
     <swiper :pagination="true" :modules="modules" class="mySwiper">
-        <swiper-slide class="w-full max-full grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
+        <swiper-slide class="w-full max-full  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
             <img  :src="getImageUrl(slide)"  alt="">
         </swiper-slide>
 

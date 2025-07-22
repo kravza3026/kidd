@@ -18,7 +18,7 @@
         ->values();
 @endphp
 
-<div class="md:min-w-[550px] w-full sm:p-2 bg-[#f6f6f6] rounded-xl md:sticky top-2 flex-col justify-center items-center gap-8 inline-flex">
+<div class="md:min-w-1/2 max-w-full  sm:max-w-2/3 lg:max-w-full mx-auto w-full sm:p-2 bg-[#f6f6f6] rounded-xl lg:sticky top-2 flex-col justify-center items-center gap-8 inline-flex">
     <div class="max-w-full h-fit" data-vue-component="ProductSlider"
          data-vue-props='@json(["slides" => $slides])'>
         {{-- gallery --}}

@@ -118,6 +118,12 @@ class Product extends Model implements LocalizedUrlRoutable
 //        return route('products.show', [$this->category, $this]);
     }
 
+    public function getLinkAttribute(): string
+    {
+        return $this->link();
+    }
+
+    protected $appends = ['link'];
     /**
      * Resolve the route binding query for the model.
      *
@@ -187,6 +193,7 @@ class Product extends Model implements LocalizedUrlRoutable
             'id' => (int) $this->id,
             'name' => (array) $this->name,
             'description' => (array) $this->description,
+
 
         ];
     }
