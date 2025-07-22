@@ -1,7 +1,32 @@
 <template>
-    <swiper :pagination="true" :modules="modules" class="mySwiper">
-        <swiper-slide class="w-full max-full grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
-            <img  :src="getImageUrl(slide)"  alt="">
+    <swiper
+        :pagination="false"
+        :space-between="20"
+        :autoplay="true"
+        :speed="1000"
+        :free-mode="true"
+        :breakpoints="{
+    0: {
+      slidesPerView: 1.2,
+    },
+    640: {
+      slidesPerView: 2.2,
+    },
+    768: {
+      slidesPerView: 3,
+    },
+    1024: {
+      slidesPerView: 4,
+    }}"
+        :modules="modules"
+
+        class="mySwiper">
+        <swiper-slide
+            class="w-full max-full grow shrink aspect-1"
+            v-for="(product, index) in products"
+            :key="index"
+        >
+            <ProductCard :product="product" />
         </swiper-slide>
 
     </swiper>
@@ -18,32 +43,29 @@ import 'swiper/css/pagination';
 // import './style.css';
 
 // import required modules
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
+import ProductCard from "@/components/productCart.vue";
 
 export default {
-    name:'ProductSlider',
+    name:'ProductCardsSlider',
     components: {
+        ProductCard,
         Swiper,
         SwiperSlide,
     },
     props:{
-        slides: {
+        products: {
             type: Array,
             default: () => [],
         },
     },
-    methods: {
-        getImageUrl(imagePath) {
 
-            return `/assets/images/${imagePath}`;
-        }
-    },
     mounted() {
         console.log('slides:', this.slides);
     },
     setup() {
         return {
-            modules: [Pagination],
+            modules: [Pagination, Autoplay],
         };
     },
 };

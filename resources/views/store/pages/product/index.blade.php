@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="container">
         <nav aria-label="Breadcrumb">
             <ol role="list" class="mx-auto flex items-center space-x-2 py-4 sm:py-6 lg:py-8">
                 <li>
@@ -37,5 +37,9 @@
 
 
     </div>
+    @include('.store.pages.product.sections.completeLook')
+    @include('.store.pages.product.sections.subscribe')
+    @include('.store.pages.product.sections.questions')
+    @include('.store.pages.product.sections.similar')
 
 </x-app-layout>

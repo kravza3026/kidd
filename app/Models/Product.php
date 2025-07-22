@@ -103,12 +103,17 @@ class Product extends Model implements LocalizedUrlRoutable
     {
         return $this->belongsTo(Fabric::class);
     }
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+            }
 
     public function link(): string
     {
         return LaravelLocalization::getURLFromRouteNameTranslated( app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
             'category' => $this->category->slug,
             'product' => $this->slug,
+
         ]);
 //        return route('products.show', [$this->category, $this]);
     }
@@ -182,6 +187,7 @@ class Product extends Model implements LocalizedUrlRoutable
             'id' => (int) $this->id,
             'name' => (array) $this->name,
             'description' => (array) $this->description,
+
         ];
     }
 

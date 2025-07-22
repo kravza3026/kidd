@@ -1,6 +1,6 @@
 <template>
 
-    <div class="flex-col justify-start items-start flex">
+    <div class=" flex-col justify-start items-start flex">
         <div class="pb-8 flex-col justify-start items-start gap-3 flex">
             <div class="justify-start items-start gap-4 inline-flex">
                 <div class="opacity-80 text-center text-[#020202] text-3xl font-bold leading-[62.40px] text-nowrap">
@@ -28,8 +28,8 @@
             </div>
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
-                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 -top-full bg-danger text-white text-[14px] px-2 py-0 rounded-full z-10">
-                    -20%
+                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 -top-full bg-danger text-white text-[14px] px-2 py-0 rounded-full ">
+                    {{discountPercent}}%
                     <div
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
                 </div>
@@ -120,15 +120,14 @@
 
         <!-- Кнопки -->
         <div class="w-full py-6 border-t border-b border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
-            <div class="w-full flex flex-row justify-between items-center gap-4">
-                <PrimaryButton class="text-olive font-bold text-[16px] text-center w-5/12">
+            <div class="w-full md:flex flex-row justify-between items-center gap-4">
+                <Button buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-full md:w-5/12" >
                     <img :src="favIcon" alt="">
                     Save to Favorites
-                </PrimaryButton>
-                <SimpleButton class="text-white text-[16px] font-bold w-7/12">
+                </Button><Button customClass="text-white text-[16px] font-bold w-full md:w-7/12" >
                     <img :src="cartWhite" alt="">
                     Add to cart
-                </SimpleButton>
+                </Button>
             </div>
         </div>
     </div>
@@ -136,11 +135,11 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SimpleButton from "@/components/SimpleButton.vue";
-import PrimaryButton from "@/components/PrimaryButton.vue";
+
 import sizeIcon from '@img/icons/size.svg'
 import favIcon from '@img/icons/fav_icon_active.svg'
 import cartWhite from '@img/icons/cart_white.svg'
+import Button from "@/components/Button.vue";
     const showDescription = ref(false)
     const showCareInstructions = ref(false)
     const props = defineProps({
@@ -197,10 +196,18 @@ console.log(props.product)
 
     const priceOnline = computed(() => {
         if (selectedVariant.value) {
+            console.log(selectedVariant.value.price_online)
             return Math.round(selectedVariant.value.price_online / 100)
         }
         return 0
     })
+const discountPercent = computed(() => {
+    if (selectedVariant.value && selectedVariant.value.price_online) {
+
+        return Math.round((100-(priceFinal.value/priceOnline.value)*100))
+    }
+    return 0
+})
 
     const hasDiscount = computed(() => {
         // Якщо потрібна логіка перевірки знижки для вибраного варіанту, можна зробити так:

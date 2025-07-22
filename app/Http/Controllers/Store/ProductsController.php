@@ -52,6 +52,12 @@ class ProductsController extends Controller
      */
     public function show(Category $category, Product $product)
     {
-        return view('store.pages.product.index', compact('category', 'product'));
+        $products = Product::where('category_id', $category->id)
+            ->where('id', '!=', $product->id)
+            ->latest()
+            ->take(16)
+            ->get();
+
+        return view('store.pages.product.index', compact('category', 'product','products'));
     }
 }

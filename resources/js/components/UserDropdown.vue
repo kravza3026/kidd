@@ -34,7 +34,7 @@
                         </form>
                     </div>
 
-                    <SimpleButton customClass="mx-auto mt-4 !w-full text-white">Log in</SimpleButton>
+                    <Button customClass="mx-auto mt-4 w-full text-white">Log in</Button>
                     <p class="font-normal  text-center opacity-60 text-[14px]">New customer? <span class="underline cursor-pointer font-bold">Register now</span></p>
 
                 </div>
@@ -96,13 +96,12 @@ import Account from '@img/icons/profile/Account.svg';
 import Favorite from '@img/icons/profile/Favorite.svg';
 import Address from '@img/icons/profile/Location.svg';
 import Order from '@img/icons/profile/Order.svg';
-import SimpleButton from '@/components/SimpleButton.vue';
+import Button from "@/components/Button.vue";
 
 export default {
     name: 'UserDropdown',
     components: {
-        SimpleButton,
-
+        Button,
     },
     props: {
         isAuthenticated: {

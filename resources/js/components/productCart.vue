@@ -1,5 +1,5 @@
 <template>
-    <a :href="link" class="cursor-pointer group p-1">
+    <a :href="link" class="cursor-pointer  group p-1">
         <div
             class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
         >

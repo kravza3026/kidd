@@ -53,7 +53,7 @@
                         <p class=" text-[18px]">570 lei</p>
                     </div>
                     <div class="px-4">
-                        <Button customClass="mx-auto mt-0 w-full">View full cart</Button>
+                        <Button customClass="mx-auto mt-0 w-full" withArrow >View full cart</Button>
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@
                         <p class="py-1 text-[18px]">Cart is empty</p>
                         <p class="py-1 opacity-60 text-[14px] font-normal">Let’s find something cute</p>
                     </div>
-                    <Button customClass="mx-auto mt-0 w-full">Explore outfits</Button>
+                    <Button customClass="mx-auto mt-0 w-full" withArrow>Explore outfits</Button>
                 </div>
             </div>
         </transition>

@@ -17,9 +17,8 @@
     }
 @endphp
 
-<div {{ $attributes->merge(['class' => 'button py-2.5 px-6 md:py-4 md:px-8 border-b-2 border-dark-olive rounded-xl xl:rounded-2xl text-white text-sm font-bold hover:bg-dark-olive duration-500 transition-all
-ease-in-out']) }}>
-    @if($left_icon)
+<div {{ $attributes->merge(['class' => ' cursor-pointer border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit py-3 md:py-4 px-10 my-5 rounded-2xl text-white']) }}>
+    @if(filter_var($left_icon, FILTER_VALIDATE_BOOLEAN))
     <svg
         class="size-3.5 md:size-4"
         width="14"
@@ -37,7 +36,7 @@ ease-in-out']) }}>
     </svg>
     @endif
     {{ $slot }}
-    @if($right_icon)
+        @if(filter_var($right_icon, FILTER_VALIDATE_BOOLEAN))
         <svg
             class="size-3.5 md:size-4"
             width="14"

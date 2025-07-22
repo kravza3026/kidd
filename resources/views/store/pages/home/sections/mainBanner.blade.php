@@ -10,7 +10,8 @@
                 From cozy onesies to trendy outfits, we have everything you need to keep your baby stylish, comfortable and oh-so-cute
             </p>
             <div class="mt-5 md:mt-20">
-                <x-ui.button size="large" class="my-5">Explore outfits</x-ui.button>
+                <x-ui.button size="large"  class="my-5">Explore outfits</x-ui.button>
+
             </div>
         </div>
     </div>

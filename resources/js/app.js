@@ -11,11 +11,14 @@ import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
 import ProductCard from './components/productCart.vue';
-import ProductPageForm from './components/productPageForm.vue';
+import ProductPageForm from './components/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
+import ProductsCardsSlider from './components/productsCardsSlider.vue';
+import SubscribeForm from './components/ui/subscribeForm.vue';
+import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
-import SimpleButton from './components/SimpleButton.vue';
-import PrimaryButton from './components/PrimaryButton.vue';
+
+
 window.Alpine = Alpine;
 window.IMask = IMask;
 
@@ -25,8 +28,8 @@ import i18n from './i18n';
 const components = {
     Search,mobileMenu,
     CartDropdown,UserDropdown,
-    Button,SimpleButton,PrimaryButton,Tooltip,
-    ProductCard,ProductSlider,ProductPageForm,
+    Button,Tooltip,SubscribeForm,
+    ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
@@ -40,15 +43,13 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
         props = { product: JSON.parse(el.dataset.product) };
     }
 
-    // Додаємо locale, якщо він є в атрибутах
-    if (el.dataset.locale) {
-        props.locale = el.dataset.locale;
-    }
+    if (el.dataset.locale) props.locale = el.dataset.locale;
+    if (el.dataset.link) props.link = el.dataset.link;
+    if (el.dataset.title) props.title = el.dataset.title;
+    if (el.dataset.info) props.info = el.dataset.info;
 
-    // Додаємо link, якщо він є в атрибутах
-    if (el.dataset.link) {
-        props.link = el.dataset.link;
-    }
+
+
 
     if (components[name]) {
         const app = createApp(components[name], props);
