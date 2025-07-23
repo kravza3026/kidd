@@ -28,8 +28,8 @@
             </div>
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
-                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 -top-full bg-danger text-white text-[14px] px-2 py-0 rounded-full ">
-                    {{discountPercent}}%
+                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 w-fit text-nowrap -top-full bg-danger text-white text-[14px] px-2 py-0 rounded-full ">
+                    -{{ product.variants[0]?.discount_display }}%
                     <div
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
                 </div>
@@ -82,19 +82,7 @@
                     </div>
                     <sizeGuide ></sizeGuide>
 
-                </div><div class="w-full py-6 border-t border-b  border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
-                <div class="w-full md:flex flex-row justify-between items-center gap-4">
-                    <Button buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12" >
-                        <img :src="favIcon" alt="">
-                        Save to Favorites
-                    </Button>
-                    <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
-                        <img :src="cartWhite" alt="">
-                        Add to cart
-                    </Button>
-                    <div id="sticky-trigger" class="h-[1px] absolute  -bottom-[110px]"></div>
                 </div>
-            </div>
                 <fieldset aria-label="Choose a size">
                     <div class="pb-1 justify-start items-center gap-4 flex flex-wrap">
                         <label
@@ -124,6 +112,20 @@
                         </label>
                     </div>
                 </fieldset>
+                <div class="w-full py-6 border-t border-b  border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
+                <div class="w-full md:flex flex-row justify-between items-center gap-4">
+                    <Button buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12" >
+                        <img :src="favIcon" alt="">
+                        Save to Favorites
+                    </Button>
+                    <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
+                        <img :src="cartWhite" alt="">
+                        Add to cart
+                    </Button>
+                    <div id="sticky-trigger" class="h-[1px] absolute  -bottom-[110px]"></div>
+                </div>
+            </div>
+
             </div>
         </div>
 
@@ -194,8 +196,8 @@ import SizeGuide from "@/components/ui/sizeGuide.vue";
 
     const priceOnline = computed(() => {
         if (selectedVariant.value) {
-            console.log(selectedVariant.value.price_online)
-            return Math.round(selectedVariant.value.price_online / 100)
+            console.log(props.product.variants[0])
+            return Math.round((props.product.variants[0]?.price_online ?? 0) / 100)
         }
         return 0
     })
