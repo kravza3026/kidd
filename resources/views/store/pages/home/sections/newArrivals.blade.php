@@ -16,19 +16,9 @@
         <div class="w-full"
              data-vue-component="ProductsCardsSlider"
              data-vue-props='@json([
-            "products" => $products
+            "products" => $products,
+            "locale" => app()->getLocale()
     ])'
         ></div>
-{{--        @foreach($products as $product)--}}
-
-{{--            <x-product-card :$product />--}}
-{{--            <div data-vue-component="ProductCard"--}}
-{{--                 data-product='@json($product)'--}}
-{{--                 data-locale='{{app()->getLocale()}}'--}}
-{{--                 data-link="{{ $product->link() }}"--}}
-
-{{--            ></div>--}}
-
-{{--        @endforeach--}}
     </div>
 </section>

@@ -18,7 +18,7 @@
                             <button
                                 @click="$store.dropdown.toggle()"
                                 type="button"
-                                class="inline-flex items-center w-full justify-center"
+                                class="inline-flex items-center w-full justify-center cursor-pointer"
                                 :class="{ 'text-olive': $store.dropdown.open }"
                                 id="menu-button"
                                 aria-expanded="true"
@@ -70,7 +70,7 @@
         x-data
         x-cloak
         x-show="$store.dropdown.open"
-        x-effect="document.body.classList.toggle('overflow-hidden', $store.dropdown.open)"
+{{--        x-effect="document.body.classList.toggle('overflow-hidden', $store.dropdown.open)"--}}
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 scale-95 "
         x-transition:enter-end="opacity-100 "
@@ -79,16 +79,16 @@
         x-transition:leave-end="opacity-0  "
         @click.outside="$store.dropdown.close()"
         id="megaMenu"
-        class="absolute overflow-auto   left-0 w-full top-[72px] lg:top-[calc(100%+1px)] h-[calc(100vh-161px)] lg:h-fit  z-50    ring-black/5">
+        class="absolute overflow-auto  left-0 w-full top-[72px] lg:top-[calc(100%+1px)] h-[calc(100vh-161px)] lg:h-fit  z-50    ring-black/5">
         <div class="bg-white shadow-lg relative lg:rounded-b-2xl min-h-fit h-full pb-5">
-            <div class="container  grid lg:flex relative  lg:gap-y-5 px-5 lg:px-[64px] py-5 lg:py-[60px] border-t border-t-light-border">
+            <div class=" container grid lg:flex relative  lg:gap-y-5  lg:px-[40px] py-5 lg:py-[60px] border-t border-t-light-border">
                 <h2 class="text-[24px] opacity-80 font-bold pb-2 lg:hidden">Explore</h2>
-                <div class="small-cards  lg:w-[50%] lg:grid grid-cols-3  lg:gap-6  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
+                <div class="small-cards  lg:w-[55%] lg:flex flex-wrap  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
                     @for ($i = 0; $i < 5; $i++)
 
                         <a href="#"
-                           class="small-cart-container group relative cursor-pointer flex items-center lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
-                           lg:rounded-2xl lg:m-2 p-4 lg:p-5  lg:w-[12vw] lg:h-[12vw] lg:max-w-[200px] lg:max-h-[200px]
+                           class="small-cart-container  group relative cursor-pointer flex items-center lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
+                           lg:rounded-2xl lg:mr-[24px] lg:mb-[24px] p-4 lg:p-5  lg:w-[16vw] lg:h-[16vw] lg:max-w-[212px] lg:max-h-[186px]
                             @if ($i!== 4) border-b border-light-border @endif
                             @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
                             ">

@@ -1,8 +1,8 @@
 <template>
     <swiper
         :pagination="false"
-        :space-between="20"
-        :autoplay="true"
+        :space-between="0"
+        :autoplay="false"
         :speed="1000"
         :free-mode="true"
         :breakpoints="{
@@ -26,7 +26,7 @@
             v-for="(product, index) in products"
             :key="index"
         >
-            <ProductCard :product="product" :link="product.link" />
+            <ProductCard :product="product" :link="product.link" :locale="locale" />
         </swiper-slide>
 
     </swiper>
@@ -58,11 +58,13 @@ export default {
             type: Array,
             default: () => [],
         },
+        locale:{
+            type: String,
+            default: 'en',
+        }
     },
 
-    mounted() {
-        console.log('slides:', this.products);
-    },
+
     setup() {
         return {
             modules: [Pagination, Autoplay],
@@ -82,6 +84,9 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.swiper-slide:hover{
+    z-index: 10!important;
 }
 
 </style>

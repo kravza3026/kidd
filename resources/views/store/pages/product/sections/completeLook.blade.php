@@ -17,7 +17,8 @@
         <div class="w-full"
              data-vue-component="ProductsCardsSlider"
              data-vue-props='@json([
-            "products" => $products
+            "products" => $products,
+            "locale" => app()->getLocale()
     ])'
         ></div>
     </div>

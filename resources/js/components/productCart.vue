@@ -1,5 +1,5 @@
 <template>
-    <a :href="link" class="cursor-pointer  group p-1">
+    <a :href="link" class="cursor-pointer relative z-0 group p-1 hover:z-10">
         <div
             class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
         >
@@ -83,7 +83,7 @@
             >
                 <img :src="favIcon" alt="add to favorite" />
                 <div
-                    class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 transition-opacity duration-300 z-10"
+                    class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 transition-opacity duration-300 z-[130]"
                 >
                     Save to Favorites
                     <div
@@ -144,6 +144,7 @@ export default {
             return `/assets/images/${imagePath}`;
         }
     },
+
     computed: {
 
         minAge() {
