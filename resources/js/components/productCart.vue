@@ -1,6 +1,6 @@
 <template>
 <!--    <a :href="link" class="cursor-pointer relative z-0 group p-1 hover:z-10">-->
-    <div :href="link" class="cursor-pointer relative z-0 group p-1 hover:z-10">
+    <div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
         <div
             class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
         >
@@ -55,11 +55,13 @@
                 </div>
 
                 <div class="w-full h-full flex justify-center items-center pt-10 transition-all duration-700 ease-in-out">
+                    <a :href="link">
                     <img
                         :src="getImageUrl(product.main_image)"
                         :alt="product.name[locale]"
                         class="w-full object-center object-contain aspect-square"
                     />
+                    </a>
                 </div>
             </div>
 
@@ -79,10 +81,10 @@
                 </template>
             </div>
 
-            <div
-                class="absolute add_favorite  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-2 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
+            <div @click.stop="toggleFavorite(product.id)"
+                class="absolute  add_favorite  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-3 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
             >
-                <img @click.stop="toggleFavorite(product.id)" :src="isFavorite(product.id) ? favIcon : inFavIcon" alt="add to favorite" />
+                <img  :src="isFavorite(product.id) ? inFavIcon : favIcon" width="24" height="24" alt="add to favorite" />
                 <div
                     class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 transition-opacity duration-300 z-[130]"
                 >
@@ -111,17 +113,18 @@
                     {{ minAge }}-{{ maxAge }}M
                 </div>
             </div>
-
-            <p class="text-sm text-charcoal sm:text-base">{{ product.name[locale] }}</p>
-            <p class="font-bold text-charcoal text-base">
-                {{ finalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
-                <span
-                    v-if="product.has_discount"
-                    class="text-sm font-light line-through opacity-30"
-                >
-          {{ originalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
-        </span>
-            </p>
+            <a :href="link">
+                <p class="text-sm text-charcoal sm:text-base">{{ product.name[locale] }}</p>
+                <p class="font-bold text-charcoal text-base">
+                    {{ finalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
+                    <span
+                        v-if="product.has_discount"
+                        class="text-sm font-light line-through opacity-30"
+                    >
+              {{ originalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
+            </span>
+                </p>
+            </a>
         </div>
     </div>
 </template>
@@ -171,7 +174,7 @@ export default {
             return '/assets/images/icons/add_fav.svg';
         },
         inFavIcon() {
-            return '/assets/images/icons/fav_icon_active.svg';
+            return '/assets/images/icons/inFavorite.svg';
         },
 
     }
