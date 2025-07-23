@@ -1,4 +1,4 @@
-<section class="container pt-section ">
+<section class="pl-[20px]  md:container pt-section ">
     <h2 class="section-title text-[30px] md:text-[48px] font-[700] pb-5">New arrivals</h2>
     <div class="py-5 font-[700] flex justify-between overflow-x-auto md:overflow-hidden">
         <ul class="flex gap-2 2xl:gap-6 cursor-pointer">

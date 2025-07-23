@@ -1,21 +1,60 @@
 <template>
-    <swiper :pagination="true" :modules="modules" class="mySwiper">
-        <swiper-slide class="w-full max-full  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
-            <img  :src="getImageUrl(slide)"  alt="">
-        </swiper-slide>
+    <div v-if="ready" class="h-[550px]">
+        <swiper
+            :pagination="true"
+            :loop="true"
+            :modules="modules"
+            :thumbs="{ swiper: thumbsSwiper }"
+            class="mySwiper2 bg-light-orange rounded-2xl lg:!h-[550px]">
+            <swiper-slide class="w-full bg-light-orange  items-center" v-for="(slide, index) in slides" :key="index">
+                <img  :src="getImageUrl(slide)" class="mx-auto" height="300"  alt="">
+            </swiper-slide>
 
-    </swiper>
+        </swiper>
+        <swiper
+            @swiper="setThumbsSwiper"
+            :spaceBetween="20"
+            :slides-per-view="6"
+            :freeMode="true"
+            :autoplay="true"
+            :speed="1000"
+            :loop="true"
+            :watchSlidesProgress="true"
+            :modules="modules"
+            :breakpoints="{
+    0: {
+      slidesPerView: 3,
+    },
+
+    768: {
+      slidesPerView: 4,
+    },
+    1440: {
+      slidesPerView: 6,
+    }}"
+            class="mySwiper mt-5"
+        >
+            <swiper-slide class="!w-[100px] h-[100px] max-full  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
+                <img  :src="getImageUrl(slide)" loading="lazy" width="100" height="100" alt="">
+            </swiper-slide>
+
+        </swiper>
+    </div>
 </template>
 <script>
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
-
+import { FreeMode, Navigation, Thumbs,Autoplay,EffectFade } from 'swiper/modules';
+import {onMounted, ref} from 'vue';
 // Import Swiper styles
+
 import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
-import 'swiper/css/pagination';
 
-// import './style.css';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
@@ -42,8 +81,18 @@ export default {
         console.log('slides:', this.slides);
     },
     setup() {
+        const thumbsSwiper = ref(null);
+        const ready = ref(false);
+        onMounted(() => {
+            ready.value = true;
+        });
+        const setThumbsSwiper = (swiper) => {
+            thumbsSwiper.value = swiper;
+        };
         return {
-            modules: [Pagination],
+            thumbsSwiper,ready,
+            setThumbsSwiper,
+            modules: [FreeMode, Navigation,Thumbs,Autoplay],
         };
     },
 };
@@ -55,11 +104,29 @@ export default {
     transition: all 0.7s ease-in-out;
 }
 
+.swiper-wrapper{
+    display: flex;
+    align-items: center;
+}
 .swiper-slide img {
     display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: auto!important;
+    min-height: 100%!important;
+    object-fit: cover!important;
+}
+.swiper-slide-thumb-active{
+    border: 1px solid var(--color-olive)!important;
+    border-radius: 12px;
+}
+.swiper {
+    opacity: 0;
+    animation: fade-in 1.5s ease-out forwards;
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
 }
 
 </style>

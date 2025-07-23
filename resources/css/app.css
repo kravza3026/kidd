@@ -8,7 +8,9 @@
 [x-cloak] {
     display: none !important;
 }
-
+/*html {*/
+/*    scrollbar-gutter: stable;*/
+/*}*/
 @theme {
 
     --color-light-orange: #F8F7F2;
@@ -63,7 +65,8 @@
 
     @variant xl {
         max-width: 1422px;
-        padding-inline: 40px;
+        /*padding-inline: 40px;*/
+        padding:0 40px ;
 
     }
 }
@@ -101,6 +104,16 @@
 
 .add_favorite:hover{
    .tooltip{
+        opacity: 1;
+    }
+}
+.page-fade {
+    opacity: 0;
+    animation: fade-in .8s ease-out forwards;
+}
+
+@keyframes fade-in {
+    to {
         opacity: 1;
     }
 }

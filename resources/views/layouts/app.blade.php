@@ -13,7 +13,7 @@
     </head>
     <body>
         @include('layouts.header')
-        <main class="bg-white">
+        <main class="bg-white page-fade">
             {{ $slot }}
         </main>
         @include('layouts.footer')
