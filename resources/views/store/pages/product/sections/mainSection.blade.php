@@ -4,7 +4,7 @@
          data-product='@json($product)'
          data-locale='{{app()->getLocale()}}'
          data-link='{{ $product->link() }}'
-
+         class="max-w-full"
     ></div>
     @include('.store.pages.product.sections.descriptions')
 </div>

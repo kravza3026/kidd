@@ -1,9 +1,9 @@
 <template>
 
-    <div class=" flex-col relative justify-start items-start flex" ref="buttonWrapper" >
-        <div class="pb-8 flex-col justify-start items-start gap-3 flex">
-            <div class="justify-start items-start gap-4 inline-flex">
-                <div class="opacity-80 text-center text-[#020202] text-3xl font-bold leading-[62.40px] text-nowrap">
+    <div class="max-w-full flex-col relative justify-start items-start flex" ref="buttonWrapper" >
+        <div class="pb-8  flex-col max-w-full justify-start items-start gap-3 flex">
+            <div class="justify-start  items-start gap-4 inline-flex">
+                <div class="opacity-80 text-center max-w-full text-[#020202] text-[24px] md:text-3xl font-bold leading-[62.40px] text-nowrap">
                     {{ product.name[locale] }}
                 </div>
 

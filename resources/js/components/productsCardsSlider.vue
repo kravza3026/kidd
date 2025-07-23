@@ -1,7 +1,7 @@
 <template>
     <swiper
         :pagination="false"
-        :space-between="0"
+        :space-between="20"
         :autoplay="false"
         :speed="1000"
         :free-mode="true"
