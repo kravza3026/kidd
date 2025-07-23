@@ -35,7 +35,7 @@
             class="mySwiper mt-5"
         >
             <swiper-slide class="!w-[100px] h-[100px] max-full  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
-                <img  :src="getImageUrl(slide)" loading="lazy" width="100" height="100" alt="">
+                <img  :src="getImageUrl(slide)" loading="lazy" width="100" height="100" class="max-h-[50px]" alt="">
             </swiper-slide>
 
         </swiper>
