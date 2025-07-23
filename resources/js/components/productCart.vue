@@ -59,7 +59,7 @@
                     <img
                         :src="getImageUrl(product.main_image)"
                         :alt="product.name[locale]"
-                        class="w-full object-center object-contain aspect-square"
+                        class="w-full object-center object-contain aspect-square max-h-[264px]"
                     />
                     </a>
                 </div>
