@@ -1,6 +1,6 @@
 <template>
 
-    <div class="max-w-full flex-col relative justify-start items-start flex" ref="buttonWrapper" >
+    <div class="max-w-full flex-col relative justify-start items-start flex"  >
         <div class="pb-8  flex-col max-w-full justify-start items-start gap-3 flex">
             <div class="justify-start  items-start gap-4 inline-flex">
                 <div class="opacity-80 text-center max-w-full text-[#020202] text-[24px] md:text-3xl font-bold leading-[62.40px] text-nowrap">
@@ -125,7 +125,7 @@
                     <img :src="favIcon" alt="">
                     Save to Favorites
                 </Button>
-                   <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12" :sticky-on-mobile="true">
+                   <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
                        <img :src="cartWhite" alt="">
                        Add to cart
                    </Button>
@@ -151,7 +151,6 @@ import Button from "@/components/Button.vue";
             required: true
         }
     })
-console.log(props.product)
     const { t, locale } = useI18n()
 
     const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
@@ -216,18 +215,6 @@ const discountPercent = computed(() => {
         // Якщо потрібна логіка перевірки знижки для вибраного варіанту, можна зробити так:
         return selectedVariant.value?.has_discount || props.product.has_discount
     })
-    const checkSticky = () => {
-        if (!buttonWrapper.value) return;
-        const rect = buttonWrapper.value.getBoundingClientRect();
-        isSticky.value = rect.bottom < window.innerHeight;
-    };
 
-    onMounted(() => {
-        window.addEventListener('scroll', checkSticky, { passive: true });
-        checkSticky(); // одразу перевірити
-    });
-    onUnmounted(() => {
-        window.removeEventListener('scroll', checkSticky);
-    });
 
 </script>

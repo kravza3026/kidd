@@ -84,7 +84,7 @@
         </div>
 
         <hr class="xl:mt-7 border border-dark">
-        <div class="pt-2 flex text-white justify-between items-center text-xs mt-5">
+        <div class="pt-2 flex mb-16 lg:mb-0 text-white justify-between items-center text-xs mt-5">
             <div class="flex items-center py-1 w-3/12 xl:w-auto">
                 <p class="flex gap-2 opacity-35">&copy; 2023 KIDD. <span class="hidden xl:block">All Rights Reserved</span></p>
             </div>

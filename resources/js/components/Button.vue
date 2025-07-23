@@ -43,18 +43,8 @@ export default {
             type: Boolean,
             default: false,
         },
-        stickyOnMobile: {
-            type: Boolean,
-            default: false, // за замовчуванням не прилипати
-        },
-    },
-    data() {
-        return {
-            isSticky: false,
-            isMobile: window.innerWidth < 768,
-        };
-    },
 
+    },
     computed: {
         mergedClasses() {
             const base = 'cursor-pointer shadow-md hover:shadow-sm duration-500 transition-all ease-in-out flex gap-5 items-center justify-center py-3 md:py-4 my-5 rounded-[12px]';
@@ -66,14 +56,10 @@ export default {
                 ? 'fixed bottom-[88px]    z-10 md:static'
                 : 'md:static';
 
-            return [base, variant, sticky, this.customClass].join(' ');
+            return [base, variant, this.customClass].join(' ');
         }
     },
-    mounted() {
-        if (this.stickyOnMobile && window.innerWidth < 768) {
-            window.addEventListener('scroll', this.handleScroll);
-        }
-    },
+
     beforeUnmount() {
         if (this.stickyOnMobile && window.innerWidth < 768) {
             window.removeEventListener('scroll', this.handleScroll);
@@ -87,7 +73,6 @@ export default {
             this.isSticky = triggerBottom < window.innerHeight;
         },
     },
-
 
 };
 </script>

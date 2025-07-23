@@ -17,6 +17,7 @@ import ProductsCardsSlider from './components/productsCardsSlider.vue';
 import SubscribeForm from './components/ui/subscribeForm.vue';
 import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
+import ScrollToTop from './components/ui/scrollToTop.vue';
 
 
 window.Alpine = Alpine;
@@ -28,7 +29,7 @@ import i18n from './i18n';
 const components = {
     Search,mobileMenu,
     CartDropdown,UserDropdown,
-    Button,Tooltip,SubscribeForm,
+    Button,Tooltip,SubscribeForm,ScrollToTop,
     ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider
 };
 
