@@ -18,27 +18,27 @@ class CartController extends Controller
         //        LaraCart::emptyCart();
         //        LaraCart::destroyCart();
 
-        $product = Product::findOrFail(333);
+        $product = Product::findOrFail(123);
         $variants = $product->variants;
 
-        //        $item = LaraCart::add(
-        //            $variants->last(),
-        //            10,
-        //        );
+//                $item = LaraCart::add(
+//                    $variants->last(),
+//                    10,
+//                );
 
-        // Adding an item to the cart
-        //        $item = LaraCart::addLine(
-        //            itemID: $variants->last(),
-        //            qty: 10,
-        //            taxable: true,
-        //        );
+//         Adding an item to the cart
+//                $item = LaraCart::addLine(
+//                    itemID: $variants->last(),
+//                    qty: 10,
+//                    taxable: true,
+//                );
 
-        //        $item->addSubItem([
-        //            'description' => 'Express Delivery', // this line is not required!
-        //            'price' => 15000,
-        //            'taxable' => false,
-        //            'qty' => 1,
-        //        ]);
+//                $item->addSubItem([
+//                    'description' => 'Express Delivery', // this line is not required!
+//                    'price' => 15000,
+//                    'taxable' => false,
+//                    'qty' => 1,
+//                ]);
 
         $coupons[] = new Fixed('test_fixed', 1000 * 100, [
             'description' => '1,000 MDL reducere',
@@ -50,10 +50,10 @@ class CartController extends Controller
             'taxable' => false,
         ]);
 
-        //        $coupons[] = new FreeDeliveryCoupon('free_delivery', 500, [
-        //            'description' => 'Livrare gratuită',
-        //            'taxable' => false,
-        //        ]);
+//            $coupons[] = new FreeDeliveryCoupon('free_delivery', 500, [
+//                'description' => 'Livrare gratuită',
+//                'taxable' => false,
+//            ]);
 
         foreach ($coupons as $coupon) {
             LaraCart::addCoupon($coupon);
@@ -108,15 +108,13 @@ class CartController extends Controller
             'fee_sub_total' => LaraCart::feeSubTotal($formatted = false, $withDiscount = true) / 100,
             'total_discount' => LaraCart::discountTotal($formatted = false) / 100,
             'total' => LaraCart::total($formatted = false, $withDiscount = true) / 100,
-
         ]);
     }
 
     public function destroy($itemHash)
     {
         LaraCart::removeItem($itemHash);
-
-        //        return response(content: null, status: 203);
-        return back();
+                return response(content: null, status: 204);
+//        return back();
     }
 }

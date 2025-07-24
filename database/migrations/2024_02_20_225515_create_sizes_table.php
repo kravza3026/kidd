@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedSmallInteger('type')->default(1); // 1 = Clothes, 2 = Shoes, 3 = Accessory TODO: Move to enum
 
             $table->json('name');
+            $table->json('slug')->nullable();
             $table->json('eu_size')->nullable();
             $table->json('us_size')->nullable();
             $table->unsignedSmallInteger('min_height')->default(0);

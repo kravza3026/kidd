@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -27,8 +29,9 @@ class HomeController extends Controller
     /** @noinspection PhpUnhandledExceptionInspection */
     public function search(Request $request)
     {
-        if($request->hasHeader('HX-Request')){
-            $results = Category::search($request->term)->get();
+        if($request->has('term') && Str::length($request->term)) {
+            $results['products'] = Product::search($request->term)->get();
+            $results['categories'] = Category::search($request->term)->get();
             return view('shared.search.result', compact('results'))->render();
         }
 

@@ -24,7 +24,7 @@
         <!-- Ціна -->
         <div class="pb-8 justify-start items-end gap-2 inline-flex">
             <div class="opacity-80 text-[#020202] text-5xl font-medium leading-[48px]">
-                {{ priceFinal }} lei
+                {{ priceFinal }} {{ t('product-show.mdl') }}
             </div>
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
@@ -34,7 +34,7 @@
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
                 </div>
                 <div class="opacity-30 text-right text-[#020202] text-sm font-normal line-through leading-[25.20px]">
-                    {{ priceOnline }} lei
+                    {{ priceOnline }} {{ t('product-show.mdl') }}
                 </div>
             </div>
         </div>
