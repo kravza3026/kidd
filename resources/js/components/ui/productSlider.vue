@@ -1,5 +1,5 @@
 <template>
-    <div v-if="ready" class="h-[550px]">
+    <div v-if="ready" class="">
         <swiper
             :pagination="true"
             :loop="true"
@@ -34,8 +34,8 @@
     }}"
             class="mySwiper mt-5"
         >
-            <swiper-slide class="!w-[100px] h-[100px] max-full  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
-                <img  :src="getImageUrl(slide)" loading="lazy" width="100" height="100" class="max-h-[50px]" alt="">
+            <swiper-slide class=" h-[100px]  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
+                <img  :src="getImageUrl(slide)" loading="lazy"  height="100" class="max-h-[50px] max-w-[70px] mx-auto" alt="">
             </swiper-slide>
 
         </swiper>

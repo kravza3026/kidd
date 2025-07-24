@@ -1,0 +1,119 @@
+{
+    "id": 101,
+    "sku": "KIDTSHIRT001",
+    "slug": "",
+    "main_img": "mainImg.png",
+    "name": {
+        "ua": "Футболка дитяча",
+        "en": "Kids T-Shirt"
+    },
+    "description": {
+        "descriptionText" : {
+            "ua": "Зручна футболка для дітей різного віку.",
+            "en": "Comfortable t-shirt for kids of all ages."
+        },
+        "characteristics": {
+            "Article": "#156936",
+            "Gender": "Girls"
+            //...
+        },
+        "instructions": [
+            {
+                "icon": "wash.png",
+                "desc": {
+                    "ua": "Avoid using bleach as it can damage the fabric",
+                    "en": "Avoid using bleach as it can damage the fabric"
+                }
+            },
+            {
+                "icon": "wash.png",
+                "desc": {
+                    "ua": "Avoid using bleach as it can damage the fabric",
+                    "en": "Avoid using bleach as it can damage the fabric"
+                }
+            }
+        ]
+
+    },
+    "variants": [
+        {
+            "id": 1,
+            "image": ["img_1.png","img_2.png"],
+            "color": {
+                "slug": "red",
+                "name": {
+                    "ua": "Червоний",
+                    "en": "Red"
+                }
+            },
+            "recommended": true,
+            "sizes": [
+                {
+                    "age_min": 12,
+                    "age_max": 24,
+                    "age_unit": {
+                        "ua": "місяців",
+                        "en": "months"
+                    },
+                    "price_old": 300,
+                    "price_new": 250
+                },
+                {
+                    "age_min": 2,
+                    "age_max": 3,
+                    "age_unit": {
+                        "ua": "роки",
+                        "en": "years"
+                    },
+                    "price_old": 300,
+                    "price_new": 250
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "image": ["img_1.png","img_2.png"],
+            "color": {
+                "slug": "blue",
+                "name": {
+                    "ua": "Синій",
+                    "en": "Blue"
+                }
+            },
+            "recommended": false,
+            "sizes": [
+                {
+                    "age_min": 6,
+                    "age_max": 12,
+                    "age_unit": {
+                        "ua": "місяців",
+                        "en": "months"
+                    },
+                    "price_old": 310,
+                    "price_new": 270
+                }
+            ]
+        }
+    ],
+    "filters": {
+        "colors": ["red", "blue", "green"],
+        "age_groups": [
+            {
+                "min": 6,
+                "max": 12,
+                "unit": {
+                    "ua": "місяців",
+                    "en": "months"
+                }
+            },
+            {
+                "min": 1,
+                "max": 3,
+                "unit": {
+                    "ua": "роки",
+                    "en": "years"
+                }
+            }
+        ]
+    }
+}

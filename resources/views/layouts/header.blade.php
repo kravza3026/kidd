@@ -83,11 +83,11 @@
         <div class="bg-white shadow-lg relative lg:rounded-b-2xl min-h-fit h-full pb-5">
             <div class=" container grid lg:flex relative  lg:gap-y-5  lg:px-[40px] py-5 lg:py-[60px] border-t border-t-light-border">
                 <h2 class="text-[24px] opacity-80 font-bold pb-2 lg:hidden">Explore</h2>
-                <div class="small-cards  lg:w-[55%] lg:flex flex-wrap  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
+                <div class="small-cards  lg:w-[55%] lg:grid grid-cols-3  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
                     @for ($i = 0; $i < 5; $i++)
 
                         <a href="#"
-                           class="small-cart-container  group relative cursor-pointer flex items-center lg:grid  lg:justify-between lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
+                           class="small-cart-container  group relative cursor-pointer flex items-center lg:grid  lg:justify-start lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
                            lg:rounded-2xl lg:mr-[24px] lg:mb-[24px] p-4 lg:p-5  lg:w-[16vw] lg:h-[16vw] lg:max-w-[212px] lg:max-h-[186px]
                             @if ($i!== 4) border-b border-light-border @endif
                             @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
