@@ -166,9 +166,9 @@ export default {
             <div
                 v-show="open || isMobile"
                 ref="searchWrapper"
-                class="search-input absolute lg:bottom-5 right-0 bg-white flex flex-col h-auto w-full z-50"
+                class="search-input absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
             >
-                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-4">
+                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0">
                     <img class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
                     <input
                         ref="searchInput"
@@ -179,7 +179,7 @@ export default {
                         @keydown.esc="closeSearch"
                     />
                     <svg
-                        class="absolute text-olive right-4 top-1/2 transform  pointer-events-none"
+                        class="absolute text-olive right-4 top-1/3 transform  pointer-events-none"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
