@@ -60,10 +60,7 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
     }
 });
 
-
-
-
-
+// Ініціалізація Alpine.js
 document.addEventListener('alpine:init', () => {
     Alpine.store('dropdown', {
         open: false,
@@ -79,7 +76,7 @@ window.addEventListener("load", function () {
     let phone_element = document.getElementById("phone");
     if (phone_element !== null) {
         IMask(phone_element, {
-            mask: "+{373}(00)000000",
+            mask: "+{373} (00) 000 000",
             lazy: false, // make placeholder always visible
             placeholderChar: "_", // defaults to '_'
         });

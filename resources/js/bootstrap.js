@@ -4,7 +4,9 @@ import * as htmx from "htmx.org";
 window.htmx = htmx;
 window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 // Axios interceptor to add CSRF token to every request
 axios.interceptors.request.use(function (config) {
@@ -15,19 +17,4 @@ axios.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     return Promise.reject(error);
-});
-
-htmx.defineExtension("ajax-header", {
-    onEvent: function (name, evt) {
-        if (name === "htmx:configRequest") {
-            evt.detail.headers["X-Requested-With"] = "XMLHttpRequest";
-        }
-    },
-});
-
-document.addEventListener("htmx:configRequest", function (event) {
-    event.detail.headers["X-CSRF-TOKEN"] = document.querySelector(
-        'meta[name="csrf-token"]',
-    ).content;
-    console.log("Htmx: Added CSRF token.");
 });

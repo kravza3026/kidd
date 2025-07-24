@@ -177,6 +177,10 @@ return [
     */
 
     'custom' => [
+        'phone' => [
+            'unique' => 'Этот номер телефона уже используется.',
+            'required' => 'Номер телефона обязателен.',
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -193,6 +197,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'first_name' => 'Имя',
+        'last_name' => 'Фамилия',
+        'phone' => 'Телефон',
+        'email' => 'Электронная почта',
+    ],
 
+    'phone' => 'Пожалуйста, введите корректный номер телефона.',
 ];

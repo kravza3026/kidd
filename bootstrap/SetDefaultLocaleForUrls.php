@@ -16,7 +16,7 @@ class SetDefaultLocaleForUrls
      */
     public function handle(Request $request, Closure $next): Response
     {
-        URL::defaults(['locale' => auth()->check() ? $request->user()->default_locale : config('app.locale')]);
+//        URL::defaults(['locale' => auth()->check() ? $request->user()->default_locale : config('app.locale')]);
 
         return $next($request);
     }

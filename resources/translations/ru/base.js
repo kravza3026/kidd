@@ -3,7 +3,7 @@ export default {
         new: 'Новый',
         mdl: 'лей',
         desc: {
-            title: 'Описание продукта',
+            title: 'Описание',
             color: 'Цвет',
             size: 'Размер',
             size_guide: 'Гид по размерам',

@@ -178,9 +178,10 @@ return [
 
     'custom' => [
         'phone' => [
-            'unique' => 'This phone number is already taken.',
-            'required' => 'Phone number is required.',
+            'unique' => 'Acest număr de telefon este deja în utilizare.',
+            'required' => 'Numărul de telefon este obligatoriu.',
         ],
+
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -198,11 +199,11 @@ return [
     */
 
     'attributes' => [
-        'first_name' => 'First Name',
-        'last_name' => 'Last Name',
-        'phone' => 'Phone',
+        'first_name' => 'Nume',
+        'last_name' => 'Familie',
+        'phone' => 'Telefon',
         'email' => 'Email',
     ],
 
-    'phone' => 'Please enter a valid phone number.',
+    'phone' => 'Vă rugăm să introduceți un număr de telefon valid.',
 ];

@@ -25,10 +25,18 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->statefulApi();
+//        $middleware->throttleApi('api', true);
+
+        $middleware->validateCsrfTokens(except: [
+            'https://api.kidd.test/v1/*',
+        ]);
+
         $middleware->prependToPriorityList(
             before: \Illuminate\Routing\Middleware\SubstituteBindings::class,
             prepend: \App\Http\Middleware\SetDefaultLocaleForUrls::class,
         );
+
         $middleware->alias([
             // Other Middleware aliases
             'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
@@ -37,7 +45,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         ]);
+
     })
+//    ->withBroadcasting(
+//        __DIR__.'/../routes/channels.php',
+//        ['prefix' => 'v1', 'middleware' => ['api', 'auth:sanctum']],
+//    )
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

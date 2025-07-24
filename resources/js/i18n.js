@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 
-import en from '../lang/en/base.js'
-import ru from '../lang/ru/base.js'
+import en from '../translations/en/base.js'
+import ru from '../translations/ru/base.js'
 
 
 const messages = {
