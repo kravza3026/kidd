@@ -7,7 +7,7 @@
             :thumbs="{ swiper: thumbsSwiper }"
             class="mySwiper2 bg-light-orange rounded-2xl lg:!h-[550px]">
             <swiper-slide class="w-full bg-light-orange  items-center" v-for="(slide, index) in slides" :key="index">
-                <img  :src="getImageUrl(slide)" class="mx-auto" height="300"  alt="">
+                <img  :src="getImageUrl(slide)" class="mx-auto" width="500" height="300"  alt="">
             </swiper-slide>
 
         </swiper>

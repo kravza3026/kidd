@@ -24,6 +24,22 @@
 
 </template>
 <script>
+// import axios from 'axios';
+// await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
+//     withCredentials: true,
+// });
+//
+// axios.get(`${import.meta.env.VITE_API_URL}/search`, {
+//     withCredentials: true
+// })
+//     .then(res => {
+//         console.log('Search result:', res.data);
+//     })
+//     .catch(err => {
+//         console.error('Search error:', err);
+//     });
+
+
 export default {
     name: 'SubscribeForm',
     props: {
