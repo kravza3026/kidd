@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Vite;
 
 class CategorySeeder extends Seeder
 {
@@ -43,7 +44,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
+            'image' => Vite::image('categories/category_1.svg'),
         ]);
 
         Category::create([
@@ -59,7 +60,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
+            'image' => Vite::image('categories/category_2.svg'),
         ]);
 
         Category::create([
@@ -75,7 +76,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg",
+            'image' => Vite::image('categories/category_3.svg'),
         ]);
 
         Category::create([
@@ -91,7 +92,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
+            'image' => Vite::image('categories/category_4.svg'),
         ]);
 
         Category::create([
@@ -107,7 +108,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
+            'image' => Vite::image('categories/category_5.svg'),
         ]);
 
 

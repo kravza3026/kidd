@@ -26,7 +26,7 @@
             v-for="(product, index) in products"
             :key="index"
         >
-            <ProductCard :product="product" :link="product.link" :locale="locale" />
+            <ProductCard :product="product" />
         </swiper-slide>
 
     </swiper>
@@ -44,7 +44,7 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination, Autoplay } from 'swiper/modules';
-import ProductCard from "@/components/productCart.vue";
+import ProductCard from "@/components/productCard.vue";
 
 export default {
     name:'ProductCardsSlider',
@@ -57,10 +57,6 @@ export default {
         products: {
             type: Array,
             default: () => [],
-        },
-        locale:{
-            type: String,
-            default: 'en',
         }
     },
 

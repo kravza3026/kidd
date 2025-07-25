@@ -16,10 +16,6 @@
                 @forelse ($products as $product)
                     <div data-vue-component="ProductCard"
                          data-product='@json($product)'
-                         data-locale='{{app()->getLocale()}}'
-                         data-link='{{ $product->link() }}'
-
-
                     ></div>
 
 {{--                    @include('store.catalog.products._product-card')--}}

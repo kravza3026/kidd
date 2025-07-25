@@ -30,12 +30,13 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         if($request->has('term') && Str::length($request->term)) {
-            $results['products'] = Product::search($request->term)->get();
-            $results['categories'] = Category::search($request->term)->get();
-            return view('shared.search.result', compact('results'))->render();
+            $results = Product::search($request->term)->get();
+            return response()->json(compact('results'));
         }
 
-        return view('shared.search.index');
+        return response()->json([
+            'error' => __('search.no_results'),
+        ]);
     }
 
 }

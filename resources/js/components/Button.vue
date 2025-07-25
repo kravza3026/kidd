@@ -1,5 +1,6 @@
 <template>
-    <div
+    <component
+        :is="displayAs"
         :class="mergedClasses"
         @click="$emit('click')"
     >
@@ -23,7 +24,7 @@
                 />
             </svg>
 
-    </div>
+    </component>
 </template>
 
 <script>
@@ -34,6 +35,10 @@ export default {
         customClass: {
             type: String,
             default: 'w-fit',
+        },
+        displayAs: {
+            type: String,
+            default: 'div',
         },
         withArrow: {
             type: Boolean,

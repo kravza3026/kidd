@@ -16,5 +16,14 @@ export default {
         },
         'add-to-favorite': 'Adaugă la favorite',
         'add-to-cart': 'Adaugă în coș',
+    },
+    'user-dropdown': {
+        'profile': 'Contul meu',
+        'orders': 'Comenzile mele',
+        'favorites': 'Favorite',
+        'addresses': 'Adrese',
+        'logout': 'Deconectare',
+        'login': 'Autentificare',
+        'register': 'Înregistrare',
     }
 }

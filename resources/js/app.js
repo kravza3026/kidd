@@ -1,5 +1,10 @@
 // resources/js/app.js
+import "./bootstrap";
+
 import { createApp } from 'vue';
+import { ZiggyVue } from 'ziggy-js';
+import { Ziggy } from './ziggy.js';
+
 import Alpine from 'alpinejs';
 
 import.meta.glob('../images/**/*');
@@ -10,7 +15,7 @@ import mobileMenu from './components/mobileMenu.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
-import ProductCard from './components/productCart.vue';
+import ProductCard from './components/productCard.vue';
 import ProductPageForm from './components/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
 import ProductsCardsSlider from './components/productsCardsSlider.vue';
@@ -28,6 +33,7 @@ import i18n from './i18n';
 
 // Масив компонентів
 const components = {
+    Accordion,
     Search,mobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
@@ -50,12 +56,10 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
     if (el.dataset.title) props.title = el.dataset.title;
     if (el.dataset.info) props.info = el.dataset.info;
 
-
-
-
     if (components[name]) {
         const app = createApp(components[name], props);
         app.use(i18n);
+        app.use(ZiggyVue, Ziggy); // php artisan ziggy:generate
         app.mount(el);
     }
 });

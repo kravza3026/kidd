@@ -1,5 +1,5 @@
 <template>
-<!--    <a :href="link" class="cursor-pointer relative z-0 group p-1 hover:z-10">-->
+<!--    <a :href="product.url" class="cursor-pointer relative z-0 group p-1 hover:z-10">-->
     <div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
         <div
             class="bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="w-full h-full flex justify-center items-center pt-10 transition-all duration-700 ease-in-out">
-                    <a :href="link">
+                    <a :href="product.url">
                     <img
                         :src="getImageUrl(product.main_image)"
                         :alt="product.name[locale]"
@@ -113,7 +113,7 @@
                     {{ minAge }}-{{ maxAge }}M
                 </div>
             </div>
-            <a :href="link">
+            <a :href="product.url">
                 <p class="text-sm text-charcoal sm:text-base">{{ product.name[locale] }}</p>
                 <p class="font-bold text-charcoal text-base">
                     {{ finalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
@@ -127,6 +127,7 @@
             </a>
         </div>
     </div>
+<!--    </a>-->
 </template>
 
 <script>
@@ -139,13 +140,12 @@ export default {
             required: true,
 
         },
-        locale: String,
-        link: String
-
     },
     setup() {
+        const locale = document.documentElement.lang || 'ro';
+
         const { toggleFavorite, isFavorite } = useFavorites()
-        return { toggleFavorite, isFavorite }
+        return { toggleFavorite, isFavorite, locale }
     },
     methods: {
         getImageUrl(imagePath) {
@@ -181,5 +181,3 @@ export default {
 
 }
 </script>
-
-

@@ -17,6 +17,7 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, 'resources/js'),
             '@img': path.resolve(__dirname, 'resources/images'), // опціонально для зображень
+            'ziggy-js': path.resolve('vendor/tightenco/ziggy'), // Router helper
         },
     },
 });

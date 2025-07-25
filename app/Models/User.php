@@ -10,6 +10,7 @@ use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,6 +42,11 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
         'default_locale',
     ];
 
+    protected $with = [
+        'favorites',
+        'family',
+    ];
+
     /**
      * The relationships that should always be loaded.
      *
@@ -48,8 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
      */
 //    protected $with = ['addresses'];
     protected $withCount = [
-//        'addresses',
-//        'orders',
+        'favorites',
+        'orders',
+        'addresses',
     ];
 
     /**
@@ -108,6 +115,11 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
         return $this->default_locale ?? config('app.locale');
     }
 
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
     public function name(): Attribute
     {
         return Attribute::make(
@@ -123,6 +135,15 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     public function family(): hasMany
     {
         return $this->hasMany(Family::class);
+    }
+
+
+    /**
+     * Get all the user's favorite products.
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_user', 'user_id', 'product_id');
     }
 
     /**

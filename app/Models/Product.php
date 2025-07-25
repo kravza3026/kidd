@@ -6,6 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -74,6 +75,10 @@ class Product extends Model implements LocalizedUrlRoutable
 //        'variants.images',
     ];
 
+    protected $appends = [
+        'url',
+    ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -103,27 +108,28 @@ class Product extends Model implements LocalizedUrlRoutable
     {
         return $this->belongsTo(Fabric::class);
     }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
-            }
+    }
 
     public function link(): string
     {
-        return LaravelLocalization::getURLFromRouteNameTranslated( app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
             'category' => $this->category->slug,
             'product' => $this->slug,
-
         ]);
-//        return route('products.show', [$this->category, $this]);
     }
 
-    public function getLinkAttribute(): string
+    public function getUrlAttribute(): string
     {
-        return $this->link();
+        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+            'category' => $this->category->slug,
+            'product' => $this->slug,
+        ]);
     }
 
-    protected $appends = ['link'];
     /**
      * Resolve the route binding query for the model.
      *
@@ -157,7 +163,7 @@ class Product extends Model implements LocalizedUrlRoutable
 
     public function getLocalizedRouteKey($locale): string
     {
-        return $this->getSlugOptions()->slugField . '->' . $locale;
+        return $this->getSlugOptions()->slugField.'->'.$locale;
     }
 
     /**
@@ -196,6 +202,11 @@ class Product extends Model implements LocalizedUrlRoutable
 
 
         ];
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id');
     }
 
 }
