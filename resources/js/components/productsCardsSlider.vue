@@ -2,7 +2,7 @@
     <swiper
         :pagination="false"
         :space-between="20"
-        :autoplay="false"
+        :autoplay="true"
         :speed="1000"
         :free-mode="true"
         :breakpoints="{

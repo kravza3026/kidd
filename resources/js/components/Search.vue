@@ -20,46 +20,46 @@ export default {
             searchIcon,loop,gender,back,
             isMobile: window.innerWidth < 1024,
             items: [
-                {
-                    id: 1,
-                    name: 'Summer Cotton Jumpsuit',
-                    colors: ['Beige','Pink','White','Gray','Ivory'],
-                    image: img1,
-                    price: 240,
-                    oldPrice: null,
-                    size:['0–12M'],
-                    gender:false
-                },
-                {
-                    id: 2,
-                    name: 'Fleece Jumpsuit',
-                    colors: ['Beige', 'Pink', 'White', 'Gray',],
-                    image: img2,
-                    price: 236,
-                    oldPrice: 240,
-                    size:['0–8M'],
-                    gender:false
-                },
-                {
-                    id: 3,
-                    name: 'Elegant Jumpsuit',
-                    colors: ['White', 'Gray',],
-                    image: img1,
-                    price: 435,
-                    oldPrice: null,
-                    size:['0–12M'],
-                    gender:true
-                },
-                {
-                    id: 4,
-                    name: 'Cotton Jumpsuit',
-                    colors: ['White', 'Gray',],
-                    image: img1,
-                    price: 315,
-                    oldPrice: null,
-                    size:['0–18M'],
-                    gender:true
-                },
+                // {
+                //     id: 1,
+                //     name: 'Summer Cotton Jumpsuit',
+                //     colors: ['Beige','Pink','White','Gray','Ivory'],
+                //     image: img1,
+                //     price: 240,
+                //     oldPrice: null,
+                //     size:['0–12M'],
+                //     gender:false
+                // },
+                // {
+                //     id: 2,
+                //     name: 'Fleece Jumpsuit',
+                //     colors: ['Beige', 'Pink', 'White', 'Gray',],
+                //     image: img2,
+                //     price: 236,
+                //     oldPrice: 240,
+                //     size:['0–8M'],
+                //     gender:false
+                // },
+                // {
+                //     id: 3,
+                //     name: 'Elegant Jumpsuit',
+                //     colors: ['White', 'Gray',],
+                //     image: img1,
+                //     price: 435,
+                //     oldPrice: null,
+                //     size:['0–12M'],
+                //     gender:true
+                // },
+                // {
+                //     id: 4,
+                //     name: 'Cotton Jumpsuit',
+                //     colors: ['White', 'Gray',],
+                //     image: img1,
+                //     price: 315,
+                //     oldPrice: null,
+                //     size:['0–18M'],
+                //     gender:true
+                // },
 
             ],
             recommended:['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress']
@@ -101,6 +101,8 @@ export default {
                 await axios.get(`/${this.locale}/search?term=${query}`)
                     .then(response => {
                         this.items = response.data.results;
+                        console.log(this.items);
+                        console.log(this.items[0].variants[0].price_final);
                     })
                     .catch(error => {
                         console.error('Search error:', error);
@@ -224,20 +226,27 @@ export default {
                     </svg>
 
                     <div v-if="items.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
-                         class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0 lg:p-4">
+                         class="w-full absolute left-0 h-fit lg:max-h-[50vh] overflow-auto top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0 lg:p-4">
                         <ul  class="relative mt-2 w-full z-50">
                             <li v-for="item in items"
                                 :key="item.id"
                                 class="px-2 py-4 lg:p-4  hover:bg-gray-100 flex justify-between items-center gap-4 border-b border-b-light-border"
                             >
-                                <a href="#" class="flex gap-x-2 w-full">
+                                <a :href="item.url" class="flex gap-x-2 w-full">
                                     <div class="bg-card-bg size-14 p-2 text-center flex items-center justify-center rounded-md">
                                         <img :src="'/assets/images/' + item.main_image" alt='product' class="max-w-[50px] max-h-[50px] object-cover rounded-md" />
                                     </div>
                                     <div class="w-full">
                                         <div class="flex justify-start w-full gap-x-1">
                                             <p v-html="highlightMatch(item.name[locale])" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-xl"></p>
-<!--                                            <img class="size-5" v-if="item.gender?.name[locale] ?? false" :src="gender" alt="unisex">-->
+                                            <div v-if="item.gender" :class="item.gender?.bg_color" class="size-5 group relative flex items-center justify-center rounded-full" >
+                                                <span v-html="item.gender?.svg ?? ''" ></span>
+                                                <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100  transition-opacity duration-300 z-10">
+                                                   {{item.gender?.name[locale]}}
+                                                    <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="flex flex-wrap w-full">
                                             <p v-for="(variant, index) in item.variants"
@@ -254,9 +263,9 @@ export default {
                                         </div>
                                     </div>
                                    <div class="grid align-top">
-<!--                                       <p class="text-base w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.variants[0].price_final / 100 }} lei</p>-->
-<!--                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.variants[0].price_online.toFixed(0) }}-->
-<!--                                           lei</p>-->
+                                       <p class="text-base w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.variants[0]?.price_final / 100 }} lei</p>
+                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.variants[0].price_online / 100}}
+                                           lei</p>
                                    </div>
                                 </a>
                             </li>

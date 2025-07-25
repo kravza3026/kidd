@@ -51,6 +51,21 @@
         padding-top: 100px;
     }
 }
+
+@utility pb-section {
+    padding-bottom: 50px;
+
+    @variant sm {
+        padding-bottom: 80px;
+    }
+
+    @variant lg {
+        padding-bottom: 100px;
+    }
+}
+.py-section{
+   @apply pt-section pb-section ;
+}
 @utility container {
     padding-inline: 16px;
     margin-inline: auto;
@@ -97,7 +112,9 @@
     @apply bg-olive hover:bg-dark-olive;
     @apply transition-colors duration-300 ease-in-out;
 }
-
+.gradient_r-b{
+    @apply bg-gradient-to-l from-red-200 to-blue-300 py-0 px-3 rounded-full
+}
 .animated{
     @apply transition-all ease-in-out duration-500
 }

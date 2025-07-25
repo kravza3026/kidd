@@ -1,4 +1,4 @@
-<section class="container pt-section ">
+<section class="container pt-section pb-section">
     <h2 class="section-title text-[30px] md:text-[48px] font-[700] pb-5">Similar styles</h2>
     <div class="mt-5">
         {{-- Product cards --}}

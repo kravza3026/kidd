@@ -25,14 +25,14 @@ class CartController extends Controller
 //                    $variants->last(),
 //                    10,
 //                );
-
-//         Adding an item to the cart
+//
+////         Adding an item to the cart
 //                $item = LaraCart::addLine(
 //                    itemID: $variants->last(),
 //                    qty: 10,
 //                    taxable: true,
 //                );
-
+//
 //                $item->addSubItem([
 //                    'description' => 'Express Delivery', // this line is not required!
 //                    'price' => 15000,
@@ -72,7 +72,7 @@ class CartController extends Controller
         //        LaraCart::removeFee('express_delivery');
         //        LaraCart::removeFee('free_express_delivery');
 
-        dump($cart);
+//        dump($cart);
 
         $items = LaraCart::getItems();
         //        foreach ($items as $item) {
@@ -83,17 +83,17 @@ class CartController extends Controller
         //            dump($item->price / 100);
         //        }
 
-        dump($items);
-        dump(LaraCart::getFees());
-        dump(LaraCart::getCoupons());
-
-        dump('Net Total: '.LaraCart::netTotal($formatted = true, $withDiscount = true));
-        dump('Items Total: '.LaraCart::itemTotals($formatted = true, $withDiscount = true));
-
-        dump('Fees: '.LaraCart::feeSubTotal($formatted = true, $withDiscount = true));
-        dump('Discount: '.LaraCart::discountTotal($formatted = true, $withDiscount = true));
-        dump('Sub Total: '.LaraCart::subTotal($formatted = true, $withDiscount = true));
-        dump('Total: '.LaraCart::total($formatted = true, $withDiscount = true));
+//        dump($items);
+//        dump(LaraCart::getFees());
+//        dump(LaraCart::getCoupons());
+//
+//        dump('Net Total: '.LaraCart::netTotal($formatted = true, $withDiscount = true));
+//        dump('Items Total: '.LaraCart::itemTotals($formatted = true, $withDiscount = true));
+//
+//        dump('Fees: '.LaraCart::feeSubTotal($formatted = true, $withDiscount = true));
+//        dump('Discount: '.LaraCart::discountTotal($formatted = true, $withDiscount = true));
+//        dump('Sub Total: '.LaraCart::subTotal($formatted = true, $withDiscount = true));
+//        dump('Total: '.LaraCart::total($formatted = true, $withDiscount = true));
 
         //        netTotal
         //        itemTotals

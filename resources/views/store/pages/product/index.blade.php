@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout >
 
     <div class="container">
         <nav aria-label="Breadcrumb">
@@ -44,5 +44,4 @@
     @include('.store.pages.product.mobile.sections.questions')
 
     @include('.store.pages.product.sections.similar')
-
 </x-app-layout>

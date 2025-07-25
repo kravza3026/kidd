@@ -1,4 +1,4 @@
-<section class="pt-section">
+<section class="pt-section pb-section">
     <div class="container md:flex justify-between">
         <div class="w-full md:w-1/2 relative">
             <img class="relative w-full rounded-2xl md:rounded-l-2xl md:rounded-r-none right-0 top-0" src="{{ Vite::image('gender_1.jpg') }}" alt="">

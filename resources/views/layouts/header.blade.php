@@ -1,4 +1,4 @@
-<header class="lg:relative z-10 sticky top-0 bg-white">
+<header class="lg:relative z-10 sticky top-0 bg-white border-b border-b-light-border">
     @include('layouts.nav.topline')
 
     <nav class="container relative z-10 h-[72px] lg:h-[88px] flex justify-between font-bold">
@@ -9,7 +9,7 @@
         </div>
 
         <div class="w-full relative z-10   min-h-[60px] px-10 items-center justify-between hidden lg:flex">
-            <ul class="nav-items h-full flex justify-start items-center gap-y-5 gap-x-10 ">
+            <ul class="nav-items h-full grid grid-cols-4 items-center gap-y-5 gap-x-2 ">
                 <li class="dropdown relative h-full  flex items-center px-2 "
                     :class="{ 'border-olive border-b-2 ': $store.dropdown.open, 'border-transparent border-b-2 ': !$store.dropdown.open }"
                     x-data>
@@ -33,18 +33,18 @@
 
                     </div>
                 </li>
-                <li class="h-full flex items-center border-transparent border-b-2">
-                    <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.about') }}">
+                <li class="h-full flex items-center  border-b-2 {{ Route::is('about') ? 'text-olive border-olive border-b-2' : 'border-transparent' }}">
+                    <a class="mx-auto" href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.menu.about') }}">
                         {{ __('header.menu.about') }}
                     </a>
                 </li>
                 <li class="h-full flex items-center border-transparent border-b-2">
-                    <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.help') }}">
+                    <a class="mx-auto" href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.help') }}">
                         {{ __('header.menu.help') }}
                     </a>
                 </li>
                 <li class="h-full flex items-center border-transparent border-b-2">
-                    <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.contacts') }}">
+                    <a class="mx-auto" href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.contacts') }}">
                         {{ __('header.menu.contacts') }}
                     </a>
                 </li>
