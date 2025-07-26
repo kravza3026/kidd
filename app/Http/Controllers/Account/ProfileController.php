@@ -17,7 +17,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
 
-        return view('store.account.profile.index', [
+        return view('store.account.index', [
             'user' => $request->user(),
         ]);
     }
@@ -27,7 +27,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        
+
         return view('store.account.profile.edit', [
             'user' => $request->user(),
         ]);

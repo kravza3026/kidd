@@ -3,8 +3,6 @@ import searchIcon from '@img/search.svg';
 
 import loop from '@img/icons/loop.svg';
 import back from '@img/icons/back.svg';
-import img1 from '@img/products/product_3.png';
-import img2 from '@img/products/product_2.png';
 import gender from '@img/icons/unisex.svg';
 export default {
     name: 'Search',
@@ -30,37 +28,6 @@ export default {
                 //     size:['0–12M'],
                 //     gender:false
                 // },
-                // {
-                //     id: 2,
-                //     name: 'Fleece Jumpsuit',
-                //     colors: ['Beige', 'Pink', 'White', 'Gray',],
-                //     image: img2,
-                //     price: 236,
-                //     oldPrice: 240,
-                //     size:['0–8M'],
-                //     gender:false
-                // },
-                // {
-                //     id: 3,
-                //     name: 'Elegant Jumpsuit',
-                //     colors: ['White', 'Gray',],
-                //     image: img1,
-                //     price: 435,
-                //     oldPrice: null,
-                //     size:['0–12M'],
-                //     gender:true
-                // },
-                // {
-                //     id: 4,
-                //     name: 'Cotton Jumpsuit',
-                //     colors: ['White', 'Gray',],
-                //     image: img1,
-                //     price: 315,
-                //     oldPrice: null,
-                //     size:['0–18M'],
-                //     gender:true
-                // },
-
             ],
             recommended:['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress']
         };
@@ -237,28 +204,28 @@ export default {
                                         <img :src="'/assets/images/' + item.main_image" alt='product' class="max-w-[50px] max-h-[50px] object-cover rounded-md" />
                                     </div>
                                     <div class="w-full">
-                                        <div class="flex justify-start w-full gap-x-1">
-                                            <p v-html="highlightMatch(item.name[locale])" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-xl"></p>
-                                            <div v-if="item.gender" :class="item.gender?.bg_color" class="size-5 group relative flex items-center justify-center rounded-full" >
-                                                <span v-html="item.gender?.svg ?? ''" ></span>
+                                        <div class="flex justify-start items-center w-full gap-x-2">
+                                            <p v-html="highlightMatch(item.name[locale])" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-lg"></p>
+                                            <div v-if="item.gender" :class="item.gender?.bg_color" class="p-1 group relative flex items-center justify-center rounded-full" >
+                                                <span class="flex items-center size-3" v-html="item.gender?.svg ?? ''" ></span>
                                                 <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100  transition-opacity duration-300 z-10">
                                                    {{item.gender?.name[locale]}}
                                                     <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="flex flex-wrap w-full">
+                                        <div class="mt-1 flex flex-wrap w-full items-center gap-x-[1px]">
                                             <p v-for="(variant, index) in item.variants"
                                                 :key="variant.color.id"
-                                                class="text-xs lg:text-base border-r border-r-light2-border pr-1  opacity-40 font-normal lg:pr-2 tracking-tighter"
+                                                class="text-xs lg:text-base pr-1  text-charcoal/40 font-normal lg:pr-2 tracking-tighter"
                                             >
                                                 {{ variant.color.name[locale] }}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
+                                            <span class="h-full block py-2 mr-2 border-r border-r-light2-border"></span>
                                             <p v-for="(variant, index) in item.variants"
                                                :key="variant.size.id"
-                                                class="text-xs lg:text-base opacity-40 font-normal pl-1 lg:pr-2">
-                                                {{ variant.size.name[locale]}}
+                                                class="text-xs lg:text-base text-charcoal/40 font-normal lg:pr-2">
+                                                {{ variant.size.name[locale]}}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
                                         </div>
                                     </div>

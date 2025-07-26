@@ -2,6 +2,8 @@
     'size' => 'medium', // small, medium, large
     'left_icon' => false,
     'right_icon' => true,
+    'stroke_width' => 2,
+    'stroke_color' => 'white',
 ])
 
 @php
@@ -28,8 +30,8 @@
         xmlns="http://www.w3.org/2000/svg">
         <path
             d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002"
-            stroke="white"
-            stroke-width="2"
+            stroke="{{ $stroke_color }}"
+            stroke-width="{{ $stroke_width }}"
             stroke-linecap="round"
             stroke-linejoin="round"
             />
@@ -47,8 +49,8 @@
         >
             <path
                 d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002"
-                stroke="white"
-                stroke-width="2"
+                stroke="{{ $stroke_color }}"
+                stroke-width="{{ $stroke_width }}"
                 stroke-linecap="round"
                 stroke-linejoin="round"
             />

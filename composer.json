@@ -16,6 +16,7 @@
         "mcamara/laravel-localization": "^2.3",
         "moneyphp/money": "^4.7",
         "propaganistas/laravel-phone": "^6.0",
+        "spatie/laravel-medialibrary": "^11.13",
         "spatie/laravel-permission": "^6.20",
         "spatie/laravel-sluggable": "^3.7",
         "spatie/laravel-translatable": "^6.11",

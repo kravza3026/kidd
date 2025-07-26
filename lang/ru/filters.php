@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'filter_by' => 'Фильтр по',
+    'filter_by' => 'Фильтр',
+
     'size' => 'Размер',
     'all_sizes' => 'Все размеры',
     'fabric_type' => 'Материал',
@@ -31,7 +32,8 @@ return [
 
     'clear' => 'Очистить',
 
-    'sort_by' => 'Сортировать по',
+    'sort_by' => 'Сортировать',
+    
     'newest' => 'Новые',
     'bestseller' => 'Бестселлер',
     'discount' => 'Reducere',

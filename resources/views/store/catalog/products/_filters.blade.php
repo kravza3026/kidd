@@ -8,9 +8,9 @@
     $family = !request()->has('filters.family.0') && array_key_exists('family', request()->get('filters', [])) && count(request('filters')['family']);
     $showClearButton = request()->has('filters') && ($size || $fabric || $color || $gender || $season || $price || $family);
 @endphp
-<form class="w-full h-full flex" action="{!! url()->current() !!}" accept-charset="UTF-8" name="filtersForm" id="filtersForm">
-    @if( !is_null( request('search') ) )
-        <input type="hidden" name="search" value="{!! request('search') !!}">
+<form class="w-full h-full flex" action="{!! url()->current() !!}" accept-charset="ascii" name="filtersForm" id="filtersForm">
+    @if( !is_null( request('term') ) )
+        <input type="hidden" name="term" value="{!! request('term') !!}">
     @endif
     <div class="bg-white w-full mt-8 justify-between items-center hidden sm:flex">
         <div class="items-center justify-start gap-5 flex">

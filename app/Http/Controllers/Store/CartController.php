@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Support\Facades\Request;
 use LukePOLO\LaraCart\Coupons\Fixed;
 use LukePOLO\LaraCart\Coupons\Percentage;
 use LukePOLO\LaraCart\Facades\LaraCart;
@@ -15,21 +16,21 @@ class CartController extends Controller
 
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
-        //        LaraCart::emptyCart();
+//                LaraCart::emptyCart();
         //        LaraCart::destroyCart();
 
-        $product = Product::findOrFail(123);
-        $variants = $product->variants;
-
+//        $product = Product::findOrFail(123);
+//        $variants = $product->variants;
+//
 //                $item = LaraCart::add(
 //                    $variants->last(),
-//                    10,
+//                    rand(1, 10),
 //                );
 //
 ////         Adding an item to the cart
 //                $item = LaraCart::addLine(
 //                    itemID: $variants->last(),
-//                    qty: 10,
+//                    qty: 1,
 //                    taxable: true,
 //                );
 //
@@ -111,10 +112,27 @@ class CartController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $product = Product::findOrFail(123);
+        $variants = $product->variants;
+
+        // Adding an item to the cart
+        $item = LaraCart::add(
+            $variants->last(),
+            10,
+        );
+
+        return response(content: null, status: 201);
+
+    }
+
     public function destroy($itemHash)
     {
         LaraCart::removeItem($itemHash);
-                return response(content: null, status: 204);
-//        return back();
+
+//      return response(content: null, status: 204);
+
+        return back();
     }
 }

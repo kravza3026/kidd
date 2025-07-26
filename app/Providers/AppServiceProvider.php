@@ -71,6 +71,10 @@ class AppServiceProvider extends ServiceProvider
             $categories = Cache::rememberForever('categories', function () {
                 return Category::all();
             });
+            // Cache the first top-level category with its subcategories
+            $clothes = Cache::rememberForever('clothes', function () {
+                return Category::with('subcategories')->whereNull('parent_id')->first();
+            });
 
             View::share('brands', $brands);
             View::share('genders', $genders);
@@ -78,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
             View::share('colors', $colors);
             View::share('sizes', $sizes);
             View::share('categories', $categories);
+            View::share('clothes', $clothes);
 
         }
 

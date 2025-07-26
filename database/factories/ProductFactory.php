@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'is_visible' => rand(0, 1),
+            'is_visible' => true,
 
             'category_id' => rand(2, 6), //Category::factory(),
             'brand_id' => 1,
@@ -38,7 +38,6 @@ class ProductFactory extends Factory
             ],
 
             'main_image' => 'products/product_'.rand(1, 9).'.png',
-//            'cost' => new Money(fake()->randomNumber(4), new \Money\Currency('MDL')),
 
             'rating' => rand(1, 5),
             'review_count' => fake()->randomNumber(rand(2, 3)),

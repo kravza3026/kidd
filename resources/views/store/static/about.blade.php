@@ -1,5 +1,4 @@
 <x-app-layout>
-{{--    About {{ app()->getLocale() }}--}}
     <div class="pageContent ">
         <section class="py-section  container grid lg:grid-cols-12 justify-between">
             <div class="pr-5 col-span-6">
@@ -11,17 +10,17 @@
                 <h2 class="font-bold text-[30px] lg:text-[24px] leading-[-2%]">Our values</h2>
                 <div class="grid gap-y-2 lg:flex justify-between items-center gap-[20px] py-[20px] leading-[175%]">
                     <div class="flex items-center ">
-                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_1.png') }} alt="icon">
+                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_1.png') }} alt="icon" alt="">
                         <p class="leading-[130%] font-bold">High quality clothing
                             that is built to last</p>
                     </div>
                     <div class="flex items-center ">
-                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_2.png') }} alt="icon">
+                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_2.png') }} alt="icon" alt="">
                         <p class="leading-[130%] font-bold">Garments that feel
                             good on children skin</p>
                     </div>
                     <div class="flex items-center ">
-                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_3.png') }} alt="icon">
+                        <img width="40" height="40" class="pr-2" src={{ Vite::image('staticPages/about/aboutIcon_3.png') }} alt="icon" alt="">
                         <p class="leading-[130%] font-bold">Clothing that does
                             not break the bank</p>
                     </div>
@@ -30,7 +29,7 @@
             </div>
             <div class="col-span-6 flex justify-center lg:justify-end">
                 <div class="max-h-[650px] lg:mt-[-7%] h-full">
-                    <img  class="max-w-full mx-auto" height="650" alt="about" src={{ Vite::image('staticPages/about/b_1.png') }}>
+                    <img class="max-w-full mx-auto" height="650" alt="about" src={{ Vite::image('staticPages/about/b_1.png') }}>
                 </div>
             </div>
         </section>
@@ -53,7 +52,7 @@
                         </p>
                     </div>
                     <div class="flex justify-end order-1 lg:order-none py-5 lg:py-0">
-                        <img  class="max-w-full mx-auto"  height="600" alt="Who we are" src={{ Vite::image('staticPages/about/b_2.png') }}>
+                        <img class="max-w-full mx-auto"  height="600" alt="Who we are" src={{ Vite::image('staticPages/about/b_2.png') }}>
                     </div>
                 </div>
                 <div class="grid lg:grid-cols-2 gap-x-2 pt-section">

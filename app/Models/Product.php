@@ -13,20 +13,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
-class Product extends Model implements LocalizedUrlRoutable
+class Product extends Model implements HasMedia, LocalizedUrlRoutable
 {
-    use Searchable, SoftDeletes, HasFactory, HasTranslations, HasTranslatableSlug;
+    use InteractsWithMedia, Searchable, SoftDeletes, HasFactory, HasTranslations, HasTranslatableSlug;
 
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
     public array $translatable = [
         'name',
         'slug',
         'description',
     ];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'category_id',
         'brand_id',
@@ -51,6 +65,11 @@ class Product extends Model implements LocalizedUrlRoutable
         'is_bestseller',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'name' => 'json',
         'slug' => 'json',
@@ -63,6 +82,11 @@ class Product extends Model implements LocalizedUrlRoutable
         'is_bestseller' => 'boolean',
     ];
 
+    /**
+     * The Relations that should be queried in the model.
+     *
+     * @var array
+     */
     protected $with = [
         'category',
         'brand',
@@ -75,53 +99,74 @@ class Product extends Model implements LocalizedUrlRoutable
 //        'variants.images',
     ];
 
+    /**
+     * The attributes that should be appended to the model.
+     *
+     * @var array
+     */
     protected $appends = [
         'url',
     ];
 
+    /**
+     * Get the category that owns the product.
+     * @return BelongsTo
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Get the variants associated with the product.
+     * @return HasMany
+     */
     public function variants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
     }
 
+    /**
+     * Get the brand that the product is.
+     * @return BelongsTo
+     */
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
+    /**
+     * Get the product gender relation.
+     * @return BelongsTo
+     */
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
     }
 
+    /**
+     * Get the season that the product is.
+     * @return BelongsTo
+     */
     public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);
     }
 
+    /**
+     * Get the fabric that the product is made of.
+     * @return BelongsTo
+     */
     public function fabric(): BelongsTo
     {
         return $this->belongsTo(Fabric::class);
     }
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
-
-    public function link(): string
-    {
-        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
-            'category' => $this->category->slug,
-            'product' => $this->slug,
-        ]);
-    }
-
+    /**
+     * Get the URL for the product.
+     *
+     * @return string
+     */
     public function getUrlAttribute(): string
     {
         return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
@@ -161,6 +206,12 @@ class Product extends Model implements LocalizedUrlRoutable
         return 'slug';
     }
 
+    /**
+     * Get the localized route key for the model.
+     *
+     * @param  string  $locale
+     * @return string
+     */
     public function getLocalizedRouteKey($locale): string
     {
         return $this->getSlugOptions()->slugField.'->'.$locale;
@@ -193,20 +244,54 @@ class Product extends Model implements LocalizedUrlRoutable
         return 'products_index';
     }
 
+    /**
+     * Get the array that should be indexed for the model.
+     */
     public function toSearchableArray(): array
     {
         return [
             'id' => (int) $this->id,
             'name' => (array) $this->name,
-            'description' => (array) $this->description,
-
-
+//            'description' => (array) $this->description,
         ];
     }
 
+    /**
+     * The users that 'Favorited' to the product.
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id');
+    }
+
+    /**
+     * Register the media collections for the model.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('thumbnail')
+            ->useFallbackUrl('/images/placeholder.png', 'preview')
+            ->useFallbackPath(public_path('images/placeholder.png'));
+
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/images/placeholder.png', 'gallery')
+            ->useFallbackPath(public_path('images/placeholder.png'));
+    }
+
+    /**
+     * Register the media conversions for the model.
+     */
+    public function registerMediaConversions(Media|null $media = null): void
+    {
+        $this->addMediaConversion('preview')
+            ->performOnCollections('thumbnail')
+            ->fit(Fit::Contain, 330, 360);
+
+        $this->addMediaConversion('gallery')
+            ->performOnCollections('gallery')
+            ->fit(Fit::Contain, 630, 640)
+            ->quality(90)
+            ->withResponsiveImages();
     }
 
 }

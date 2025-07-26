@@ -26,7 +26,6 @@ class HomeController extends Controller
         return view('store.pages.home.index', compact('categories', 'products'));
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function search(Request $request)
     {
         if($request->has('term') && Str::length($request->term)) {
@@ -35,7 +34,8 @@ class HomeController extends Controller
         }
 
         return response()->json([
-            'error' => __('search.no_results'),
+            'results' => [],
+            'message' => __('search.no_results'),
         ]);
     }
 
