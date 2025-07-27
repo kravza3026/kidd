@@ -108,7 +108,7 @@ class CategorySeeder extends Seeder
                 'ru' => 'Desc RU!',
                 'en' => 'Desc EN!',
             ],
-            'image' => Vite::image('categories/category_5.svg'),
+            'image' => Vite::image('categories/placeholder.svg'),
         ]);
 
 

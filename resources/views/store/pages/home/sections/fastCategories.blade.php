@@ -1,11 +1,11 @@
 <section class="container pt-section ">
     <div class="flex justify-between overflow-x-scroll md:overflow-hidden w-full gap-5">
-        @for ($i = 1; $i <= 4; $i++)
+        @foreach ($clothes->subcategories->take(4) as $category)
             <x-category-card
-                title="Jumpsuits"
-                background-image="{{ asset('assets/images/categories/category_' . $i . '.svg') }}"
-                link="/categories/jumpsuits"
+                title="{{ $category->name }}"
+                background-image="{{ Vite::image($category->image) }}"
+                link="{{ route('products.category.index', $category) }}"
             />
-        @endfor
+        @endforeach
     </div>
 </section>

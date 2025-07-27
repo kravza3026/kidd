@@ -82,24 +82,26 @@
         class="absolute overflow-auto  left-0 w-full top-[72px] lg:top-[calc(100%+1px)] h-[calc(100vh-161px)] lg:h-fit  z-50    ring-black/5">
         <div class="bg-white shadow-lg relative lg:rounded-b-2xl min-h-fit h-full pb-5">
             <div class=" container grid lg:flex relative  lg:gap-y-5  lg:px-[40px] py-5 lg:py-[60px] border-t border-t-light-border">
-                <h2 class="text-[24px] opacity-80 font-bold pb-2 lg:hidden">Explore</h2>
+                <h2 class="text-[24px] opacity-80 font-bold pb-2 lg:hidden">
+                    {{ __('header.menu.catalog') }}
+                </h2>
                 <div class="small-cards  lg:w-[55%] lg:grid grid-cols-3  border lg:border-none rounded-2xl lg:rounded-none  border-light-border">
-                    @for ($i = 0; $i < 5; $i++)
-
-                        <a href="#"
+                    @foreach ($clothes->subcategories as $category)
+                        <a href="{{ route('products.category.index', ['category' => $category]) }}"
                            class="small-cart-container  group relative cursor-pointer flex items-center lg:grid  lg:justify-start lg:bg-light-orange hover:bg-olive duration-500 ease-in-out transition-all
                            lg:rounded-2xl lg:mr-[24px] lg:mb-[24px] p-4 lg:p-5  lg:w-[16vw] lg:h-[16vw] lg:max-w-[212px] lg:max-h-[186px]
-                            @if ($i!== 4) border-b border-light-border @endif
-                            @if($i==0) rounded-t-2xl  @elseif ($i == 4) rounded-b-2xl @endif
+                            @if ($loop->iteration != 4) border-b border-light-border @endif
+                            @if($loop->first) rounded-t-2xl  @elseif ($loop->iteration == 4) rounded-b-2xl @endif
                             ">
                             <div class="small-cart_img_container">
                                 <svg class="text-olive group-hover:text-white animated w-[24px] h-[24px] lg:w-[38px] lg:h-[38px]"  viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.28571 21.7L2.73695 19.6437C1.75688 19.2805 1.22175 18.2239 1.50889 17.2189L4.51054 6.71312C5.47673 3.33146 8.56761 1 12.0846 1V1C12.383 1 12.6557 1.16857 12.7891 1.43544L13.4179 2.69292C14.4751 4.80727 16.6361 6.14286 19 6.14286V6.14286C21.3639 6.14286 23.5249 4.80727 24.5821 2.69292L25.2109 1.43544C25.3443 1.16857 25.617 1 25.9154 1V1C29.4324 1 32.5233 3.33146 33.4895 6.71312L36.4911 17.2189C36.7783 18.2239 36.2431 19.2805 35.2631 19.6437L29.7143 21.7M8.28571 21.7V33.5193C8.28571 35.4416 9.84408 37 11.7664 37V37C13.2174 37 14.5161 36.1 15.0255 34.7414L17.6603 27.7155C18.1245 26.4776 19.8755 26.4776 20.3397 27.7155L22.9745 34.7414C23.4839 36.1 24.7826 37 26.2336 37V37C28.1559 37 29.7143 35.4416 29.7143 33.5193V21.7M8.28571 21.7V16.75M29.7143 21.7V16.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-
                             </div>
                             <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
-                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">Jumpsuits</p>
+                                <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">
+                                    {{ $category->name }}
+                                </p>
                             </div>
                             <i class="small-cart-arrow absolute right-0 lg:top-0 p-3 group-hover:p-2  duration-500 ease-in-out transition-all">
                                 <svg
@@ -120,15 +122,10 @@
                                         />
                                     </g>
                                 </svg>
-
                             </i>
                         </a>
-
-                    @endfor
-
+                    @endforeach
                 </div>
-
-
             </div>
             <div class="w-11/12 mx-auto lg:w-[45%] h-[224px] lg:h-full rounded-2xl lg:rounded-none relative lg:absolute right-0 bottom-0 lg:rounded-br-2xl flex flex-col justify-between"
                  style="background-image: url('{{ Vite::image('dropdown_bg.png') }}'); background-size: cover; background-position: center;">

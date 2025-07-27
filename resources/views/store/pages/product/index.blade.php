@@ -6,7 +6,7 @@
                 <li>
                     <div class="flex items-center">
                         <a href="{{ route('products.index') }}" class="mr-2 text-sm font-medium text-gray-500">
-                            {{ __('nav.explore') }}
+                            {{ __('header.menu.catalog') }}
                         </a>
                         <span class="text-gray-300">\</span>
                     </div>

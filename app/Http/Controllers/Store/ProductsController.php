@@ -25,7 +25,7 @@ class ProductsController extends Controller
     {
 
         $filters = [
-            new SearchProductFilter($request->get('search') ?? null),
+            new SearchProductFilter($request->get('term') ?? null),
             new CategoryProductFilter($category->exists ? $category->id : null),
             new GenderProductFilter($request->has('filters.gender') ? $request->get('filters')['gender'] : null),
             new FabricProductFilter($request->has('filters.fabric') ? $request->get('filters')['fabric'] : null),
@@ -38,7 +38,7 @@ class ProductsController extends Controller
         $products = Pipeline::send(Product::query())
             ->through($filters)
             ->thenReturn()
-            ->paginate(perPage: $request->per_page ?? 100)
+            ->paginate(perPage: $request->per_page ?? 32)
             ->withQueryString();
 
         //        dd(Category::search('suit')->get());

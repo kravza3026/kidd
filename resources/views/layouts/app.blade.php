@@ -7,6 +7,12 @@
         <meta name="description" content="Discover adorable outfits for your little joy! From cozy onesies to trendy outfits, we have everything you need to keep your baby stylish, comfortable and oh-so-cute.">
         <title>{{ config('app.name') }} - Moldova</title>
 
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('common/favicon_32x32.ico') }}">
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('common/favicon_16x16.ico') }}">
+        <link rel="icon" type="image/x-icon" href="{{ Vite::image('common/favicon.ico') }}">
+
+        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet">
@@ -14,7 +20,7 @@
     </head>
     <body>
         @include('layouts.header')
-        <main class="bg-white page-fade">
+        <main @class(['page-fade','bg-white', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
             {{ $slot }}
         </main>
         @include('layouts.footer')
@@ -31,5 +37,6 @@
              x-transition:enter-end="opacity-100 "
         ></div>
 
+        @stack('scripts')
     </body>
 </html>

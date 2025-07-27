@@ -19,7 +19,7 @@ class PagesController extends Controller
 
     public function terms_conditions()
     {
-        return view('store.static.terms_conditions');
+        return view('store.static.terms');
     }
 
     public function about()

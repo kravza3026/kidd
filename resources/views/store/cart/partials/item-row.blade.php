@@ -1,11 +1,14 @@
 <div class="border-b pb-6 w-full">
-    <form class="flex gap-6" action="{{ route('cart.destroy', $item->getHash()) }}" name="product_{{ $item->getHash() }}">
-        <div class="inline-flex selector">
-            <input type="checkbox" name="cart_product[]" id="{{ $item->getHash() }}" value="{{ @$item->getHash() }}" class="shrink-0 border-gray-300 rounded text-olive focus:ring-dark-olive"/>
-        </div>
+    <form class="flex gap-6" action="{{ route('cart.destroy', $item->getHash()) }}" name="cart_item_{{ $item->getHash() }}" method="POST">
+        @csrf
+        @method('DELETE')
+        {{--        <div class="flex items
+{{--        <div class="inline-flex selector">--}}
+{{--            <input type="checkbox" name="cart_product[]" id="{{ $item->getHash() }}" value="{{ @$item->getHash() }}" class="shrink-0 border-gray-300 rounded text-olive focus:ring-dark-olive"/>--}}
+{{--        </div>--}}
         <div class="max-w-[100px] flex bg-secondary rounded-xl">
             <div class="size-[100px] aspect-1">
-                <img width="100px" height="100px" src="{{ Vite::image('product-1.png') }}" alt="test img"/>
+                <img width="100px" height="100px" src="{{ Vite::image('products/product_1.png') }}" alt="test img"/>
             </div>
         </div>
         <div class="flex flex-1 justify-between flex-col">
@@ -77,9 +80,9 @@
                 </div>
             </div>
             <div class="flex justify-end">
-                <x-secondary-button class="px-4 capitalize text-olive !bg-secondary border !border-darkest-snow/50" type="submit">
-                    <img src="{{ Vite::image('trash.svg') }}" alt="">
-                    <span class="ml-2">Remove</span>
+                <x-secondary-button class="cursor-pointer !capitalize !shadow-none px-4 text-olive !bg-secondary border !border-darkest-snow/50" type="submit">
+                    <img src="{{ Vite::image('common/trash.svg') }}" alt="">
+                    <span class="ml-2">Delete</span>
                 </x-secondary-button>
             </div>
         </div>

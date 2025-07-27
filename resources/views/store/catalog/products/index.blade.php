@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class="bg-white mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <main class="container">
         <div class="mt-12 mb-6 flex-col justify-start items-start gap-6 flex">
             <div class="justify-start items-start gap-2 inline-flex">
                 <div class="opacity-80 text-black text-5xl font-bold leading-10">{{ $category->exists ? $category->name : __('general.products') }}</div>

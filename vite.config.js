@@ -11,7 +11,15 @@ export default defineConfig({
             refresh: true,
         }),
         vue(),
-        tailwindcss(),
+        tailwindcss({
+            config: {
+                plugins: [
+                    require("@tailwindcss/forms"),
+                    require("@tailwindcss/typography"),
+                    require("@tailwindcss/aspect-ratio"),
+                ],
+            }
+        }),
     ],
     resolve: {
         alias: {

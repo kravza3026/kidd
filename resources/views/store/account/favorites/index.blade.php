@@ -6,12 +6,13 @@
 
             <div class="p-6 md:px-10 mb-4">
                 <!-- Product grid -->
-                @forelse ([] as $product)
+{{--            // TODO - update this condition when we have a proper favorites system--}}
+                @forelse ($products ?? auth()->user()->favorites as $product)
                     @include('store.catalog.products._product-card')
                 @empty
                     <div class="flex flex-col justify-center items-center my-12 py-12">
                         <div class="flex justify-center items-center -mb-6">
-                            <img src="{{ Vite::image('empty_favorites.jpg') }}" alt=""/>
+                            <img src="{{ Vite::image('common/empty_favorites.jpg') }}" alt=""/>
                         </div>
                         <h3 class="flex justify-center items-center font-extrabold text-lg text-gray-900">
                             {{ __('You have no favorite products') }}

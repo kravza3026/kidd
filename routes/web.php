@@ -29,7 +29,7 @@ Route::group([
     Route::get('search', [HomeController::class, 'search'])->name('search');
 
     Route::get('cart', [CartController::class, 'index'])->name('cart');
-//    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 //    Route::put('cart', [CartController::class, 'update'])->name('cart.update');
     Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])->name('cart.destroy');
 
