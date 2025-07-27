@@ -69,16 +69,18 @@
                     <!-- Help -->
                     <div class="flex-1 group">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
-                            href="#"
+                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 "
+                            :href="`/${locale}/help`"
                         >
-                          <span class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                          <span  class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                             <img
-                                :src="faqIcon"
+                                :src="isHelpActive ? faqOpenIcon : faqIcon"
                                 alt="faq"
                                 class="mx-auto pb-1 opacity-65"
                             />
-                            <span class="block text-[12px] pb-1">Help</span>
+                            <span
+                                :class="{ 'text-olive': isHelpActive }"
+                                class="block text-[12px] pb-1">Help</span>
                           </span>
                         </a>
                     </div>
@@ -117,17 +119,18 @@
 
 <script>
 import Search from './Search.vue';
-
 import menuIcon from '@img/icons/menu.svg';
 import menuOpenIcon from '@img/icons/menuOpen.svg';
 import searchIcon from '@img/icons/search.svg';
 import searchOpenIcon from '@img/icons/searchOpen.svg';
 import cartIcon from '@img/icons/cart.svg';
 import faqIcon from '@img/icons/faq.svg';
+import faqOpenIcon from '@img/icons/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
 import CartDropdown from "@/components/CartDropdown.vue";
 import UserDropdown from "@/components/UserDropdown.vue";
 
+const currentPath = '/' + (window.location.pathname.split('/')[2] || '')
 export default {
     name: 'MobileMenu',
     props: {
@@ -139,7 +142,9 @@ export default {
             type: Object,
             default: () => ({}),
         },
+
     },
+
     components: {UserDropdown, CartDropdown, Search},
     data() {
         return {
@@ -152,9 +157,19 @@ export default {
             searchIcon,
             searchOpenIcon,
             cartIcon,
-            faqIcon,
+            faqIcon,faqOpenIcon,
             userIcon,
+            currentPath,
+
         };
+    },
+    computed: {
+        locale() {
+            return document.documentElement.lang || 'en';
+        },
+        isHelpActive() {
+            return window.location.pathname.includes('/help');
+        }
     },
     methods: {
         toggleExplore() {
@@ -195,6 +210,7 @@ export default {
             this.cartOpen = !this.cartOpen;
             document.body.classList.toggle('overflow-hidden', this.cartOpen);
         },
+
         toggleUser() {
             // Закриваємо інші
             this.exploreOpen = false;
@@ -208,6 +224,7 @@ export default {
             this.searchOpen = false;
             document.body.classList.remove('overflow-hidden');
         },
+
     }
 
 };

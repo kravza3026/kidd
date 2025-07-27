@@ -26,6 +26,7 @@ class HomeController extends Controller
         return view('store.pages.home.index', compact('categories', 'products'));
     }
 
+    //TODO Max 20 product result
     public function search(Request $request)
     {
         if($request->has('term') && Str::length($request->term)) {

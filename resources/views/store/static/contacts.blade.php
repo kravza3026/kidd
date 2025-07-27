@@ -1,7 +1,9 @@
 <x-app-layout>
     <div class="pageContent">
         <section class="container pt-section">
-            Contacts {{ app()->getLocale() }}
+            <div data-vue-component="contactUs">
+
+            </div>
         </section>
     </div>
 </x-app-layout>

@@ -164,7 +164,7 @@ export default {
                 ref="searchWrapper"
                 class="search-input absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
             >
-                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0">
+                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0 lg:top-[-10px]">
                     <img class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
                     <input
                         ref="searchInput"
