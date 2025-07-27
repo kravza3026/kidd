@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="pt-2 sm:pt-8 max-w-7xl mx-auto sm:px-4 lg:px-8 space-y-6">
-        <div class="bg-white shadow sm:rounded-lg">
+    <div class="bg-white sm:bg-transparent sm:pt-16 sm:pb-20 max-w-4xl mx-auto sm:px-4 lg:px-8 space-y-2">
+        <div class="bg-white shadow sm:rounded-xl">
             @include('store.account.nav')
             <div class="p-6 md:px-10">
 

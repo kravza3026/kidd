@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('order')->default(0);
+            $table->unsignedSmallInteger('sort_order')->default(0);
 
             $table->json('name');
 

@@ -1,4 +1,4 @@
-<div hx-target="this" hx-swap="outerHTML" class="w-full rounded-xl border border-gray-100 p-4">
+<div class="w-full rounded-xl border border-gray-100 p-4">
     <div class="flex flex-col items-start gap-1">
         <div class="flex flex-1 w-full justify-between items-center">
             <div class="flex">
@@ -10,21 +10,21 @@
                     <h3 class="text-lg leading-5 font-medium text-gray-900">
                         {{ $member->name }}
                     </h3>
-                    <span class="inline-block mx-3 h-6 w-[1px] bg-gray-300"></span>
-                    <span class="text-base leading-5 font-normal text-gray-400">
+                    <span class="inline-block mx-3 h-6 w-[1px] bg-gray-300/50"></span>
+                    <span class="text-sm leading-5 font-light text-gray-400">
                         {{ $member->birth_date->diffForHumans(['parts' => 2, 'short'=> false, 'options' => Carbon\Carbon::SEQUENTIAL_PARTS_ONLY, 'syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) }}
                     </span>
                 </div>
             </div>
             <div class="flex gap-2">
                 @can('update', $member)
-                    <button class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
+                    <button class="inline-flex items-center p-[7px] bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
                             hx-trigger="click" hx-get="{{ route('family.edit', $member) }}">
                         <img src="{{ Vite::image('common/edit.svg') }}" alt="">
                     </button>
                 @endcan
                 @can('delete', $member)
-                    <button class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
+                    <button class="inline-flex items-center p-[7px] bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
                             hx-trigger="click" hx-delete="{{ route('family.destroy', $member) }}">
                         <img src="{{ Vite::image('common/trash.svg') }}" alt="">
                     </button>

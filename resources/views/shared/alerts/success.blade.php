@@ -1,5 +1,5 @@
 
-<div class="max-w-full mx-auto px-0">
+<div class="max-w-full mx-auto px-0 py-4">
     <div class="space-y-3">
         <div x-data="{ show: true }"
              x-show="show"

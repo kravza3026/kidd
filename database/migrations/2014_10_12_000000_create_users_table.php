@@ -24,6 +24,12 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('default_locale', 2)->default('ro'); // Default locale for the user
+
+            $table->boolean('newsletter')->default(1);
+            $table->boolean('new_order_to_email')->default(1);
+            $table->boolean('new_order_to_sms')->default(1);
+            $table->boolean('order_status_email')->default(1);
+            $table->boolean('order_status_sms')->default(1);
             $table->boolean('email_marketing')->default(1);
             $table->boolean('sms_marketing')->default(1);
 

@@ -12,33 +12,33 @@
         @csrf
     </form>
 
-    <form name="profile" method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-4">
-        @csrf
+    <form name="profile" method="post" action="{{ route('profile.update') }}" class="sm:space-y-8">
+        <input type="hidden" name="section" value="profile"/>
         @method('put')
+        @csrf
 
-        <div class="flex flex-col sm:flex-row items-start gap-4 justify-between">
+        <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full">
                 <x-input-label for="first_name" :value="__('First name')"/>
-                <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full"
+                <x-text-input id="first_name" name="first_name" type="text" class="mt-3 block w-full"
                               :value="old('first_name', $user->first_name)" autocomplete="first_name"/>
-                <x-input-error class="mt-2" :messages="$errors->get('first_name')"/>
+                <x-input-error class="mt-2" :messages="$errors->profile->get('first_name')"/>
             </div>
 
             <div class="w-full">
                 <x-input-label for="last_name" :value="__('Last name')"/>
-                <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full"
+                <x-text-input id="last_name" name="last_name" type="text" class="mt-3 block w-full"
                               :value="old('last_name', $user->last_name)" autocomplete="last_name"/>
-                <x-input-error class="mt-2" :messages="$errors->get('last_name')"/>
+                <x-input-error class="mt-2" :messages="$errors->profile->get('last_name')"/>
             </div>
         </div>
 
-
-        <div class="flex flex-col sm:flex-row items-start gap-4 justify-between">
-            <div class="w-full">
+        <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
+            <div class="w-full mt-6 sm:mt-0">
                 <x-input-label for="email" :value="__('E-mail address')"/>
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
+                <x-text-input id="email" name="email" type="email" class="mt-3 block w-full"
                               :value="old('email', $user->email)" required autocomplete="email"/>
-                <x-input-error class="mt-2" :messages="$errors->get('email')"/>
+                <x-input-error class="mt-2" :messages="$errors->profile->get('email')"/>
 
                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                     <div>
@@ -61,9 +61,9 @@
             </div>
             <div class="w-full">
                 <x-input-label for="phone" :value="__('Phone number')"/>
-                <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full"
+                <x-text-input id="phone" name="phone" type="text" class="mt-3 block w-full"
                               :value="old('phone', $user->phone)" required autocomplete="phone"/>
-                <x-input-error class="mt-2" :messages="$errors->get('phone')"/>
+                <x-input-error class="mt-2" :messages="$errors->profile->get('phone')"/>
                 @if ($user instanceof App\MustVerifyPhone && ! $user->hasVerifiedPhone())
                     <div>
                         <p class="text-sm mt-2 text-gray-800">
@@ -85,22 +85,22 @@
             </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-start gap-4 justify-between">
-            <div class="w-full">
+        <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
+            <div class="w-full mt-6 sm:mt-0">
                 <x-input-label for="password" :value="__('Password')"/>
-                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password"/>
-                <x-input-error :messages="$errors->get('password')" class="mt-2"/>
+                <x-text-input id="password" name="password" type="password" class="mt-3 block w-full" autocomplete="new-password"/>
+                <x-input-error :messages="$errors->profile->get('password')" class="mt-2"/>
             </div>
 
             <div class="w-full">
                 <x-input-label for="password_confirmation" :value="__('Password confirmation')"/>
-                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password"/>
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>
+                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-3 block w-full" autocomplete="new-password"/>
+                <x-input-error :messages="$errors->profile->get('password_confirmation')" class="mt-2"/>
             </div>
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save changes') }}</x-primary-button>
+        <div class="flex items-center">
+            <x-primary-button class="mt-6 sm:mt-0">{{ __('Save changes') }}</x-primary-button>
         </div>
     </form>
 </section>

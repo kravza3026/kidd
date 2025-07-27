@@ -120,7 +120,7 @@ class CartController extends Controller
         // Adding an item to the cart
         $item = LaraCart::add(
             $variants->last(),
-            10,
+            3,
         );
 
         return response(content: null, status: 201);
