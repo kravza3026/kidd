@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('sort_order')->default(0);
             $table->unsignedSmallInteger('type')->default(1); // 1 = Clothes, 2 = Shoes, 3 = Accessory TODO: Move to enum
+            $table->unsignedSmallInteger('sort_order')->default(0);
 
             $table->json('name');
             $table->json('slug')->nullable();

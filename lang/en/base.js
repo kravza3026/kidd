@@ -1,4 +1,11 @@
 export default {
+    'menu': {
+        'catalog': 'Explore',
+        'search': 'Search',
+        'cart': 'Cart',
+        'help': 'Help',
+        'account': 'Account',
+    },
     'product-show': {
         new: 'New',
         mdl: 'lei',
@@ -16,5 +23,14 @@ export default {
         },
         'add-to-favorite': 'Save to Favorites',
         'add-to-cart': 'Add to cart',
+    },
+    'user-dropdown': {
+        'profile': 'My Profile',
+        'orders': 'My Orders',
+        'favorites': 'Favorites',
+        'addresses': 'Addresses',
+        'logout': 'Logout',
+        'login': 'Login',
+        'register': 'Register',
     }
 }

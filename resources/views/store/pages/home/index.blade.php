@@ -1,4 +1,11 @@
 <x-app-layout>
+    @push('meta')
+        @foreach(['en', 'ro', 'ru'] as $lang)
+            <link rel="alternate" hreflang="{{ $lang }}" href="{{ config('app.url') }}/{{ $lang }}" />
+        @endforeach
+        <link rel="alternate" hreflang="x-default" href="{{ config('app.url') }}" />
+    @endpush
+
     <div class="pageContent">
 
         {{-- Main banner at the top of the homepage --}}

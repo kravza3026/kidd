@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -23,6 +22,12 @@ class UserSeeder extends Seeder
 
             'phone_verified_at' => now(),
             'email_verified_at' => now(),
+
+            'newsletter' => 1,
+            'new_order_to_email' => 1,
+            'new_order_to_sms' => 1,
+            'order_status_email' => 1,
+            'order_status_sms' => 1,
 
             'email_marketing' => 1,
             'sms_marketing' => 1,

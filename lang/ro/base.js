@@ -1,4 +1,11 @@
 export default {
+    'menu': {
+        'catalog': 'Catalog',
+        'search': 'Căutare',
+        'cart': 'Coș',
+        'help': 'Ajutor',
+        'account': 'Contul meu',
+    },
     'product-show': {
         new: 'Nou',
         mdl: 'lei',

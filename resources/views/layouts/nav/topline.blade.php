@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="flex-1 flex justify-end gap-5 items-center">
-            @include('layouts.nav._lang_switcher')
+            @include('layouts.partials._lang_switcher')
             <a href="tel:+37360123456" class="text-[13px] font-medium">+373 (60) 123 456</a>
         </div>
     </div>

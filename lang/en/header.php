@@ -33,10 +33,4 @@ return [
         'profile' => 'Profile',
         'settings' => 'Settings',
     ],
-
-    'footer' => [
-        'terms' => 'Terms of Service',
-        'privacy' => 'Privacy Policy',
-        'faq' => 'FAQ',
-    ],
 ];

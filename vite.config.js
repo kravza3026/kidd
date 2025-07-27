@@ -14,9 +14,9 @@ export default defineConfig({
         tailwindcss({
             config: {
                 plugins: [
-                    require("@tailwindcss/forms"),
-                    require("@tailwindcss/typography"),
-                    require("@tailwindcss/aspect-ratio"),
+                    "@tailwindcss/forms",
+                    "@tailwindcss/typography",
+                    "@tailwindcss/aspect-ratio",
                 ],
             }
         }),

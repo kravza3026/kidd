@@ -37,8 +37,17 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
         'phone',
         'email',
         'password',
+
+        'newsletter',
+        'new_order_to_email',
+        'new_order_to_sms',
+        'order_status_email',
+        'order_status_sms',
+
         'email_marketing',
         'sms_marketing',
+
+
         'default_locale',
     ];
 

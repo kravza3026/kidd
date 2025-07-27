@@ -17,8 +17,6 @@
                     <div data-vue-component="ProductCard"
                          data-product='@json($product)'
                     ></div>
-
-{{--                    @include('store.catalog.products._product-card')--}}
                 @empty
                     <p>No products found</p>
                 @endforelse

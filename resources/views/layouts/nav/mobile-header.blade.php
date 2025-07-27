@@ -1,7 +1,7 @@
 {{--    mobile menu    --}}
 <div class="flex lg:hidden items-center gap-x-2">
     <div class="dropdown border border-black/10 rounded-full ">
-        @include('layouts.nav._lang_switcher')
+        @include('layouts.partials._lang_switcher')
     </div>
     <a class="p-2 w-[33px] h-[33px] flex items-center border border-black/10 rounded-full" href="tel:+37360123456">
         <img height="13" src="{{ Vite::image('icons/phone_i.svg') }}" alt="">

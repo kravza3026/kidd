@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->json('slug');
             $table->json('description')->nullable();
             $table->string('image')->nullable();
+            $table->text('icon')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

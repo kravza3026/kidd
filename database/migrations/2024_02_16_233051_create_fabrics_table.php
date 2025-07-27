@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('fabrics', function (Blueprint $table) {
             $table->id();
+            $table->unsignedSmallInteger('sort_order')->default(0);
             $table->json('name');
             $table->string('image_path')->nullable();
             $table->text('image_encoded')->nullable();

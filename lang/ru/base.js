@@ -1,4 +1,11 @@
 export default {
+    'menu': {
+        'catalog': 'Каталог',
+        'search': 'Поиск',
+        'cart': 'Корзина',
+        'help': 'Помощь',
+        'account': 'Мой аккаунт',
+    },
     'product-show': {
         new: 'Новый',
         mdl: 'лей',
@@ -16,5 +23,14 @@ export default {
         },
         'add-to-favorite': 'Сохранить в Избранные',
         'add-to-cart': 'Добавить в корзину',
+    },
+    'user-dropdown': {
+        'profile': 'Мой профиль',
+        'orders': 'Мои заказы',
+        'favorites': 'Избранные',
+        'addresses': 'Адреса',
+        'logout': 'Выйти',
+        'login': 'Войти',
+        'register': 'Регистрация',
     }
 };

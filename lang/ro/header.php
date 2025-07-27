@@ -33,10 +33,4 @@ return [
         'profile' => 'Profil',
         'settings' => 'Setări',
     ],
-
-    'footer' => [
-        'terms' => 'Termeni și condiții',
-        'privacy' => 'Confidențialitate',
-        'faq' => 'Întrebări frecvente',
-    ],
 ];
