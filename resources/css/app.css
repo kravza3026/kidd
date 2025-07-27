@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -39,6 +38,12 @@
     --color-baby-eyes: hsla(213, 98%, 79%, 1);
     --color-baby-pink: hsla(359, 49%, 84%, 1);
 
+}
+
+@layer base {
+    body {
+        @apply text-charcoal bg-white;
+    }
 }
 @utility pt-section {
     padding-top: 50px;
@@ -90,6 +95,7 @@
     font-family: "Onest", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+
 }
 
 .light_border{

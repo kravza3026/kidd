@@ -24,6 +24,8 @@ import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
+import HelpMain from './components/statickPages/help/helpMain.vue';
+import contactUs from './components/statickPages/contact-us/contactUs.vue';
 
 
 window.Alpine = Alpine;
@@ -37,7 +39,8 @@ const components = {
     Search,mobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
-    ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider
+    ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider,
+    HelpMain,contactUs
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
