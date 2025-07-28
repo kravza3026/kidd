@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Request;
 use LukePOLO\LaraCart\Coupons\Fixed;
 use LukePOLO\LaraCart\Coupons\Percentage;
@@ -114,14 +115,22 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $product = Product::findOrFail(123);
-        $variants = $product->variants;
 
-        // Adding an item to the cart
-        $item = LaraCart::add(
-            $variants->last(),
-            3,
-        );
+        $productVariant = ProductVariant::findOrFail($request->product_variant_id);
+
+//        LaraCart::add(
+//            $productVariant,
+//            3,
+//        );
+
+        return response(content: null, status: 201);
+
+    }
+
+    public function update(Request $request, $itemHash)
+    {
+
+//        LaraCart::find($itemHash)->update($request->all());
 
         return response(content: null, status: 201);
 

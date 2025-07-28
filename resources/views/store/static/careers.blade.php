@@ -67,6 +67,7 @@
                 </div>
             </div>
         </section>
+
         <section class="py-section bg-light-orange">
             <div class="container px-48">
                 <h2 class="text-center opacity-80 text-[48px] font-bold leading-[175%]">Do the work that matters</h2>
@@ -81,12 +82,12 @@
                                 <a href="{{ $job['link'] }}" class="text-olive flex items-center gap-x-2 mt-5">
                                     Apply now
                                     <span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.73334 2.66666H12.6667C13.0349 2.66666 13.3333 2.96513 13.3333 3.33332V12.2667M2.66667 13.3333L12.8 3.19999"
-                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3.73334 2.66666H12.6667C13.0349 2.66666 13.3333 2.96513 13.3333 3.33332V12.2667M2.66667 13.3333L12.8 3.19999"
+                                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
                                 </a>
                             </div>
                             <div class="max-w-1/2 flex gap-x-2 flex-wrap">
@@ -95,15 +96,11 @@
                                 @endforeach
                             </div>
                         </div>
-                        @unless($loop->last)
-                            <hr class="border-light-border">
-                        @endunless
+                        <hr class="border-light-border">
                     @endforeach
-                    <hr class="border-light-border">
                 </div>
             </div>
         </section>
-
 
     </div>
 </x-app-layout>

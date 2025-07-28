@@ -13,6 +13,27 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\VerifyPhoneController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Account\AddressesController;
+use App\Http\Controllers\Account\FamilyController;
+use App\Http\Controllers\Account\FavoritesController;
+use App\Http\Controllers\Account\OrdersController;
+use App\Http\Controllers\Account\ProfileController;
+
+
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    'prefix' => 'account',
+], function () {
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::resource('family', FamilyController::class)->only(['edit', 'store', 'update', 'destroy']);
+    Route::resource('favorites', FavoritesController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('orders', OrdersController::class)->only(['index', 'show']);
+    Route::resource('addresses', AddressesController::class)->only(['index', 'store', 'update', 'destroy']);
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');

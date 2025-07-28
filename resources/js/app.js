@@ -24,8 +24,8 @@ import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
-import HelpMain from './components/statickPages/help/helpMain.vue';
-import contactUs from './components/statickPages/contact-us/contactUs.vue';
+import HelpMain from './components/staticPages/help/helpMain.vue';
+import contactUs from './components/staticPages/contact-us/contactUs.vue';
 
 
 window.Alpine = Alpine;

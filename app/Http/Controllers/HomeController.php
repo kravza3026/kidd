@@ -16,27 +16,23 @@ class HomeController extends Controller
     public function index(): View
     {
 
-        //TODO Home Page New Arrivals Query
+        //TODO - Home Page New Arrivals Query
         $products = Product::latest()->take(16)->get();
 
         return view('store.pages.home.index', compact( 'products'));
     }
 
-    //TODO Max 20 product result
     public function search(Request $request)
     {
+        $results = [];
 
-        // TODO Move this endpoint to API Route & Controllers
-        // TODO Add Search Validation & Limitations
-        if($request->has('term') && (Str::length($request->term) > 3)) {
-            $results = Product::search($request->input('term'))->get();
-            return response()->json(compact('results'));
+        // TODO - Move this endpoint to API Route & Controllers
+        // TODO - Add Search Validation & Limitations (20 results)
+        if($request->has('term') && (Str::length($request->term) > 2)) {
+            $results = Product::search($request->input('term'))->take(20)->get();
         }
 
-        return response()->json([
-            'results' => [],
-            'message' => __('search.no_results'),
-        ]);
+        return response()->json(compact('results'));
     }
 
 }

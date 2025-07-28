@@ -16,14 +16,6 @@
         @endforeach
     </div>
 
-    {{--        <div>--}}
-    {{--            <x-input-label for="family" :value="__('First Name')"/>--}}
-    {{--            <x-text-input id="family" name="family" type="text" class="mt-1 block w-full"--}}
-    {{--                          :value="old('family', $user->family)"--}}
-    {{--                          required autocomplete="family"/>--}}
-    {{--            <x-input-error class="mt-2" :messages="$errors->get('family')"/>--}}
-    {{--        </div>--}}
-
     <div class="items-center gap-4 flex">
         <x-primary-button type="button" hx-get="{{ route('family.create') }}" hx-target="div.family_list" hx-swap="beforeend">
             {{ __('+ Add child') }}
