@@ -2,7 +2,10 @@
     <swiper
         :pagination="false"
         :space-between="20"
-        :autoplay="true"
+        :autoplay="{
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        }"
         :speed="1000"
         :free-mode="true"
         :breakpoints="{

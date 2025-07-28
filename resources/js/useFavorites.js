@@ -20,6 +20,7 @@ export function useFavorites() {
         const index = favorites.value.indexOf(productId)
         if (index === -1) {
             favorites.value.push(productId)
+
         } else {
             favorites.value.splice(index, 1)
         }

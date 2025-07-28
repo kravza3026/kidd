@@ -32,5 +32,12 @@ export default {
         'logout': 'Logout',
         'login': 'Login',
         'register': 'Register',
+    },
+    'alerts':{
+        'savedToFavorites':'saved to Favorites',
+        'removedFromFavorites':'removed from Favorites',
+        'addedToCart':'added to cart',
+        'removedFromCart':'removed from cart',
+
     }
 }

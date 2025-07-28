@@ -31,6 +31,7 @@
         "@tailwindplus/elements": "^1.0.0",
         "alpinejs": "^3.14.9",
         "js-cookie": "^3.0.5",
+        "sweetalert2": "^11.22.2",
         "swiper": "^11.2.10",
         "vue": "^3.5.17",
         "vue-i18n": "^9.14.5",

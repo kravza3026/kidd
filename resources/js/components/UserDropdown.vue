@@ -37,7 +37,7 @@
                         </form>
                     </div>
 
-                    <Button @click.passive="handleLogin" display-as="a" type="submit" customClass="mx-auto mt-4 w-full text-white">
+                    <Button @click.passive="handleLogin" display-as="a" type="submit" customClass="mx-auto py-3 mt-4 w-full text-white">
                         {{ $t ? $t('user-dropdown.login') : 'Sign In' }}
                     </Button>
 
