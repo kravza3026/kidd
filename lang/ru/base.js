@@ -4,7 +4,7 @@ export default {
         'search': 'Поиск',
         'cart': 'Корзина',
         'help': 'Помощь',
-        'account': 'Мой аккаунт',
+        'account': 'Аккаунт',
     },
     'product-show': {
         new: 'Новый',

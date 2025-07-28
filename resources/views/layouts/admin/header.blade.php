@@ -1,0 +1,82 @@
+<header class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64">
+    <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+        <div class="me-5 lg:me-0 lg:hidden">
+            <!-- Logo -->
+            <a href="{{ url('/') }}">
+                <svg class="block h-9 w-auto fill-current text-gray-800" width="116" height="36" viewBox="0 0 116 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="Logo">
+                        <path id="Ellipse 14" opacity="0.4" d="M34.1126 17.5676C34.1126 24.613 27.8249 30.3244 20.7287 30.3244C13.6325 30.3244 7.87988 24.613 7.87988 17.5676C7.87988 10.5223 18.2243 7.62173 21.7087 15.946C25.8464 7.40549 34.1126 10.5223 34.1126 17.5676Z" fill="#A8BA66"/>
+                        <path id="Vector" d="M17.778 30.1802C18.592 30.334 19.3765 29.7988 19.5303 28.9847C19.6841 28.1707 19.1489 27.3862 18.3348 27.2324L17.778 30.1802ZM20.0687 17.5C20.0687 18.3284 20.7403 19 21.5687 19C22.3972 19 23.0687 18.3284 23.0687 17.5H20.0687ZM24.1554 4.82993C24.908 5.17636 25.7988 4.84717 26.1453 4.09466C26.4917 3.34214 26.1625 2.45127 25.41 2.10484L24.1554 4.82993ZM18.0564 28.7063C18.3348 27.2324 18.3355 27.2325 18.3361 27.2326C18.3363 27.2327 18.3369 27.2328 18.3372 27.2328C18.3379 27.233 18.3384 27.2331 18.3388 27.2331C18.3395 27.2333 18.3398 27.2333 18.3395 27.2333C18.339 27.2332 18.3363 27.2326 18.3317 27.2317C18.3224 27.2298 18.3051 27.2262 18.2802 27.2206C18.2305 27.2096 18.151 27.191 18.0459 27.1637C17.8353 27.109 17.5245 27.0195 17.147 26.8855C16.3875 26.6159 15.3839 26.1749 14.39 25.492C12.4386 24.151 10.5247 21.8952 10.5247 18.0001H7.52467C7.52467 23.105 10.1266 26.2023 12.691 27.9645C13.9551 28.8331 15.2094 29.3811 16.1434 29.7127C16.6126 29.8792 17.0074 29.9934 17.2907 30.0671C17.4326 30.104 17.5471 30.1309 17.6297 30.1493C17.671 30.1584 17.7044 30.1655 17.7293 30.1706C17.7417 30.1731 17.752 30.1752 17.7602 30.1768C17.7642 30.1776 17.7678 30.1783 17.7707 30.1789C17.7722 30.1791 17.7736 30.1794 17.7748 30.1796C17.7754 30.1797 17.7762 30.1799 17.7765 30.18C17.7772 30.1801 17.778 30.1802 18.0564 28.7063ZM10.5247 18.0001C10.5247 16.0659 11.1112 14.7628 11.8725 13.9422C12.6407 13.1145 13.684 12.6709 14.7957 12.6238C17.0062 12.5301 19.4812 14.0175 20.0946 17.2774L23.0429 16.7227C22.151 11.9829 18.3539 9.47026 14.6687 9.62648C12.8326 9.70432 11.0221 10.4482 9.67346 11.9017C8.31802 13.3624 7.52467 15.4342 7.52467 18.0001H10.5247ZM23.0338 17.3217C23.7601 14.0133 26.2671 12.5309 28.4351 12.6238C29.5247 12.6705 30.5412 13.1091 31.2907 13.9321C32.0361 14.7505 32.6128 16.0566 32.6128 18.0001H35.6128C35.6128 15.4436 34.8409 13.3748 33.5087 11.912C32.1806 10.4538 30.3905 9.70489 28.5635 9.62659C24.8985 9.46952 21.1335 11.9871 20.1036 16.6784L23.0338 17.3217ZM20.0687 17.0001V17.5H23.0687V17.0001H20.0687ZM32.6128 18.0001C32.6128 26.0032 26.1007 32.5 18.0564 32.5V35.5C27.7475 35.5 35.6128 27.67 35.6128 18.0001H32.6128ZM18.0564 32.5C10.0121 32.5 3.5 26.0032 3.5 18H0.5C0.5 27.67 8.36524 35.5 18.0564 35.5V32.5ZM3.5 18C3.5 9.99684 10.0121 3.5 18.0564 3.5V0.5C8.36524 0.5 0.5 8.33005 0.5 18H3.5ZM18.0564 3.5C20.2374 3.5 22.3023 3.97681 24.1554 4.82993L25.41 2.10484C23.1712 1.07417 20.679 0.5 18.0564 0.5V3.5Z" fill="#020202"/>
+                        <g id="Text">
+                            <path d="M52.6884 12.9112C52.9146 12.4359 53.2846 12.2188 53.7985 12.2602L57.8687 12.2912C58.3826 12.2912 58.7526 12.5185 58.9788 12.9732C59.2049 13.4073 59.1946 13.831 58.9479 14.2444L54.6927 21.065C54.6516 21.1684 54.6619 21.251 54.7235 21.3131L60.243 28.4437C60.5719 28.8364 60.6336 29.2705 60.428 29.7459C60.2019 30.2006 59.8318 30.4486 59.3179 30.4899L55.1861 30.7379C54.7955 30.7586 54.4563 30.6139 54.1685 30.3039L50.715 26.3355C50.6328 26.2735 50.5506 26.2529 50.4683 26.2735C50.3861 26.3149 50.345 26.3872 50.345 26.4906L50.4375 29.4048C50.4581 29.7355 50.345 30.0455 50.0983 30.3349C49.8105 30.5829 49.5022 30.7069 49.1733 30.7069L45.2264 30.6759C44.8769 30.6553 44.5789 30.5313 44.3322 30.3039C44.0855 30.0559 43.9622 29.7562 43.9622 29.4048L43.7463 8.57082C43.7463 8.21945 43.8594 7.93009 44.0855 7.70273C44.3116 7.45471 44.5994 7.31003 44.9489 7.26869L48.3716 7.08267C48.7621 7.08267 49.0705 7.19635 49.2966 7.42371C49.5638 7.65106 49.7077 7.95076 49.7283 8.32279L50.0058 16.9106C50.0058 17.0346 50.0675 17.0967 50.1908 17.0967C50.2936 17.138 50.3656 17.107 50.4067 17.0036L52.6884 12.9112Z" fill="#020202"/>
+                            <path d="M61.638 13.8723L61.4222 29.3118C61.4222 29.6632 61.5455 29.9629 61.7922 30.2109C62.0183 30.4796 62.3164 30.6139 62.6864 30.6139L67.1883 30.6449C67.5172 30.6863 67.8255 30.5623 68.1133 30.2729C68.36 30.0249 68.4833 29.7252 68.4833 29.3738L68.175 13.8413C68.175 13.49 68.0517 13.2006 67.805 12.9732C67.5583 12.7252 67.2602 12.6012 66.9108 12.6012H62.9022C62.5528 12.6012 62.2547 12.7252 62.008 12.9732C61.7614 13.2213 61.638 13.521 61.638 13.8723Z" fill="#020202"/>
+                            <path d="M81.2632 29.0328C80.8932 29.4462 80.3176 29.7975 79.5364 30.0869C78.7758 30.3556 77.933 30.4899 77.008 30.4899C76.1857 30.4899 75.3532 30.3556 74.5104 30.0869C73.6675 29.8182 72.8967 29.3635 72.1977 28.7228C71.5194 28.0614 70.9541 27.1933 70.5018 26.1185C70.0701 25.0231 69.844 23.6693 69.8235 22.0571C69.8029 20.5483 69.9879 19.2462 70.3785 18.1508C70.7691 17.0346 71.283 16.1252 71.9202 15.4225C72.578 14.7198 73.3284 14.203 74.1712 13.8723C75.014 13.521 75.8979 13.3453 76.823 13.3453C78.2414 13.3453 79.6084 13.707 80.924 14.4304C80.9857 14.4717 81.0576 14.4717 81.1398 14.4304C81.2015 14.3684 81.2323 14.3064 81.2323 14.2444L81.0473 8.63282C81.0268 8.26079 81.1398 7.95076 81.3865 7.70273C81.6126 7.43404 81.9107 7.2997 82.2807 7.2997L86.3201 7.20669C86.649 7.18602 86.9574 7.2997 87.2451 7.54772C87.4918 7.79574 87.6152 8.10577 87.6152 8.47781L87.5535 29.5288C87.5535 29.8802 87.4302 30.1799 87.1835 30.4279C86.9368 30.6759 86.6387 30.7999 86.2893 30.7999H82.5582C82.2088 30.7999 81.9107 30.6863 81.664 30.4589C81.4379 30.2316 81.3146 29.9422 81.294 29.5908L81.2632 29.0328ZM81.0782 20.0729C80.667 19.8869 80.297 19.7629 79.9681 19.7009C79.6392 19.6182 79.3309 19.5769 79.0431 19.5769C78.3236 19.5769 77.7788 19.7836 77.4088 20.1969C77.0594 20.5897 76.8846 21.034 76.8846 21.5301C76.8846 22.0261 77.0594 22.4808 77.4088 22.8942C77.7583 23.3076 78.2928 23.5143 79.0122 23.5143C79.3 23.5143 79.6187 23.4729 79.9681 23.3903C80.3176 23.3076 80.6979 23.1629 81.109 22.9562C81.1707 22.9355 81.2015 22.8735 81.2015 22.7702V20.29C81.2015 20.1866 81.1604 20.1143 81.0782 20.0729Z" fill="#020202"/>
+                            <path d="M100.445 29.0328C100.075 29.4462 99.499 29.7975 98.7179 30.0869C97.9573 30.3556 97.1145 30.4899 96.1894 30.4899C95.3672 30.4899 94.5346 30.3556 93.6918 30.0869C92.849 29.8182 92.0781 29.3635 91.3792 28.7228C90.7008 28.0614 90.1355 27.1933 89.6833 26.1185C89.2516 25.0231 89.0255 23.6693 89.0049 22.0571C88.9843 20.5483 89.1693 19.2462 89.5599 18.1508C89.9505 17.0346 90.4644 16.1252 91.1017 15.4225C91.7595 14.7198 92.5098 14.203 93.3526 13.8723C94.1954 13.521 95.0794 13.3453 96.0044 13.3453C97.4228 13.3453 98.7898 13.707 100.105 14.4304C100.167 14.4717 100.239 14.4717 100.321 14.4304C100.383 14.3684 100.414 14.3064 100.414 14.2444L100.229 8.63282C100.208 8.26079 100.321 7.95076 100.568 7.70273C100.794 7.43404 101.092 7.2997 101.462 7.2997L105.502 7.20669C105.83 7.18602 106.139 7.2997 106.427 7.54772C106.673 7.79574 106.797 8.10577 106.797 8.47781L106.735 29.5288C106.735 29.8802 106.612 30.1799 106.365 30.4279C106.118 30.6759 105.82 30.7999 105.471 30.7999H101.74C101.39 30.7999 101.092 30.6863 100.845 30.4589C100.619 30.2316 100.496 29.9422 100.475 29.5908L100.445 29.0328ZM100.26 20.0729C99.8485 19.8869 99.4785 19.7629 99.1496 19.7009C98.8207 19.6182 98.5123 19.5769 98.2245 19.5769C97.505 19.5769 96.9603 19.7836 96.5903 20.1969C96.2408 20.5897 96.0661 21.034 96.0661 21.5301C96.0661 22.0261 96.2408 22.4808 96.5903 22.8942C96.9397 23.3076 97.4742 23.5143 98.1937 23.5143C98.4815 23.5143 98.8001 23.4729 99.1496 23.3903C99.499 23.3076 99.8793 23.1629 100.29 22.9562C100.352 22.9355 100.383 22.8735 100.383 22.7702V20.29C100.383 20.1866 100.342 20.1143 100.26 20.0729Z" fill="#020202"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M65.0103 5.47914C64.1831 5.01752 63.107 5.12834 62.3993 5.81162C61.5546 6.62717 61.5546 7.94945 62.3993 8.765L63.4808 9.80918C64.3255 10.6247 65.6951 10.6247 66.5398 9.80918L67.6214 8.765C68.4661 7.94945 68.4661 6.62717 67.6214 5.81162C66.9136 5.12834 65.8375 5.01752 65.0103 5.47914Z" fill="#020202"/>
+                            <path d="M113.773 23.8317C113.332 23.6287 112.86 23.5272 112.359 23.5272C111.837 23.5272 111.355 23.6287 110.914 23.8317C110.473 24.0121 110.081 24.2714 109.74 24.6097C109.419 24.9254 109.169 25.3088 108.988 25.7598C108.787 26.1882 108.687 26.6506 108.687 27.1467C108.687 27.6653 108.787 28.1502 108.988 28.6012C109.169 29.0297 109.419 29.4131 109.74 29.7513C110.081 30.067 110.473 30.3264 110.914 30.5293C111.355 30.7097 111.837 30.7999 112.359 30.7999C112.86 30.7999 113.332 30.7097 113.773 30.5293C114.214 30.3264 114.596 30.067 114.917 29.7513C115.258 29.4131 115.519 29.0297 115.699 28.6012C115.9 28.1502 116 27.6653 116 27.1467C116 26.6506 115.9 26.1882 115.699 25.7598C115.519 25.3088 115.258 24.9254 114.917 24.6097C114.596 24.2714 114.214 24.0121 113.773 23.8317Z" fill="#020202"/>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <!-- End Logo -->
+        </div>
+
+        <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
+            <div class="sm:hidden">
+                <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </div>
+
+            <div class="hidden sm:block">
+                <label for="icon" class="sr-only">Search</label>
+                <div class="relative min-w-72 md:min-w-80">
+                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
+                        <svg class="flex-shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <input type="text" id="icon" name="icon" class="py-2 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Search">
+                </div>
+            </div>
+
+            <div class="flex flex-row items-center justify-end gap-2">
+                <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                </button>
+                <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" data-hs-offcanvas="#hs-offcanvas-right">
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </button>
+
+                <div class="hs-dropdown relative inline-flex [--placement:bottom-right]'>
+          <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                <img class="inline-block size-[38px] rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description">
+                </button>
+
+                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
+                    <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
+                        <p class="text-sm text-gray-500">Signed in as</p>
+                        <p class="text-sm font-medium text-gray-800">{{ auth()->user()->name }}</p>
+                    </div>
+                    <div class="mt-2 py-2 first:pt-0 last:pb-0">
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
+                            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                            Newsletter
+                        </a>
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
+                            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            Purchases
+                        </a>
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
+                            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
+                            Downloads
+                        </a>
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
+                            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            Team Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </nav>
+</header>

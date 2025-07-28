@@ -1,10 +1,6 @@
 <x-app-layout>
     @push('head')
-        <!-- // Here are the styles -->
 {{--        <link rel="stylesheet" href="{{ asset('css/locations.css') }}">--}}
-        <style>
-
-        </style>
     @endpush
 
     <section class="container py-10">
@@ -12,7 +8,7 @@
             {{ __('header.topline.locations') }}
         </div>
     </section>
-        <div class="block w-full h-full min-h-[600px]" id="map"></div>
+    <div class="block w-full h-full min-h-[600px]" id="map"></div>
 
     @push('scripts')
         <script>

@@ -16,20 +16,19 @@ class HomeController extends Controller
     public function index(): View
     {
 
-        //TODO Home Page Display
+        //TODO Home Page New Arrivals Query
+        $products = Product::latest()->take(16)->get();
 
-        $categories = Category::whereNull('parent_id')->get();
-
-        $categories = $categories->first()->subcategories()->paginate(4);
-        $products = $categories->first()->products()->limit(8)->get();
-
-        return view('store.pages.home.index', compact('categories', 'products'));
+        return view('store.pages.home.index', compact( 'products'));
     }
 
     public function search(Request $request)
     {
-        if($request->has('term') && Str::length($request->term)) {
-            $results = Product::search($request->term)->get();
+
+        // TODO Move this endpoint to API Route & Controllers
+        // TODO Add Search Validation & Limitations
+        if($request->has('term') && (Str::length($request->term) > 3)) {
+            $results = Product::search($request->input('term'))->get();
             return response()->json(compact('results'));
         }
 

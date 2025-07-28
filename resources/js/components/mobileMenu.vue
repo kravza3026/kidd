@@ -20,7 +20,7 @@
                                       alt="menu"
                                       class="mx-auto pb-1 opacity-65"
                                   />
-                                <span class="block text-[12px] pb-1">Explore</span>
+                                <span class="block text-[12px] pb-1">{{ this.$t('menu.catalog') }}</span>
                             </span>
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                                     alt="search"
                                     class="mx-auto pb-1 opacity-65 w-[24px] h-[24px]"
                                 />
-                                <span class="block text-[12px] pb-1">Search</span>
+                                <span class="block text-[12px] pb-1">{{ this.$t('menu.search') }}</span>
                             </span>
                         </a>
                     </div>
@@ -61,7 +61,7 @@
                            </div>
                             <span
                                 :class="{ 'text-olive': cartOpen }"
-                                class="block text-[12px] pb-1">Cart</span>
+                                class="block text-[12px] pb-1">{{ this.$t('menu.cart') }}</span>
                           </div>
                         </a>
                     </div>
@@ -78,7 +78,7 @@
                                 alt="faq"
                                 class="mx-auto pb-1 opacity-65"
                             />
-                            <span class="block text-[12px] pb-1">Help</span>
+                            <span class="block text-[12px] pb-1">{{ this.$t('menu.help') }}</span>
                           </span>
                         </a>
                     </div>
@@ -94,7 +94,7 @@
                            <div class="mx-auto w-fit pb-1">
                                <UserDropdown :user="user" :is-authenticated="isAuthenticated" />
                            </div>
-                            <span class="block text-[12px] pb-1">Account</span>
+                            <span class="block text-[12px] pb-1">{{ this.$t('menu.account') }}</span>
                           </div>
                         </a>
                     </div>
