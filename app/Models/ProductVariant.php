@@ -66,12 +66,16 @@ class ProductVariant extends Model
 
     public function color(): BelongsTo
     {
-        return $this->belongsTo(Color::class);
+        return $this->belongsTo(Color::class)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc');
     }
 
     public function size(): BelongsTo
     {
-        return $this->belongsTo(Size::class);
+        return $this->belongsTo(Size::class)
+            ->orderBy('id', 'asc')
+            ->orderBy('sort_order', 'asc');
     }
 
 

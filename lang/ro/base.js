@@ -4,7 +4,7 @@ export default {
         'search': 'Căutare',
         'cart': 'Coș',
         'help': 'Ajutor',
-        'account': 'Contul meu',
+        'account': 'Cont',
     },
     'product-show': {
         new: 'Nou',

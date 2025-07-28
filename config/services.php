@@ -35,6 +35,10 @@ return [
         ],
     ],
 
+    'google_maps' => [
+        'key' => env('GOOGLE_MAPS_API_KEY', 'AIzaSyDrkYdFS2g0CovDZhGrBdvKzDitK34BgY0'),
+    ],
+
     'ga4' => [
         'measurement_id' => env('GA4_MEASUREMENT_ID'),
         'api_secret' => env('GA4_API_SECRET'),
