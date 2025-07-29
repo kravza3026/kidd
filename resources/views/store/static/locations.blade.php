@@ -58,7 +58,7 @@
                     const option = document.createElement('option');
                     option.value = marker.address;
                     option.textContent = marker.address;
-                    console.log(select)
+
                     select.appendChild(option);
                 });
 
@@ -72,6 +72,10 @@
                             view.content.style.display = '';
                         } else {
                             view.content.style.display = 'none';
+
+                            const selectedLocation = locations[index];
+                            map.setCenter(selectedLocation.position);
+                            map.setZoom(15);
                         }
                     });
                 });

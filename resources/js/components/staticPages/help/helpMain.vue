@@ -260,6 +260,37 @@ export default {
             activeTab,
             tabContentItem
         };
+    },
+    computed:{
+        handleType: function() {
+            if (this.timeout)
+                clearTimeout(this.timeout);
+
+            this.timeout = setTimeout(() => {
+                this.search();
+            }, 500); // delay
+        }
+    },
+    methods:{
+        async search() {
+            if (!this.searchQuery.trim()) return [];
+
+            const query = this.searchQuery.trim().toLowerCase();
+
+            try {
+                await axios.get(`/${this.locale}/search?term=${query}`)
+                    .then(response => {
+                        this.items = response.data.results;
+                        console.log(this.items);
+                        console.log(this.items[0].variants[0].price_final);
+                    })
+                    .catch(error => {
+                        console.error('Search error:', error);
+                    });
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        },
     }
 
 };

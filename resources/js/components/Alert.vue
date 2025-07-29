@@ -1,7 +1,7 @@
 <template id="my-template">
 <!--    <swal-title>Are you sure?</swal-title>-->
     <swal-html>
-        <div class="rounded-full flex items-center gap-x-5" >
+        <div class="rounded-full flex items-center gap-x-5 max-h-[100px]" >
             <div class="bg-light-orange/20 p-3 rounded-full">
                 <swal-icon type="success">
                     <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@ export default {
                 width: 'fit-content',
                 position: 'bottom',
                 showConfirmButton: false,
-                timer: 5000,
+                timer: 50000,
                 template: 'my-template',
             });
         }
