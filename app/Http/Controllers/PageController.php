@@ -44,7 +44,7 @@ class PageController extends Controller
      */
     public function help()
     {
-        return view('store.static.help');
+        return view('store.static.helpPage.index');
     }
 
     /**

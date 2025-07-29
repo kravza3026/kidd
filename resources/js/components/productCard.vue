@@ -107,7 +107,7 @@
                     <div class="w-4 flex justify-center  items-center rounded-2xl" v-html="product.gender.svg"></div>
                 </div>
                 <div
-                    class="text-[12px] bg-white font-bold h-[24px] text-nowrap rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10"
+                    class="text-[12px]  bg-white font-bold h-[24px] text-nowrap rounded-full flex items-center justify-center py-1 px-2 gap-x-1 border border-black/10"
                 >
                     <img :src="sizeIcon" alt="size" />
                     {{ minAge }}-{{ maxAge }}M
@@ -158,7 +158,7 @@ export default {
                 width: 'fit-content',
                 position: 'bottom',
                 showConfirmButton: false,
-                timer: false,
+                timer: 3000,
                 html: `
                 <div class="rounded-full flex items-center" >
                     <div class="bg-light-orange/20 p-3 rounded-full">

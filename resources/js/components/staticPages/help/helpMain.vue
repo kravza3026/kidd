@@ -188,26 +188,7 @@
     </div>
 
     <div class="tabContent py-section">
-        <div v-if="activeTab === 'DeliveryTab'">
-            <div class="container">
-                <delivery></delivery>
-            </div>
-        </div>
-        <div v-if="activeTab === 'PaymentsTab'">
-            <div class="container">
-                <p>This is the Payments tab content.</p>
-            </div>
-        </div>
-        <div v-if="activeTab === 'AccountTab'">
-            <div class="container">
-                <p>This is the Account tab content.</p>
-            </div>
-        </div>
-        <div v-if="activeTab === 'TechnicalTab'">
-            <div class="container">
-                <p>This is the Technical tab content.</p>
-            </div>
-        </div>
+        <div v-html="tabContentItem" />
 
         <div class="container">
             <div class="mt-10 p-2 px-[20px] md:container lg:p-10 bg-light-orange">
@@ -250,8 +231,7 @@
 
 </template>
 <script>
-import { ref } from 'vue';
-import Delivery from "@/components/staticPages/help/tabs/delivery.vue";
+import { ref, computed } from 'vue';
 import Button from "@/components/Button.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseTextarea from "@/components/ui/BaseTextarea.vue";
@@ -259,22 +239,29 @@ import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 
 export default {
     name: 'HelpMain',
-    components: {BaseCheckbox, BaseTextarea, Button, BaseInput, Delivery},
+    components: {BaseCheckbox, BaseTextarea, Button, BaseInput},
 
     data() {
         return {
             searchQuery: '',
             locale: document.documentElement.lang || 'ro',
-            tabs: ['DeliveryTab', 'PaymentsTab', 'AccountTab', 'TechnicalTab'],
         };
     },
 
     setup() {
         const activeTab = ref('DeliveryTab');
+
+        const tabContentItem = computed(() => {
+            const el = document.getElementById(`tab-${activeTab.value}`);
+            return el ? el.innerHTML : '';
+        });
+
         return {
             activeTab,
+            tabContentItem
         };
     }
+
 };
 
 </script>

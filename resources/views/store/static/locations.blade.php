@@ -40,28 +40,65 @@
                 // Add a custom control to the map
                 const controlDiv = document.createElement("div");
                 controlDiv.classList.add("custom-control");
-                controlDiv.innerHTML = `
-                    <select class="bg-white text-sm font-light mt-8 ml-12 px-3 py-2 rounded-sm" onclick="console.log(this.value)">
-                        <option value="0" selected>All locations</option>
-                        <option value="1">mun. Chișinău</option>
-                        <option value="2">mun. Bălți</option>
-                        <option value="3">or. Ungheni</option>
-                    </select>
-                `;
+
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
 
-                // Add markers to the map
+
+
+                const select = document.createElement('select');
+                select.classList.add('bg-white', 'text-sm', 'font-light', 'mt-8', 'ml-12', 'px-3', 'py-2', 'focus:outline-hidden', 'rounded-sm', 'border-none');
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = 0;
+                defaultOption.selected = true;
+                defaultOption.textContent = 'All locations';
+                select.appendChild(defaultOption);
+
+                locations.forEach((marker, index) => {
+                    const option = document.createElement('option');
+                    option.value = marker.address;
+                    option.textContent = marker.address;
+                    console.log(select)
+                    select.appendChild(option);
+                });
+
+                controlDiv.appendChild(select);
+
+                select.addEventListener('change', () => {
+                    const selectedType = select.value;
+
+                    markerViews.forEach(({ view, type }) => {
+                        if (selectedType === '0' || selectedType === type) {
+                            view.content.style.display = '';
+                        } else {
+                            view.content.style.display = 'none';
+                        }
+                    });
+                });
+
+
+                const markerViews = [];
+
                 for (const store_location of locations) {
-                    const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+                    const markerView = new google.maps.marker.AdvancedMarkerElement({
                         map,
                         content: buildContent(store_location),
                         position: store_location.position,
-                        title: store_location.description,
                     });
-                    AdvancedMarkerElement.addListener("click", () => {
-                        toggleHighlight(AdvancedMarkerElement, store_location);
+
+                    markerView.addListener("click", () => {
+                        toggleHighlight(markerView, store_location);
                     });
+
+                    markerViews.push({
+                        view: markerView,
+                        type: store_location.address
+                    });
+
+                    // Якщо потрібен доступ до content для фільтрації
+                    store_location.content = markerView.content;
                 }
+
 
             }
 
@@ -80,15 +117,61 @@
             // Function to build the content for each marker
             function buildContent(property) {
                 const content = document.createElement("div");
-                content.classList.add("property");
+                content.classList.add("marker-content");
                 content.innerHTML = `
-                    <div class="location">
-                        <h4>${property.name}</h4>
-                        <div class="details">
-                            <div class="address">${property.address}</div>
-                            <div class="description">${property.description}</div>
-                        </div>
+                          <div class="custom-marker group relative " >
+                <div class="text-red-500 duration-700 group-hover:text-charcoal">
+                         <svg width="112" height="117" viewBox="0 0 112 117"  xmlns="http://www.w3.org/2000/svg">
+                        <g filter="url(#filter0_dddii_969_9083)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M80 47.3681C80 49.0851 79.7069 50.7362 79.1661 52.278C76.7083 59.576 69.4458 65.2448 65.9386 67.6401C64.7604 68.4448 63.2396 68.4448 62.0614 67.6401C58.5542 65.2448 51.2917 59.5759 48.8339 52.2779C48.2931 50.7362 48 49.085 48 47.3681C48 38.8806 55.1634 32 64 32C72.8366 32 80 38.8806 80 47.3681ZM64 53.0764C67.6819 53.0764 70.6667 50.1276 70.6667 46.49C70.6667 42.8525 67.6819 39.9037 64 39.9037C60.3181 39.9037 57.3333 42.8525 57.3333 46.49C57.3333 50.1276 60.3181 53.0764 64 53.0764Z" fill="currentColor"/>
+                        </g>
+                        <defs>
+                        <filter id="filter0_dddii_969_9083" x="0" y="0" width="112" height="116.244" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dx="-8" dy="8"/>
+                        <feGaussianBlur stdDeviation="5"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_969_9083"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dx="-8" dy="8"/>
+                        <feGaussianBlur stdDeviation="20"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0.992157 0 0 0 0 0.2 0 0 0 0 0.2 0 0 0 0.2 0"/>
+                        <feBlend mode="normal" in2="effect1_dropShadow_969_9083" result="effect2_dropShadow_969_9083"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dx="8" dy="8"/>
+                        <feGaussianBlur stdDeviation="10"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+                        <feBlend mode="normal" in2="effect2_dropShadow_969_9083" result="effect3_dropShadow_969_9083"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow_969_9083" result="shape"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dx="2" dy="-12"/>
+                        <feGaussianBlur stdDeviation="6"/>
+                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                        <feBlend mode="normal" in2="shape" result="effect4_innerShadow_969_9083"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dx="-2" dy="2"/>
+                        <feGaussianBlur stdDeviation="4"/>
+                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"/>
+                        <feBlend mode="normal" in2="effect4_innerShadow_969_9083" result="effect5_innerShadow_969_9083"/>
+                        </filter>
+                        </defs>
+                        </svg>
+                </div>
+                <div class="absolute w-fit min-w-[100px] opacity-0 group-hover:opacity-100 duration-300 top-8 left-10/12  bg-white text-xs text-black p-3 rounded ">
+                    <p class="text-[18px]"> ${property.name} </p>
+                    <p class="text-[14px opacity-80 leading-[140%] text-nowrap py-1">${property.address}</p>
+                    <p class="text-[14px opacity-40 leading-[140%] text-nowrap">${property.description.hours}</p>
+                    <p class="text-[14px opacity-40 leading-[140%] text-nowrap">${property.description.dayOff}</p>
+                    <div class="absolute bg-white opacity-100 w-5 h-5 -translate-x-full rotate-45 top-1/6 -z-1" ></div>
                     </div>
+                </div>
+
                 `;
                 return content;
             }
@@ -99,27 +182,51 @@
             // Define the locations with their details
             const locations = [
                 {
+                    content:{
+                        style:{
+                            display:''
+                        },
+                    },
                     name: 'Store #3',
                     address: 'mun. Chișinău, str. Albisoara 3/1',
-                    description: 'Working hours — 09:00-20:00, Sunday — day-off',
+                    description: {
+                        hours:'Working hours — 09:00-20:00',
+                        dayOff:'Sunday — day-off'
+                    },
                     type: 'store',
                     position: {
                         lat: 47.0144034,
                         lng: 28.8561766,
                     }
                 }, {
+                    content:{
+                        style:{
+                            display:''
+                        },
+                    },
                     name: 'Warehouse #1',
                     address: 'mun. Chișinău, str. Muncești 5',
-                    description: 'Working hours — 09:00-20:00, Sunday — day-off',
+                    description: {
+                        hours:'Working hours — 09:00-20:00',
+                        dayOff:'Sunday — day-off'
+                    },
                     type: 'warehouse',
                     position: {
                         lat: 47.0226291,
                         lng: 28.8670329,
                     }
                 }, {
+                    content:{
+                        style:{
+                            display:''
+                        },
+                    },
                     name: 'Store #7',
                     address: 'or. Ungheni, bd. Decebal 12',
-                    description: 'Working hours — 09:00-20:00, Sunday — day-off',
+                    description: {
+                        hours:'Working hours — 09:00-20:00',
+                        dayOff:'Sunday — day-off'
+                    },
                     type: 'store',
                     position: {
                         lat: 46.9918719,
