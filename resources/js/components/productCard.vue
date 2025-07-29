@@ -240,7 +240,7 @@ export default {
     margin-bottom: 25px;
 }
 .swal2-html-container{
-    margin: 0.5em !important;
+    margin: 0.5rem !important;
 }
 
 </style>
