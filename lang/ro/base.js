@@ -21,8 +21,8 @@ export default {
             sleeve: 'Mâneci',
             closure: 'Închidere',
         },
-        'add-to-favorite': 'Adaugă la favorite',
-        'add-to-cart': 'Adaugă în coș',
+        'add-to-favorite': 'Adaugă la Favorite',
+        'add-to-cart': 'Adaugă în Coș',
     },
     'user-dropdown': {
         'profile': 'Contul meu',
@@ -32,5 +32,11 @@ export default {
         'logout': 'Deconectare',
         'login': 'Autentificare',
         'register': 'Înregistrare',
+    },
+    'alerts':{
+        'savedToFavorites':'salvat la Favorite',
+        'removedFromFavorites':'șters din Favorite',
+        'addedToCart':'adăugat în Coș',
+        'removedFromCart':'șters din Coș',
     }
 }

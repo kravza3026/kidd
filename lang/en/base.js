@@ -22,7 +22,7 @@ export default {
             closure: 'Closure',
         },
         'add-to-favorite': 'Save to Favorites',
-        'add-to-cart': 'Add to cart',
+        'add-to-cart': 'Add to Сart',
     },
     'user-dropdown': {
         'profile': 'My Profile',
@@ -36,8 +36,7 @@ export default {
     'alerts':{
         'savedToFavorites':'saved to Favorites',
         'removedFromFavorites':'removed from Favorites',
-        'addedToCart':'added to cart',
-        'removedFromCart':'removed from cart',
-
+        'addedToCart':'added to Сart',
+        'removedFromCart':'removed from Сart',
     }
 }

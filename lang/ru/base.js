@@ -22,7 +22,7 @@ export default {
             closure: 'Закрытие',
         },
         'add-to-favorite': 'Сохранить в Избранные',
-        'add-to-cart': 'Добавить в корзину',
+        'add-to-cart': 'Добавить в Корзину',
     },
     'user-dropdown': {
         'profile': 'Мой профиль',
@@ -32,5 +32,11 @@ export default {
         'logout': 'Выйти',
         'login': 'Войти',
         'register': 'Регистрация',
+    },
+    'alerts':{
+        'savedToFavorites':'сохранено в Избранных',
+        'removedFromFavorites':'удалено из Избранных',
+        'addedToCart':'добавлено в Корзину',
+        'removedFromCart':'удалено из Корзины',
     }
 };
