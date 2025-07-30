@@ -1,61 +1,32 @@
 <script>
+import _ from 'lodash';
 import searchIcon from '@img/search.svg';
-
 import loop from '@img/icons/loop.svg';
 import back from '@img/icons/back.svg';
 import gender from '@img/icons/unisex.svg';
 export default {
     name: 'Search',
-    props: {
-        modelValue: Boolean
-    },
     data() {
         return {
-            timeout: null,
             locale: document.documentElement.lang || 'ro',
             open: false,
             searchQuery: '',
+            processed: false,
             searchIcon,loop,gender,back,
             isMobile: window.innerWidth < 1024,
-            items: [
-                // {
-                //     id: 1,
-                //     name: 'Summer Cotton Jumpsuit',
-                //     colors: ['Beige','Pink','White','Gray','Ivory'],
-                //     image: img1,
-                //     price: 240,
-                //     oldPrice: null,
-                //     size:['0–12M'],
-                //     gender:false
-                // },
-            ],
-            recommended:['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress']
+            products: [],
+            recommended:[]
         };
     },
 
     computed: {
-        filteredResults() {
-            if (!this.searchQuery.trim()) return [];
-
-            const query = this.searchQuery.trim().toLowerCase();
-
-            return this.items.filter(item =>
-                item.name.toLowerCase().includes(query) ||
-                item.colors.some(color => color.toLowerCase().includes(query)) ||
-                item.size.some(size => size.toLowerCase().includes(query))
-            );
-        },
         hasSearchNoResults() {
-            return this.searchQuery.trim() !== '' && this.filteredResults.length === 0;
-        },
-        handleType: function() {
-            if (this.timeout)
-                clearTimeout(this.timeout);
-
-            this.timeout = setTimeout(() => {
-                this.search();
-            }, 500); // delay
+            return this.searchQuery.trim() !== '' && this.processed;
         }
+    },
+
+    created() {
+        this.fetchTags();
     },
 
     methods: {
@@ -64,20 +35,28 @@ export default {
 
             const query = this.searchQuery.trim().toLowerCase();
 
-            try {
-                await axios.get(`/${this.locale}/search?term=${query}`)
-                    .then(response => {
-                        this.items = response.data.results;
-                        console.log(this.items);
-                        console.log(this.items[0].variants[0].price_final);
-                    })
-                    .catch(error => {
-                        console.error('Search error:', error);
-                    });
-            } catch (error) {
-                console.error('Search error:', error);
-            }
+            // TODO - set url from global storage and easy accessible.
+            await axios.get(this.locale + this.route('search', {term:query}, false) )
+                .then(response => {
+                    this.products = response.data.results;
+                    this.processed = true;
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                });
+
         },
+
+        async fetchTags() {
+            // TODO - Implement API tags for recommended searches.
+            // TODO - Make them clickable, @click set as searchQuery
+            this.recommended = ['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress'];
+        },
+
+        handleType: _.debounce(function() {
+            this.search();
+        }, 350),
+
         openSearchFromOutside() {
             this.$refs.searchInput?.focus();
         },
@@ -130,7 +109,6 @@ export default {
         handleResize() {
             this.isMobile = window.innerWidth < 1024;
         },
-
 
     },
 
@@ -192,10 +170,10 @@ export default {
                         />
                     </svg>
 
-                    <div v-if="items.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
+                    <div v-if="products.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
                          class="w-full absolute left-0 h-fit lg:max-h-[50vh] overflow-auto top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0 lg:p-4">
                         <ul  class="relative mt-2 w-full z-50">
-                            <li v-for="item in items"
+                            <li v-for="item in products"
                                 :key="item.id"
                                 class="px-2 py-4 lg:p-4  hover:bg-gray-100 flex justify-between items-center gap-4 border-b border-b-light-border"
                             >
@@ -238,7 +216,8 @@ export default {
                             </li>
                         </ul>
                     </div>
-                    <div v-else-if="hasSearchNoResults" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white rounded-md shadow p-4">
+                    <div v-else-if="hasSearchNoResults" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
+                         class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white rounded-md shadow p-4">
                         <div>
                             <p class="text-sm">No relevant results found</p>
                             <p class="text-sm opacity-60 font-normal">You can change your query or choose from suggested search options</p>

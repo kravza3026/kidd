@@ -54,7 +54,11 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        // TODO - Unified user notification for messages.
         return Redirect::route('profile.edit')
-            ->with(['success' => true, 'message' => 'Profile updated successfully']);
+            ->with([
+                'success' => true,
+                'message' => 'Profile updated successfully'
+            ]);
     }
 }

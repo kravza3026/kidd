@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    public function locations()
-    {
-        return view('store.static.locations');
-    }
 
     public function careers()
     {

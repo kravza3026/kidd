@@ -8,6 +8,11 @@ use App\Models\User;
 class FamilyPolicy
 {
 
+    public function before(User $user, $ability)
+    {
+
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -21,7 +26,7 @@ class FamilyPolicy
      */
     public function view(User $user, Family $family): bool
     {
-        return $user->family()->pluck('id')->contains($family->id);
+        return $family->user()->is($user);
     }
 
     /**
@@ -38,8 +43,7 @@ class FamilyPolicy
     public function update(User $user, Family $family): bool
     {
 
-        return $user->family()->pluck('id')
-            ->contains($family->id);
+        return $family->user()->is($user);
 
     }
 
@@ -49,8 +53,7 @@ class FamilyPolicy
     public function delete(User $user, Family $family): bool
     {
 
-        return $user->family()->pluck('id')
-            ->contains($family->id);
+        return $family->user()->is($user);
 
     }
 

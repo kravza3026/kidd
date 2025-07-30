@@ -28,7 +28,6 @@
         </main>
         @include('layouts.partials.footer')
 
-{{--        @include('layouts.nav.mobile')--}}
         <div data-vue-component="mobileMenu" data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"></div>
         <div data-vue-component="ScrollToTop"></div>
         <div class="backdrop fixed inset-0 bg-black/70 z-[2]"

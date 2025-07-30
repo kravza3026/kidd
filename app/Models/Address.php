@@ -30,16 +30,20 @@ class Address extends Model
         'floor',
         'apartment',
         'intercom',
-        'city',
-        'region',
-        'country',
+        'city_id',
+        'region_id',
+        'country_id',
         'postal_code',
         'notes',
-        'price',
     ];
 
     protected $with = [
         'region',
+    ];
+
+    protected $hidden = [
+        'addressable_type',
+        'addressable_id',
     ];
 
     /**

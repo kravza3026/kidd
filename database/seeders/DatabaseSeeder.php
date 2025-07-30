@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             WarehouseSeeder::class,
             InventorySeeder::class,
+            LocationSeeder::class,
+            VacancySeeder::class,
         ]);
 
         Family::create([
@@ -41,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'weight' => 13200,
             'notes' => 'Test Sebastian Note!',
         ]);
-        
+
         Family::create([
             'user_id' => 1,
             'gender_id' => 3,

@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Store\CartController;
+use App\Http\Controllers\Store\LocationController;
 use App\Http\Controllers\Store\ProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,7 @@ Route::group([
     Route::group([
 //        'middleware' => 'cache.headers:public;max_age=60000;etag' // TODO - Production enable
     ], function () {
-        Route::get(LaravelLocalization::transRoute('routes.topline.locations'), [PageController::class, 'locations'])
+        Route::get(LaravelLocalization::transRoute('routes.topline.locations'), LocationController::class)
             ->name('locations');
         Route::get(LaravelLocalization::transRoute('routes.topline.careers'), [PageController::class, 'careers'])
             ->name('careers');

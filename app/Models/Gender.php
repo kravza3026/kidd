@@ -36,8 +36,7 @@ class Gender extends Model
                 return $value ?? 'bg-[#eee]';
             });
 //            set: fn ($value) => [
-//                'first_name' => explode(' ', $value)[0],
-//                'last_name' => explode(' ', $value)[1] ?? '',
+//                'first_name' => $value,
 //            ],
 
     }

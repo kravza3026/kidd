@@ -1,8 +1,8 @@
 <template>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 pb-section">
         <div class="form">
-            <h1 class="text-[24px] lg:text-[32px] font-bold">We’d love to hear from you</h1>
-            <p class="opacity-60 leading-[175%] text-[14px] lg:text-base">Message us and we will get back as soon as possible</p>
+            <h1 class="text-2xl lg:text-[32px] font-bold">We’d love to hear from you</h1>
+            <p class="opacity-60 leading-[175%] text-sm lg:text-base">Message us and we will get back as soon as possible</p>
             <form action="" class="w-full">
                 <BaseInput
                     customClass="w-full"
@@ -11,7 +11,7 @@
                     name="nameContact"
                     id="nameContact"
                     placeholder="Enter your first name"
-                    v-model="text"
+                    v-model="form.first_name"
 
                 />
                 <BaseInput
@@ -20,7 +20,7 @@
                     name="lnameContact"
                     id="lnameContact"
                     placeholder="Enter your last name"
-                    v-model="text"
+                    v-model="form.last_name"
                 />
                 <BaseInput
                     label="E-mail"
@@ -31,7 +31,7 @@
                     v-model="email"
                 />
                 <BaseTextarea
-                    v-model="message"
+                    v-model="form.message"
                     label="How can we help?"
                     id="messageHelp"
                     name="messageHelp"
@@ -53,11 +53,14 @@
         </div>
         <div :style="{ backgroundImage: `url(${imgBg})` }" class="relative mt-10 lg:mt-0 bg-no-repeat bg-center bg-cover rounded-2xl flex items-end min-h-[400px] md:min-h-[500px]">
             <div class="absolute inset-0 bg-gradient-to-t from-charcoal/25 to-charcoal/5 z-0 rounded-2xl"></div>
-           <div class="p-5 relative grid gap-[24px] z-10 text-white">
-               <p class="text-[20px] lg:text-[32px] text-white leading-[150%] lg:mb-10">“I'm so grateful to have discovered KIDD. The fabrics are soft and gentle, and the attention to details is outstanding.”</p>
+           <div class="p-5 relative grid gap-6 z-10 text-white">
+               <p class=" lg:text-[32px] text-xl text-white leading-[150%] lg:mb-10">“I'm so grateful to have discovered KIDD. The fabrics are soft and gentle, and the attention to details
+                   is
+                   outstanding
+                   .”</p>
                <div>
-                   <p class="font-bold lg:text-[20px]">Ana-Maria Parahonco</p>
-                   <p class="text-[12px] lg:text-[14px]">Mother of little princess</p>
+                   <p class="font-bold lg:text-xl">Ana-Maria Parahonco</p>
+                   <p class="text-xs lg:text-sm">Mother of little princess</p>
                </div>
            </div>
         </div>
@@ -78,9 +81,12 @@ export default {
 
     data() {
         return {
-            searchQuery: '',
-            locale: document.documentElement.lang || 'ro',
-            tabs: ['DeliveryTab', 'PaymentsTab', 'AccountTab', 'TechnicalTab'],
+            form: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                message: '',
+            },
             imgBg
         };
     },

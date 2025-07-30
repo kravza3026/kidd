@@ -48,7 +48,10 @@ export default {
             type: Boolean,
             default: false,
         },
-
+        stickyOnMobile: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         mergedClasses() {

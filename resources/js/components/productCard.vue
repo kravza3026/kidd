@@ -158,7 +158,7 @@ export default {
                 width: 'fit-content',
                 position: 'bottom',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 10000,
                 html: `
                 <div class="rounded-full flex items-center" >
                     <div class="bg-light-orange/20 p-3 rounded-full">
@@ -170,7 +170,8 @@ export default {
                     <strong class="text-sm">${productName}</strong><br>
                     <small class="text-xs opacity-60">${message}</small>
                 </div>
-                <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-sm rounded-full font-bold h-full px-4 py-2.5" href="/favorites" >
+                <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-sm rounded-full font-bold h-full px-4 py-2.5"
+                href="${ locale + '/account/favorites' }" >
                     ${t('user-dropdown.favorites')}
                     <svg
                 v-if="withArrow"

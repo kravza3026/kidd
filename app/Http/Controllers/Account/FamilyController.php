@@ -12,42 +12,38 @@ use Illuminate\Support\Carbon;
 class FamilyController extends Controller
 {
 
-    public function index(Request $request)
-    {
-        return view('store.account.profile.partials.family-list', [
-            'members' => $request->user()->family
-        ]);
-    }
-
-    public function store(StoreFamilyRequest $familyRequest)
+    public function store(StoreFamilyRequest $request)
     {
 
         $family = [
             'gender_id' => Gender::BOY,
-//            'gender_id' => $familyRequest->gender_id,
-//            'name' => $familyRequest->name,
+//            'gender_id' => $request->gender_id,
+//            'name' => $request->name,
             'name' => 'Baby Boy',
-            'birth_date' => Carbon::now()->subMonths(rand(1, 9)),
-            'height' => 55,
-            'weight' => 3445,
+            'birth_date' => Carbon::now()->year(rand(0, 2))->subMonths(rand(1, 9)),
+            'height' => 55, // in centimeters
+            'weight' => 3445, // in grams
             'notes' => 'Test note...',
         ];
 
-        $member = $familyRequest->user()->family()->create($family);
+        $member = $request->user()->family()->create($family);
 
-        return view('store.account.profile.partials.family-row', compact('member'));
+        // TODO - Success message. w/ Global toast message.
+        return response(content: $member, status: 201);
+//        return view('store.account.profile.partials.family-row', compact('member'));
     }
 
     public function create()
     {
-        return view('store.account.profile.partials.family-add');
+        return view('store.account.profile.partials.family-add')
+            ->render();
     }
 
     public function edit(Family $family)
     {
         return view('store.account.profile.partials.family-edit', [
             'member' => $family
-        ]);
+        ])->render();
     }
 
     public function show(Family $family)
@@ -75,8 +71,10 @@ class FamilyController extends Controller
 
     public function destroy(Family $family)
     {
-        if ($family->delete()) {
-            return response(content: null, status: 200);
-        }
+        auth()->user()->can('destroy', $family);
+        $family->delete();
+
+        // TODO - Success message. w/ Global toast message.
+        return response(content: null, status: 204);
     }
 }
