@@ -28,11 +28,16 @@
             <label for="filter_{{ $componentName }}_0"
                    class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                 <div class="inline-flex items-center">
-                    <input name="filters[color][]" value="true" type="checkbox"
-                           style="background-image: url('{{ Vite::image('common/all_colors.svg') }}'); background-position: center;"
-                           class="filter-all p-[12px] rounded-full text-white shadow-charcoal/15 shadow-inner border-0"
-                           id="filter_{{ $componentName }}_0"
-                        @checked(request()->has('filters.color.0') || !request()->has('filters.color'))>
+                    <x-ui.checkbox
+                        id="filter_{{ $componentName }}_0"
+                        name="filters[color][]"
+                        value="true"
+                        :modelValue="request()->has('filters.color.0') || !request()->has('filters.color')"
+                        class="rounded-full border-transparent border-none"
+                        style="background-image:url('{{Vite::image('icons/gradient.png')}}'); background-size: cover;background-color: transparent;
+                        "
+                    />
+
                     <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                         {{ __('filters.all_colors') }}
                     </span>
@@ -46,11 +51,16 @@
                 <label for="filter_{{ $componentName }}_{{ $color->id }}"
                        class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                     <div class="inline-flex items-center">
-                        <input name="filters[color][{{ $color->id }}]" value="true" type="checkbox"
-                               style="background-color: {{ $color->hex }};"
-                               class="filter-option bg-[{{ $color->hex }}] p-[12px] checked:bg-[{{ $color->hex }}] rounded-full text-white shadow-charcoal/15 shadow-inner border-0"
-                               id="filter_{{ $componentName }}_{{ $color->id }}"
-                            @checked(request()->has('filters.color.'.$color->id))>
+
+                        <x-ui.checkbox
+                            id="filter_{{ $componentName }}_{{ $color->id }}"
+                            name="filters[color][{{ $color->id }}]"
+                            value="true"
+                            :modelValue="request()->has('filters.color.'.$color->id)"
+                            class="rounded-full"
+                            style="background-color: {{ $color->hex }}"
+                        />
+
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                             {{ $color->name }}
                         </span>

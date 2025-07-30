@@ -49,10 +49,15 @@
                 <label for="filter_price_discounted"
                        class="cursor-pointer flex justify-between w-full text-sm">
                     <div class="inline-flex items-center">
-                        <input name="filters[price][discounted]" value="true" type="checkbox"
-                               class="rounded-md w-5 h-5 text-charcoal checked:text-olive"
-                               id="filter_price_discounted"
-                            @checked( request()->has('filters.price.discounted') )>
+
+                        <x-ui.checkbox
+                            id="filter_{{ $componentName }}_{{ $size->id }}"
+                            id="filter_price_discounted"
+                            value="true"
+                            name="filters[price][discounted]"
+                            :modelValue="request()->has('filters.price.discounted')"
+
+                        />
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                         {{ __('filters.price_discounted') }}
                     </span>

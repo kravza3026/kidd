@@ -28,10 +28,14 @@
             <label for="filter_{{ $componentName }}_0"
                    class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                 <div class="inline-flex items-center">
-                    <input name="filters[size][]" value="true" type="checkbox"
-                           class="filter-all shrink-0 border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                           id="filter_{{ $componentName }}_0"
-                        @checked(request()->has('filters.size.0') || !request()->has('filters.size'))>
+                    <x-ui.checkbox
+                        id="filter_{{ $componentName }}_0"
+                        name="filters[size][]"
+                        value="true"
+                        :modelValue="request()->has('filters.size.0') || !request()->has('filters.size')"
+                        class="rounded-full"
+                    />
+
                     <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                         {{ __('filters.all_sizes') }}
                     </span>
@@ -45,10 +49,15 @@
                 <label for="filter_{{ $componentName }}_{{ $size->id }}"
                        class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                     <div class="inline-flex items-center">
-                        <input name="filters[size][{{ $size->id }}]" value="true" type="checkbox"
-                               class="filter-option shrink-0 border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                               id="filter_{{ $componentName }}_{{ $size->id }}"
-                            @checked(request()->has('filters.size.'.$size->id))>
+                        <x-ui.checkbox
+                            id="filter_{{ $componentName }}_{{ $size->id }}"
+                            name="filters[size][{{ $size->id }}]"
+                            value="true"
+                            :modelValue="request()->has('filters.size.'.$size->id)"
+                            class="rounded-full"
+                        />
+
+
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                             {{ $size->name }}
                         </span>

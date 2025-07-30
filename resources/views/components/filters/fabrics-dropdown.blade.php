@@ -28,10 +28,15 @@
             <label for="filter_{{ $componentName }}_0"
                    class="cursor-pointer flex flex-wrap h-[100px] w-[136px] rounded-xl pb-4 px-4 pt-3 text-sm bg-secondary border border-darkest-snow">
                 <div class="w-full flex items-center justify-end">
-                    <input name="filters[fabric][0]" value="true" type="checkbox"
-                           class="checked:inline-flex hidden checked:visible filter-all border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                           id="filter_{{ $componentName }}_0"
-                        @checked(request()->has('filters.fabric.0') || !request()->has('filters.fabric'))>
+                    <x-ui.checkbox
+                        id="filter_{{ $componentName }}_0"
+                        name="filters[fabric][0]"
+                        value="true"
+                        :modelValue="request()->has('filters.fabric.0') || !request()->has('filters.fabric')"
+                        class="rounded-full"
+                    />
+
+
                 </div>
                 <div class="w-full flex items-end">
                     <div class="flex items-center gap-x-1">
@@ -50,11 +55,13 @@
                        style="background-image: url('{{ Vite::image('fabrics/'.$fabric->image_path) }}'); background-blend-mode: darken; background-size: cover;"
                        class="bg-black/25 bg-blend-multiply hover:bg-blend-lighten cursor-pointer flex flex-wrap h-[100px] w-[136px] rounded-xl pb-4 px-4 pt-3 text-sm bg-fill border focus:border-darkest-snow">
                     <div class="w-full flex items-center justify-end">
-                        <input name="filters[fabric][{{ $fabric->id }}]" value="true" type="checkbox"
-                               class="filter-option checked:inline-flex hidden checked:visible border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                               id="filter_{{ $componentName }}_{{ $fabric->id }}"
-                            @checked(request()->has('filters.fabric.'.$fabric->id))>
-
+                        <x-ui.checkbox
+                            id="filter_{{ $componentName }}_{{ $fabric->id }}"
+                            name="filters[fabric][{{ $fabric->id }}]"
+                            value="true"
+                            :modelValue="request()->has('filters.fabric.'.$fabric->id)"
+                            class="rounded-full"
+                        />
                     </div>
                     <div class="w-full flex items-end">
                         <div class="flex items-center gap-x-1">

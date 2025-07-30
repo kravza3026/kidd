@@ -12,7 +12,7 @@
             name="{{ $name }}"
             @checked(old($name, $modelValue))
             {{ $attributes->merge([
-                'class' => 'peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-olive checked:border-light-grey'
+                'class' => 'peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-1 border-light-border checked:bg-olive checked:border-light-grey'
             ]) }}
         />
         <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

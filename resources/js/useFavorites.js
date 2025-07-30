@@ -7,6 +7,7 @@ const COOKIE_KEY = 'favorites'
 export function useFavorites() {
     const favorites = ref(getFavoritesFromCookie())
 
+
     function getFavoritesFromCookie() {
         const cookie = Cookies.get(COOKIE_KEY)
         return cookie ? JSON.parse(cookie) : []
@@ -23,6 +24,7 @@ export function useFavorites() {
 
         } else {
             favorites.value.splice(index, 1)
+            console.log('add')
         }
         saveToCookie()
     }

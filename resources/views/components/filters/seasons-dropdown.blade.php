@@ -28,10 +28,15 @@
             <label for="filter_{{ $componentName }}_0"
                    class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                 <div class="inline-flex items-center">
-                    <input name="filters[season][]" value="true" type="checkbox"
-                           class="filter-all shrink-0 border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                           id="filter_{{ $componentName }}_0"
-                        @checked(request()->has('filters.season.0') || !request()->has('filters.season'))>
+
+                    <x-ui.checkbox
+                        id="filter_{{ $componentName }}_0"
+                        name="filters[season][]"
+                        value="true"
+                        :modelValue="request()->has('filters.season.0') || !request()->has('filters.season')"
+                        class="rounded-full"
+                    />
+
                     <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                         {{ __('filters.all_seasons') }}
                     </span>
@@ -45,10 +50,15 @@
                 <label for="filter_{{ $componentName }}_{{ $season->id }}"
                        class="cursor-pointer max-w-xs flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
                     <div class="inline-flex items-center">
-                        <input name="filters[season][{{ $season->id }}]" value="true" type="checkbox"
-                               class="filter-option shrink-0 border-darken p-[11px] rounded-full text-olive focus:ring-olive disabled:opacity-50 disabled:pointer-events-none"
-                               id="filter_{{ $componentName }}_{{ $season->id }}"
-                            @checked(request()->has('filters.season.'.$season->id))>
+
+                        <x-ui.checkbox
+                            id="filter_{{ $componentName }}_{{ $season->id }}"
+                            name="filters[season][{{ $season->id }}]"
+                            value="true"
+                            :modelValue="request()->has('filters.season.'.$season->id)"
+                            class="rounded-full "
+                        />
+
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
                             {{ $season->name }}
                         </span>
