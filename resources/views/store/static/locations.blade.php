@@ -67,27 +67,31 @@
         defaultOption.textContent = 'All locations';
         select.appendChild(defaultOption);
 
-        locations.forEach((marker, index) => {
-            const option = document.createElement('option');
-            option.value = marker.address;
-            option.textContent = marker.address;
-            console.log(select)
-            select.appendChild(option);
-        });
+                locations.forEach((marker, index) => {
+                    const option = document.createElement('option');
+                    option.value = marker.address;
+                    option.textContent = marker.address;
+
+                    select.appendChild(option);
+                });
 
         controlDiv.appendChild(select);
 
         select.addEventListener('change', () => {
             const selectedType = select.value;
 
-            markerViews.forEach(({ view, type }) => {
-                if (selectedType === '0' || selectedType === type) {
-                    view.content.style.display = '';
-                } else {
-                    view.content.style.display = 'none';
-                }
-            });
-        });
+                    markerViews.forEach(({ view, type }) => {
+                        if (selectedType === '0' || selectedType === type) {
+                            view.content.style.display = '';
+                        } else {
+                            view.content.style.display = 'none';
+
+                            const selectedLocation = locations[index];
+                            map.setCenter(selectedLocation.position);
+                            map.setZoom(15);
+                        }
+                    });
+                });
 
         const markerViews = [];
 
