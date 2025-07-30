@@ -140,3 +140,10 @@
         opacity: 1;
     }
 }
+ul.markers{
+    list-style-image: url('../images/icons/list_marker.png');
+
+    li>p{
+        opacity: 80%;
+    }
+}

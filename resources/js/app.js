@@ -25,7 +25,7 @@ import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
-import contactUs from './components/staticPages/contact-us/contactUs.vue';
+
 
 
 window.Alpine = Alpine;
@@ -40,7 +40,7 @@ const components = {
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
     ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider,
-    HelpMain,contactUs
+    HelpMain
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
