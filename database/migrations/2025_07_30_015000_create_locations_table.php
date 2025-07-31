@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Address;
+use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +17,7 @@ return new class extends Migration
             // Location name
             $table->json('name');
             // Location type (Store || Warehouse)
-            $table->unsignedSmallInteger('type')->default(1); // 1 - Warehouse, 2 - Store..
+            $table->unsignedSmallInteger('type')->default(Location::TYPE_WAREHOUSE); // 1 - Warehouse, 2 - Store..
             // Location Geo Position (lat,lng) coords
             $table->json('geo_position')->nullable();
             // Location Open Hours

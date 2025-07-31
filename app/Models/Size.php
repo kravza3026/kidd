@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -10,6 +11,11 @@ use Spatie\Translatable\HasTranslations;
 class Size extends Model
 {
     use HasTranslations, HasTranslatableSlug;
+
+    // TODO - Move to Enum
+    const int TYPE_CLOTH = 1;
+    const int TYPE_SHOES = 2;
+    const int TYPE_ACCESSORY = 3;
 
     public array $translatable = [
         'name',
@@ -23,15 +29,11 @@ class Size extends Model
         'slug' => 'json',
     ];
 
-    protected $with = [
-//        'products', // memory leak!
-    ];
-
     protected $withCount = [
         'products'
     ];
 
-    public function products()
+    public function products(): Size|HasManyThrough
     {
         return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id');
     }

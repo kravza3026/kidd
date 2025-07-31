@@ -115,13 +115,13 @@
                 <div class="w-full md:flex flex-row justify-between items-center gap-4">
 
                     <Button
-                        @click="handleFavoriteClick(product.id, product.name[locale])"
+                        @click.once="handleFavoriteClick(product.id, product.name[locale])"
                         buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
                         <img :src="favIcon" alt="">
                         Save to Favorites
                     </Button>
                     <Button
-                        @click="addToCart"
+                        @click.once="addToCart"
                         customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
                         <img :src="cartWhite" alt="">
                         Add to cart
@@ -137,6 +137,7 @@
     </div>
 
 </template>
+
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -146,7 +147,6 @@ import Button from "@/components/Button.vue";
 import SizeGuide from "@/components/ui/sizeGuide.vue";
 import { useFavorites } from '@/useFavorites'
 import {useAlert} from "@/useAlert.js";
-import axios from 'axios'
 
 const { toggleFavorite, isFavorite } = useFavorites()
 const { showAlert } = useAlert(isFavorite)
@@ -218,15 +218,16 @@ const addToCart = async () => {
     if (!selectedVariantId.value) return
 
     try {
-        const response = await axios.post('/cart/add', {
+        const response = await window.axios.post(`${locale.value}/cart`, {
             variant_id: selectedVariantId.value,
             quantity: 1
         })
 
-        // Наприклад, показати повідомлення:
-        console.log('Товар додано до кошика', response.data)
+        showAlert(response.data.product.name, response.data.product.id)
+        this.$emit('cartUpdated'); // TODO - not working
+        console.log('Product added to the cart') // TODO Remove in production
     } catch (error) {
-        console.error('Помилка при додаванні до кошика:', error)
+        console.error('Server error:', error) // TODO Remove in production
     }
 }
 
@@ -274,4 +275,3 @@ const handleFavoriteClick = (id, name) => {
 }
 
 </script>
-

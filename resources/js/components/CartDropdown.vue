@@ -23,7 +23,7 @@
                 <div v-if="cartItems.length > 0">
                     <div class="flex justify-between p-4 md:border-b md:border-b-light-border">
                         <h3 class="text-lg font-bold mb-2">My cart</h3>
-                        <p class="font-bold text-[14px] opacity-40">3 products</p>
+                        <p class="font-bold text-[14px] opacity-40">{{ cartItems.length }} products</p>
                     </div>
                     <ul  class="p-4 space-y-3 border-b border-b-light-border max-h-[40vh] overflow-y-auto">
                         <li v-for="item in cartItems" :key="item.id" class="flex justify-between gap-4 mb-6">
@@ -44,13 +44,13 @@
                                 </div>
                             </div>
                             <div>
-                                <p class="text-olive">{{item.price}} lei</p>
+                                <p class="text-olive">{{ item.price / 100 }} lei</p>
                             </div>
                         </li>
                     </ul>
                     <div class="flex justify-between p-4">
                         <h3 class="text-lg font-bold mb-2">Grand total</h3>
-                        <p class=" text-[18px]">570 lei</p>
+                        <p class=" text-[18px]">{{ grandTotal }}</p>
                     </div>
                     <div class="px-4">
                         <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >View full cart</Button>
@@ -75,8 +75,8 @@ import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/Button.vue';
-import img1 from '@img/products/product_3.png'
-import img2 from '@img/products/product_2.png'
+import {useI18n} from "vue-i18n";
+
 export default {
     name: 'CartDropdown',
     components: {
@@ -84,18 +84,28 @@ export default {
     },
     data() {
         return {
+            locale: document.documentElement.lang || 'ro',
+            t: useI18n(),
             open: false,
             cartIcon,cartIconOpen,
             basket_empty,
-            cartItems: [
-                { id: 1, name: 'Summer Cotton Jumpsuit', quantity: 2, price: 240, color:'#020202',img:img1, colorName:'Black', size:'0–3M' },
-                { id: 2, name: 'Thin Pants', quantity: 1, price: 330, color:'#ECE1DE',img:img2, colorName:'Beige', size:'6–9M' },
-            ],
+            cartItems: [],
+            grandTotal: 0,
         };
     },
     methods: {
         toggle() {
             this.open = !this.open;
+        },
+        async getCartItems() {
+            try {
+                const response = await window.axios.get(`${this.locale}/cart/items`)
+                this.cartItems = response.data.items;
+                this.grandTotal = response.data.grand_total;
+                console.log(response) // TODO Remove in production
+            } catch (error) {
+                console.error('Server error:', error) // TODO Remove in production
+            }
         },
         handleClickOutside(event) {
             const dropdown = this.$refs.dropdown;
@@ -105,11 +115,13 @@ export default {
         },
     },
     mounted() {
+        this.getCartItems();
         document.addEventListener('click', this.handleClickOutside);
     },
     beforeUnmount() {
         document.removeEventListener('click', this.handleClickOutside);
     },
+
 };
 </script>
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Models\ProductVariant;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Vite;
 use LukePOLO\LaraCart\Coupons\Fixed;
 use LukePOLO\LaraCart\Coupons\Percentage;
 use LukePOLO\LaraCart\Facades\LaraCart;
@@ -76,7 +76,7 @@ class CartController extends Controller
 
 //        dump($cart);
 
-        $items = LaraCart::getItems();
+//        $items = LaraCart::getItems();
         //        foreach ($items as $item) {
         //            $item->name = $item->model->product->name;
         //            $item->description = $item->model->product->description;
@@ -113,17 +113,48 @@ class CartController extends Controller
         ]);
     }
 
+    public function show(Request $request)
+    {
+        $cartItems = LaraCart::getItems();
+        $response = [
+            'items' => [],
+            'grand_total' => LaraCart::total($formatted = true, $withDiscount = true)
+        ];
+        foreach ($cartItems as $hash => $cartItem) {
+            $response['items'][] = [
+                'id' => $hash,
+                'name' => $cartItem->options['model']->product->name,
+                'quantity' => $cartItem->options['qty'],
+                'price' => $cartItem->options['price'],
+                'color' => $cartItem->options['model']->color->hex,
+                'colorName' => $cartItem->options['model']->color->name,
+                'img' => Vite::image($cartItem->options['model']->product->main_image),
+                'size' => $cartItem->options['model']->size->name,
+//                'obj' => $cartItem,
+//                'variant' => $cartItem->options['model'],
+//                'product' => $cartItem->options['model']->product,
+            ];
+        }
+
+        return $response;
+    }
+
     public function store(Request $request)
     {
 
-        $productVariant = ProductVariant::findOrFail($request->product_variant_id);
+        $productVariant = ProductVariant::findOrFail($request->variant_id);
 
-//        LaraCart::add(
-//            $productVariant,
-//            3,
-//        );
+        LaraCart::add(
+            $productVariant,
+            $request->quantity,
+        );
 
-        return response(content: null, status: 201);
+        return response(content:json_encode([
+            'product' => [
+                'id' => $productVariant->product->id,
+                'name' => $productVariant->product->name,
+            ],
+        ]), status: 200);
 
     }
 

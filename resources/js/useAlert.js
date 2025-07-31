@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import { useI18n } from 'vue-i18n'
 
 export function useAlert(getIsFavorite) {
+    const locale = document.documentElement.lang || 'ro';
     const { t } = useI18n()
 
     const showAlert = (productName, productId) => {
@@ -30,7 +31,7 @@ export function useAlert(getIsFavorite) {
                         <p class=" text-[14px] block md:text-sm text-nowrap">${productName}</p>
                         <p class="text-[12px] lg:text-xs opacity-60">${message}</p>
                     </div>
-                    <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="/favorites">
+                    <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="/${locale}/favorites">
                         ${t('user-dropdown.favorites')}
                         <svg
                         class="hidden md:block"

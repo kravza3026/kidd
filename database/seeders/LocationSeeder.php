@@ -20,7 +20,7 @@ class LocationSeeder extends Seeder
                 'ru' => 'Склад #1',
                 'en' => 'Warehouse #1',
             ],
-            'type' => 1, // Type 1 - Warehouse
+            'type' => Location::TYPE_WAREHOUSE,
             'geo_position' => [
                 'lat' => '47.0226291',
                 'lng' => '28.8670329',
@@ -62,7 +62,7 @@ class LocationSeeder extends Seeder
                 'ru' => 'Магазин #3',
                 'en' => 'Store #3',
             ],
-            'type' => 2, // Type 2 - Store
+            'type' => Location::TYPE_STORE,
             'geo_position' => [
                 'lat' => '47.0144034',
                 'lng' => '28.8561766',
@@ -104,7 +104,7 @@ class LocationSeeder extends Seeder
                 'ru' => 'Магазин #7',
                 'en' => 'Store #7',
             ],
-            'type' => 2, // Type 2 - Store
+            'type' => Location::TYPE_STORE,
             'geo_position' => [
                 'lat' => '46.9918719',
                 'lng' => '28.8580194',

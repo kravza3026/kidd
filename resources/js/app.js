@@ -4,6 +4,7 @@ import "./bootstrap";
 import { createApp } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy.js';
+import mitt from 'mitt';
 
 import Alpine from 'alpinejs';
 

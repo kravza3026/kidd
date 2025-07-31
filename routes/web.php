@@ -30,6 +30,8 @@ Route::group([
 
     Route::get('cart', [CartController::class, 'index'])
         ->name('cart');
+    Route::get('cart/items', [CartController::class, 'show'])
+        ->name('cart.items');
     Route::post('cart', [CartController::class, 'store'])
         ->name('cart.store');
     Route::put('cart/{itemHash}', [CartController::class, 'update'])

@@ -12,6 +12,18 @@ class Location extends Model
 
     use HasTranslations, SoftDeletes;
 
+
+    /**
+     * Location type Warehouse
+     */
+    const int TYPE_WAREHOUSE = 1;
+
+    /**
+     * Location type Store
+     */
+    const int TYPE_STORE = 2;
+
+
     protected array $translatable = [
         'name',
         'open_hours',
@@ -20,7 +32,6 @@ class Location extends Model
     protected $guarded = [];
 
     protected $hidden = [
-        'address_id',
         'created_at',
         'updated_at',
         'deleted_at'

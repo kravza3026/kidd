@@ -22,6 +22,7 @@
         @foreach($locations as $location)
             {{ $location->name }} / {{ $location->open_hours }} / {{ $location->address->street_name }} {{ $location->address->building }}<br/>
         @endforeach
+
 </section>
 <div class="block w-full h-full min-h-[600px]" id="map"></div>
 

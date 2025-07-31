@@ -134,7 +134,7 @@
 import { useFavorites } from '@/useFavorites'
 import { useI18n } from 'vue-i18n'
 import { useAlert } from '../useAlert.js'
-import Swal from 'sweetalert2'
+
 export default {
     name: 'ProductCard',
     props: {
@@ -148,7 +148,6 @@ export default {
 
         const locale = document.documentElement.lang || 'ro';
         const { t } = useI18n()
-
 
         const { toggleFavorite, isFavorite } = useFavorites()
         const { showAlert } = useAlert(isFavorite)
