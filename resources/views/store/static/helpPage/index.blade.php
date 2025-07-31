@@ -8,9 +8,7 @@
                 @include('.store.static.helpPage.tabs.delivery')
             </script>
 
-{{--            <script type="text/x-template" id="tab-care">--}}
-{{--                @include('partials.help.care')--}}
-{{--            </script>--}}
+
         </section>
     </div>
 </x-app-layout>

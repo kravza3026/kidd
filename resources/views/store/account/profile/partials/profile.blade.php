@@ -19,25 +19,27 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full">
-                <x-input-label for="first_name" :value="__('First name')"/>
-                <x-text-input id="first_name" name="first_name" type="text" class="mt-3 block w-full"
-                              :value="old('first_name', $user->first_name)" autocomplete="first_name"/>
+                <x-ui.input-label for="first_name" :value="old('first_name', $user->first_name)" name="first_name" :label="__('First name')"/>
+{{--                <x-text-input id="first_name" name="first_name" type="text" class="mt-3 block w-full"--}}
+{{--                              :value="old('first_name', $user->first_name)" autocomplete="first_name"/>--}}
                 <x-input-error class="mt-2" :messages="$errors->profile->get('first_name')"/>
             </div>
 
             <div class="w-full">
-                <x-input-label for="last_name" :value="__('Last name')"/>
-                <x-text-input id="last_name" name="last_name" type="text" class="mt-3 block w-full"
-                              :value="old('last_name', $user->last_name)" autocomplete="last_name"/>
+                <x-ui.input-label for="last_name" :value="old('last_name', $user->last_name)" name="last_name" :label="__('Last name')"/>
+{{--                <x-input-label for="last_name" :value="__('Last name')"/>--}}
+{{--                <x-text-input id="last_name" name="last_name" type="text" class="mt-3 block w-full"--}}
+{{--                              :value="old('last_name', $user->last_name)" autocomplete="last_name"/>--}}
                 <x-input-error class="mt-2" :messages="$errors->profile->get('last_name')"/>
             </div>
         </div>
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full mt-6 sm:mt-0">
-                <x-input-label for="email" :value="__('E-mail address')"/>
-                <x-text-input id="email" name="email" type="email" class="mt-3 block w-full"
-                              :value="old('email', $user->email)" required autocomplete="email"/>
+                <x-ui.input-label for="email" :value="old('email', $user->email)" type="email" name="email" :label="__('E-mail address')"/>
+{{--                <x-input-label for="email" :value="__('E-mail address')"/>--}}
+{{--                <x-text-input id="email" name="email" type="email" class="mt-3 block w-full"--}}
+{{--                              :value="old('email', $user->email)" required autocomplete="email"/>--}}
                 <x-input-error class="mt-2" :messages="$errors->profile->get('email')"/>
 
                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -60,9 +62,10 @@
                 @endif
             </div>
             <div class="w-full">
-                <x-input-label for="phone" :value="__('Phone number')"/>
-                <x-text-input id="phone" name="phone" type="text" class="mt-3 block w-full"
-                              :value="old('phone', $user->phone)" required autocomplete="phone"/>
+                <x-ui.input-label for="phone" :value="old('phone', $user->phone)" type="text" name="phone" :label="__('Phone number')"/>
+{{--                <x-input-label for="phone" :value="__('Phone number')"/>--}}
+{{--                <x-text-input id="phone" name="phone" type="text" class="mt-3 block w-full"--}}
+{{--                              :value="old('phone', $user->phone)" required autocomplete="phone"/>--}}
                 <x-input-error class="mt-2" :messages="$errors->profile->get('phone')"/>
                 @if ($user instanceof App\MustVerifyPhone && ! $user->hasVerifiedPhone())
                     <div>
@@ -87,14 +90,18 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full mt-6 sm:mt-0">
-                <x-input-label for="password" :value="__('Password')"/>
-                <x-text-input id="password" name="password" type="password" class="mt-3 block w-full" autocomplete="new-password"/>
+                <x-ui.input-label for="password"  type="password" name="password" :label="__('Password')" autocomplete="new-password"/>
+
+{{--                <x-input-label for="password" :value="__('Password')"/>--}}
+{{--                <x-text-input id="password" name="password" type="password" class="mt-3 block w-full" autocomplete="new-password"/>--}}
                 <x-input-error :messages="$errors->profile->get('password')" class="mt-2"/>
             </div>
 
             <div class="w-full">
-                <x-input-label for="password_confirmation" :value="__('Password confirmation')"/>
-                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-3 block w-full" autocomplete="new-password"/>
+                <x-ui.input-label for="password_confirmation"  type="password" name="password" :label="__('Password confirmation')" autocomplete="new-password"/>
+
+{{--                <x-input-label for="password_confirmation" :value="__('Password confirmation')"/>--}}
+{{--                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-3 block w-full" autocomplete="new-password"/>--}}
                 <x-input-error :messages="$errors->profile->get('password_confirmation')" class="mt-2"/>
             </div>
         </div>

@@ -115,7 +115,7 @@
                 <div class="w-full md:flex flex-row justify-between items-center gap-4">
 
                     <Button
-                        @click.once="handleFavoriteClick(product.id, product.name[locale])"
+                        @click="handleFavoriteClick(product.id, product.name[locale])"
                         buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
                         <img :src="favIcon" alt="">
                         Save to Favorites
@@ -147,7 +147,7 @@ import Button from "@/components/Button.vue";
 import SizeGuide from "@/components/ui/sizeGuide.vue";
 import { useFavorites } from '@/useFavorites'
 import {useAlert} from "@/useAlert.js";
-
+import { emitter } from '@/eventBus'
 const { toggleFavorite, isFavorite } = useFavorites()
 const { showAlert } = useAlert(isFavorite)
 
@@ -222,7 +222,7 @@ const addToCart = async () => {
             variant_id: selectedVariantId.value,
             quantity: 1
         })
-
+        emitter.emit('cart-updated');
         showAlert(response.data.product.name, response.data.product.id)
         this.$emit('cartUpdated'); // TODO - not working
         console.log('Product added to the cart') // TODO Remove in production
@@ -269,7 +269,6 @@ const handleFavoriteClick = (id, name) => {
     if (clickedRecently) return
     clickedRecently = true
     setTimeout(() => clickedRecently = false, 300)
-
     toggleFavorite(id)
     showAlert(name, id)
 }

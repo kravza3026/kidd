@@ -17,6 +17,7 @@ import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
 import Button from './components/Button.vue';
 import ProductCard from './components/productCard.vue';
+import Cart from './components/Cart.vue';
 import ProductPageForm from './components/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
 import ProductsCardsSlider from './components/productsCardsSlider.vue';
@@ -37,6 +38,7 @@ import i18n from './i18n';
 // Масив компонентів
 const components = {
     Accordion,
+    Cart,
     Search,mobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,

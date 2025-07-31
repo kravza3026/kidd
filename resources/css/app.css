@@ -147,3 +147,31 @@ ul.markers{
         opacity: 80%;
     }
 }
+/* <span class= "border border-slate-300 rounded-full w-2 h-2 peer-checked:hidden"> </span> */
+.checkboxLabelCircle::after {
+    content: '';
+    background-color: #fff;
+    border: 1px solid var(--color-light-border);
+    padding: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+
+
+}
+
+input:checked + .checkboxLabelCircle::after {
+    content: '| |';
+    display: flex;
+    justify-content: center;
+    color: var(--color-olive);
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    margin-top: -1px;
+    font-weight: bold;
+    text-wrap: nowrap;
+    text-align: center;
+    font-size: 10px;
+}
+

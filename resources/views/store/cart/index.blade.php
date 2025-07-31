@@ -8,6 +8,7 @@
     <div class="w-full flex gap-x-16">
         <div class="w-full flex grow basis-full shrink-1 mt-4">
             <div class="flex flex-col space-y-6 w-full last:[&>div]:border-b-0">
+                <div data-vue-component="Cart" data-vue-props='@json(["products" => $items])'></div>
                 @forelse($items as $item)
                     @include('store.cart.partials.item-row')
                 @empty
@@ -16,6 +17,8 @@
 
             </div>
         </div>
+
+
         <div class="w-full grow-0 flex-shrink-0 basis-[340px] flex border border-[#eeeeee]/70 rounded-xl shadow-lg">
             <div class="text-nowrap static w-full h-auto p-6">
                 <h4 class="flex pb-6 w-full text-2xl text-gray-800 font-bold leading-6 tracking-[-2%]">
@@ -75,5 +78,6 @@
             </div>
         </div>
     </div>
+
 </div>
 </x-app-layout>

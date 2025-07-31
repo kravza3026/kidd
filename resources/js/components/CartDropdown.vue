@@ -76,7 +76,7 @@ import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/Button.vue';
 import {useI18n} from "vue-i18n";
-
+import { emitter } from '@/eventBus'
 export default {
     name: 'CartDropdown',
     components: {
@@ -117,8 +117,10 @@ export default {
     mounted() {
         this.getCartItems();
         document.addEventListener('click', this.handleClickOutside);
+        emitter.on('cart-updated', this.getCartItems);
     },
     beforeUnmount() {
+        emitter.off('cart-updated', this.getCartItems);
         document.removeEventListener('click', this.handleClickOutside);
     },
 
