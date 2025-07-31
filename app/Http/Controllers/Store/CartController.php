@@ -132,7 +132,7 @@ class CartController extends Controller
                 'size' => $cartItem->options['model']->size->name,
 //                'obj' => $cartItem,
 //                'variant' => $cartItem->options['model'],
-//                'product' => $cartItem->options['model']->product,
+                'product' => $cartItem->options['model']->product,
             ];
         }
 

@@ -164,7 +164,7 @@ const { t, locale } = useI18n()
 const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
 const selectedSizeId = ref(null)
 
-
+console.log(props.product)
 
 // --- Unique colors (no duplicates)
 const uniqueColors = computed(() => {
@@ -184,8 +184,15 @@ const sizes = computed(() => {
     allSizes.forEach(s => {
         if (!unique.find(u => u.id === s.id)) unique.push(s)
     })
-    return unique
+
+    return unique.sort((a, b) => {
+        if (a.sort_order === b.sort_order) {
+            return a.id - b.id
+        }
+        return a.sort_order - b.sort_order
+    })
 })
+
  // --- List of available sizes for selected color
 const availableSizes = computed(() => {
     return props.product.variants

@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 import { useI18n } from 'vue-i18n'
 
-export function useAlert(getIsFavorite) {
+export function useAlert() {
     const locale = document.documentElement.lang || 'ro';
     const { t } = useI18n()
 
@@ -21,7 +21,6 @@ export function useAlert(getIsFavorite) {
                            title = 'Default Title',
                            type = 'add_to_cart',
                            message = 'Default message',
-                           // icon = 'graphic-outline',
                            button = { label: '', href: '' },
                            options = {}
                        }) => {
