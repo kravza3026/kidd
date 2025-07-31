@@ -34,7 +34,7 @@
                         name="filters[family][]"
                         value="true"
                         :modelValue="request()->has('filters.family.0') || !request()->has('filters.family')"
-                        class="rounded-full"
+                        class="rounded-full filter-all"
                     />
 
 {{--                    <input name="filters[family][]" value="true" type="checkbox"--}}
@@ -59,7 +59,7 @@
                             name="filters[family][{{ $member->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.family.'.$member->id)"
-                            class="rounded-full"
+                            class="rounded-full filter-option"
                         />
 
 {{--                        <input name="filters[family][{{ $member->id }}]" value="true" type="checkbox"--}}

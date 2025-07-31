@@ -33,7 +33,7 @@
                         name="filters[gender][]"
                         value="true"
                         :modelValue="request()->has('filters.gender.0') || !request()->has('filters.gender')"
-                        class="rounded-full"
+                        class="rounded-full filter-all"
                     />
 
 
@@ -55,7 +55,7 @@
                             name="filters[gender][{{ $gender->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.gender.'.$gender->id)"
-                            class="rounded-full "
+                            class="rounded-full filter-option"
                         />
 
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">

@@ -33,7 +33,7 @@
                         name="filters[fabric][0]"
                         value="true"
                         :modelValue="request()->has('filters.fabric.0') || !request()->has('filters.fabric')"
-                        class="rounded-full"
+                        class="rounded-full filter-all"
                     />
 
 
@@ -60,7 +60,7 @@
                             name="filters[fabric][{{ $fabric->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.fabric.'.$fabric->id)"
-                            class="rounded-full"
+                            class="rounded-full filter-option"
                         />
                     </div>
                     <div class="w-full flex items-end">

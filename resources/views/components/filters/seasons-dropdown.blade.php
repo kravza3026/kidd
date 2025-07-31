@@ -34,7 +34,7 @@
                         name="filters[season][]"
                         value="true"
                         :modelValue="request()->has('filters.season.0') || !request()->has('filters.season')"
-                        class="rounded-full"
+                        class="rounded-full filter-all"
                     />
 
                     <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
@@ -56,7 +56,7 @@
                             name="filters[season][{{ $season->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.season.'.$season->id)"
-                            class="rounded-full "
+                            class="rounded-full filter-option"
                         />
 
                         <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">

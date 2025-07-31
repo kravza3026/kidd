@@ -33,7 +33,7 @@
                         name="filters[color][]"
                         value="true"
                         :modelValue="request()->has('filters.color.0') || !request()->has('filters.color')"
-                        class="rounded-full border-transparent border-none"
+                        class="rounded-full border-transparent border-none filter-all"
                         style="background-image:url('{{Vite::image('icons/gradient.png')}}'); background-size: cover;background-color: transparent;
                         "
                     />
@@ -57,7 +57,7 @@
                             name="filters[color][{{ $color->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.color.'.$color->id)"
-                            class="rounded-full"
+                            class="rounded-full filter-option"
                             style="background-color: {{ $color->hex }}"
                         />
 

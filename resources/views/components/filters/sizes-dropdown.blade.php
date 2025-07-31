@@ -33,7 +33,7 @@
                         name="filters[size][]"
                         value="true"
                         :modelValue="request()->has('filters.size.0') || !request()->has('filters.size')"
-                        class="rounded-full"
+                        class="rounded-full filter-all"
                     />
 
                     <span class="text-sm leading-4 -tracking-[2%] font-bold text-charcoal ms-2.5">
@@ -54,7 +54,7 @@
                             name="filters[size][{{ $size->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.size.'.$size->id)"
-                            class="rounded-full"
+                            class="rounded-full "
                         />
 
 
