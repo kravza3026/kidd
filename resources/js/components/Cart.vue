@@ -1,18 +1,16 @@
 <template>
     <div
         v-for="cartItem in cartItems"
-        :key="cartItem.id" class="">
-
-<!--        {{product}}-->
+        class="">
 
         <div class="flex justify-between items-center my-2">
             <div class="flex items-center gap-x-6">
                 <div class="p-2 bg-light-orange rounded-2xl">
-                    <img class="w-[84px]" :src='getImageUrl(cartItem.options.model.product.main_image)' alt="{{cartItem.options.model.product.name[locale]}}">
+                    <img class="w-[84px]" :src='cartItem.img' alt="{{cartItem.name}}">
                 </div>
                 <div>
                     <div>
-                        <p class="text-[20px] font-medium">{{cartItem.options.model.product.name[locale]}}</p>
+                        <p class="text-[20px] font-medium">{{cartItem.name}}</p>
                         <p class="opacity-60">{{cartItem.price / 100}} lei</p>
                     </div>
                     <div>sizes</div>
@@ -20,7 +18,7 @@
             </div>
             <div class="flex justify-between flex-col min-h-full gap-6">
                 <div class="flex justify-end">
-                    <p class="text-olive">{{(cartItem.options.model.product.price_final / 100) - cartItem.options.model.product.discounted[0] / 100}} lei</p>
+                    <p class="text-olive">{{ cartItem.product.price_final / 100 }} lei</p>
                 </div>
                 <div class="flex justify-end items-center gap-2 text-olive bg-light-orange py-1 px-4 rounded-lg cursor-pointer">
                     <img :src="iconTrash" alt="">
@@ -32,10 +30,10 @@
 </template>
 
 <script>
-// import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import iconTrash from '@img/common/trash.svg'
 import { useI18n } from 'vue-i18n'
-import {emitter} from "@/eventBus.js";
+// import {emitter} from "@/eventBus.js";
 export default {
     name: 'Cart',
 
@@ -61,7 +59,7 @@ export default {
                 const response = await window.axios.get(`${this.locale}/cart/items`)
                 this.cartItems = response.data.items;
                 console.log(this.cartItems[0])
-                console.log(response) // TODO Remove in production
+                // console.log(response) // TODO Remove in production
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }
