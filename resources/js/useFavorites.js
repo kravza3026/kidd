@@ -1,11 +1,12 @@
 
 import Cookies from 'js-cookie'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAlert } from './useAlert.js'
 const COOKIE_KEY = 'favorites'
 
 export function useFavorites() {
-
+    const { t, locale } = useI18n();
     const favorites = ref(getFavoritesFromCookie())
     const { showAlert } = useAlert(isFavorite)
 
@@ -18,46 +19,46 @@ export function useFavorites() {
         Cookies.set(COOKIE_KEY, JSON.stringify(favorites.value), { expires: 30 })
     }
 
-    function toggleFavorite(productId, productName) {
+    const toggleFavorite = ({ type, id, name, title, message, icon, button = {} }) => {
 
-        const index = favorites.value.indexOf(productId)
+        const index = favorites.value.indexOf(id)
         if (index === -1) {
-            favorites.value.push(productId)
+            favorites.value.push(id)
             showAlert({
-                title: `Added to cart: ${productName}`,
-                type: "info",
-                message: "Product was added to your shopping cart",
-                icon: "graphic-outline",
+                title: title ?? `Added to cart: ${name}`,
+                type: type ?? 'favorite',
+                message: message ?? "saved to Favorites",
+                icon: icon ?? "favorite",
                 button: {
-                    label: "View Cart",
-                    href: "/en/cart",
+                    label: button.label ?? "Favorites",
+                    href: button.href ?? `/${locale.value}/favorites`,
                 },
                 options: {
-                    timer: 6000,
+                    timer: 4000,
                 }
             });
 
         } else {
             favorites.value.splice(index, 1)
             showAlert({
-                title: `Added to cart: ${productName}`,
-                type: "info",
-                message: "Product was removed to your shopping cart",
-                icon: "graphic-outline",
+                title: `Removed from cart: ${name}`,
+                type: "favorite",
+                message: "saved to Favorites from favorites",
+                icon: icon ?? "favorite",
                 button: {
-                    label: "View Cart",
-                    href: "/en/cart",
+                    label: button.label ?? "Favorites",
+                    href: button.href ?? `/${locale.value}/favorites`,
                 },
                 options: {
-                    timer: 6000,
+                    timer: 4000,
                 }
             });
         }
         saveToCookie()
     }
 
-    function isFavorite(productId) {
-        return favorites.value.includes(productId)
+    function isFavorite(id) {
+        return favorites.value.includes(id)
     }
 
     return {

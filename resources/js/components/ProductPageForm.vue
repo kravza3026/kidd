@@ -115,7 +115,7 @@
                 <div class="w-full md:flex flex-row justify-between items-center gap-4">
 
                     <Button
-                        @click="handleFavoriteClick(product.id, product.name[locale])"
+                        @click="handleFavoriteClick(product.id, product.name[locale],)"
                         buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
                         <img :src="favIcon" alt="">
                         Save to Favorites
@@ -223,7 +223,7 @@ const addToCart = async () => {
             quantity: 1
         })
         emitter.emit('cart-updated');
-        showAlert(response.data.product.name, response.data.product.id)
+        showAlert({type:'add_to_cart', title: 'Add to cart ' + response.data.product.name, id: response.data.product.id, button:{label: 'View cart', href: `/${locale.value}/cart`}})
         this.$emit('cartUpdated'); // TODO - not working
         console.log('Product added to the cart') // TODO Remove in production
     } catch (error) {
@@ -270,8 +270,10 @@ const handleFavoriteClick = (id, name) => {
     if (clickedRecently) return
     clickedRecently = true
     setTimeout(() => clickedRecently = false, 300)
-    toggleFavorite(id)
+    toggleFavorite(id, name)
 
 }
+
+
 
 </script>

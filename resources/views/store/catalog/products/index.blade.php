@@ -7,7 +7,7 @@
                     <div class="text-white text-sm font-extrabold leading-none">{{ $products->total() }}</div>
                 </div>
             </div>
-            @include('store.catalog.products._filters')
+            @include('store.catalog.products._filtersnpm')
         </div>
 
         <div class="mb-24 space-y-20">
