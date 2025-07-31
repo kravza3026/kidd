@@ -115,7 +115,7 @@
                 <div class="w-full md:flex flex-row justify-between items-center gap-4">
 
                     <Button
-                        @click="toggleFavorite(product.id, product.name[locale])"
+                        @click="handleFavoriteClick(product.id, product.name[locale])"
                         buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
                         <img :src="favIcon" alt="">
                         Save to Favorites
@@ -271,7 +271,7 @@ const handleFavoriteClick = (id, name) => {
     clickedRecently = true
     setTimeout(() => clickedRecently = false, 300)
     toggleFavorite(id)
-    showAlert(name, id)
+
 }
 
 </script>
