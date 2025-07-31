@@ -20,7 +20,6 @@ export function useAlert() {
                            title = 'Default Title',
                            type = 'info',
                            message = 'Default message',
-                           // icon = 'graphic-outline',
                            button = { label: '', href: '' },
                            options = {}
                        }) => {

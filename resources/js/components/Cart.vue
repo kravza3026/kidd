@@ -13,14 +13,14 @@
                 <div>
                     <div>
                         <p class="text-[20px] font-medium">{{cartItem.options.model.product.name[locale]}}</p>
-                        <p class="opacity-60">{{cartItem.options.price_final / 100}} lei</p>
+                        <p class="opacity-60">{{cartItem.price / 100}} lei</p>
                     </div>
                     <div>sizes</div>
                 </div>
             </div>
             <div class="flex justify-between flex-col min-h-full gap-6">
                 <div class="flex justify-end">
-                    <p class="text-olive">{{(cartItem.options.price_final / 100) - cartItem.discounted[0] / 100}} lei</p>
+                    <p class="text-olive">{{(cartItem.options.model.product.price_final / 100) - cartItem.options.model.product.discounted[0] / 100}} lei</p>
                 </div>
                 <div class="flex justify-end items-center gap-2 text-olive bg-light-orange py-1 px-4 rounded-lg cursor-pointer">
                     <img :src="iconTrash" alt="">
@@ -32,19 +32,17 @@
 </template>
 
 <script>
+// import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import iconTrash from '@img/common/trash.svg'
 import { useI18n } from 'vue-i18n'
+import {emitter} from "@/eventBus.js";
 export default {
     name: 'Cart',
-    props: {
-        cartItems: {
-            type: Object,
-            required: true,
-        },
-    },
+
     data(){
         return {
-            iconTrash
+            iconTrash,
+            cartItems: [],
         }
     },
     setup(){
@@ -54,13 +52,25 @@ export default {
             locale
         }
     },
-    mounted() {
-        console.log(this.cartItems) // ✅ ось так правильно
-    },
     methods: {
         getImageUrl(imagePath) {
             return `/assets/images/${imagePath}`;
+        },
+        async getCartItems() {
+            try {
+                const response = await window.axios.get(`${this.locale}/cart/items`)
+                this.cartItems = response.data.items;
+                console.log(this.cartItems[0])
+                console.log(response) // TODO Remove in production
+            } catch (error) {
+                console.error('Server error:', error) // TODO Remove in production
+            }
         }
-    }
+    },
+    mounted() {
+        this.getCartItems();
+        // emitter.on('cart-updated', this.getCartItems);
+    },
+
 }
 </script>
