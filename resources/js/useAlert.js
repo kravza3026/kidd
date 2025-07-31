@@ -19,7 +19,7 @@ export function useAlert(getIsFavorite) {
 `
     const showAlert = ({
                            title = 'Default Title',
-                           type = 'info',
+                           type = 'add_to_cart',
                            message = 'Default message',
                            // icon = 'graphic-outline',
                            button = { label: '', href: '' },
