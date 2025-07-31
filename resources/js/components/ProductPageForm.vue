@@ -115,13 +115,13 @@
                 <div class="w-full md:flex flex-row justify-between items-center gap-4">
 
                     <Button
-                        @click="handleFavoriteClick(product.id, product.name[locale])"
+                        @click="toggleFavorite(product.id, product.name[locale])"
                         buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
                         <img :src="favIcon" alt="">
                         Save to Favorites
                     </Button>
                     <Button
-                        @click.once="addToCart"
+                        @click="addToCart"
                         customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
                         <img :src="cartWhite" alt="">
                         Add to cart
@@ -227,7 +227,8 @@ const addToCart = async () => {
         this.$emit('cartUpdated'); // TODO - not working
         console.log('Product added to the cart') // TODO Remove in production
     } catch (error) {
-        console.error('Server error:', error) // TODO Remove in production
+        console.error('Server error:', error)
+        // TODO Remove in production
     }
 }
 

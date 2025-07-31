@@ -81,7 +81,7 @@
                 </template>
             </div>
 
-            <div @click.stop="toggleFavorite(product.id)" @click="showAlert(product.name[locale], product.id)"
+            <div @click="toggleFavorite(product.id, product.name[locale])"
                 class="absolute  add_favorite  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-3 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
             >
                 <img  :src="isFavorite(product.id) ? inFavIcon : favIcon" width="24" height="24" alt="add to favorite" />
@@ -148,10 +148,12 @@ export default {
 
         const locale = document.documentElement.lang || 'ro';
         const { t } = useI18n()
-
         const { toggleFavorite, isFavorite } = useFavorites()
         const { showAlert } = useAlert(isFavorite)
+
+
         return { toggleFavorite, isFavorite, locale, showAlert }
+
     },
     methods: {
         getImageUrl(imagePath) {
@@ -182,6 +184,7 @@ export default {
         inFavIcon() {
             return '/assets/images/icons/inFavorite.svg';
         },
+
 
     }
 
