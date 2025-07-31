@@ -27,12 +27,12 @@
             {{ __('header.menu.about') }}
         </a>
     </li>
-    <li class="h-full flex items-center border-transparent border-b-2">
+    <li class="h-full flex items-center border-b-2 {{ Route::is('help') ? 'text-olive border-olive border-b-2' : 'border-transparent' }}">
         <a class="mx-auto" href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.help') }}">
             {{ __('header.menu.help') }}
         </a>
     </li>
-    <li class="h-full flex items-center border-transparent border-b-2">
+    <li class="h-full flex items-center border-b-2 {{ Route::is('contacts') ? 'text-olive border-olive border-b-2' : 'border-transparent' }}">
         <a class="mx-auto" href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.menu.contacts') }}">
             {{ __('header.menu.contacts') }}
         </a>

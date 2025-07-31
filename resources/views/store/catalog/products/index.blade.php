@@ -1,6 +1,6 @@
 <x-app-layout>
     <main class="container">
-        <div class="mt-12 mb-6 flex-col justify-start items-start gap-6 flex">
+        <div class=" bg-white z-50  mt-12 mb-6 flex-col justify-start items-start gap-6 flex">
             <div class="justify-start items-start gap-2 inline-flex">
                 <div class="opacity-80 text-black text-5xl font-bold leading-10">{{ $category->exists ? $category->name : __('general.products') }}</div>
                 <div class="px-2 py-1.5 bg-olive rounded-xl justify-center items-center flex">

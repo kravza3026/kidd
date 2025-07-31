@@ -77,9 +77,7 @@ export default {
             return `/assets/images/${imagePath}`;
         }
     },
-    mounted() {
-        console.log('slides:', this.slides);
-    },
+
     setup() {
         const thumbsSwiper = ref(null);
         const ready = ref(false);

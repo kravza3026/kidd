@@ -245,6 +245,7 @@ export default {
         return {
             searchQuery: '',
             locale: document.documentElement.lang || 'ro',
+            items: [],
         };
     },
 
@@ -281,8 +282,7 @@ export default {
                 await axios.get(`/${this.locale}/search?term=${query}`)
                     .then(response => {
                         this.items = response.data.results;
-                        console.log(this.items);
-                        console.log(this.items[0].variants[0].price_final);
+
                     })
                     .catch(error => {
                         console.error('Search error:', error);
