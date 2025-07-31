@@ -6,7 +6,7 @@ export default {
         'help': 'Ajutor',
         'account': 'Cont',
     },
-    'product-show': {
+    'product': {
         'new': 'Nou',
         'mdl': 'lei',
         'desc': {
@@ -22,6 +22,7 @@ export default {
             'closure': 'Închidere',
         },
         'add-to-favorite': 'Adaugă la Favorite',
+        'remove-from-favorites': 'Șterge din Favorite',
         'add-to-cart': 'Adaugă în Coș',
     },
     'user-dropdown': {

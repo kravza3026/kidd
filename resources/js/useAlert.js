@@ -1,9 +1,8 @@
 import Swal from 'sweetalert2'
 import { useI18n } from 'vue-i18n'
 
-export function useAlert(getIsFavorite) {
-    const locale = document.documentElement.lang || 'ro';
-    const { t } = useI18n()
+export function useAlert() {
+    const { t, locale } = useI18n()
 
     const iconFavorite = `
     <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,14 +18,15 @@ export function useAlert(getIsFavorite) {
 `
     const showAlert = ({
                            title = 'Default Title',
-                           type = 'add_to_cart',
+                           type = 'info',
                            message = 'Default message',
                            // icon = 'graphic-outline',
                            button = { label: '', href: '' },
                            options = {}
                        }) => {
-        let icon = ''
-        if (type === 'add_to_cart') {
+
+        let icon = null;
+        if (type === 'cart') {
             icon = iconCard
         } else if (type === 'favorite') {
             icon = iconFavorite
@@ -37,27 +37,24 @@ export function useAlert(getIsFavorite) {
             width: 'fit-content',
             position: 'bottom',
             showConfirmButton: false,
-            timer: options.timer === undefined ? (type === 'permanent' ? null : 4000) : options.timer,
+            timer: options.timer === undefined ? (type === 'permanent' ? null : 7000) : options.timer,
             background: '#000',
             color: '#fff',
             html: `
             <div class="rounded-full flex items-center">
-                <div class="bg-light-orange/20 p-2 lg:p-3 rounded-full">
-                   ${icon || ''}
-
+                <div v-if="icon" class="bg-light-orange/20 p-2 lg:p-3 rounded-full">
+                   ${icon}
                 </div>
-                <div class="pl-1 lg:pl-4 pr-3 lg:pr-10 grid items-center text-center md:text-start" style="flex: 1;">
-                    ${title ? `<p class="text-[14px] block md:text-sm text-nowrap truncate">${title}</p>` : ''}
-                    ${message ? `<p class="text-[12px] lg:text-xs opacity-60">${message}</p>` : ''}
+                <div v-if="title || message" class="pl-1 lg:pl-4 pr-3 lg:pr-10 grid items-center text-center md:text-start" style="flex: 1;">
+                    <p v-if="title" class="text-[14px] block md:text-sm text-nowrap truncate">${title}</p>
+                    <p v-if="message" class="text-[12px] lg:text-xs opacity-60">${message}</p>
                 </div>
-                ${button ? `
-                    <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="${button.href}">
-                        ${button.label}
-                        <svg class="md:block" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                ` : ''}
+                <a v-if="button" class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="${button.href}">
+                    ${button.label}
+                    <svg class="md:block" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
             </div>
         `,
             ...options,

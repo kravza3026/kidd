@@ -6,7 +6,7 @@ export default {
         'help': 'Help',
         'account': 'Account',
     },
-    'product-show': {
+    'product': {
         'new': 'New',
         'mdl': 'lei',
         'desc': {
@@ -22,6 +22,7 @@ export default {
             'closure': 'Closure',
         },
         'add-to-favorite': 'Save to Favorites',
+        'remove-from-favorite': 'Remove from Favorites',
         'add-to-cart': 'Add to Сart',
     },
     'user-dropdown': {

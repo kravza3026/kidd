@@ -10,7 +10,7 @@
                 <div v-if="product.is_new" class="justify-center relative items-center gap-2 flex">
                     <div
                         class="absolute left-2/3 uppercase font-bold -translate-x-2/5 top-0 mt-0 w-max bg-olive text-white text-sm px-3 py-1 rounded-full transition-opacity duration-300">
-                        {{ $t('product-show.new') }}
+                        {{ $t('product.new') }}
                         <div
                             class="absolute -bottom-0.5 left-1/3 rotate-90 w-0 h-0 border-l-8 -z-1 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></div>
                     </div>
@@ -24,7 +24,7 @@
         <!-- Ціна -->
         <div class="pb-8 justify-start items-end gap-2 inline-flex">
             <div class="opacity-80 text-charcoal text-5xl font-medium leading-[48px]">
-                {{ priceFinal }} {{ t('product-show.mdl') }}
+                {{ priceFinal }} {{ t('product.mdl') }}
             </div>
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
@@ -34,7 +34,7 @@
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
                 </div>
                 <div class="opacity-30 text-right text-charcoal text-sm font-normal line-through leading-[25.20px]">
-                    {{ priceOnline }} {{ t('product-show.mdl') }}
+                    {{ priceOnline }} {{ t('product.mdl') }}
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
 
                 <div class="flex justify-between items-center w-full">
                     <div class="text-charcoal text-base font-normal inline-flex">
-                        {{ t('product-show.desc.size') }}
+                        {{ t('product.desc.size') }}
                     </div>
                     <sizeGuide ></sizeGuide>
 
@@ -116,15 +116,16 @@
 
                     <Button
                         @click="handleFavoriteClick(product.id, product.name[locale],)"
-                        buttonPrimary customClass="text-olive font-bold text-[16px] text-center w-[93vw] md:w-5/12"  >
-                        <img :src="favIcon" alt="">
-                        Save to Favorites
+                        buttonPrimary customClass="text-olive font-bold text-[15px] text-center w-[93vw] md:w-5/12"  >
+                        <img class="size-4" :src="isFavorite(product.id) ? '/assets/images/icons/inFavorite.svg' : favIcon" alt="">
+                        {{ isFavorite(product.id) ? t('product.remove-from-favorites') : t('product.add-to-favorite') }}
                     </Button>
+
                     <Button
                         @click="addToCart"
                         customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
                         <img :src="cartWhite" alt="">
-                        Add to cart
+                        {{ t('product.add-to-cart') }}
                     </Button>
                     <div id="sticky-trigger" class="h-[1px] absolute  -bottom-[110px]"></div>
                 </div>
@@ -149,7 +150,7 @@ import { useFavorites } from '@/useFavorites'
 import {useAlert} from "@/useAlert.js";
 import { emitter } from '@/eventBus'
 const { toggleFavorite, isFavorite } = useFavorites()
-const { showAlert } = useAlert(isFavorite)
+const { showAlert } = useAlert()
 
 const props = defineProps({
     product: {
@@ -163,8 +164,6 @@ const { t, locale } = useI18n()
 // --- Selection states
 const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
 const selectedSizeId = ref(null)
-
-
 
 // --- Unique colors (no duplicates)
 const uniqueColors = computed(() => {
@@ -214,7 +213,7 @@ const selectedVariant = computed(() => {
 // --- Selected variant ID (to send to server during purchase)
 const selectedVariantId = computed(() => selectedVariant.value?.id || null)
 
-const addToCart = async () => {
+const addToCart = async (event) => {
     if (!selectedVariantId.value) return
 
     try {
@@ -223,9 +222,18 @@ const addToCart = async () => {
             quantity: 1
         })
         emitter.emit('cart-updated');
-        showAlert({type:'add_to_cart', title: 'Add to cart ' + response.data.product.name, id: response.data.product.id, button:{label: 'View cart', href: `/${locale.value}/cart`}})
-        this.$emit('cartUpdated'); // TODO - not working
-        console.log('Product added to the cart') // TODO Remove in production
+
+        showAlert({
+            title: props.product.name[locale.value],
+            type: 'cart',
+            message: t('alerts.addedToCart'),
+            icon: 'cart',
+            button: {
+                label: t('menu.cart'),
+                href: `/${locale.value}/cart`,
+            }
+        });
+
     } catch (error) {
         console.error('Server error:', error)
         // TODO Remove in production
@@ -273,7 +281,5 @@ const handleFavoriteClick = (id, name) => {
     toggleFavorite(id, name)
 
 }
-
-
 
 </script>

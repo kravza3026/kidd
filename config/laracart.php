@@ -75,7 +75,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'tax' => null,
+    'tax' => '20',
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +127,7 @@ return [
             'price_final' => 'price_final',
             //            'size' => 'size',
             //            'color' => 'color',
-            'product' => 'product',
+            //            'product' => 'product',
             //            'your_key' => 'price_relation.value', // this will go to the price relation then get the value!
             //            'your_other_key' => 'price_relation.sub_relation.value', // This also works
             // put columns here for additional options,
@@ -136,7 +136,7 @@ return [
         ],
     ],
 
-    'free_delivery_after' => 1500, // free delivery after total MDL amount (Without discounts)
+    'free_delivery_after' => 10000, // free delivery after total MDL amount (Without discounts)
     'delivery_price' => 500, // delivery price in MDL
 
     /*
@@ -146,7 +146,7 @@ return [
     |
     */
     'item_model_relations' => [
-        'product',
+//        'product',
     ],
 
     /*

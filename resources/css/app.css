@@ -156,8 +156,6 @@ ul.markers{
     width: 10px;
     height: 10px;
     border-radius: 100%;
-
-
 }
 
 input:checked + .checkboxLabelCircle::after {
@@ -175,3 +173,17 @@ input:checked + .checkboxLabelCircle::after {
     font-size: 10px;
 }
 
+
+/* Sweet alert styling.*/
+.swal2-popup{
+    border-radius: 50px;
+    padding: 1px!important;
+    margin-bottom: 25px;
+}
+.swal2-html-container{
+    margin: 0.5rem !important;
+
+}
+.swal2-container{
+    min-width: 360px!important;
+}

@@ -102,7 +102,6 @@ export default {
                 const response = await window.axios.get(`${this.locale}/cart/items`)
                 this.cartItems = response.data.items;
                 this.grandTotal = response.data.grand_total;
-                console.log(response) // TODO Remove in production
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }

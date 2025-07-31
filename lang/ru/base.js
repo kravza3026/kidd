@@ -6,7 +6,7 @@ export default {
         'help': 'Помощь',
         'account': 'Аккаунт',
     },
-    'product-show': {
+    'product': {
         'new': 'Новый',
         'mdl': 'лей',
         'desc': {
@@ -22,6 +22,7 @@ export default {
             'closure': 'Закрытие',
         },
         'add-to-favorite': 'Сохранить в Избранные',
+        'remove-from-favorite': 'Удалить из Избранных',
         'add-to-cart': 'Добавить в Корзину',
     },
     'user-dropdown': {

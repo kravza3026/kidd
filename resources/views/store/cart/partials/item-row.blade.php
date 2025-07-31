@@ -14,7 +14,7 @@
         <div class="flex flex-1 justify-between flex-col">
             <div class="flex flex-col gap-2">
                 <h5 class="text-xl font-medium text-charcoal leading-5 tracking-[-2%]">
-                    {{ $item->options['product']->name }}
+                    {{ $item->options['model']->product->name }}
                 </h5>
                 <span class="text-base font-normal text-charcoal leading-4 tracking-[-2%]">
                 {{ $item->options['model']->price_final / 100 }} lei

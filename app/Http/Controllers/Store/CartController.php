@@ -149,12 +149,31 @@ class CartController extends Controller
             $request->quantity,
         );
 
-        return response(content:json_encode([
-            'product' => [
-                'id' => $productVariant->product->id,
-                'name' => $productVariant->product->name,
-            ],
-        ]), status: 200);
+//        showAlert({
+//            title: response.data.product.name,
+//            type: 'cart',
+//            message: t('alerts.addedToCart'),
+//            icon: 'cart',
+//            button: {
+//        label: t('menu.cart'),
+//                href: `/${locale.value}/cart`,
+//            }
+//        });
+
+//        return response([
+//            'alert' => [
+//                'title' => $productVariant->product->name,
+//                'type' => "cart",
+//                'message' => __('alerts.addedToCart'),
+//                'icon' => 'cart', // наприклад: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
+//                'button' => [
+//                    'label' => __('menu.cart'),
+//                    'href' => route('cart'),
+//                ],// { label: "View Cart", href: "/en/cart" }
+//            ],
+//        ], status: 200);
+
+        return response(status: 204);
 
     }
 

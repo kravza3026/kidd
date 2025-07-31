@@ -3,7 +3,7 @@
         <div @click="open = true" class="cursor-pointer flex items-center gap-1">
             <img :src="sizeIcon" alt="" class="w-3" />
             <span class="text-[#a8ba66] text-sm font-bold underline leading-[14px]">
-      {{ t('product-show.desc.size_guide') }}
+      {{ t('product.desc.size_guide') }}
     </span>
         </div>
 

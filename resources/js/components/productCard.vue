@@ -19,7 +19,7 @@
                         v-if="product.is_new"
                         class="bg-olive text-white text-[10px] md:text-[12px] font-semibold rounded-full px-3 py-1"
                     >
-                        {{ $t ? $t('product-show.new') : 'New' }}
+                        {{ $t ? $t('product.new') : 'New' }}
                     </div>
                 </div>
 
@@ -81,14 +81,14 @@
                 </template>
             </div>
 
-            <div @click="toggleFavorite({ id: product.id, name: product.name[locale], type: 'favorite' })"
+            <div @click="toggleFavorite(product.id, product.name[locale])"
                 class="absolute  add_favorite  bg-white w-7 h-7 xl:w-10 xl:h-10 p-1 xl:p-3 border border-black/10 rounded-full right-4 xl:right-4 bottom-4 xl:bottom-[-20%] group-hover:bottom-4 xl:opacity-0 group-hover:opacity-100 duration-500 transition-all ease-in-out"
             >
                 <img  :src="isFavorite(product.id) ? inFavIcon : favIcon" width="24" height="24" alt="add to favorite" />
                 <div
                     class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 transition-opacity duration-300 z-[130]"
                 >
-                   {{isFavorite(product.id) ? 'Remove from Favorites' : 'Save to Favorites' }}
+                   {{ isFavorite(product.id) ? 'Remove from Favorites' : 'Save to Favorites' }}
                     <div
                         class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"
                     ></div>
@@ -116,12 +116,12 @@
             <a :href="product.url">
                 <p class="text-sm text-charcoal sm:text-base">{{ product.name[locale] }}</p>
                 <p class="font-bold text-charcoal text-base">
-                    {{ finalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
+                    {{ finalPrice }} {{ $t ? $t('product.mdl') : 'MDL' }}
                     <span
                         v-if="product.has_discount"
                         class="text-sm font-light line-through opacity-30"
                     >
-              {{ originalPrice }} {{ $t ? $t('product-show.mdl') : 'MDL' }}
+              {{ originalPrice }} {{ $t ? $t('product.mdl') : 'MDL' }}
             </span>
                 </p>
             </a>
@@ -133,7 +133,6 @@
 <script>
 import { useFavorites } from '@/useFavorites'
 import { useI18n } from 'vue-i18n'
-import { useAlert } from '../useAlert.js'
 
 export default {
     name: 'ProductCard',
@@ -149,10 +148,8 @@ export default {
         const locale = document.documentElement.lang || 'ro';
         const { t } = useI18n()
         const { toggleFavorite, isFavorite } = useFavorites()
-        const { showAlert } = useAlert(isFavorite)
 
-
-        return { toggleFavorite, isFavorite, locale, showAlert }
+        return { toggleFavorite, isFavorite, locale }
 
     },
     methods: {
@@ -176,7 +173,7 @@ export default {
             return (this.product.variants[0]?.price_online ?? 0) / 100;
         },
         sizeIcon() {
-            return '/assets/images/icons/size.png';
+            return '/assets/images/icons/size.svg';
         },
         favIcon() {
             return '/assets/images/icons/add_fav.svg';
@@ -190,17 +187,3 @@ export default {
 
 }
 </script>
-<style>
-.swal2-popup{
-    border-radius: 50px;
-    padding: 1px!important;
-    margin-bottom: 25px;
-}
-.swal2-html-container{
-    margin: 0.5rem !important;
-
-}
-.swal2-container{
-    min-width: 360px!important;
-}
-</style>
