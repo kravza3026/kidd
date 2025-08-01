@@ -126,15 +126,20 @@ class CartController extends Controller
                 'name' => $cartItem->options['model']->product->name,
                 'quantity' => $cartItem->options['qty'],
                 'price' => $cartItem->options['price'],
-                'color' => $cartItem->options['model']->color->hex,
+                'color' => $cartItem->options['model']->color->name,
+                'color_id' => $cartItem->options['model']->color->id,
+                'hex' => $cartItem->options['model']->color->hex,
                 'colorName' => $cartItem->options['model']->color->name,
                 'img' => Vite::image($cartItem->options['model']->product->main_image),
                 'size' => $cartItem->options['model']->size->name,
+                'size_id' => $cartItem->options['model']->size->id,
 //                'obj' => $cartItem,
 //                'variant' => $cartItem->options['model'],
                 'product' => $cartItem->options['model']->product,
             ];
+
         }
+
 
         return $response;
     }
@@ -192,6 +197,9 @@ class CartController extends Controller
 
 //      return response(content: null, status: 204);
 
-        return back();
+//        return back();
+        return response()->json([
+            'message' => 'Item removed'
+        ], 200);
     }
 }

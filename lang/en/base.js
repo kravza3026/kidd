@@ -34,6 +34,9 @@ export default {
         'login': 'Login',
         'register': 'Register',
     },
+    'cart':{
+        'title':'My Cart'
+    },
     'alerts':{
         'savedToFavorites':'saved to Favorites',
         'removedFromFavorites':'removed from Favorites',

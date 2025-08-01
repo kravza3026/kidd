@@ -149,6 +149,7 @@ export default {
         const { t } = useI18n()
         const { toggleFavorite, isFavorite } = useFavorites()
 
+
         return { toggleFavorite, isFavorite, locale }
 
     },

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="max-w-full flex-col relative justify-start items-start flex"  >
+    <div class="max-w-full flex-col relative justify-start items-start flex page-fade"  >
         <div class="pb-8  flex-col max-w-full justify-start items-start gap-3 flex">
             <div class="justify-start  items-start gap-4 inline-flex">
                 <div class="opacity-80 text-center max-w-full text-charcoal text-[24px] md:text-3xl font-bold leading-[62.40px] text-nowrap">
@@ -144,8 +144,8 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import favIcon from '@img/icons/fav_icon_active.svg'
 import cartWhite from '@img/icons/cart_white.svg'
-import Button from "@/components/Button.vue";
 import SizeGuide from "@/components/ui/sizeGuide.vue";
+import Button from "@/components/Button.vue";
 import { useFavorites } from '@/useFavorites'
 import {useAlert} from "@/useAlert.js";
 import { emitter } from '@/eventBus'

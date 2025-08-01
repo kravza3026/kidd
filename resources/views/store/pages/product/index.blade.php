@@ -29,7 +29,7 @@
                 </li>
             </ol>
         </nav>
-        <div class="w-full py-2 flex-col lg:flex-row justify-center items-start gap-12 inline-flex relative">
+        <div class="w-full py-2 flex-col lg:flex-row justify-center items-start gap-12 inline-flex relative ">
             @include('.store.pages.product.sections.imgSlider')
             @include('.store.pages.product.sections.mainSection')
 
