@@ -27,6 +27,7 @@ export default {
         'add-to-cart': 'Добавить в Корзину',
     },
     'user-dropdown': {
+        'tooltip':'Профиль',
         'profile': 'Мой профиль',
         'orders': 'Мои заказы',
         'favorites': 'Избранные',
@@ -36,6 +37,7 @@ export default {
         'register': 'Регистрация',
     },
     'cart':{
+        'tooltip': 'Корзина',
         'title':'Моя Корзина',
         'products_count' : 'нет товаров | 1 товар | {count} товара',
         'grand_total': 'Общая сумма',

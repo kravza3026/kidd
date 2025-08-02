@@ -27,6 +27,7 @@ export default {
         'add-to-cart': 'Add to Сart',
     },
     'user-dropdown': {
+        'tooltip': 'Account',
         'profile': 'My Profile',
         'orders': 'My Orders',
         'favorites': 'Favorites',
@@ -36,6 +37,7 @@ export default {
         'register': 'Register',
     },
     'cart':{
+        'tooltip': 'Cart',
         'title':'My Cart',
         'products_count' : 'no products | 1 product | {count} products',
         'grand_total': 'Grand total',

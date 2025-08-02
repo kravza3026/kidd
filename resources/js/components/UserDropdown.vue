@@ -3,7 +3,7 @@
        <div class="group relative">
            <img :src="profileIcon" alt="cart" class="w-[24px] h-[24px] xl:w-[32px] xl:h-[32px]">
             <div class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-               Account
+               {{ $t('user-dropdown.tooltip')}}
                <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
            </div>
        </div>

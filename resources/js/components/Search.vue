@@ -140,7 +140,7 @@ export default {
             <div
                 v-show="open || isMobile"
                 ref="searchWrapper"
-                class="search-input absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
+                class="search-input px-3 absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
             >
                 <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0 lg:top-[-10px]">
                     <img class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
@@ -149,7 +149,7 @@ export default {
                         v-model="searchQuery"
                         @input="handleType"
                         type="text"
-                        class="w-full focus:outline-hidden h-[50px] m-2 pl-12 lg:pl-5 pr-12 rounded-md bg-light-orange"
+                        class="w-full focus:outline-hidden h-[50px] m-2 pl-12 lg:mx-0 lg:pl-5 pr-12 rounded-md bg-light-orange"
                         placeholder=""
                         @keydown.esc="closeSearch"
                     />
@@ -171,17 +171,17 @@ export default {
                     </svg>
 
                     <div v-if="products.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
-                         class="w-full absolute left-0 h-fit lg:max-h-[50vh] overflow-auto top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0">
-                        <ul  class="relative mt-2 w-full z-50">
+                         class="w-full absolute left-0 h-fit lg:min-h-[267px] lg:max-h-[50vh] overflow-auto top-22 lg:top-[78px] mx-auto mb-4 bg-white rounded-md lg:shadow p-0">
+                        <ul  class="relative mt-2 lg:mt-0 w-full z-50">
                             <li v-for="item in products"
                                 :key="item.id"
                                 class="px-2 py-4 lg:p-4  hover:bg-gray-100 flex justify-between items-center gap-4 border-b border-b-light-border"
                             >
-                                <a :href="item.url" class="flex gap-x-2 w-full">
+                                <a :href="item.url" class="flex gap-x-4 w-full">
                                     <div class="bg-card-bg size-14 p-2 text-center flex items-center justify-center rounded-md">
                                         <img :src="'/assets/images/' + item.main_image" alt='product' class="max-w-[50px] max-h-[50px] object-cover rounded-md" />
                                     </div>
-                                    <div class="w-full">
+                                    <div class="w-full flex flex-col justify-evenly">
                                         <div class="flex justify-start items-center w-full gap-x-2">
                                             <p v-html="highlightMatch(item.name[locale])" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-lg"></p>
                                             <div v-if="item.gender" :class="item.gender?.bg_color" class="p-1 group relative flex items-center justify-center rounded-full" >
@@ -208,8 +208,9 @@ export default {
                                         </div>
                                     </div>
                                    <div class="grid align-top justify-items-end">
-                                       <p class="text-base w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.variants[0]?.price_final / 100 }} {{ $t('product.mdl') }}</p>
-                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.variants[0].price_online / 100}} {{ $t('product.mdl') }}</p>
+                                       <p class="text-sm w-fit text-nowrap  lg:text-base text-olive font-bold">{{ $n(item.variants[0]?.price_final / 100, 'currency', 'ro') }}</p>
+                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/25 line-through font-medium">
+                                           {{ $n(item.variants[0]?.price_online / 100, 'currency', 'ro') }}</p>
                                    </div>
                                 </a>
                             </li>
