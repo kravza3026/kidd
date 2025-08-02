@@ -21,6 +21,7 @@ export default {
             'sleeve': 'Рукав',
             'closure': 'Закрытие',
         },
+        'choose-color': 'Выберите цвет',
         'add-to-favorite': 'Сохранить в Избранные',
         'remove-from-favorite': 'Удалить из Избранных',
         'add-to-cart': 'Добавить в Корзину',
@@ -33,6 +34,15 @@ export default {
         'logout': 'Выйти',
         'login': 'Войти',
         'register': 'Регистрация',
+    },
+    'cart':{
+        'title':'Моя Корзина',
+        'products_count' : 'нет товаров | 1 товар | {count} товара',
+        'grand_total': 'Общая сумма',
+        'btn_view_cart': 'Открыть корзину',
+        'empty': 'Корзина пуста',
+        'empty_description': 'Найдём что-нибудь милое',
+        'btn_explore': 'Каталог нарядов',
     },
     'alerts':{
         'savedToFavorites':'сохранено в Избранных',

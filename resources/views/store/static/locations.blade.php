@@ -9,22 +9,22 @@
         </div>
 
 
-        <br/>
-        @foreach($locations->groupBy('address.region_id') as $group => $locations)
-            @foreach($locations as $location)
-                @if($loop->first)
-                    {{ $location->address->region->name }}
-                @endif
-            {{ $location->name }}<br/>
-            @endforeach
-        @endforeach
-        <hr class="my-4">
-        @foreach($locations as $location)
-            {{ $location->name }} / {{ $location->open_hours }} / {{ $location->address->street_name }} {{ $location->address->building }}<br/>
-        @endforeach
+{{--        <br/>--}}
+{{--        @foreach($locations->groupBy('address.region_id') as $group => $locations)--}}
+{{--            @foreach($locations as $location)--}}
+{{--                @if($loop->first)--}}
+{{--                    {{ $location->address->region->name }}--}}
+{{--                @endif--}}
+{{--            {{ $location->name }}<br/>--}}
+{{--            @endforeach--}}
+{{--        @endforeach--}}
+{{--        <hr class="my-4">--}}
+{{--        @foreach($locations as $location)--}}
+{{--            {{ $location->name }} / {{ $location->open_hours }} / {{ $location->address->street_name }} {{ $location->address->building }}<br/>--}}
+{{--        @endforeach--}}
 
 </section>
-<div class="block w-full h-full min-h-[600px]" id="map"></div>
+<div class="block w-full h-full min-h-[90vh] -mb-7" id="map"></div>
 
 @push('scripts')
 <script>
@@ -68,13 +68,13 @@
         defaultOption.textContent = 'All locations';
         select.appendChild(defaultOption);
 
-                locations.forEach((marker, index) => {
-                    const option = document.createElement('option');
-                    option.value = marker.address;
-                    option.textContent = marker.address;
+            locations.forEach((marker, index) => {
+                const option = document.createElement('option');
+                option.value = marker.address;
+                option.textContent = marker.address;
 
-                    select.appendChild(option);
-                });
+                select.appendChild(option);
+            });
 
         controlDiv.appendChild(select);
 

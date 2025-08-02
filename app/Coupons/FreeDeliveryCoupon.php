@@ -32,7 +32,7 @@ class FreeDeliveryCoupon implements CouponContract
     public function discount($throwErrors = false)
     {
         // $this->minAmount was passed to the $options when constructing the coupon class
-        $this->checkMinAmount(config('laracart.free_delivery_after') * 100, $throwErrors);
+        $this->checkMinAmount(config('laracart.free_delivery_after') * 100, false);
 
         return $this->value;
     }

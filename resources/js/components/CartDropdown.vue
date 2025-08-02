@@ -22,8 +22,8 @@
 
                 <div v-if="cartItems.length > 0">
                     <div class="flex justify-between p-4 md:border-b md:border-b-light-border">
-                        <h3 class="text-lg font-bold mb-2">My cart</h3>
-                        <p class="font-bold text-[14px] opacity-40">{{ cartItems.length }} products</p>
+                        <h3 class="text-lg font-bold mb-2">{{ $t('cart.title') }}</h3>
+                        <p class="font-bold text-[14px] opacity-40">{{ $t('cart.products_count', cartItems.length) }}</p>
                     </div>
                     <ul  class="p-4 space-y-3 border-b border-b-light-border max-h-[40vh] overflow-y-auto">
                         <li v-for="item in cartItems" :key="item.id" class="flex justify-between gap-4 mb-6">
@@ -35,35 +35,45 @@
                                     <p class="font-semibold">{{ item.name }}</p>
                                     <div class="flex">
                                         <div class="flex items-center gap-x-2 border-r pr-2 border-r-light-border">
-                                            <span class="h-4 w-4 light_border rounded-full" :style="{ backgroundColor: item.color }"></span>
-                                            <p class="opacity-40 font-normal text-[14px]">{{item.colorName}}</p>
+                                            <span class="h-4 w-4 light_border rounded-full" :style="{ backgroundColor: item.color.hex }"></span>
+                                            <p class="opacity-40 font-normal text-[14px]">{{item.color.name}}</p>
                                         </div>
-                                        <p class="opacity-40 font-normal text-[14px] pl-2">{{item.size}}</p>
+                                        <p class="opacity-40 font-normal text-[14px] pl-2">{{item.size.name}}</p>
                                     </div>
                                     <p class="text-sm text-black">x{{ item.quantity }}</p>
                                 </div>
                             </div>
                             <div>
-                                <p class="text-olive">{{ item.price / 100 }} lei</p>
+<!--                                <p class="text-olive">{{ item.price / 100 }} lei</p>-->
+                                <p class="text-olive">{{ $n(item.price / 100, 'currency', 'ro') }}</p>
                             </div>
                         </li>
                     </ul>
                     <div class="flex justify-between p-4">
-                        <h3 class="text-lg font-bold mb-2">Grand total</h3>
-                        <p class=" text-[18px]">{{ grandTotal }}</p>
+                        <h3 class="text-lg font-bold mb-2">{{ $t('cart.grand_total')}}</h3>
+<!--                        <p class=" text-[18px]">{{ cartGrandTotal }}</p>-->
+                        <p class=" text-[18px]">{{ $n(cartGrandTotal / 100, 'currency', 'ro') }}</p>
                     </div>
                     <div class="px-4">
-                        <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >View full cart</Button>
+                        <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >
+                            {{ $t('cart.btn_view_cart')}}
+                        </Button>
                     </div>
                 </div>
 
                 <div v-else class="text-center p-4 grid justify-center ">
                     <img class="mx-auto py-4" :src="basket_empty" alt="">
                     <div class="py-4">
-                        <p class="py-1 text-[18px]">Cart is empty</p>
-                        <p class="py-1 opacity-60 text-[14px] font-normal">Let’s find something cute</p>
+                        <p class="py-1 text-[18px]">
+                            {{ $t('cart.empty') }}
+                        </p>
+                        <p class="py-1 opacity-60 text-[14px] font-normal">
+                            {{ $t('cart.empty_description') }}
+                        </p>
                     </div>
-                    <Button display-as="a" :href="route('products.index')" customClass="mx-auto mt-0 w-full" withArrow>Explore outfits</Button>
+                    <Button display-as="a" :href="route('products.index')" customClass="mx-auto mt-0 w-full" withArrow>
+                        {{ $t('cart.btn_explore')}}
+                    </Button>
                 </div>
             </div>
         </transition>
@@ -90,7 +100,7 @@ export default {
             cartIcon,cartIconOpen,
             basket_empty,
             cartItems: [],
-            grandTotal: 0,
+            cartGrandTotal: 0,
         };
     },
     methods: {
@@ -101,7 +111,7 @@ export default {
             try {
                 const response = await window.axios.get(`${this.locale}/cart/items`)
                 this.cartItems = response.data.items;
-                this.grandTotal = response.data.grand_total;
+                this.cartGrandTotal = response.data.grand_total;
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }

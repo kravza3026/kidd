@@ -1,10 +1,8 @@
-// resources/js/app.js
 import "./bootstrap";
 
 import { createApp } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy.js';
-// import mitt from 'mitt';
 
 import Alpine from 'alpinejs';
 
@@ -27,8 +25,6 @@ import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
-
-
 
 window.Alpine = Alpine;
 window.IMask = IMask;

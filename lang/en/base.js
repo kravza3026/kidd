@@ -21,6 +21,7 @@ export default {
             'sleeve': 'Sleeve',
             'closure': 'Closure',
         },
+        'choose-color': 'Choose color',
         'add-to-favorite': 'Save to Favorites',
         'remove-from-favorite': 'Remove from Favorites',
         'add-to-cart': 'Add to Сart',
@@ -35,7 +36,13 @@ export default {
         'register': 'Register',
     },
     'cart':{
-        'title':'My Cart'
+        'title':'My Cart',
+        'products_count' : 'no products | 1 product | {count} products',
+        'grand_total': 'Grand total',
+        'btn_view_cart': 'View full cart',
+        'empty': 'Cart is empty',
+        'empty_description': 'Let’s find something cute',
+        'btn_explore': 'Explore outfits',
     },
     'alerts':{
         'savedToFavorites':'saved to Favorites',

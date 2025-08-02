@@ -133,7 +133,7 @@ export default {
             ref="searchToggle"
         >
             <img :src="searchIcon" alt="search" width="24" height="24" />
-            <span>Search</span>
+            <span>{{ $t('menu.search') }}</span>
         </div>
 
         <transition name="slide-fade" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
@@ -171,7 +171,7 @@ export default {
                     </svg>
 
                     <div v-if="products.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
-                         class="w-full absolute left-0 h-fit lg:max-h-[50vh] overflow-auto top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0 lg:p-4">
+                         class="w-full absolute left-0 h-fit lg:max-h-[50vh] overflow-auto top-22  mx-auto -mt-3 mb-4 bg-white   rounded-md lg:shadow p-0">
                         <ul  class="relative mt-2 w-full z-50">
                             <li v-for="item in products"
                                 :key="item.id"
@@ -195,22 +195,21 @@ export default {
                                         <div class="mt-1 flex flex-wrap w-full items-center gap-x-[1px]">
                                             <p v-for="(variant, index) in item.variants"
                                                 :key="variant.color.id"
-                                                class="text-xs lg:text-base pr-1  text-charcoal/40 font-normal lg:pr-2 tracking-tighter"
+                                                class="text-xs lg:text-base pr-1  text-charcoal/40 font-light lg:pr-2 tracking-tighter"
                                             >
                                                 {{ variant.color.name[locale] }}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
                                             <span class="h-full block py-2 mr-2 border-r border-r-light2-border"></span>
                                             <p v-for="(variant, index) in item.variants"
                                                :key="variant.size.id"
-                                                class="text-xs lg:text-base text-charcoal/40 font-normal lg:pr-2">
+                                                class="text-xs lg:text-base text-charcoal/40 font-light lg:pr-2">
                                                 {{ variant.size.name[locale]}}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
                                         </div>
                                     </div>
-                                   <div class="grid align-top">
-                                       <p class="text-base w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.variants[0]?.price_final / 100 }} lei</p>
-                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.variants[0].price_online / 100}}
-                                           lei</p>
+                                   <div class="grid align-top justify-items-end">
+                                       <p class="text-base w-fit text-nowrap  lg:text-sm text-olive font-bold">{{ item.variants[0]?.price_final / 100 }} {{ $t('product.mdl') }}</p>
+                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/20 line-through font-bold">{{ item.variants[0].price_online / 100}} {{ $t('product.mdl') }}</p>
                                    </div>
                                 </a>
                             </li>

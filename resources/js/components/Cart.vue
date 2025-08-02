@@ -6,7 +6,6 @@ import { emitter } from '@/eventBus'
 import iconTrash from '@img/common/trash.svg'
 import { useI18n } from 'vue-i18n'
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
-// import {emitter} from "@/eventBus.js";
 export default {
     name: 'Cart',
     components: {BaseCheckbox},
@@ -22,7 +21,6 @@ export default {
     },
     setup(){
         const { t, locale } = useI18n()
-
 
         const getColorById = (item, id) => {
             return item.product.variants
@@ -126,7 +124,6 @@ export default {
         }
     },
 
-
     methods: {
 
         async getCartItems() {
@@ -135,70 +132,58 @@ export default {
                 this.cartItems = response.data.items.map(item => ({
                     ...item,
                     selected: false,
-                    selectedSizeId: item.size_id,
-                    selectedColorId: item.color_id,
+                    selectedSizeId: item.size.id,
+                    selectedColorId: item.color.id,
                     sizeDropdownOpen: false,
                     colorDropdownOpen: false,
                 }));
-                console.log(this.cartItems[0])
-                // console.log(response) // TODO Remove in production
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }
         },
 
-        removeItem($itemHash) {
-            axios.delete(`/cart/${$itemHash}`)
+        async removeItem($itemHash) {
+            await axios.delete(`/cart/${$itemHash}`)
                 .then(() => {
                     this.cartItems = this.cartItems.filter(item => item.id !== $itemHash);
                     emitter.emit('cart-updated');
                 })
                 .catch(err => {
-                    console.error('Помилка при видаленні:', err)
+                    console.error('Server error:', err) // TODO Remove in production
                 });
         },
-
-
-
-
-
     },
     mounted() {
         this.getCartItems();
     },
-
 }
 </script>
 
 <template>
-
     <div class="mb-4 inline-block relative text-5xl font-bold leading-[62px] tracking-[-2%] text-charcoal/80">
-        <h1>{{$t('cart.title')}}</h1>
-        <p class="absolute w-7 h-6 py-2 px-3 flex justify-center items-center text-white text-xl font-bold  rounded-full -right-10 top-0 bg-olive">
+        <h1>{{ $t('cart.title') }}</h1>
+        <p class="absolute w-7 h-6 py-2 px-3 flex justify-center items-center text-white text-sm font-extrabold rounded-full -right-10 top-0 bg-olive">
             <span class="p-2">{{ cartItems.length }}</span>
             <span class="absolute -z-1 -bottom-[2px] left-1/12 rotate-95 w-4 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></span>
         </p>
-
     </div>
 
     <div
         v-for="cartItem in cartItems"
         :key="cartItem.id"
         class="">
-
         <div class="flex justify-between items-center my-2">
-
             <div class="flex items-center gap-x-6">
                 <div class="flex gap-x-6">
-
                     <div class="p-2 bg-light-orange rounded-2xl">
                         <img class="w-[84px]" :src='cartItem.img' alt="{{cartItem.name}}">
                     </div>
                 </div>
                 <div>
                     <div>
-                        <p class="text-[20px] font-medium">{{cartItem.name}}</p>
-                        <p class="opacity-60">{{cartItem.price / 100}} lei</p>
+                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
+<!--                        <p class="opacity-60">{{cartItem.price / 100}} lei</p>-->
+                        <p class="opacity-60">{{ $n(cartItem.price / 100, 'currency', 'ro') }}</p>
                     </div>
                     <div class="flex gap-x-2">
 
@@ -276,14 +261,13 @@ export default {
                                 </li>
                             </ul>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <div class="flex justify-between flex-col min-h-full gap-6">
                 <div class="flex justify-end">
-                    <p class="text-olive">{{ (cartItem.price / 100) * cartItem.quantity }} lei</p>
+<!--                    <p class="text-olive">{{ (cartItem.price / 100) * cartItem.quantity }} lei</p>-->
+                    <p class="text-olive">{{ $n( (cartItem.price / 100) * cartItem.quantity, 'currency', 'ro') }}</p>
                 </div>
                 <div
                     @click="removeItem(cartItem.id)"
@@ -293,7 +277,6 @@ export default {
                 </div>
             </div>
         </div>
-        <hr class="my-4 border-light-border"></hr>
+        <hr class="my-4 border-light-border" />
     </div>
-
 </template>

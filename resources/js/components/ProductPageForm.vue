@@ -43,7 +43,7 @@
         <div class="w-full py-8 border-t border-[#eeeeee] flex-col justify-start items-start gap-8 flex">
             <div class="w-full flex-col justify-start items-start gap-4 flex">
                 <h3 class="text-sm font-medium text-gray-900">
-                    Choose color - <span>{{ selectedColorName[locale] }}</span>
+                    {{ t('product.choose-color') }} - <span>{{ selectedColorName[locale] }}</span>
                 </h3>
                 <fieldset aria-label="Choose a color">
                     <div class="flex items-center gap-x-3 space-x-3">
@@ -276,7 +276,7 @@ const discountPercent = computed(() => {
 })
 
 const hasDiscount = computed(() => {
-    return selectedVariant.value?.has_discount || props.product.has_discount
+    return selectedVariant.value?.has_discount
 })
 
 let clickedRecently = false

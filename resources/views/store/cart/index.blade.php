@@ -65,6 +65,7 @@
                         Grand total
                     </span>
                     <span class="font-extrabold text-base tracking-[-2%] text-charcoal">
+                        {{ $sub_total }} lei /
                         {{ $total }} lei
                     </span>
                 </div>
