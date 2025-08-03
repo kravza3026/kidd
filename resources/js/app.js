@@ -30,6 +30,10 @@ window.Alpine = Alpine;
 window.IMask = IMask;
 
 import i18n from './i18n';
+import { useAlert } from "@/useAlert";
+
+const { showAlert } = useAlert();
+window.toast = showAlert;
 
 // Масив компонентів
 const components = {
@@ -87,4 +91,5 @@ window.addEventListener("load", function () {
             placeholderChar: "_", // defaults to '_'
         });
     }
+
 });

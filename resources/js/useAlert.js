@@ -1,8 +1,7 @@
 import Swal from 'sweetalert2'
-import { useI18n } from 'vue-i18n'
+import {isObject, isPlainObject} from "lodash";
 
 export function useAlert() {
-    const { t, locale } = useI18n()
 
     const iconFavorite = `
     <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,25 +9,49 @@ export function useAlert() {
                     </svg>
     `
     const iconCard = `
-
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M3.05436 3.33738L4.08697 9.36846H11.4349C12.7159 9.36846 13.8252 8.50093 14.1036 7.28134L14.6334 4.96049C14.8236 4.12767 14.1739 3.33738 13.2991 3.33738H3.05436Z" fill="white"/>
 <path d="M2.71016 1.66671L3.44473 1.51537C3.38615 1.23105 3.16877 1.00607 2.88664 0.937767L2.71016 1.66671ZM1.50982 0.604433C1.10724 0.506966 0.70187 0.754311 0.604403 1.15689C0.506935 1.55948 0.75428 1.96485 1.15686 2.06231L1.50982 0.604433ZM4.77555 13.312L4.02565 13.2999L4.77555 13.312ZM14.1036 7.28134L14.8348 7.44826L14.1036 7.28134ZM14.6334 4.96049L13.9023 4.79357L14.6334 4.96049ZM2.88664 0.937767L1.50982 0.604433L1.15686 2.06231L2.53368 2.39565L2.88664 0.937767ZM3.78893 3.18604L3.44473 1.51537L1.97558 1.81805L2.31979 3.48873L3.78893 3.18604ZM12.2863 13.3334C12.2863 13.633 12.0285 13.9167 11.6594 13.9167V15.4167C12.8112 15.4167 13.7863 14.5065 13.7863 13.3334H12.2863ZM11.6594 13.9167C11.2904 13.9167 11.0326 13.633 11.0326 13.3334H9.53263C9.53263 14.5065 10.5077 15.4167 11.6594 15.4167V13.9167ZM11.0326 13.3334C11.0326 13.0337 11.2904 12.75 11.6594 12.75V11.25C10.5077 11.25 9.53263 12.1603 9.53263 13.3334H11.0326ZM11.6594 12.75C12.0285 12.75 12.2863 13.0337 12.2863 13.3334H13.7863C13.7863 12.1603 12.8112 11.25 11.6594 11.25V12.75ZM6.779 13.3334C6.779 13.633 6.52124 13.9167 6.15219 13.9167V15.4167C7.30393 15.4167 8.279 14.5065 8.279 13.3334H6.779ZM6.15219 13.9167C5.78314 13.9167 5.52538 13.633 5.52538 13.3334H4.02538C4.02538 14.5065 5.00045 15.4167 6.15219 15.4167V13.9167ZM6.15219 12.75C6.52124 12.75 6.779 13.0337 6.779 13.3334H8.279C8.279 12.1603 7.30393 11.25 6.15219 11.25V12.75ZM5.52538 13.3334C5.52538 13.3303 5.5254 13.3272 5.52545 13.3242L4.02565 13.2999C4.02547 13.311 4.02538 13.3222 4.02538 13.3334H5.52538ZM5.52545 13.3242C5.53024 13.0284 5.78697 12.75 6.15219 12.75V11.25C5.01133 11.25 4.04439 12.1426 4.02565 13.2999L5.52545 13.3242ZM7.529 14.0834H10.2826V12.5834H7.529V14.0834ZM2.31512 3.46395L3.34773 9.49502L4.82621 9.24189L3.7936 3.21081L2.31512 3.46395ZM13.9023 4.79357L13.3724 7.11442L14.8348 7.44826L15.3646 5.12741L13.9023 4.79357ZM3.05436 4.08738H13.2991V2.58738H3.05436V4.08738ZM4.08697 10.1185H11.4349V8.61846H4.08697V10.1185ZM4.77538 12.5834H4.74277V14.0834H4.77538V12.5834ZM3.46016 11.3509V10.7113H1.96016V11.3509H3.46016ZM3.46016 10.7113C3.46016 10.4014 3.72302 10.1185 4.08697 10.1185V8.61846C2.93014 8.61846 1.96016 9.5379 1.96016 10.7113H3.46016ZM4.74277 12.5834C4.01663 12.5834 3.46016 12.014 3.46016 11.3509H1.96016C1.96016 12.8776 3.22375 14.0834 4.74277 14.0834V12.5834ZM13.3724 7.11442C13.1746 7.98113 12.3782 8.61846 11.4349 8.61846V10.1185C13.0536 10.1185 14.4758 9.02073 14.8348 7.44826L13.3724 7.11442ZM15.3646 5.12741C15.6672 3.80191 14.6314 2.58738 13.2991 2.58738V4.08738C13.7163 4.08738 13.9799 4.45342 13.9023 4.79357L15.3646 5.12741Z" fill="white"/>
+</svg>
+`
+    const iconSuccess = `
+<svg class="size-4" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 3.4L5.375 7L11 1" stroke="#A8BA66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`
+    const iconInfo = `
+<svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24">
+    <path d="M 12 2 C 10.343 2 9 3.343 9 5 C 9 6.657 10.343 8 12 8 C 13.657 8 15 6.657 15 5 C 15 3.343 13.657 2 12 2 z M 9 10 A 1.0001 1.0001 0 1 0 9 12 L 10 12 L 10 20 L 9 20 A 1.0001 1.0001 0 1 0 9 22 L 15 22 A 1.0001 1.0001 0 1 0 15 20 L 14 20 L 14 11 C 14 10.448 13.552 10 13 10 L 11 10 L 9 10 z" fill="white" stroke="white" stroke-width="1" stroke-linecap="round"></path>
 </svg>
 `
     const showAlert = ({
                            title = 'Default Title',
                            type = 'info',
                            message = 'Default message',
-                           button = { label: '', href: '' },
+                           button,// = { label: null, href: null },
                            options = {}
                        }) => {
 
+        console.dir(button);
+
+        let display_button = typeof button === 'object' ? `
+        <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="${button?.href ?? ''}">
+            ${button?.label ?? ''}
+            <svg class="md:block" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </a>` : '';
+
         let icon = null;
+
         if (type === 'cart') {
             icon = iconCard
         } else if (type === 'favorite') {
             icon = iconFavorite
+        } else if (type === 'info') {
+            icon = iconInfo
+        }else if (type === 'success') {
+            icon = iconSuccess
         }
         Swal.fire({
             toast: true,
@@ -48,12 +71,7 @@ export function useAlert() {
                     <p v-if="title" class="text-[14px] block md:text-sm text-nowrap truncate">${title}</p>
                     <p v-if="message" class="text-[12px] lg:text-xs opacity-60">${message}</p>
                 </div>
-                <a v-if="button" class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="${button.href}">
-                    ${button.label}
-                    <svg class="md:block" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.73335 1.66669H11.6667C12.0349 1.66669 12.3334 1.96516 12.3334 2.33335V11.2667M1.66669 12.3334L11.8 2.20002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
+                ${display_button}
             </div>
         `,
             ...options,

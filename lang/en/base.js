@@ -35,6 +35,7 @@ export default {
         'logout': 'Logout',
         'login': 'Login',
         'register': 'Register',
+        'new-customer': 'New customer?',
     },
     'cart':{
         'tooltip': 'Cart',

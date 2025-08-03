@@ -8,13 +8,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     public function index(Request $request)
     {
-
         return view('store.account.index', [
             'user' => $request->user(),
         ]);
@@ -25,7 +25,6 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-
         return view('store.account.profile.edit', [
             'user' => $request->user(),
         ]);
@@ -54,11 +53,17 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        // TODO - Unified user notification for messages.
-        return Redirect::route('profile.edit')
-            ->with([
-                'success' => true,
-                'message' => 'Profile updated successfully'
-            ]);
+        // TODO - Unified user notification for messages && translations.
+        Session::flash('toast', [
+            'title' => 'Account',
+            'type' => 'info',
+            'message' => 'Profile updated successfully.',
+//            'button' => [
+//                'href' => '/',
+//                'label' => 'Account'
+//            ]
+        ]);
+
+        return Redirect::route('profile.edit');
     }
 }

@@ -35,6 +35,7 @@ export default {
         'logout': 'Deconectare',
         'login': 'Autentificare',
         'register': 'Înregistrare',
+        'new-customer': 'Utilizator nou?',
     },
     'cart':{
         'tooltip': 'Coș',

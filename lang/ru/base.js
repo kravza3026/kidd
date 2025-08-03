@@ -35,6 +35,7 @@ export default {
         'logout': 'Выйти',
         'login': 'Войти',
         'register': 'Регистрация',
+        'new-customer': 'Новый пользователь?',
     },
     'cart':{
         'tooltip': 'Корзина',

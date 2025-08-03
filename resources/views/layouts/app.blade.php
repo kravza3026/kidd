@@ -40,5 +40,28 @@
         ></div>
 
         @stack('scripts')
+
+{{--        @if(session('toast'))--}}
+            <script>
+                window.addEventListener("load", function () {
+                    console.dir(@json(session('toast')));
+
+                    // window.toast({
+                    //     title: 'Account',
+                    //     type: 'info',
+                    //     message: 'Profile updated successfully.',
+                    //     button: { label: 'Account', href: '/ro/account/profile/edit' },
+                    //     options: {
+                    //         timer: 15000
+                    //     }
+                    // });
+
+                    @if(session('toast'))
+                        window.toast(@json(session('toast')));
+                    @endif
+
+                });
+            </script>
+{{--        @endif--}}
     </body>
 </html>

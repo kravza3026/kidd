@@ -17,7 +17,9 @@
     <input
         type="{{ $type }}"
         name="{{ $name }}"
+        @if($id)
         id="{{ $id }}"
+        @endif
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value) }}"
         {{ $attributes->merge([

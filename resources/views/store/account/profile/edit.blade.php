@@ -1,10 +1,6 @@
 <x-app-layout>
     <div class="bg-white sm:bg-transparent sm:pt-16 sm:pb-20 max-w-4xl mx-auto sm:px-4 lg:px-8 space-y-2">
 
-        @if(session('success'))
-            @include('shared.alerts.success')
-        @endif
-
         <div class="bg-white sm:rounded-xl">
             @include('store.account.nav')
             <div class="px-4 sm:p-10">
