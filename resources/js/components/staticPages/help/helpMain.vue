@@ -1,3 +1,69 @@
+<script>
+import { ref, computed } from 'vue';
+import Button from "@/components/ui/Button.vue";
+import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseTextarea from "@/components/ui/BaseTextarea.vue";
+import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
+
+export default {
+    name: 'HelpMain',
+    components: {BaseCheckbox, BaseTextarea, Button, BaseInput},
+
+    data() {
+        return {
+            searchQuery: '',
+            locale: document.documentElement.lang || 'ro',
+            items: [],
+        };
+    },
+
+    setup() {
+        const activeTab = ref('DeliveryTab');
+
+        const tabContentItem = computed(() => {
+            const el = document.getElementById(`tab-${activeTab.value}`);
+            return el ? el.innerHTML : '';
+        });
+
+        return {
+            activeTab,
+            tabContentItem
+        };
+    },
+    computed:{
+        handleType: function() {
+            if (this.timeout)
+                clearTimeout(this.timeout);
+
+            this.timeout = setTimeout(() => {
+                this.search();
+            }, 500); // delay
+        }
+    },
+    methods:{
+        async search() {
+            if (!this.searchQuery.trim()) return [];
+
+            const query = this.searchQuery.trim().toLowerCase();
+
+            try {
+                await axios.get(`/${this.locale}/search?term=${query}`)
+                    .then(response => {
+                        this.items = response.data.results;
+
+                    })
+                    .catch(error => {
+                        console.error('Search error:', error);
+                    });
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        },
+    }
+
+};
+
+</script>
 <template>
     <div class="container">
         <div class="relative">
@@ -230,69 +296,5 @@
     </div>
 
 </template>
-<script>
-import { ref, computed } from 'vue';
-import Button from "@/components/Button.vue";
-import BaseInput from "@/components/ui/BaseInput.vue";
-import BaseTextarea from "@/components/ui/BaseTextarea.vue";
-import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 
-export default {
-    name: 'HelpMain',
-    components: {BaseCheckbox, BaseTextarea, Button, BaseInput},
 
-    data() {
-        return {
-            searchQuery: '',
-            locale: document.documentElement.lang || 'ro',
-            items: [],
-        };
-    },
-
-    setup() {
-        const activeTab = ref('DeliveryTab');
-
-        const tabContentItem = computed(() => {
-            const el = document.getElementById(`tab-${activeTab.value}`);
-            return el ? el.innerHTML : '';
-        });
-
-        return {
-            activeTab,
-            tabContentItem
-        };
-    },
-    computed:{
-        handleType: function() {
-            if (this.timeout)
-                clearTimeout(this.timeout);
-
-            this.timeout = setTimeout(() => {
-                this.search();
-            }, 500); // delay
-        }
-    },
-    methods:{
-        async search() {
-            if (!this.searchQuery.trim()) return [];
-
-            const query = this.searchQuery.trim().toLowerCase();
-
-            try {
-                await axios.get(`/${this.locale}/search?term=${query}`)
-                    .then(response => {
-                        this.items = response.data.results;
-
-                    })
-                    .catch(error => {
-                        console.error('Search error:', error);
-                    });
-            } catch (error) {
-                console.error('Search error:', error);
-            }
-        },
-    }
-
-};
-
-</script>

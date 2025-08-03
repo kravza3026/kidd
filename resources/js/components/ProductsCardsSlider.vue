@@ -47,7 +47,7 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination, Autoplay } from 'swiper/modules';
-import ProductCard from "@/components/productCard.vue";
+import ProductCard from "@/components/ProductCard.vue";
 
 export default {
     name:'ProductCardsSlider',

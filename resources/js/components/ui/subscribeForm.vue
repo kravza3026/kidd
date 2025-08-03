@@ -5,10 +5,10 @@
             class=""
             >
             <div>
-                <h2 class="section-title text-balance text-white xl:leading-12 font-[700] " :class="titleClass">
+                <h2 class="section-title text-balance  xl:leading-12 font-[700] " :class="titleClass">
                     {{title}}
                 </h2>
-                <p class="text-white" :class="subtitleClass">
+                <p class="" :class="subtitleClass">
                     {{secondaryTitle}}
                 </p>
             </div>
@@ -40,11 +40,11 @@ export default {
         contentWidth:String,
         titleClass:{
             type:String,
-            default:'md:text-[24px] xl:text-[40px] py-5'
+            default:'md:text-[24px] text-white xl:text-[40px] py-5'
         },
         subtitleClass:{
             type:String,
-            default:''
+            default:'text-white'
         },
         formClass:{
             type:String,

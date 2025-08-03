@@ -62,18 +62,15 @@ export default {
         },
 
         handleClickOutside(event) {
-
             const wrapper = this.$refs.searchWrapper;
             const toggle = this.$refs.searchToggle;
-
-
             if (!this.open) return;
-            if (
-                wrapper && !wrapper.contains(event.target) &&
-                toggle && !toggle.contains(event.target)
-            ) {
-                this.closeSearch();
-            }
+                if (
+                    wrapper && !wrapper.contains(event.target) &&
+                    toggle && !toggle.contains(event.target)
+                ) {
+                    this.closeSearch();
+                }
         },
         highlightMatch(text) {
             const query = this.searchQuery.trim();

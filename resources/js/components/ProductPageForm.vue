@@ -1,3 +1,156 @@
+
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import favIcon from '@img/icons/fav_icon_active.svg'
+import cartWhite from '@img/icons/cart_white.svg'
+import SizeGuide from "@/components/ui/sizeGuide.vue";
+import Button from "@/components/ui/Button.vue";
+import { useFavorites } from '@/useFavorites'
+import {useAlert} from "@/useAlert.js";
+import { emitter } from '@/eventBus'
+const { toggleFavorite, isFavorite } = useFavorites()
+const { showAlert } = useAlert()
+
+const props = defineProps({
+    product: {
+        type: Object,
+        required: true
+    }
+})
+
+const { t, locale } = useI18n()
+
+// --- Selection states
+const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
+const selectedSizeId = ref(null)
+
+// --- Unique colors (no duplicates)
+const uniqueColors = computed(() => {
+    const seen = new Set()
+    return props.product.variants
+        .map(v => v.color)
+        .filter(color => {
+            if (seen.has(color.id)) return false
+            seen.add(color.id)
+            return true
+        })
+})
+
+const sizes = computed(() => {
+    const allSizes = props.product.variants.map(v => v.size)
+    const unique = []
+    allSizes.forEach(s => {
+        if (!unique.find(u => u.id === s.id)) unique.push(s)
+    })
+
+    return unique.sort((a, b) => {
+        if (a.sort_order === b.sort_order) {
+            return a.id - b.id
+        }
+        return a.sort_order - b.sort_order
+    })
+})
+
+// --- List of available sizes for selected color
+const availableSizes = computed(() => {
+    return props.product.variants
+        .filter(v => v.color.id === selectedColorId.value)
+        .map(v => v.size)
+        .filter((size, index, self) => self.findIndex(s => s.id === size.id) === index) // unique
+})
+
+// --- Auto-select first available size after changing color
+watch(selectedColorId, (newColorId) => {
+    const sizes = props.product.variants
+        .filter(v => v.color.id === newColorId)
+        .map(v => v.size.id)
+
+    selectedSizeId.value = sizes.length ? sizes[0] : null
+}, { immediate: true })
+
+// --- Currently selected variant
+const selectedVariant = computed(() => {
+    return props.product.variants.find(v =>
+        v.color.id === selectedColorId.value &&
+        v.size.id === selectedSizeId.value
+    )
+})
+
+// --- Selected variant ID (to send to server during purchase)
+const selectedVariantId = computed(() => selectedVariant.value?.id || null)
+
+const addToCart = async (event) => {
+    if (!selectedVariantId.value) return
+
+    try {
+        const response = await window.axios.post(`${locale.value}/cart`, {
+            variant_id: selectedVariantId.value,
+            quantity: 1
+        })
+        emitter.emit('cart-updated');
+
+        showAlert({
+            title: props.product.name[locale.value],
+            type: 'cart',
+            message: t('alerts.addedToCart'),
+            icon: 'cart',
+            button: {
+                label: t('menu.cart'),
+                href: `/${locale.value}/cart`,
+            }
+        });
+
+    } catch (error) {
+        console.error('Server error:', error)
+        // TODO Remove in production
+    }
+}
+
+// --- Selected color name (optional, but convenient)
+const selectedColorName = computed(() => {
+    return props.product.variants.find(v => v.color.id === selectedColorId.value)?.color.name || ''
+})
+
+// --- Prices
+const priceFinal = computed(() => {
+    if (selectedVariant.value) {
+        return Math.round(selectedVariant.value.price_final / 100)
+    }
+    return 0
+})
+
+const priceOnline = computed(() => {
+    if (selectedVariant.value) {
+        return Math.round((selectedVariant.value.price_online ?? 0) / 100)
+    }
+    return 0
+})
+
+// --- Discount
+const discountPercent = computed(() => {
+    if (selectedVariant.value && selectedVariant.value.price_online) {
+        return Math.round(100 - (priceFinal.value / priceOnline.value) * 100)
+    }
+    return 0
+})
+
+const hasDiscount = computed(() => {
+    return selectedVariant.value?.has_discount
+})
+
+let clickedRecently = false
+
+const handleFavoriteClick = (id, name) => {
+    if (clickedRecently) return
+    clickedRecently = true
+    setTimeout(() => clickedRecently = false, 300)
+    toggleFavorite(id, name)
+
+}
+
+</script>
+
 <template>
 
     <div class="max-w-full flex-col relative justify-start items-start flex page-fade"  >
@@ -138,155 +291,3 @@
     </div>
 
 </template>
-
-<script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import favIcon from '@img/icons/fav_icon_active.svg'
-import cartWhite from '@img/icons/cart_white.svg'
-import SizeGuide from "@/components/ui/sizeGuide.vue";
-import Button from "@/components/Button.vue";
-import { useFavorites } from '@/useFavorites'
-import {useAlert} from "@/useAlert.js";
-import { emitter } from '@/eventBus'
-const { toggleFavorite, isFavorite } = useFavorites()
-const { showAlert } = useAlert()
-
-const props = defineProps({
-    product: {
-        type: Object,
-        required: true
-    }
-})
-
-const { t, locale } = useI18n()
-
-// --- Selection states
-const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
-const selectedSizeId = ref(null)
-
-// --- Unique colors (no duplicates)
-const uniqueColors = computed(() => {
-    const seen = new Set()
-    return props.product.variants
-        .map(v => v.color)
-        .filter(color => {
-            if (seen.has(color.id)) return false
-            seen.add(color.id)
-            return true
-        })
-})
-
-const sizes = computed(() => {
-    const allSizes = props.product.variants.map(v => v.size)
-    const unique = []
-    allSizes.forEach(s => {
-        if (!unique.find(u => u.id === s.id)) unique.push(s)
-    })
-
-    return unique.sort((a, b) => {
-        if (a.sort_order === b.sort_order) {
-            return a.id - b.id
-        }
-        return a.sort_order - b.sort_order
-    })
-})
-
- // --- List of available sizes for selected color
-const availableSizes = computed(() => {
-    return props.product.variants
-        .filter(v => v.color.id === selectedColorId.value)
-        .map(v => v.size)
-        .filter((size, index, self) => self.findIndex(s => s.id === size.id) === index) // unique
-})
-
-// --- Auto-select first available size after changing color
-watch(selectedColorId, (newColorId) => {
-    const sizes = props.product.variants
-        .filter(v => v.color.id === newColorId)
-        .map(v => v.size.id)
-
-    selectedSizeId.value = sizes.length ? sizes[0] : null
-}, { immediate: true })
-
-// --- Currently selected variant
-const selectedVariant = computed(() => {
-    return props.product.variants.find(v =>
-        v.color.id === selectedColorId.value &&
-        v.size.id === selectedSizeId.value
-    )
-})
-
-// --- Selected variant ID (to send to server during purchase)
-const selectedVariantId = computed(() => selectedVariant.value?.id || null)
-
-const addToCart = async (event) => {
-    if (!selectedVariantId.value) return
-
-    try {
-        const response = await window.axios.post(`${locale.value}/cart`, {
-            variant_id: selectedVariantId.value,
-            quantity: 1
-        })
-        emitter.emit('cart-updated');
-
-        showAlert({
-            title: props.product.name[locale.value],
-            type: 'cart',
-            message: t('alerts.addedToCart'),
-            icon: 'cart',
-            button: {
-                label: t('menu.cart'),
-                href: `/${locale.value}/cart`,
-            }
-        });
-
-    } catch (error) {
-        console.error('Server error:', error)
-        // TODO Remove in production
-    }
-}
-
-// --- Selected color name (optional, but convenient)
-const selectedColorName = computed(() => {
-    return props.product.variants.find(v => v.color.id === selectedColorId.value)?.color.name || ''
-})
-
-// --- Prices
-const priceFinal = computed(() => {
-    if (selectedVariant.value) {
-        return Math.round(selectedVariant.value.price_final / 100)
-    }
-    return 0
-})
-
-const priceOnline = computed(() => {
-    if (selectedVariant.value) {
-        return Math.round((selectedVariant.value.price_online ?? 0) / 100)
-    }
-    return 0
-})
-
-// --- Discount
-const discountPercent = computed(() => {
-    if (selectedVariant.value && selectedVariant.value.price_online) {
-        return Math.round(100 - (priceFinal.value / priceOnline.value) * 100)
-    }
-    return 0
-})
-
-const hasDiscount = computed(() => {
-    return selectedVariant.value?.has_discount
-})
-
-let clickedRecently = false
-
-const handleFavoriteClick = (id, name) => {
-    if (clickedRecently) return
-    clickedRecently = true
-    setTimeout(() => clickedRecently = false, 300)
-    toggleFavorite(id, name)
-
-}
-
-</script>

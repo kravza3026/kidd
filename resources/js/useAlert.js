@@ -32,7 +32,6 @@ export function useAlert() {
                            options = {}
                        }) => {
 
-        console.dir(button);
 
         let display_button = typeof button === 'object' ? `
         <a class="flex items-center gap-x-2 bg-light-orange/20 text-olive text-[12px] lg:text-sm rounded-full font-bold h-full px-4 py-2.5" href="${button?.href ?? ''}">

@@ -5,10 +5,10 @@
              data-vue-props='{
                 "title": "Subscribe to newsletter and get 25% off your first order",
                 "secondaryTitle": "Receive the latest updates and take advantage of great offers",
-                "contentWidth": "w-full lg:flex justify-between gap-x-5 items-end",
-                "titleClass": "text-[24px]",
+                "contentWidth": "w-full lg:flex  justify-between gap-x-5 items-end",
+                "titleClass": "text-[24px] text-white",
                 "formClass": "w-full mt-5 lg:mt-0 lg:w-5/12",
-                "subtitleClass": "text-[14px]"
+                "subtitleClass": "text-[14px] text-white"
             }'
         ></div>
     </div>

@@ -109,7 +109,7 @@ import Account from '@img/icons/profile/Account.svg';
 import Favorite from '@img/icons/profile/Favorite.svg';
 import Address from '@img/icons/profile/Location.svg';
 import Order from '@img/icons/profile/Order.svg';
-import Button from "@/components/Button.vue";
+import Button from "@/components/ui/Button.vue";
 
 export default {
     name: 'UserDropdown',

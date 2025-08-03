@@ -10,15 +10,15 @@ import.meta.glob('../images/**/*');
 import { default as IMask } from "imask";
 
 import Search from './components/Search.vue';
-import mobileMenu from './components/mobileMenu.vue';
+import MobileMenu from './components/MobileMenu.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
-import Button from './components/Button.vue';
-import ProductCard from './components/productCard.vue';
+import Button from './components/ui/Button.vue';
+import ProductCard from './components/ProductCard.vue';
 import Cart from './components/Cart.vue';
 import ProductPageForm from './components/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
-import ProductsCardsSlider from './components/productsCardsSlider.vue';
+import ProductsCardsSlider from './components/ProductsCardsSlider.vue';
 import SubscribeForm from './components/ui/subscribeForm.vue';
 import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
@@ -39,10 +39,10 @@ window.toast = showAlert;
 const components = {
     Accordion,
     Cart,
-    Search,mobileMenu,
+    Search, mobileMenu: MobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
-    ProductCard,ProductSlider,ProductPageForm,ProductsCardsSlider,
+    ProductCard,ProductSlider,ProductPageForm, ProductsCardsSlider,
     HelpMain
 };
 

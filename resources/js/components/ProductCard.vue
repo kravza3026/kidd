@@ -1,3 +1,56 @@
+<script>
+import { useFavorites } from '@/useFavorites'
+import { useI18n } from 'vue-i18n'
+
+export default {
+    name: 'ProductCard',
+    props: {
+        product: {
+            type: Object,
+            required: true,
+        },
+    },
+    setup() {
+        const { locale, t, n } = useI18n()
+
+        const { toggleFavorite, isFavorite } = useFavorites()
+
+        return { toggleFavorite, isFavorite, locale }
+    },
+    methods: {
+        getImageUrl(imagePath) {
+            return `/assets/images/${imagePath}`;
+        }
+    },
+
+    computed: {
+
+        minAge() {
+            return Math.min(...this.product.variants.map(v => v.size.min_age || 0));
+        },
+        maxAge() {
+            return Math.max(...this.product.variants.map(v => v.size.max_age || 0));
+        },
+        finalPrice() {
+            return (this.product.variants[0]?.price_final ?? 0) / 100;
+        },
+        originalPrice() {
+            return (this.product.variants[0]?.price_online ?? 0) / 100;
+        },
+        sizeIcon() {
+            return '/assets/images/icons/size.svg';
+        },
+        favIcon() {
+            return '/assets/images/icons/add_fav.svg';
+        },
+        inFavIcon() {
+            return '/assets/images/icons/inFavorite.svg';
+        },
+
+    }
+
+}
+</script>
 <template>
 <div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
     <div
@@ -125,58 +178,4 @@
 </div>
 </template>
 
-<script>
-import { useFavorites } from '@/useFavorites'
-import { useI18n } from 'vue-i18n'
 
-export default {
-    name: 'ProductCard',
-    props: {
-        product: {
-            type: Object,
-            required: true,
-        },
-    },
-    setup() {
-        // const locale = document.documentElement.lang || 'ro';
-        const { locale, t, n } = useI18n()
-
-        const { toggleFavorite, isFavorite } = useFavorites()
-
-        return { toggleFavorite, isFavorite, locale }
-    },
-    methods: {
-        getImageUrl(imagePath) {
-            return `/assets/images/${imagePath}`;
-        }
-    },
-
-    computed: {
-
-        minAge() {
-            return Math.min(...this.product.variants.map(v => v.size.min_age || 0));
-        },
-        maxAge() {
-            return Math.max(...this.product.variants.map(v => v.size.max_age || 0));
-        },
-        finalPrice() {
-            return (this.product.variants[0]?.price_final ?? 0) / 100;
-        },
-        originalPrice() {
-            return (this.product.variants[0]?.price_online ?? 0) / 100;
-        },
-        sizeIcon() {
-            return '/assets/images/icons/size.svg';
-        },
-        favIcon() {
-            return '/assets/images/icons/add_fav.svg';
-        },
-        inFavIcon() {
-            return '/assets/images/icons/inFavorite.svg';
-        },
-
-
-    }
-
-}
-</script>

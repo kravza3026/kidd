@@ -101,7 +101,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import closeIcon from '@img/icons/close_dark.svg'
 import sizeIcon from '@img/icons/size.svg';
 import { useI18n } from 'vue-i18n';
-import Button from "@/components/Button.vue";
+import Button from "@/components/ui/Button.vue";
 
 const { t, locale } = useI18n();
 const open = ref(false)
