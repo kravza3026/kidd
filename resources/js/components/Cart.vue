@@ -202,9 +202,6 @@ export default {
         }
 
         const removeItem = async (item) => {
-            // const confirmed = window.confirm(t('confirm.remove')) // або власний текст/модальне вікно
-            // if (!confirmed) return
-
             try {
                 await axios.delete(`/cart/${item.hash}`)
                 proxy.cartItems = proxy.cartItems.filter(i => i.hash !== item.hash)
@@ -564,6 +561,7 @@ export default {
 
     ></SubscribeForm>
 </template>
+
 <style scoped>
 .fade-slide-enter-active,
 .fade-slide-leave-active {
