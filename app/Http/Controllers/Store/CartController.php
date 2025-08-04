@@ -122,7 +122,7 @@ class CartController extends Controller
         ];
         foreach ($cartItems as $hash => $cartItem) {
             $response['items'][] = [
-                'id' => $hash,
+                'hash' => $hash,
                 'name' => $cartItem->options['model']->product->name,
                 'quantity' => $cartItem->options['qty'],
                 'price' => $cartItem->options['price'],

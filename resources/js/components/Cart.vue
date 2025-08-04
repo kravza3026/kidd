@@ -4,6 +4,8 @@ import { ref, computed, watch, onMounted, onUnmounted,getCurrentInstance } from 
 import clickOutside from '@/clickOutside';
 import { emitter } from '@/eventBus'
 import iconTrash from '@img/common/trash.svg'
+import iconCheck from '@img/icons/checked_white.svg'
+import iconDelete from '@img/icons/close.svg'
 import { useI18n } from 'vue-i18n'
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 import SubscribeForm from "@/components/ui/subscribeForm.vue";
@@ -19,13 +21,29 @@ export default {
     },
     data(){
         return {
-            iconTrash,
+            iconTrash,iconCheck,iconDelete,
             cartItems: [],
         }
     },
     setup(){
         const { t, locale } = useI18n()
+        const isMobile = ref(false)
         const { proxy } = getCurrentInstance()
+
+        const checkIsMobile = () => {
+            isMobile.value = window.innerWidth <= 768 // наприклад, 768px як межа
+        }
+
+        onMounted(() => {
+            checkIsMobile()
+            window.addEventListener('resize', checkIsMobile)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('resize', checkIsMobile)
+        })
+
+
         const getColorById = (item, id) => {
             return item.product.variants
                 .map(v => v.color)
@@ -45,6 +63,8 @@ export default {
             item.sizeDropdownOpen = false
             updateAvailableColors(item)
             updateSelectedPrice(item)
+            updateItem(item)
+
         }
 
         // Коли обирають колір
@@ -52,6 +72,7 @@ export default {
             item.selectedColorId = colorId
             item.colorDropdownOpen = false
             updateSelectedPrice(item)
+            updateItem(item)
         }
 
         // Отримати список унікальних розмірів (для dropdown)
@@ -114,16 +135,18 @@ export default {
             }
 
         const min = 1
-        const max = 99
+        const max = 30
         const increment = (item) => {
             if (item.quantity < max) {
                 item.quantity++
+                updateItem(item)
             }
         }
 
         const decrement = (item) => {
             if (item.quantity > min) {
                 item.quantity--
+                updateItem(item)
             }
         }
 
@@ -131,13 +154,20 @@ export default {
             const variant = item.product.variants.find(v =>
                 v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
             )
-            item.selectedPrice = variant?.price_final ?? 0
+            item.selectedPriceOnline = variant?.price_online ?? 0
+            item.selectedPriceFinal = variant?.price_final ?? 0
             item.selectedDiscount = variant?.discount_amount ?? 0
         }
 
+        const cartTotalOnline = computed(() => {
+            return proxy.cartItems.reduce((total, item) => {
+                return total + item.selectedPriceOnline * item.quantity
+            }, 0)
+        })
+
         const cartTotal = computed(() => {
             return proxy.cartItems.reduce((total, item) => {
-                return total + item.selectedPrice * item.quantity
+                return total + item.selectedPriceFinal * item.quantity
             }, 0)
         })
 
@@ -148,25 +178,63 @@ export default {
             }, 0)
         })
 
+        const updateItem = async (item) => {
+            const variant = item.product.variants.find(v =>
+                v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
+            )
+            if (!variant) return;
+
+            try {
+                await axios.put(`/cart/${item.hash}`, {
+                       arguments:{
+                           variant_id: variant.id,
+                           quantity: item.quantity
+                       }
+                });
+                emitter.emit('cart-updated');
+            } catch (err) {
+                console.error('Server error:', err);
+            }
+        }
+
+        const toggleConfirm = (item) => {
+            item.showConfirm = !item.showConfirm
+        }
+
+        const removeItem = async (item) => {
+            // const confirmed = window.confirm(t('confirm.remove')) // або власний текст/модальне вікно
+            // if (!confirmed) return
+
+            try {
+                await axios.delete(`/cart/${item.hash}`)
+                proxy.cartItems = proxy.cartItems.filter(i => i.hash !== item.hash)
+                emitter.emit('cart-updated')
+            } catch (err) {
+                console.error('Server error:', err)
+            }
+        }
+
+
 
 
         return {
             t,
             locale,
             selectIcon,
+            isMobile,
             // основні методи
             getUniqueSizes,
             getAvailableColors,
+            updateSelectedPrice,
             updateAvailableColors,
             selectSize,
             selectColor,
             getSizeNameById,
             getColorById,
-            updateSelectedPrice,
             getAllColorsWithAvailability,
             increment, decrement,
-            cartTotal,totalDiscount
-
+            cartTotal,totalDiscount,cartTotalOnline,
+            toggleConfirm,removeItem
 
         }
     },
@@ -176,7 +244,10 @@ export default {
         async getCartItems() {
             try {
                 const response = await window.axios.get(`${this.locale}/cart/items`)
-
+                const grandTotal = response.data.grand_total;
+                const total = response.data.total;
+                console.log('total:', total / 100 );
+                console.log('Grand total:', grandTotal / 100); // MDL
                 this.cartItems = response.data.items.map(item => {
                     const selectedVariant = item.product.variants.find(v =>
                         v.size.id === item.size.id && v.color.id === item.color.id
@@ -188,11 +259,12 @@ export default {
                         selected: false,
                         selectedSizeId: item.size.id,
                         selectedColorId: item.color.id,
-                        selectedPrice: selectedVariant?.price_final ?? 0,
+                        selectedPriceOnline: selectedVariant?.price_online ?? 0,
+                        selectedPriceFinal: selectedVariant?.price_final ?? 0,
                         selectedDiscount: selectedVariant?.discount_amount ?? 0,
-
                         sizeDropdownOpen: false,
                         colorDropdownOpen: false,
+                        showConfirm: false,
                     }
                 })
                 console.log(response)
@@ -201,25 +273,19 @@ export default {
             }
         },
 
-        async removeItem($itemHash) {
-            await axios.delete(`/cart/${$itemHash}`)
-                .then(() => {
-                    this.cartItems = this.cartItems.filter(item => item.id !== $itemHash);
-                    emitter.emit('cart-updated');
-                })
-                .catch(err => {
-                    console.error('Server error:', err) // TODO Remove in production
-                });
-        },
+
+
     },
     mounted() {
         this.getCartItems();
+
     },
 }
 </script>
 
 <template>
-   <div class="w-full flex justify-between gap-x-16">
+
+   <div class="w-full  lg:flex justify-between gap-x-16">
        <div class="w-full basis-full">
            <div class="mb-4 inline-block relative text-5xl font-bold leading-[62px] tracking-[-2%] text-charcoal/80">
                <h1>{{ $t('cart.title') }}</h1>
@@ -228,128 +294,218 @@ export default {
                    <span class="absolute -z-1 -bottom-[2px] left-1/12 rotate-95 w-4 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></span>
                </p>
            </div>
+            <div class="border lg:border-none border-light-border rounded-lg mb-7 md:px-5 lg:px-0 shadow-sm lg:shadow-none py-1">
 
-           <div
-               v-for="cartItem in cartItems"
-               :key="cartItem.id"
-               class=" w-full">
-               <div class="flex justify-between items-center my-2">
-                   <div class="flex items-center gap-x-6">
-                       <div class="flex gap-x-6">
-                           <div class="p-2 bg-light-orange rounded-2xl">
-                               <img class="w-[84px]" :src='cartItem.img' alt="{{cartItem.name}}">
-                           </div>
-                       </div>
-                       <div>
-                           <div>
-                               <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
-                               <p class="opacity-60 pb-5">{{ cartItem.selectedPrice / 100 }} lei</p>
+                <div
 
-                           </div>
-                           <div class="flex gap-x-2">
+                    v-for="(cartItem, index) in cartItems"
+                    :key="cartItem.hash"
+                    class="w-full">
+                    <div v-if="isMobile"
 
-                               <div class="relative min-w-42 shadow-sm rounded-lg">
-                                   <div
-                                       class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
-                                       @click="cartItem.sizeDropdownOpen = !cartItem.sizeDropdownOpen"
-                                       v-click-outside="() => cartItem.sizeDropdownOpen = false"
+                    >
+                        <div class="grid grid-cols-12 gap-x-3   justify-between  my-2 py-2 px-3">
+                            <div class="col-span-3 max-w-[100px] px-1 py-2 flex justify-center bg-light-orange rounded-2xl">
+                                <img class="w-[80px]" :src='cartItem.img' alt="{{cartItem.name}}">
+                            </div>
+                            <div class="col-span-7">
+                                <div class="h-full flex flex-col justify-between">
+                                    <div>
+                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
+                                        <div class="flex items-center gap-x-2 mt-1">
+                                            <div class="border-r-light-border border-r-2 pr-2 flex items-center gap-x-2">
+                                                <div class="size-5 rounded-full border border-light-border" :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"></div>
+                                                <p class="text-[14px] opacity-40">{{cartItem.color.name}}</p>
+                                            </div>
+                                            <p class="text-[14px] opacity-40">{{cartItem.size.name}}</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-olive font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                </div>
+                            </div>
+                            <div
+                                v-click-outside="() => cartItem.showConfirm = false"
+                                @click="toggleConfirm(cartItem)"
+                                class="col-span-2 flex justify-center items-center h-fit   relative">
+                                <div class="text-olive bg-light-orange p-2 rounded-full shadow-sm shadow-olive cursor-pointer">
+                                    <img :src="iconTrash" alt="" />
+                                </div>
 
-                                   >
-                                       <p>{{ getSizeNameById(cartItem, cartItem.selectedSizeId) || cartItem.size }}</p>
-                                       <img :src="selectIcon" alt="selectIcon">
-                                   </div>
 
-                                   <ul
-                                       v-if="cartItem.sizeDropdownOpen"
-                                       class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-md max-h-60 overflow-auto"
-                                   >
-                                       <li
-                                           v-for="size in getUniqueSizes(cartItem)"
-                                           :key="size.id"
-                                           @click="selectSize(cartItem, size.id)"
-                                           class="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                                       >
-                                           {{ size.name[locale] }}
-                                       </li>
-                                   </ul>
-                               </div>
+                                <transition name="fade-slide" appear>
+                                    <div
+                                        v-if="cartItem.showConfirm"
+                                        class="absolute w-full left-3 grid gap-x-2 flex-col gap-y-2 justify-between items-center -bottom-14"
+                                    >
+                                        <div
+                                            class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-lg w-full  py-1 px-5 flex items-center justify-center bg-olive h-5"
+                                            @click="toggleConfirm(cartItem)"
+                                        >
 
-                               <!-- Випадаючий список кольору -->
-                               <div class="relative min-w-42 rounded-lg shadow-sm" >
-                                   <div
-                                       class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center"
-                                       @click="cartItem.colorDropdownOpen = !cartItem.colorDropdownOpen"
-                                       v-click-outside="() => cartItem.colorDropdownOpen = false"
-                                   >
+                                            <img class="size-3" :src="iconDelete" alt="" />
+                                        </div>
+                                        <div
+                                            @click="removeItem(cartItem)"
+                                            class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-lg w-full text-center py-1 px-5 flex justify-center bg-danger h-5"
+                                        >
+                                            <img class="size-3" :src="iconCheck" alt="" />
+                                        </div>
+                                    </div>
+                                </transition>
 
-                                       <p class="flex items-center gap-x-2">
+                            </div>
+                        </div>
+                        <hr v-if="index < cartItems.length - 1" class="border-light-border" />
+                    </div>
+
+
+                    <div v-else >
+                        <div class="grid grid-cols-12 justify-between items-center my-2 py-2">
+                            <div class="col-span-10 flex items-center gap-x-6">
+                                <div class="flex gap-x-6">
+                                    <div class="p-2 bg-light-orange rounded-2xl">
+                                        <img class="w-[84px]" :src='cartItem.img' alt="{{cartItem.name}}">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
+                                        <div class="flex gap-x-2">
+                                            <p class="opacity-60 pb-5">{{ cartItem.selectedPriceFinal / 100 }} lei</p>
+                                            <p class="opacity-40 pb-5 line-through">{{ cartItem.selectedPriceOnline / 100 }} lei</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="flex gap-x-2">
+
+                                        <div class="relative min-w-42 shadow-sm rounded-lg">
+                                            <div
+                                                class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                                                @click="cartItem.sizeDropdownOpen = !cartItem.sizeDropdownOpen"
+                                                v-click-outside="() => cartItem.sizeDropdownOpen = false"
+
+                                            >
+                                                <p>{{ getSizeNameById(cartItem, cartItem.selectedSizeId) || cartItem.size }}</p>
+                                                <img :src="selectIcon" alt="selectIcon">
+                                            </div>
+
+                                            <ul
+                                                v-if="cartItem.sizeDropdownOpen"
+                                                class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                                            >
+                                                <li
+                                                    v-for="size in getUniqueSizes(cartItem)"
+                                                    :key="size.id"
+                                                    @click="selectSize(cartItem, size.id)"
+                                                    class="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                                                >
+                                                    {{ size.name[locale] }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- Випадаючий список кольору -->
+                                        <div class="relative min-w-42 rounded-lg shadow-sm" >
+                                            <div
+                                                class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center"
+                                                @click="cartItem.colorDropdownOpen = !cartItem.colorDropdownOpen"
+                                                v-click-outside="() => cartItem.colorDropdownOpen = false"
+                                            >
+
+                                                <p class="flex items-center gap-x-2">
                                     <span
                                         v-if="cartItem.selectedColorId || cartItem.hex"
                                         class="block min-w-5 min-h-5 rounded-full border border-light-border"
                                         :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"
                                     ></span>
-                                           {{ getColorById(cartItem, cartItem.selectedColorId)?.name[locale] || getColorById(cartItem, cartItem.color_id)?.name[locale] }}
+                                                    {{ getColorById(cartItem, cartItem.selectedColorId)?.name[locale] || getColorById(cartItem, cartItem.color_id)?.name[locale] }}
 
-                                       </p>
-                                       <img :src="selectIcon" alt="selectIcon">
+                                                </p>
+                                                <img :src="selectIcon" alt="selectIcon">
 
-                                   </div>
+                                            </div>
 
-                                   <ul
-                                       v-if="cartItem.colorDropdownOpen"
-                                       class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-md max-h-60 overflow-auto"
-                                   >
-                                       <li
-                                           v-for="color in getAllColorsWithAvailability(cartItem)"
-                                           :key="color.id"
-                                           @click="color.available && selectColor(cartItem, color.id)"
-                                           class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                                           :class="{
+                                            <ul
+                                                v-if="cartItem.colorDropdownOpen"
+                                                class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                                            >
+                                                <li
+                                                    v-for="color in getAllColorsWithAvailability(cartItem)"
+                                                    :key="color.id"
+                                                    @click="color.available && selectColor(cartItem, color.id)"
+                                                    class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                                                    :class="{
                                         'hover:bg-gray-100 cursor-pointer': color.available,
                                         'opacity-50 cursor-not-allowed': !color.available
                                       }"
-                                       >
+                                                >
                                         <span
                                             class="w-5 h-5 block rounded-full border border-light-border"
                                             :style="{ backgroundColor: color.hex }"
                                         ></span>
-                                           {{ color.name[locale] }}
-                                       </li>
-                                   </ul>
-                               </div>
-                               <div
-                                   class="flex justify-between min-w-24 items-center gap-x-2 border border-light-border rounded-lg shadow-sm px-2 py-1 select-none"
-                               >
-                                   <div class="font-bold cursor-pointer" @click="decrement(cartItem)">
-                                       <p class="opacity-40">-</p>
-                                   </div>
-                                   <div>{{ cartItem.quantity }}</div>
-                                   <div class="font-bold cursor-pointer" @click="increment(cartItem)">
-                                       <p class="opacity-40">+</p>
-                                   </div>
-                               </div>
+                                                    {{ color.name[locale] }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div
+                                            class="flex justify-between min-w-24 items-center gap-x-2 border border-light-border rounded-lg shadow-sm px-2 py-1 select-none"
+                                        >
+                                            <div class="font-bold cursor-pointer" @click="decrement(cartItem)">
+                                                <p class="opacity-40">-</p>
+                                            </div>
+                                            <div>{{ cartItem.quantity }}</div>
+                                            <div class="font-bold cursor-pointer" @click="increment(cartItem)">
+                                                <p class="opacity-40">+</p>
+                                            </div>
+                                        </div>
 
-                           </div>
-                       </div>
-                   </div>
-                   <div class="flex justify-between flex-col min-h-full gap-6">
-                       <div class="flex justify-end">
-                           <p class="text-olive">{{ ( (cartItem.selectedPrice / 100) * cartItem.quantity).toFixed(2) }} lei</p>
-                       </div>
-                       <div
-                           @click="removeItem(cartItem.id)"
-                           class="flex justify-end items-center gap-2 text-olive bg-light-orange py-1 px-4 rounded-lg cursor-pointer">
-                           <img :src="iconTrash" alt="">
-                           <p class="text-[14px]">Delete</p>
-                       </div>
-                   </div>
-               </div>
-               <hr class="my-4 border-light-border" />
+                                    </div>
+                                </div>
+                            </div>
 
-           </div>
+                            <div class="col-span-2 grid justify-end content-between min-h-full gap-6">
+                                <div class="flex justify-end">
+                                    <p class="text-olive font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                </div>
+                                <div
+                                    v-click-outside="() => cartItem.showConfirm = false"
+                                    @click="toggleConfirm(cartItem)"
+                                    class="flex justify-end content-between h-fit w-fit gap-x-2 text-olive bg-light-orange border border-light-border py-2 px-4 rounded-lg shadow-sn shadow-olive cursor-pointer relative">
+                                    <img :src="iconTrash" alt="" />
+                                    <p class="text-[14px] font-bold">Delete</p>
+
+
+                                    <transition name="fade-slide" appear>
+                                        <div
+                                            v-if="cartItem.showConfirm"
+                                            class="absolute w-full right-0 flex gap-x-2 justify-between items-center -bottom-8"
+                                        >
+                                            <div
+                                                class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-olive h-5"
+                                                @click="toggleConfirm(cartItem)"
+                                            >
+                                                <img :src="iconDelete" alt="" />
+                                            </div>
+                                            <div
+                                                @click="removeItem(cartItem)"
+                                                class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
+                                            >
+                                                <img :src="iconCheck" alt="" />
+                                            </div>
+                                        </div>
+                                    </transition>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4 border-light-border" />
+                    </div>
+
+                </div>
+            </div>
        </div>
        <!--  Summary  -->
-       <div class="w-full sticky top-10 grow-5 flex-shrink-0 basis-[340px] h-fit flex border border-[#eeeeee]/70 rounded-xl shadow-lg">
+       <div class="w-full sticky top-10 grow-5 flex-shrink-0 basis-[340px] h-fit flex border border-[#eeeeee]/70 rounded-xl shadow-sm">
            <div class="w-full grow-0  flex border border-[#eeeeee]/70 rounded-xl shadow-lg">
                <div class="text-nowrap static w-full h-auto p-6">
                    <h4 class="flex pb-6 w-full text-2xl text-gray-800 font-bold leading-6 tracking-[-2%]">
@@ -362,7 +518,7 @@ export default {
                             Products
                         </span>
                            <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                            {{ (cartTotal/100).toFixed(2) }} lei
+                            {{ (cartTotalOnline/100).toFixed(2) }} lei
                         </span>
                        </div>
 
@@ -372,7 +528,7 @@ export default {
                                Discount
                             </span>
                            <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                                {{ (totalDiscount/100).toFixed(2)}} lei
+                                {{ (totalDiscount).toFixed(2)}} lei
                             </span>
                        </div>
 
@@ -408,3 +564,30 @@ export default {
 
     ></SubscribeForm>
 </template>
+<style scoped>
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-slide-enter-from {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.fade-slide-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-slide-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+</style>
