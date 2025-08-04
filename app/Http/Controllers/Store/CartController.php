@@ -157,17 +157,6 @@ class CartController extends Controller
             $request->quantity,
         );
 
-//        showAlert({
-//            title: response.data.product.name,
-//            type: 'cart',
-//            message: t('alerts.addedToCart'),
-//            icon: 'cart',
-//            button: {
-//        label: t('menu.cart'),
-//                href: `/${locale.value}/cart`,
-//            }
-//        });
-
 //        return response([
 //            'alert' => [
 //                'title' => $productVariant->product->name,
@@ -188,9 +177,22 @@ class CartController extends Controller
     public function update(Request $request, $itemHash)
     {
 
-        LaraCart::find($itemHash)->update($request->all());
+        $productVariant = ProductVariant::findOrFail($request->variant_id);
 
-        return response(content: null, status: 204);
+        LaraCart::find($itemHash)->update($request->get('variant_id'));
+
+        return response([
+            'alert' => [
+                'title' => $productVariant->product->name,
+                'type' => "cart",
+                'message' => __('alerts.updated'),
+                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+//                'button' => [
+//                    'label' => __('menu.cart'),
+//                    'href' => route('cart'),
+//                ],
+            ],
+        ], status: 200);
 
     }
 
