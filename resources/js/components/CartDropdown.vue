@@ -1,58 +1,69 @@
 <script>
+import { ref, onMounted } from 'vue';
 import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/ui/Button.vue';
-import {useI18n} from "vue-i18n";
-import { emitter } from '@/eventBus'
+import { useI18n } from 'vue-i18n';
+import { emitter } from '@/eventBus';
+
 export default {
     name: 'CartDropdown',
     components: {
         Button,
     },
-    data() {
+    setup() {
+        const cartItems = ref([]);
+        const cartGrandTotal = ref(0);
+        const open = ref(false);
+        const dropdown = ref(null);
+        const locale = document.documentElement.lang || 'ro';
+
+        const getCartItems = async () => {
+            if (getCartItems.fetched) return;
+            getCartItems.fetched = true;
+
+            try {
+                const response = await window.axios.get(`${locale}/cart/items`);
+                cartItems.value = response.data.items;
+                cartGrandTotal.value = response.data.grand_total;
+                console.trace('Fetching cart items');
+            } catch (error) {
+                console.error('Server error:', error);
+            }
+        };
+        getCartItems.fetched = false;
+
+        const handleClickOutside = (event) => {
+            if (dropdown.value && !dropdown.value.contains(event.target)) {
+                open.value = false;
+            }
+        };
+
+        onMounted(() => {
+            getCartItems();
+            document.addEventListener('click', handleClickOutside);
+            emitter.on('cart-updated', getCartItems);
+        });
+
         return {
-            locale: document.documentElement.lang || 'ro',
-            t: useI18n(),
-            open: false,
-            cartIcon,cartIconOpen,
+            cartItems,
+            cartGrandTotal,
+            open,
+            dropdown,
+            cartIcon,
+            cartIconOpen,
             basket_empty,
-            cartItems: [],
-            cartGrandTotal: 0,
+            toggle: () => (open.value = !open.value),
         };
     },
-    methods: {
-        toggle() {
-            this.open = !this.open;
-        },
-        async getCartItems() {
-            try {
-                const response = await window.axios.get(`${this.locale}/cart/items`)
-                this.cartItems = response.data.items;
-                this.cartGrandTotal = response.data.grand_total;
-            } catch (error) {
-                console.error('Server error:', error) // TODO Remove in production
-            }
-        },
-        handleClickOutside(event) {
-            const dropdown = this.$refs.dropdown;
-            if (dropdown && !dropdown.contains(event.target)) {
-                this.open = false;
-            }
-        },
-    },
-    mounted() {
-        this.getCartItems();
-        document.addEventListener('click', this.handleClickOutside);
-        emitter.on('cart-updated', this.getCartItems);
-    },
     beforeUnmount() {
-        emitter.off('cart-updated', this.getCartItems);
         document.removeEventListener('click', this.handleClickOutside);
-    },
-
+        emitter.off('cart-updated', this.getCartItems);
+    }
 };
 </script>
+
 <template>
     <div class="cart relative cursor-pointer " ref="dropdown" @click="toggle">
        <div class="group relative">

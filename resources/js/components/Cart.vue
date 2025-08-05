@@ -291,21 +291,21 @@ export default {
                    <span class="absolute -z-1 -bottom-[2px] left-1/12 rotate-95 w-4 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></span>
                </p>
            </div>
-            <div class="border lg:border-none border-light-border rounded-lg mb-7 md:px-5 lg:px-0 shadow-sm lg:shadow-none py-1">
+            <div class=" border lg:border-none border-light-border rounded-lg mb-7 md:px-5 lg:px-0 shadow-sm lg:shadow-none py-1">
 
                 <div
 
                     v-for="(cartItem, index) in cartItems"
                     :key="cartItem.hash"
-                    class="w-full">
+                    class="w-full relative">
                     <div v-if="isMobile"
 
                     >
                         <div class="grid grid-cols-12 gap-x-3   justify-between  my-2 py-2 px-3">
-                            <div class="col-span-3 max-w-[100px] px-1 py-2 flex justify-center bg-light-orange rounded-2xl">
-                                <img class="w-[80px]" :src='cartItem.img' alt="{{cartItem.name}}">
+                            <div class="col-span-3 max-w-[100px] h-fit px-1 py-2 flex justify-center bg-light-orange rounded-2xl">
+                                <img class="max-w-[80px]" :src='cartItem.img' alt="{{cartItem.name}}">
                             </div>
-                            <div class="col-span-7">
+                            <div class="col-span-9">
                                 <div class="h-full flex flex-col justify-between">
                                     <div>
                                         <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
@@ -317,40 +317,52 @@ export default {
                                             <p class="text-[14px] opacity-40">{{cartItem.size.name}}</p>
                                         </div>
                                     </div>
-                                    <p class="text-olive font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                    <div class="flex justify-between items-center w-full">
+                                        <div class="py-2 flex items-center gap-x-2 justify-between w-full">
+                                            <p>
+                                                {{cartItem.quantity}} x
+                                                <span>{{ cartItem.selectedPriceFinal / 100 }}</span>
+                                                <span class="text-[14px] opacity-40 line-through px-1">{{cartItem.selectedPriceOnline / 100}}</span>
+
+                                            </p>
+                                            <p class="text-olive text-[16px] font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                             <div
-                                v-click-outside="() => cartItem.showConfirm = false"
-                                @click="toggleConfirm(cartItem)"
-                                class="col-span-2 flex justify-center items-center h-fit   relative">
-                                <div class="text-olive bg-light-orange p-2 rounded-full shadow-sm shadow-olive cursor-pointer">
-                                    <img :src="iconTrash" alt="" />
+                                    v-click-outside="() => cartItem.showConfirm = false"
+                                    @click="toggleConfirm(cartItem)"
+                                    class="absolute col-span-2 flex justify-center items-center h-fit  right-2 top-1 ">
+                                    <div class="text-olive bg-light-orange p-2 rounded-full shadow-sm shadow-olive cursor-pointer">
+                                        <img :src="iconTrash" alt="" />
+                                    </div>
+
+
+                                    <transition name="fade-slide" appear>
+                                        <div
+                                            v-if="cartItem.showConfirm"
+                                            class="absolute w-full -left-1 grid gap-x-2 flex-col gap-y-2 justify-between items-center -bottom-14"
+                                        >
+                                            <div
+                                                class=" duration-300 transition-all ease-in-out shadow-sm rounded-lg w-10  py-1 px-0 flex items-center justify-center bg-olive h-5"
+                                                @click="toggleConfirm(cartItem)"
+                                            >
+                                                <img class="size-3" :src="iconDelete" alt="icon remove" />
+                                            </div>
+                                            <div
+                                                @click="removeItem(cartItem)"
+                                                class=" duration-300 transition-all ease-in-out shadow-sm rounded-lg w-10 text-center py-1 px-0 flex justify-center bg-danger h-5"
+                                            >
+                                                <img class="size-3" :src="iconCheck" alt="" />
+                                            </div>
+                                        </div>
+                                    </transition>
+
                                 </div>
 
 
-                                <transition name="fade-slide" appear>
-                                    <div
-                                        v-if="cartItem.showConfirm"
-                                        class="absolute w-full left-3 grid gap-x-2 flex-col gap-y-2 justify-between items-center -bottom-14"
-                                    >
-                                        <div
-                                            class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-lg w-full  py-1 px-5 flex items-center justify-center bg-olive h-5"
-                                            @click="toggleConfirm(cartItem)"
-                                        >
-
-                                            <img class="size-3" :src="iconDelete" alt="" />
-                                        </div>
-                                        <div
-                                            @click="removeItem(cartItem)"
-                                            class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-lg w-full text-center py-1 px-5 flex justify-center bg-danger h-5"
-                                        >
-                                            <img class="size-3" :src="iconCheck" alt="" />
-                                        </div>
-                                    </div>
-                                </transition>
-
-                            </div>
                         </div>
                         <hr v-if="index < cartItems.length - 1" class="border-light-border" />
                     </div>
@@ -562,30 +574,30 @@ export default {
     ></SubscribeForm>
 </template>
 
-<style scoped>
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
+<!--<style scoped>-->
+<!--.fade-slide-enter-active,-->
+<!--.fade-slide-leave-active {-->
+<!--    transition: opacity 0.2s ease, transform 0.2s ease;-->
+<!--}-->
 
-.fade-slide-enter-from {
-    opacity: 0;
-    transform: translateY(8px);
-}
+<!--.fade-slide-enter-from {-->
+<!--    opacity: 0;-->
+<!--    transform: translateY(8px);-->
+<!--}-->
 
-.fade-slide-enter-to {
-    opacity: 1;
-    transform: translateY(0);
-}
+<!--.fade-slide-enter-to {-->
+<!--    opacity: 1;-->
+<!--    transform: translateY(0);-->
+<!--}-->
 
-.fade-slide-leave-from {
-    opacity: 1;
-    transform: translateY(0);
-}
+<!--.fade-slide-leave-from {-->
+<!--    opacity: 1;-->
+<!--    transform: translateY(0);-->
+<!--}-->
 
-.fade-slide-leave-to {
-    opacity: 0;
-    transform: translateY(8px);
-}
+<!--.fade-slide-leave-to {-->
+<!--    opacity: 0;-->
+<!--    transform: translateY(8px);-->
+<!--}-->
 
-</style>
+<!--</style>-->
