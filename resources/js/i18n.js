@@ -30,28 +30,7 @@ const numberFormats = {
             style: 'percent', useGrouping: false
         }
     },
-    'ru': {
-        currency: {
-            style: 'currency', currency: 'RUB', useGrouping: true, currencyDisplay: 'symbol'
-        },
-        decimal: {
-            style: 'decimal', minimumSignificantDigits: 2, maximumSignificantDigits: 3
-        },
-        percent: {
-            style: 'percent', useGrouping: false
-        }
-    },
-    'en': {
-        currency: {
-            style: 'currency', currency: 'USD', useGrouping: true, currencyDisplay: 'symbol'
-        },
-        decimal: {
-            style: 'decimal', minimumSignificantDigits: 2, maximumSignificantDigits: 3
-        },
-        percent: {
-            style: 'percent', useGrouping: false
-        }
-    }
+
 }
 
 const i18n = createI18n({

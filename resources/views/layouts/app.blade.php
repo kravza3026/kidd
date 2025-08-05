@@ -23,7 +23,7 @@
     </head>
     <body>
         @include('layouts.partials.header')
-        <main @class(['page-fade','bg-white','min-h-[100vh]', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
+        <main @class(['page-fade','bg-white','min-h-[calc(100vh-250px)]', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
             {{ $slot }}
         </main>
         @include('layouts.partials.footer')

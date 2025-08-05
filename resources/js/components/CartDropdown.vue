@@ -27,7 +27,6 @@ export default {
                 const response = await window.axios.get(`${locale}/cart/items`);
                 cartItems.value = response.data.items;
                 cartGrandTotal.value = response.data.grand_total;
-                console.trace('Fetching cart items');
             } catch (error) {
                 console.error('Server error:', error);
             }

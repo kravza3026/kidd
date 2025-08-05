@@ -25,7 +25,9 @@ import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
+import Swal from 'sweetalert2';
 
+window.Swal = Swal;
 window.Alpine = Alpine;
 window.IMask = IMask;
 

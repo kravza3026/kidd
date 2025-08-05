@@ -1,47 +1,47 @@
 <x-app-layout>
-<div class="max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+    <div class=" flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-xl w-lg mx-auto mt-4 bg-white p-6 rounded-lg shadow-md">
 
-    <form method="POST" action="{{ LaravelLocalization::localizeURL('/login') }}">
-        @csrf
+            <form method="POST" action="{{ LaravelLocalization::localizeURL('/login') }}">
+                @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')"/>
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"/>
-            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
-        </div>
+                <div class="mt-4">
+                    <x-ui.input-label for="email" :type="'email'" :placeholder="'Enter yor e-mail'" name="email" :label="__('E-mail')" required autofocus autocomplete="email"/>
+                    <x-input-error :messages="$errors->get('email')" class="mt-2"/>
+                </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')"/>
+                <!-- Email Address -->
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password"/>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2"/>
-        </div>
+                <!-- Password -->
+                <div class="mt-4">
+                    <x-ui.input-label :id="'password'" for="password" :type="'password'" :placeholder="'Enter account password'"  name="password" :label="__('Password')"  :value="old('phone')" required autofocus autocomplete="phone"  required autocomplete="new-password"/>
+                    <x-input-error :messages="$errors->get('password')" class="mt-2"/>
+                </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+                @if (Route::has('password.request'))
+                    <div class="mt-4">
+                        <a class="underline font-bold text-olive  " href="{{ route('password.request') }}">
+                            {{ __('Forgot password?') }}
+                        </a>
+                    </div>
+                @endif
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+
+
+                <div class="mt-4">
+                    <x-primary-button class="ms-3 w-full" :class="'!w-full'">
+                        {{ __('Log in') }}
+                    </x-primary-button>
+                </div>
+            </form>
+            <div class="mt-4 opacity-60 text-center flex gap-x-2 justify-center">
+                <p>New customer? </p>
+                <a class="underline font-bold  focus:outline-none "
+                   href="{{ route('register') }}">
+                    {{ __('Register now') }}
                 </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            </div>
         </div>
-    </form>
-</div>
+    </div>
 </x-app-layout>

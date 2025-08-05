@@ -9,19 +9,7 @@
         </div>
 
 
-{{--        <br/>--}}
-{{--        @foreach($locations->groupBy('address.region_id') as $group => $locations)--}}
-{{--            @foreach($locations as $location)--}}
-{{--                @if($loop->first)--}}
-{{--                    {{ $location->address->region->name }}--}}
-{{--                @endif--}}
-{{--            {{ $location->name }}<br/>--}}
-{{--            @endforeach--}}
-{{--        @endforeach--}}
-{{--        <hr class="my-4">--}}
-{{--        @foreach($locations as $location)--}}
-{{--            {{ $location->name }} / {{ $location->open_hours }} / {{ $location->address->street_name }} {{ $location->address->building }}<br/>--}}
-{{--        @endforeach--}}
+
 
 </section>
 <div class="block w-full h-full min-h-[90vh] -mb-7" id="map"></div>
@@ -79,20 +67,36 @@
         controlDiv.appendChild(select);
 
         select.addEventListener('change', () => {
-            const selectedType = select.value;
+            const selectedAddress = select.value;
 
-                    markerViews.forEach(({ view, type }) => {
-                        if (selectedType === '0' || selectedType === type) {
-                            view.content.style.display = '';
-                        } else {
-                            view.content.style.display = 'none';
-
-                            const selectedLocation = locations[index];
-                            map.setCenter(selectedLocation.position);
-                            map.setZoom(15);
-                        }
-                    });
+            if (selectedAddress === '0') {
+                // Показати всі маркери, якщо вибрано "All locations"
+                markerViews.forEach(({ view }) => {
+                    view.content.style.display = '';
                 });
+
+                map.setCenter({ lat: 47.015095, lng: 28.854760 }); // Центр Chișinău
+                map.setZoom(13);
+                return;
+            }
+
+            // Показати лише обраний маркер, сховати інші
+            markerViews.forEach(({ view, type }) => {
+                if (type === selectedAddress) {
+                    view.content.style.display = '';
+                } else {
+                    view.content.style.display = 'none';
+                }
+            });
+
+            // Знайти обрану локацію
+            const selectedLocation = locations.find(loc => loc.address === selectedAddress);
+
+            if (selectedLocation) {
+                map.panTo(selectedLocation.position);
+                map.setZoom(15);
+            }
+        });
 
         const markerViews = [];
 

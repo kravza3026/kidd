@@ -200,7 +200,7 @@ return [
     'attributes' => [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
-        'phone' => 'Phone',
+        'phone' => 'Phone number',
         'email' => 'Email',
     ],
 

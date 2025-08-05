@@ -4,6 +4,7 @@ import { ref, computed, watch, onMounted, onUnmounted,getCurrentInstance } from 
 import clickOutside from '@/clickOutside';
 import { emitter } from '@/eventBus'
 import iconTrash from '@img/common/trash.svg'
+import iconTrashMobile from '@img/icons/trash_b.png'
 import iconCheck from '@img/icons/checked_white.svg'
 import iconDelete from '@img/icons/close.svg'
 import { useI18n } from 'vue-i18n'
@@ -21,12 +22,12 @@ export default {
     },
     data(){
         return {
-            iconTrash,iconCheck,iconDelete,
+            iconTrash,iconCheck,iconDelete,iconTrashMobile,
             cartItems: [],
         }
     },
     setup(){
-        const { t, locale } = useI18n()
+        const { locale, t, n } = useI18n()
         const isMobile = ref(false)
         const { proxy } = getCurrentInstance()
 
@@ -215,7 +216,7 @@ export default {
 
 
         return {
-            t,
+            t,n,
             locale,
             selectIcon,
             isMobile,
@@ -301,7 +302,7 @@ export default {
                     <div v-if="isMobile"
 
                     >
-                        <div class="grid grid-cols-12 gap-x-3   justify-between  my-2 py-2 px-3">
+                        <div class="grid grid-cols-12 gap-x-3 items-center  justify-between  my-2 py-2 px-3">
                             <div class="col-span-3 max-w-[100px] h-fit px-1 py-2 flex justify-center bg-light-orange rounded-2xl">
                                 <img class="max-w-[80px]" :src='cartItem.img' alt="{{cartItem.name}}">
                             </div>
@@ -321,11 +322,14 @@ export default {
                                         <div class="py-2 flex items-center gap-x-2 justify-between w-full">
                                             <p>
                                                 {{cartItem.quantity}} x
-                                                <span>{{ cartItem.selectedPriceFinal / 100 }}</span>
-                                                <span class="text-[14px] opacity-40 line-through px-1">{{cartItem.selectedPriceOnline / 100}}</span>
+                                                <span>{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</span>
+                                                <span class="text-[14px] opacity-40 line-through px-1">{{$n(cartItem.selectedPriceOnline / 100, 'currency')}}</span>
 
+<!--                                                {{ $n(cartItem.selectedPriceFinal, 'currency') }}-->
                                             </p>
-                                            <p class="text-olive text-[16px] font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                            <p class="text-olive text-[16px] font-bold">
+                                                {{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}
+                                            </p>
                                         </div>
 
                                     </div>
@@ -335,8 +339,8 @@ export default {
                                     v-click-outside="() => cartItem.showConfirm = false"
                                     @click="toggleConfirm(cartItem)"
                                     class="absolute col-span-2 flex justify-center items-center h-fit  right-2 top-1 ">
-                                    <div class="text-olive bg-light-orange p-2 rounded-full shadow-sm shadow-olive cursor-pointer">
-                                        <img :src="iconTrash" alt="" />
+                                    <div class="text-olive  p-2 rounded-full border border-light-border  cursor-pointer">
+                                        <img :src="iconTrashMobile" alt="" />
                                     </div>
 
 
@@ -380,8 +384,8 @@ export default {
                                     <div>
                                         <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
                                         <div class="flex gap-x-2">
-                                            <p class="opacity-60 pb-5">{{ cartItem.selectedPriceFinal / 100 }} lei</p>
-                                            <p class="opacity-40 pb-5 line-through">{{ cartItem.selectedPriceOnline / 100 }} lei</p>
+                                            <p class="opacity-60 pb-5">{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</p>
+                                            <p class="opacity-40 pb-5 line-through">{{ $n(cartItem.selectedPriceOnline / 100, 'currency') }} lei</p>
                                         </div>
 
                                     </div>
@@ -474,7 +478,7 @@ export default {
 
                             <div class="col-span-2 grid justify-end content-between min-h-full gap-6">
                                 <div class="flex justify-end">
-                                    <p class="text-olive font-bold">{{ ( (cartItem.selectedPriceFinal / 100) * cartItem.quantity).toFixed(2) }} lei</p>
+                                    <p class="text-olive font-bold">{{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}</p>
                                 </div>
                                 <div
                                     v-click-outside="() => cartItem.showConfirm = false"
@@ -527,7 +531,7 @@ export default {
                             Products
                         </span>
                            <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                            {{ (cartTotalOnline/100).toFixed(2) }} lei
+                            {{ $n(cartTotalOnline/100,'currency') }}
                         </span>
                        </div>
 
@@ -537,7 +541,7 @@ export default {
                                Discount
                             </span>
                            <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                                {{ (totalDiscount).toFixed(2)}} lei
+                                {{ $n(totalDiscount,'currency')}}
                             </span>
                        </div>
 
@@ -548,7 +552,7 @@ export default {
                         Grand total
                     </span>
                        <span class="font-extrabold text-base tracking-[-2%] text-charcoal">
-                      {{ (cartTotal/100).toFixed(2) }} lei
+                      {{ $n(cartTotal/100, 'currency') }}
                     </span>
                    </div>
 
