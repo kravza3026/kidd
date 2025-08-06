@@ -9,6 +9,7 @@
             @input="$emit('update:modelValue', $event.target.value)"
             :aria-label="ariaLabel"
             :disabled="disabled"
+            :required="required"
             v-bind="attrs"
 
             :class="[
@@ -24,6 +25,10 @@
 import { useAttrs } from 'vue'
 
 defineProps({
+    required: {
+        type: Boolean,
+        default: false,
+    },
     ariaLabel: {
         type: String,
         required: true

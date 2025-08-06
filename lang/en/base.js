@@ -52,5 +52,18 @@ export default {
         'removedFromFavorites':'removed from Favorites',
         'addedToCart':'added to Сart',
         'removedFromCart':'removed from Сart',
+    },
+    'address': {
+        'delete': 'Delete address',
+        'edit': 'Edit address',
+        'add': 'Add address',
+        'new': 'New address',
+        'save': 'Save address',
+        'select': 'Select address',
+        'default': 'Default',
+        'name': 'Name',
+        'street': 'Street',
+        'city': 'City',
+        'zip': 'Zip',
     }
 }

@@ -34,7 +34,7 @@ export default {
     props: {
         customClass: {
             type: String,
-            default: 'w-fit py-3',
+            default: 'w-fit py-3 md:py-4',
         },
         displayAs: {
             type: String,
@@ -55,7 +55,7 @@ export default {
     },
     computed: {
         mergedClasses() {
-            const base = 'cursor-pointer shadow-md hover:shadow-sm duration-500 transition-all ease-in-out flex gap-5 items-center justify-center py-5 md:py-4 my-5 rounded-[12px]';
+            const base = 'cursor-pointer shadow-md hover:shadow-sm duration-500 transition-all ease-in-out flex gap-5 items-center justify-center py-5  my-5 rounded-[12px]';
             const variant = this.buttonPrimary
                 ? 'shadow-light-border border-b-2 border-1 bg-light-orange hover:bg-light-border border-light-border'
                 : 'shadow-olive border-b-2 hover:bg-dark-olive border-dark-olive bg-olive px-10 text-white';
