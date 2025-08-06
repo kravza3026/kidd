@@ -177,20 +177,45 @@ class CartController extends Controller
     public function update(Request $request, $itemHash)
     {
 
-        $productVariant = ProductVariant::findOrFail($request->variant_id);
+        $variant = ProductVariant::findOrFail($request->variant_id);
 
-        LaraCart::find($itemHash)->update($request->get('variant_id'));
+//        $item = LaraCart::updateItem($itemHash, $productVariant, $request->variant_id);
+//        LaraCart::updateItem($itemHash, 'id', $variant->id);
+//        LaraCart::updateItem($itemHash, 'options[id]', $variant->id);
+//        LaraCart::updateItem($itemHash, 'itemID', $variant->id);
+//        LaraCart::updateItem($itemHash, 'itemModel', $variant);
+//        LaraCart::updateItem($itemHash, 'model', $variant);
+        LaraCart::updateItem($itemHash, 'qty', $request->quantity);
+//        $item = LaraCart::getItem($itemHash);
+//        $item->model->id = $request->variant_id;
+//        $item->update();
+
+        $matches = LaraCart::find([$itemHash]);
+        $matches2 = LaraCart::find(['model.id' => $request->variant_id]);;
+        $matches3 = LaraCart::find(['options.product.id' => $request->variant_id]);
+
+//        return response([
+//            $request->variant_id,
+//            LaraCart::get(),
+////            $item,
+//            $matches,
+//            $matches2,
+//            $matches3
+//        ], status: 200);
 
         return response([
             'alert' => [
-                'title' => $productVariant->product->name,
-                'type' => "cart",
-                'message' => __('alerts.updated'),
-                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'title' => $variant->product->name,
+                'type' => "info",
+                'message' => __('alerts.cart.updated'),
+                'icon' => 'success', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
 //                'button' => [
 //                    'label' => __('menu.cart'),
 //                    'href' => route('cart'),
 //                ],
+                'options' => [
+                    'timer' => 1000,
+                ],
             ],
         ], status: 200);
 
@@ -200,11 +225,20 @@ class CartController extends Controller
     {
         LaraCart::removeItem($itemHash);
 
-//      return response(content: null, status: 204);
-
-//        return back();
-        return response()->json([
-            'message' => 'Item removed'
-        ], 200);
+        return response([
+            'alert' => [
+                'title' => "Success",
+                'type' => "info",
+                'message' => __('alerts.cart.removed'),
+                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+//                'button' => [
+//                    'label' => __('menu.cart'),
+//                    'href' => route('cart'),
+//                ],
+                'options' => [
+                    'timer' => 1000,
+                ],
+            ],
+        ], status: 200);
     }
 }

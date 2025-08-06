@@ -121,10 +121,12 @@ return [
         \LukePOLO\LaraCart\CartItem::ITEM_PRICE => 'price_final',
         \LukePOLO\LaraCart\CartItem::ITEM_TAXABLE => false,
         \LukePOLO\LaraCart\CartItem::ITEM_OPTIONS => [
-            'name' => 'product.name',
+//            'name' => 'product.name',
             'description' => 'product.description',
             'price_online' => 'price_online',
             'price_final' => 'price_final',
+            'discount_final' => 'discount_final',
+            'discount_display' => 'discount_display',
             //            'product' => 'product',
             //            'your_key' => 'price_relation.value', // this will go to the price relation then get the value!
             //            'your_other_key' => 'price_relation.sub_relation.value', // This also works

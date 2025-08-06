@@ -24,7 +24,7 @@ export default {
             getCartItems.fetched = true;
 
             try {
-                const response = await window.axios.get(`${locale}/cart/items`);
+                const response = await window.axios.get(`cart/items`); // ${locale}/
                 cartItems.value = response.data.items;
                 cartGrandTotal.value = response.data.grand_total;
             } catch (error) {

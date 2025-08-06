@@ -186,12 +186,14 @@ export default {
             if (!variant) return;
 
             try {
-                await axios.put(`/cart/${item.hash}`, {
-                       arguments:{
-                           variant_id: variant.id,
-                           quantity: item.quantity
-                       }
+                await axios.put(`cart/${item.hash}`, {
+                   variant_id: variant.id,
+                   quantity: item.quantity
+                }).then(response => {
+                    if (response.data?.alert)
+                        window.toast(response.data.alert);
                 });
+
                 emitter.emit('cart-updated');
             } catch (err) {
                 console.error('Server error:', err);
@@ -204,7 +206,11 @@ export default {
 
         const removeItem = async (item) => {
             try {
-                await axios.delete(`/cart/${item.hash}`)
+                await axios.delete(`cart/${item.hash}`)
+                    .then(response => {
+                        if (response.data?.alert)
+                            window.toast(response.data.alert);
+                    });
                 proxy.cartItems = proxy.cartItems.filter(i => i.hash !== item.hash)
                 emitter.emit('cart-updated')
             } catch (err) {
@@ -241,11 +247,11 @@ export default {
 
         async getCartItems() {
             try {
-                const response = await window.axios.get(`${this.locale}/cart/items`)
+                const response = await window.axios.get(`cart/items`) //${this.locale}/
                 const grandTotal = response.data.grand_total;
                 const total = response.data.total;
-                console.log('total:', total / 100 );
-                console.log('Grand total:', grandTotal / 100); // MDL
+                // console.log('total:', total / 100 );
+                // console.log('Grand total:', grandTotal / 100); // MDL
                 this.cartItems = response.data.items.map(item => {
                     const selectedVariant = item.product.variants.find(v =>
                         v.size.id === item.size.id && v.color.id === item.color.id
@@ -265,7 +271,7 @@ export default {
                         showConfirm: false,
                     }
                 })
-                console.log(response)
+                // console.log(response)
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }
@@ -535,13 +541,12 @@ export default {
                         </span>
                        </div>
 
-
                        <div class="flex w-full justify-between">
                             <span class="font-normal text-base tracking-[-2%] text-charcoal/40">
                                Discount
                             </span>
                            <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                                {{ $n(totalDiscount,'currency')}}
+                                {{ $n(totalDiscount/100,'currency')}}
                             </span>
                        </div>
 
@@ -557,7 +562,7 @@ export default {
                    </div>
 
                    <div class="flex w-full pt-6">
-                       <Button class="w-full" :href="`/checkout?total=${cartTotal}`" withArrow>Continue to checkout</Button>
+                       <Button :display-as="`a`" class="w-full" :href="`cart/checkout`" withArrow>Continue to checkout</Button>
                    </div>
 
                </div>
@@ -567,13 +572,12 @@ export default {
 
 
     <SubscribeForm
-
-                title = "Subscribe to newsletter and get 25% off your first order"
-                secondaryTitle = "Receive the latest updates and take advantage of great offers"
-                contentWidth = "w-full lg:flex justify-between gap-x-5 items-end bg-light-orange py-6 px-5 my-16 rounded-2xl"
-                titleClass = "text-[24px] text-black"
-                formClass = "w-full mt-5 lg:mt-0 lg:w-5/12"
-                subtitleClass = "text-[14px]"
+        title = "Subscribe to newsletter and get 25% off your first order"
+        secondaryTitle = "Receive the latest updates and take advantage of great offers"
+        contentWidth = "w-full lg:flex justify-between gap-x-5 items-end bg-light-orange py-6 px-5 my-16 rounded-2xl"
+        titleClass = "text-[24px] text-black"
+        formClass = "w-full mt-5 lg:mt-0 lg:w-5/12"
+        subtitleClass = "text-[14px]"
 
     ></SubscribeForm>
 </template>

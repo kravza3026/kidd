@@ -23,7 +23,7 @@ export default {
         },
         'choose-color': 'Выберите цвет',
         'add-to-favorite': 'Сохранить в Избранные',
-        'remove-from-favorite': 'Удалить из Избранных',
+        'remove-from-favorites': 'Удалить из Избранных',
         'add-to-cart': 'Добавить в Корзину',
     },
     'user-dropdown': {

@@ -13,27 +13,28 @@
                        </div>
 
                         <div class="mt-4">
-                            <x-ui.input-label for="last_name" :placeholder="'Enter yor last name'" name="last_name" :label="__('Last name')" required autofocus autocomplete="last_name"/>
+                            <x-ui.input-label for="last_name" :placeholder="'Enter yor last name'" name="last_name" :label="__('Last name')" required autocomplete="last_name"/>
                             <x-input-error :messages="$errors->get('last_name')" class="mt-2"/>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <x-ui.input-label for="email" :type="'email'" :placeholder="'Enter yor e-mail'" name="email" :label="__('E-mail')" required autofocus autocomplete="email"/>
+                        <x-ui.input-label for="email" :type="'email'" :placeholder="'Enter yor e-mail'" name="email" :label="__('E-mail')" required autocomplete="email"/>
                         <x-input-error :messages="$errors->get('email')" class="mt-2"/>
                     </div>
 
                     <div class="mt-4">
-                        <x-ui.input-label :id="'phone'" for="phone" :type="'text'"  name="phone" :label="__('Phone')"  :value="old('phone')" required autofocus autocomplete="phone"/>
+                        <x-ui.input-label :id="'phone'" for="phone" :type="'text'"  name="phone" :label="__('Phone')"  :value="old('phone')" required autocomplete="phone"/>
                         <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
                     </div>
 
                     <div class="grid grid-cols-2 justify-between gap-x-2">
                         <div class="mt-4">
-                            <x-ui.input-label :id="'password'" for="password" :type="'password'" :placeholder="'Enter account password'"  name="password" :label="__('Password')"  :value="old('password')" required autofocus autocomplete="password"  required autocomplete="new-password"/>
+                            <x-ui.input-label :id="'password'" for="password" :type="'password'" :placeholder="'Enter account password'"  name="password" :label="__('Password')"  :value="old('password')" required autocomplete="password"  required autocomplete="new-password"/>
                             <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                         </div>
                         <div class="mt-4">
-                            <x-ui.input-label :id="'confirm-password'" for="confirm-password" :type="'password'" :placeholder="'Confirm account password'"  name="password" :label="__('Confirm password')"  :value="old('password')" required autofocus autocomplete="password"  required autocomplete="confirm-password"/>
+                            <x-ui.input-label :id="'confirm-password'" for="confirm-password" :type="'password'" :placeholder="'Confirm account password'" name="password_confirmation" :label="__('Confirm
+                            password')"  :value="old('password')" required autocomplete="confirm-password"/>
                             <x-input-error :messages="$errors->get('confirm-password')" class="mt-2"/>
                         </div>
                     </div>

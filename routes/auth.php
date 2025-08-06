@@ -21,7 +21,7 @@ use App\Http\Controllers\Account\ProfileController;
 
 
 Route::group([
-    'middleware' => ['auth', 'verified'],
+    'middleware' => ['auth'],
     'prefix' => 'account',
 ], function () {
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
