@@ -11,7 +11,7 @@
         <!-- full dropdown cart menu -->
         <transition name="slide-fade" @click.stop>
             <div v-if="open"
-                class="fixed inset-0 h-[calc(100%-162px)] lg:h-fit lg:inset-auto left-0 lg:-right-10 w-full p-5 lg:p-0  lg:absolute cursor-auto border-t lg:border-light-border  top-[72px] lg:top-full lg:mt-4 lg:w-100 bg-white lg:shadow-xl lg:rounded-md z-50 "
+                class="fixed inset-0 h-[calc(100%-162px)] lg:h-fit lg:inset-auto left-0 lg:-right-10 w-full p-5 lg:p-0  lg:absolute cursor-auto border-t lg:border-light-border  top-[72px] lg:top-full lg:mt-4 lg:w-[22rem] bg-white lg:shadow-xl lg:rounded-md z-50 "
             >
                 <i class="w-[15px] h-[15px] hidden lg:block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
 
@@ -51,7 +51,7 @@
                         <p class="text-base text-dark-olive text-start">{{ user.name }}</p>
 <!--                        <p class="text-xs text-dark text-start">{{ user.email }}</p>-->
                         <div class="rounded-xl light_border mt-4">
-                            <a :href="route('profile.edit')" class="flex justify-between items-center rounded-t-xl  animated border-b border-b-light-border hover:bg-card-bg py-2 px-3  cursor-pointer">
+                            <a :href="route('profile.edit')" class="flex justify-between items-center rounded-t-xl  animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Account" alt="arrow">
                                     <p class="text-[18px] font-normal">
@@ -60,7 +60,7 @@
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </a>
-                            <a :href="route('favorites.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-2 px-3  cursor-pointer">
+                            <a :href="route('favorites.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Favorite" alt="arrow">
                                     <p class="text-[18px] font-normal">{{ $t('user-dropdown.favorites')}}</p>
@@ -69,7 +69,7 @@
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </a>
-                            <a :href="route('orders.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-2 px-3  cursor-pointer">
+                            <a :href="route('orders.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Order" alt="arrow">
                                     <p class="text-[18px] font-normal">{{ $t('user-dropdown.orders')}}</p>
@@ -79,7 +79,7 @@
                                 </div>
                                 <img class="opacity-20" :src="arrow" alt="arrow">
                             </a>
-                            <a :href="route('addresses.index')" class="flex justify-between items-center rounded-b-xl animated  hover:bg-card-bg py-2 px-3  cursor-pointer">
+                            <a :href="route('addresses.index')" class="flex justify-between items-center rounded-b-xl animated  hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Address" alt="arrow">
                                     <p class="text-[18px] font-normal">{{ $t('user-dropdown.addresses')}}</p>

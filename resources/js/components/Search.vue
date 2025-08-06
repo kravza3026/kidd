@@ -36,7 +36,7 @@ export default {
             const query = this.searchQuery.trim().toLowerCase();
 
             // TODO - set url from global storage and easy accessible.
-            await axios.get(this.locale + this.route('search', {term:query}, false) )
+            await axios.get(this.route('search', {term:query}, false) )
                 .then(response => {
                     this.products = response.data.results;
                     this.processed = true;

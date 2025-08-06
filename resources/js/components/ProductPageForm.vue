@@ -84,10 +84,11 @@ const addToCart = async (event) => {
     if (!selectedVariantId.value) return
 
     try {
-        const response = await window.axios.post(`${locale.value}/cart`, {
+        const response = await window.axios.post(`cart`, { // ${locale.value}/
             variant_id: selectedVariantId.value,
             quantity: 1
         })
+
         emitter.emit('cart-updated');
 
         showAlert({

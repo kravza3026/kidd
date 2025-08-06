@@ -29,6 +29,38 @@ const numberFormats = {
         percent: {
             style: 'percent', useGrouping: false
         }
+    }
+    ,'ru': {
+        currency: {
+            style: 'currency',
+            currency: 'MDL',
+            useGrouping: true,
+            notation: 'standard', // notation: 'standart' | 'compact'
+            currencyDisplay: 'code', // currencyDisplay: 'code' | 'symbol' | 'name'
+            maximumFractionDigits: 0
+        },
+        decimal: {
+            style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2
+        },
+        percent: {
+            style: 'percent', useGrouping: false
+        }
+    }
+    ,'en': {
+        currency: {
+            style: 'currency',
+            currency: 'MDL',
+            useGrouping: true,
+            notation: 'standard', // notation: 'standart' | 'compact'
+            currencyDisplay: 'code', // currencyDisplay: 'code' | 'symbol' | 'name'
+            maximumFractionDigits: 0
+        },
+        decimal: {
+            style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2
+        },
+        percent: {
+            style: 'percent', useGrouping: false
+        }
     },
 
 }

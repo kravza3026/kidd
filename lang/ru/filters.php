@@ -1,42 +1,26 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Filter Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used by the paginator library to build
-    | the simple pagination links. You are free to change them to anything
-    | you want to customize your views to better match your application.
-    |
-    */
-
-    'filter_by' => 'Фильтр',
-
-    'size' => 'Размер',
-    'all_sizes' => 'Все размеры',
-    'fabric_type' => 'Материал',
-    'all_fabric_types' => 'Все материалы',
-    'color' => 'Цвет',
     'all_colors' => 'Все цвета',
-    'gender' => 'Пол',
+    'all_fabric_types' => 'Все материалы',
+    'all_family_members' => 'Вся семья',
     'all_genders' => 'Все',
-    'season' => 'Сезон',
     'all_seasons' => 'Все сезоны',
+    'all_sizes' => 'Все размеры',
+    'bestseller' => 'Бестселлер',
+    'clear' => 'Очистить',
+    'color' => 'Цвет',
+    'discount' => 'Reducere',
+    'fabric_type' => 'Материал',
+    'family_member' => 'Моя семья',
+    'filter_by' => 'Фильтр',
+    'gender' => 'Пол',
+    'newest' => 'Новые',
     'price' => 'Цена',
     'price_discounted' => 'Только со скидкой',
-    'family_member' => 'Моя семья',
-    'all_family_members' => 'Вся семья',
-
-    'clear' => 'Очистить',
-
-    'sort_by' => 'Сортировать',
-    
-    'newest' => 'Новые',
-    'bestseller' => 'Бестселлер',
-    'discount' => 'Reducere',
-    'price_low_to_high' => 'Цена по возрастанию',
     'price_high_to_low' => 'Цена по убыванию',
+    'price_low_to_high' => 'Цена по возрастанию',
+    'season' => 'Сезон',
+    'size' => 'Размер',
+    'sort_by' => 'Сортировать',
 ];

@@ -74,8 +74,8 @@ class ProductVariant extends Model
     public function size(): BelongsTo
     {
         return $this->belongsTo(Size::class)
-            ->orderBy('id', 'asc')
-            ->orderBy('sort_order', 'asc');
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc');
     }
 
 
