@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
@@ -18,13 +18,9 @@ export default {
         const open = ref(false);
         const dropdown = ref(null);
         const locale = document.documentElement.lang || 'ro';
-
         const getCartItems = async () => {
-            if (getCartItems.fetched) return;
-            getCartItems.fetched = true;
-
             try {
-                const response = await window.axios.get(`cart/items`); // ${locale}/
+                const response = await window.axios.get(`cart/items`);
                 cartItems.value = response.data.items;
                 cartGrandTotal.value = response.data.grand_total;
             } catch (error) {
@@ -39,10 +35,17 @@ export default {
             }
         };
 
+        // 🔄 Додаємо слухач
         onMounted(() => {
             getCartItems();
             document.addEventListener('click', handleClickOutside);
             emitter.on('cart-updated', getCartItems);
+        });
+
+        // ❌ Прибираємо слухач
+        onUnmounted(() => {
+            document.removeEventListener('click', handleClickOutside);
+            emitter.off('cart-updated', getCartItems);
         });
 
         return {
@@ -56,11 +59,8 @@ export default {
             toggle: () => (open.value = !open.value),
         };
     },
-    beforeUnmount() {
-        document.removeEventListener('click', this.handleClickOutside);
-        emitter.off('cart-updated', this.getCartItems);
-    }
 };
+
 </script>
 
 <template>

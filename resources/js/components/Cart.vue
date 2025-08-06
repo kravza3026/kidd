@@ -43,8 +43,6 @@ export default {
         onUnmounted(() => {
             window.removeEventListener('resize', checkIsMobile)
         })
-
-
         const getColorById = (item, id) => {
             return item.product.variants
                 .map(v => v.color)
@@ -57,7 +55,6 @@ export default {
                 .find(s => s.id === id)
             return size ? size.name[locale.value] : ''
         }
-
         // Коли обирають розмір
         const selectSize = (item, sizeId) => {
             item.selectedSizeId = sizeId
@@ -65,9 +62,7 @@ export default {
             updateAvailableColors(item)
             updateSelectedPrice(item)
             updateItem(item)
-
         }
-
         // Коли обирають колір
         const selectColor = (item, colorId) => {
             item.selectedColorId = colorId
@@ -75,7 +70,6 @@ export default {
             updateSelectedPrice(item)
             updateItem(item)
         }
-
         // Отримати список унікальних розмірів (для dropdown)
         const getUniqueSizes = (item) => {
             const seen = new Set()
@@ -87,7 +81,6 @@ export default {
                     return true
                 })
         }
-
         // Отримати кольори, доступні лише для обраного розміру
         const getAvailableColors = (item) => {
             if (!item.selectedSizeId) return []
@@ -102,20 +95,16 @@ export default {
                     return true
                 })
         }
-
         // Після вибору розміру, оновлюємо список доступних кольорів
         const updateAvailableColors = (item) => {
             const colors = getAvailableColors(item)
             console.log(colors)
             item.selectedColorId = colors.length ? colors[0].id : null
         }
-
         const getAllColorsWithAvailability = (item) => {
                 const allColors = []
                 const seen = new Set()
-
                 const currentSizeId = item.selectedSizeId
-
                 item.product.variants.forEach(variant => {
                     const { color, size } = variant
                     if (!seen.has(color.id)) {
@@ -134,7 +123,6 @@ export default {
 
                 return allColors
             }
-
         const min = 1
         const max = 30
         const increment = (item) => {
@@ -150,7 +138,6 @@ export default {
                 updateItem(item)
             }
         }
-
         const updateSelectedPrice = (item) => {
             const variant = item.product.variants.find(v =>
                 v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
@@ -178,13 +165,11 @@ export default {
                 return acc + (discount * item.quantity)
             }, 0)
         })
-
         const updateItem = async (item) => {
             const variant = item.product.variants.find(v =>
                 v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
             )
             if (!variant) return;
-
             try {
                 await axios.put(`cart/${item.hash}`, {
                    variant_id: variant.id,
@@ -193,17 +178,14 @@ export default {
                     if (response.data?.alert)
                         window.toast(response.data.alert);
                 });
-
                 emitter.emit('cart-updated');
             } catch (err) {
                 console.error('Server error:', err);
             }
         }
-
         const toggleConfirm = (item) => {
             item.showConfirm = !item.showConfirm
         }
-
         const removeItem = async (item) => {
             try {
                 await axios.delete(`cart/${item.hash}`)
@@ -217,9 +199,6 @@ export default {
                 console.error('Server error:', err)
             }
         }
-
-
-
 
         return {
             t,n,
@@ -242,7 +221,6 @@ export default {
 
         }
     },
-
     methods: {
 
         async getCartItems() {
@@ -256,7 +234,6 @@ export default {
                     const selectedVariant = item.product.variants.find(v =>
                         v.size.id === item.size.id && v.color.id === item.color.id
                     )
-
                     return {
                         ...item,
                         quantity: item.quantity || 1,
@@ -271,14 +248,10 @@ export default {
                         showConfirm: false,
                     }
                 })
-                // console.log(response)
             } catch (error) {
                 console.error('Server error:', error) // TODO Remove in production
             }
         },
-
-
-
     },
     mounted() {
         this.getCartItems();
@@ -330,8 +303,6 @@ export default {
                                                 {{cartItem.quantity}} x
                                                 <span>{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</span>
                                                 <span class="text-[14px] opacity-40 line-through px-1">{{$n(cartItem.selectedPriceOnline / 100, 'currency')}}</span>
-
-<!--                                                {{ $n(cartItem.selectedPriceFinal, 'currency') }}-->
                                             </p>
                                             <p class="text-olive text-[16px] font-bold">
                                                 {{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}
@@ -432,11 +403,11 @@ export default {
                                             >
 
                                                 <p class="flex items-center gap-x-2">
-                                    <span
-                                        v-if="cartItem.selectedColorId || cartItem.hex"
-                                        class="block min-w-5 min-h-5 rounded-full border border-light-border"
-                                        :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"
-                                    ></span>
+                                            <span
+                                                v-if="cartItem.selectedColorId || cartItem.hex"
+                                                class="block min-w-5 min-h-5 rounded-full border border-light-border"
+                                                :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"
+                                            ></span>
                                                     {{ getColorById(cartItem, cartItem.selectedColorId)?.name[locale] || getColorById(cartItem, cartItem.color_id)?.name[locale] }}
 
                                                 </p>
@@ -454,14 +425,14 @@ export default {
                                                     @click="color.available && selectColor(cartItem, color.id)"
                                                     class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
                                                     :class="{
-                                        'hover:bg-gray-100 cursor-pointer': color.available,
-                                        'opacity-50 cursor-not-allowed': !color.available
-                                      }"
+                                                        'hover:bg-gray-100 cursor-pointer': color.available,
+                                                        'opacity-50 cursor-not-allowed': !color.available
+                                                      }"
                                                 >
-                                        <span
-                                            class="w-5 h-5 block rounded-full border border-light-border"
-                                            :style="{ backgroundColor: color.hex }"
-                                        ></span>
+                                                <span
+                                                    class="w-5 h-5 block rounded-full border border-light-border"
+                                                    :style="{ backgroundColor: color.hex }"
+                                                ></span>
                                                     {{ color.name[locale] }}
                                                 </li>
                                             </ul>

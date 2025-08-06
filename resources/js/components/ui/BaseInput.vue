@@ -1,10 +1,5 @@
 <template>
-    <div
-        :class="customClass"
-        class="flex flex-col gap-3 mt-3">
-        <label v-if="label" :for="id" class="text-[14px] font-bold">
-            {{ label }}
-        </label>
+
         <input
             :type="type"
             :name="name"
@@ -12,21 +7,30 @@
             :placeholder="placeholder"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
-            class="border-light-border border-1 focus:outline-hidden bg-white p-3 rounded-xl"
+            :aria-label="ariaLabel"
+            :disabled="disabled"
             v-bind="attrs"
 
+            :class="[
+        'border rounded-lg px-4 bg-white', customClass,
+        error ? 'border-red-500' : 'border-light-border',
+        disabled ? 'bg-gray-100 cursor-not-allowed' : ''
+      ]"
         />
-    </div>
+
 </template>
 
 <script setup>
-import { useAttrs } from 'vue';
+import { useAttrs } from 'vue'
 
 defineProps({
-    label: String,
+    ariaLabel: {
+        type: String,
+        required: true
+    },
     type: {
         type: String,
-        default: 'text',
+        default: 'text'
     },
     name: String,
     id: String,
@@ -34,11 +38,19 @@ defineProps({
     modelValue: [String, Number],
     customClass: {
         type: String,
-        default: '',
+        default: ''
     },
-});
+    error: {
+        type: String,
+        default: ''
+    },
+    disabled: {
+        type: Boolean,
+        default: false
+    }
+})
 
-defineEmits(['update:modelValue']);
+defineEmits(['update:modelValue'])
 
-const attrs = useAttrs();
+const attrs = useAttrs()
 </script>

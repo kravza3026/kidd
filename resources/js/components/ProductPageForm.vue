@@ -88,6 +88,7 @@ const addToCart = async (event) => {
             variant_id: selectedVariantId.value,
             quantity: 1
         })
+
         emitter.emit('cart-updated');
 
         showAlert({

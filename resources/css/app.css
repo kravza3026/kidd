@@ -121,6 +121,9 @@
 .gradient_r-b{
     @apply bg-gradient-to-l from-red-200 to-blue-300 py-0 px-3 rounded-full
 }
+.gradient_r-b_dark{
+    @apply bg-gradient-to-l from-[#EAC2C3] to-[#97C5FE] py-0 px-3 rounded-full
+}
 .animated{
     @apply transition-all ease-in-out duration-500
 }

@@ -13,6 +13,7 @@ import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
 import CartDropdown from './components/CartDropdown.vue';
 import UserDropdown from './components/UserDropdown.vue';
+import Addresses from './components/Addresses.vue';
 import Button from './components/ui/Button.vue';
 import ProductCard from './components/ProductCard.vue';
 import Cart from './components/Cart.vue';
@@ -40,7 +41,7 @@ window.toast = showAlert;
 // Масив компонентів
 const components = {
     Accordion,
-    Cart,
+    Cart,Addresses,
     Search, mobileMenu: MobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
