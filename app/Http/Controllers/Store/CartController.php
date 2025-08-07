@@ -17,8 +17,8 @@ class CartController extends Controller
     public function index()
     {
 
-        $cart = LaraCart::setInstance('default');
-        $cart = $cart->cart;
+//        $cart = LaraCart::setInstance('default');
+//        $cart = $cart->cart;
 //        LaraCart::emptyCart();
 //        dd($cart);
 //                LaraCart::destroyCart();

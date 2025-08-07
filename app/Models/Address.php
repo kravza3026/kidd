@@ -37,6 +37,10 @@ class Address extends Model
         'notes',
     ];
 
+    protected $appends = [
+        'editor',
+    ];
+
     protected $with = [
         'region',
     ];
@@ -54,6 +58,7 @@ class Address extends Model
     protected $casts = [
         'address_type' => AddressType::class,
         'is_default' => 'boolean',
+        'editor' => 'json:unicode',
     ];
 
     /**
@@ -80,5 +85,15 @@ class Address extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function getEditorAttribute()
+    {
+        return [
+            'isEditing' => false,
+            'dropdownCityOpen' => false,
+            'dropdownDistrictOpen' => false,
+            'confirmingDelete' => false,
+        ];
     }
 }
