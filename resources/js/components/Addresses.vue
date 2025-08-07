@@ -12,7 +12,8 @@ import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
- export default {
+
+export default {
      name: 'Addresses',
      components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
 
@@ -21,64 +22,13 @@ import BaseInput from "@/components/ui/BaseInput.vue";
      },
      data(){
          return {
-             addresses: [
-                 {
-                     id: 1,
-                     type:'shipping',
-                     title:'Address #1',
-                     city: 'city',
-                     district: 'district',
-                     street: 'street',
-                     houseNumber: '12',
-                     apartmentNumber: '3',
-                     entrance: '43',
-                     floor: '5',
-                     default:true,
-                     isEditing: false,
-                     dropdownCityOpen: false,
-                     dropdownDistrictOpen: false,
-                     confirmingDelete: false
-                 },
-                 {
-                     id: 2,
-                     type:'billing',
-                     title:'Address #2',
-                     city: 'city',
-                     district: 'district',
-                     street: 'street',
-                     houseNumber: '52',
-                     apartmentNumber: '6',
-                     entrance: '3',
-                     floor: '52',
-                     default:true,
-                     isEditing: false,
-                     dropdownCityOpen: false,
-                     dropdownDistrictOpen: false,
-                     confirmingDelete: false
-                 },
-                 {
-                     id: 3,
-                     type:'billing',
-                     title:'Address #2',
-                     city: 'city',
-                     district: 'district',
-                     street: 'street',
-                     houseNumber: '52',
-                     apartmentNumber: '6',
-                     entrance: '3',
-                     floor: '52',
-                     default:false,
-                     isEditing: false,
-                     dropdownCityOpen: false,
-                     dropdownDistrictOpen: false,
-                     confirmingDelete: false
-                 }
-             ],
+             locale: document.documentElement.lang || 'ro',
+             addresses: [],
+             regions: [],
+             cities: [],
              dropdownOpen: false,
              dropdownCityOpen: false,
              iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
-             districtOptions: ['District #1', 'District #2', 'District #3'],
-             cityOptions: ['Shevchenkivskyi', 'Solomianskyi', 'Holosiivskyi'],
 
          }
      },
@@ -90,36 +40,51 @@ import BaseInput from "@/components/ui/BaseInput.vue";
      methods: {
 
          async getAddresses() {
-             try {
-                 const response = await window.axios.get(`/addresses`)
-                 console.log(response.data)
 
-             } catch (error) {
-                 console.error('Server error:', error)
-             }
+             await window.axios.get(`/user/addresses`)
+                 .then((response) => {
+                     this.addresses = response.data.addresses;
+                     this.regions = response.data.regions;
+                    console.log(response.data)
+                 }).catch((error) => {
+                    console.error('Server error:', error)
+                 });
+
          },
 
-         addNewAddress(type) {
+         addNewAddress(address_type) {
              if (this._isAddingAddress) return;
              this._isAddingAddress = true;
              const newAddress = {
                  id: Date.now(), // унікальний ID
-                 type:`${type}`,
-                 city: '',
-                 district: '',
-                 street: '',
-                 houseNumber: '',
-                 apartmentNumber: '',
+                 address_type: address_type,
+                 label: '',
+                 city_id: 0,
+                 region: {
+                     id: 0,
+                     name: [
+                         {'ro': 'Select district'},
+                         {'ru': 'Select district'},
+                         {'en': 'Select district'},
+                     ],
+                 },
+                 street_name: '',
+                 building: '',
+                 apartment: '',
                  entrance: '',
                  floor: '',
-                 isEditing: true,
-                 dropdownCityOpen: false,
-                 dropdownDistrictOpen: false,
-                 confirmingDelete: false
+                 intercom: '',
+                 postal_code: '',
+                 editor: {
+                     isEditing: true,
+                     dropdownCityOpen: false,
+                     dropdownDistrictOpen: false,
+                     confirmingDelete: false
+                 },
              };
              this.addresses.push(newAddress);
 
-             setTimeout(() => (this._isAddingAddress = false), 100);
+             setTimeout(() => (this._isAddingAddress = false), 500);
          },
 
          confirmRemoveAddress(id) {
@@ -132,7 +97,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
          toggleEdit(id) {
              const index = this.addresses.findIndex(address => address.id === id);
              if (index !== -1) {
-                 this.addresses[index].isEditing = !this.addresses[index].isEditing;
+                 this.addresses[index].editor.isEditing = !this.addresses[index].editor.isEditing;
              }
          },
          removeAddress(id) {
@@ -150,7 +115,8 @@ import BaseInput from "@/components/ui/BaseInput.vue";
 <template>
     <div class=" bg-white shadow sm:rounded-xl p-5">
         <h1 class="text-[24px] font-bold">Shipping addresses</h1>
-        <div v-for="(address, index) in addresses.filter(a => a.type === 'billing')"
+<!--    Type 4 = Shipping-->
+        <div v-for="(address, index) in addresses.filter(a => a.address_type === 3)"
              :key="address.id" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
@@ -158,22 +124,22 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                         <img class="opacity-65" :src="iconMarker" alt="">
                     </div>
                     <BaseInput
-                        :disabled="!address.isEditing"
+                        :disabled="!address.editor.isEditing"
                         customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="title"
-                        id="title"
-                        :value="address.title"
-                        v-model="address.title"
-                        aria-label="title"
+                        name="label"
+                        id="label"
+                        :value="address.label"
+                        v-model="address.label"
+                        aria-label="label"
                         class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
-                        :class="{'cursor-not-allowed border-none !shadow-none': !address.isEditing,'': address.isEditing}"
+                        :class="{'cursor-not-allowed border-none !shadow-none': !address.editor.isEditing,'': address.editor.isEditing}"
                     />
 
                 </div>
                 <div class="flex items-center gap-x-2">
 
 
-                    <button v-if="address.default" class="gradient_r-b_dark relative shadow-sm cursor-pointer">
+                    <button v-if="address.is_default" class="gradient_r-b_dark relative shadow-sm cursor-pointer">
                         <span class="absolute inset-0 bg-black/15 rounded-full"></span>
                         <div class="flex items-center gap-x-2 relative z-10 py-2 px-3">
                             <img :src="iconFavorite" alt="">
@@ -182,13 +148,13 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     </button>
                     <button v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make default</p>
+                            <p class="text-olive font-bold text-[14px]">Make is_default</p>
                         </div>
                     </button>
                     <div
                         class="cursor-pointer group p-2 border border-light-border rounded-full shadow-sm relative"
-                        @click="address.confirmingDelete = !address.confirmingDelete"
-                        v-click-outside="() => address.confirmingDelete = false"
+                        @click="address.editor.confirmingDelete = !address.editor.confirmingDelete"
+                        v-click-outside="() => address.editor.confirmingDelete = false"
                     >
                         <img class="size-4" :src="iconTrash" alt="" />
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -198,13 +164,13 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                         <transition name="fade-slide" appear>
                             <div
 
-                                v-if="address.confirmingDelete"
+                                v-if="address.editor.confirmingDelete"
                                 class="absolute w-[100px] -right-9 flex gap-x-2 justify-between items-center -bottom-8"
                             >
                                 <!-- Cancel -->
                                 <div
                                     class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl  text-center py-1 flex justify-center bg-olive w-full h-5"
-                                    @click.stop="address.confirmingDelete = false"
+                                    @click.stop="address.editor.confirmingDelete = false"
                                 >
                                     <img :src="iconClose" alt="" />
                                 </div>
@@ -220,7 +186,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                         </transition>
                     </div>
                     <button class="settings cursor-pointer p-2 border border-light-border  rounded-full shadow-sm duration-500 relative group"
-                            :class="{'text-olive': !address.isEditing,'text-white bg-olive': address.isEditing}"
+                            :class="{'text-olive': !address.editor.isEditing,'text-white bg-olive': address.editor.isEditing}"
                             @click="toggleEdit(address.id)"
                     >
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -238,30 +204,62 @@ import BaseInput from "@/components/ui/BaseInput.vue";
             </div>
 
             <div class="grid grid-cols-17 justify-between gap-x-4 my-4 w-full">
+
+                <!-- District dropdown -->
+                <div class="relative col-span-3 rounded-lg shadow-sm">
+                    <div
+                        class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                        :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
+                        @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
+                        v-click-outside="() => address.editor.dropdownDistrictOpen = false"
+                    >
+                        <p class="flex items-center opacity-60 text-[14px]">
+                            {{ address.region_id || 'Select district' }}
+                        </p>
+                        <img :src="selectIcon" alt="selectIcon" class="duration-500"
+                             :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
+                    </div>
+
+                    <ul
+                        v-if="address.editor.dropdownDistrictOpen"
+                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                    >
+                        <li
+                            v-for="region in regions"
+                            :key="region.id"
+                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                            @click="address.region_id = region.id; address.editor.dropdownDistrictOpen = false"
+                        >
+                            {{ region.name[locale] }}
+                        </li>
+                    </ul>
+
+                </div>
+
                 <!-- City dropdown -->
                 <div class="relative col-span-3 rounded-lg shadow-sm">
                     <div
                         class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center "
-                        :class="{'cursor-not-allowed': !address.isEditing,'': address.isEditing}"
-                        @click="address.isEditing && (address.dropdownCityOpen = !address.dropdownCityOpen)"
-                        v-click-outside="() => address.dropdownCityOpen = false"
+                        :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
+                        @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
+                        v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
                             {{ address.city || 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
-                        :class="{'opacity-0': !address.isEditing,'opacity-40': address.isEditing}"  />
+                        :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"  />
                     </div>
 
                     <ul
-                        v-if="address.dropdownCityOpen"
+                        v-if="address.editor.dropdownCityOpen"
                         class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
-                            v-for="city in cityOptions"
+                            v-for="city in cities"
                             :key="city"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.city = city; address.dropdownCityOpen = false"
+                            @click="address.city = city; address.editor.dropdownCityOpen = false"
 
                         >
                             {{ city }}
@@ -269,69 +267,38 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     </ul>
                 </div>
 
-                <!-- District dropdown -->
-                <div class="relative col-span-3 rounded-lg shadow-sm">
-                    <div
-                        class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
-                        :class="{'cursor-not-allowed': !address.isEditing,'': address.isEditing}"
-                        @click="address.isEditing && (address.dropdownDistrictOpen = !address.dropdownDistrictOpen)"
-                        v-click-outside="() => address.dropdownDistrictOpen = false"
-                    >
-                        <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.district || 'Select district' }}
-                        </p>
-                        <img :src="selectIcon" alt="selectIcon" class="duration-500"
-                             :class="{'opacity-0': !address.isEditing,'opacity-40': address.isEditing}"   />
-                    </div>
-
-                    <ul
-                        v-if="address.dropdownDistrictOpen"
-                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
-                    >
-                        <li
-                            v-for="district in districtOptions"
-                            :key="district"
-                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.district = district; address.dropdownDistrictOpen = false"
-                        >
-                            {{ district }}
-                        </li>
-                    </ul>
-
-                </div>
-
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 h-7.5 placeholder-text-sm"
                     name="street"
                     id="street"
-                    :value="address.street"
-                    v-model="address.street"
+                    :value="address.street_name"
+                    v-model="address.street_name"
                     aria-label="street"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="houseNumber"
-                    id="houseNumber"
-                    :value="address.houseNumber"
-                    v-model="address.houseNumber"
-                    aria-label="houseNumber"
+                    name="building"
+                    id="building"
+                    :value="address.building"
+                    v-model="address.building"
+                    aria-label="building"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="apartmentNumber"
-                    id="apartmentNumber"
-                    :value="address.apartmentNumber"
-                    v-model="address.apartmentNumber"
-                    aria-label="apartmentNumber"
+                    name="apartment"
+                    id="apartment"
+                    :value="address.apartment"
+                    v-model="address.apartment"
+                    aria-label="apartment"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="entrance"
                     id="entrance"
@@ -341,7 +308,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="floor"
                     id="floor"
@@ -352,11 +319,12 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                 />
                 </div>
             <div class="flex justify-end">
-                <Button customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.isEditing}">Save</Button>
+                <Button customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
             </div>
         </div>
+<!--            Type 3 = Shipping -->
         <Button
-            @click="addNewAddress('billing')"
+            @click="addNewAddress(3)"
             customClass="py-2 md:py-2 w-fit"
             class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
 
@@ -365,7 +333,8 @@ import BaseInput from "@/components/ui/BaseInput.vue";
 
     <div class=" mt-5 bg-white shadow sm:rounded-xl p-5">
         <h1 class="text-[24px] font-bold">Billing addresses</h1>
-        <form v-for="(address, index) in addresses.filter(a => a.type === 'shipping')"
+<!--        Type 4 = Billing-->
+        <form v-for="(address, index) in addresses.filter(a => a.address_type === 4)"
              :key="address.id" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
@@ -373,23 +342,23 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                         <img class="opacity-65" :src="iconMarker" alt="">
                     </div>
                     <BaseInput
-                        :disabled="!address.isEditing"
+                        :disabled="!address.editor.isEditing"
                         customClass="p-0 min-h-7.5 placeholder-text-sm"
                         name="username"
                         id="username"
                         :required="true"
-                        :value="address.title"
-                        v-model="address.title"
-                        aria-label="Ім’я користувача"
+                        :value="address.label"
+                        v-model="address.label"
+                        aria-label=""
                         class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
-                        :class="{'cursor-not-allowed border-none !shadow-none': !address.isEditing,'': address.isEditing}"
+                        :class="{'cursor-not-allowed border-none !shadow-none': !address.editor.isEditing,'': address.editor.isEditing}"
                     />
 
                 </div>
                 <div class="flex items-center gap-x-2">
 
 
-                    <button type="button" v-if="address.default" class="gradient_r-b_dark relative shadow-sm cursor-pointer">
+                    <button type="button" v-if="address.is_default" class="gradient_r-b_dark relative shadow-sm cursor-pointer">
                         <span class="absolute inset-0 bg-black/15 rounded-full"></span>
                         <div class="flex items-center gap-x-2 relative z-10 py-2 px-3">
                             <img :src="iconFavorite" alt="">
@@ -398,7 +367,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     </button>
                     <button type="button" v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make default</p>
+                            <p class="text-olive font-bold text-[14px]">Make is_default</p>
                         </div>
                     </button>
                     <button type="button"
@@ -408,7 +377,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                         <img class="size-4" :src="iconTrash" alt="">
                     </button>
                     <button type="button" class="settings cursor-pointer p-2 border border-light-border  rounded-full shadow-sm duration-500"
-                            :class="{'text-olive': !address.isEditing,'text-white bg-olive': address.isEditing}"
+                            :class="{'text-olive': !address.editor.isEditing,'text-white bg-olive': address.editor.isEditing}"
                             @click="toggleEdit(address.id)"
                     >
                         <svg class="size-4" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -422,30 +391,62 @@ import BaseInput from "@/components/ui/BaseInput.vue";
             </div>
 
             <div class="grid grid-cols-17 justify-between gap-x-4 my-4 w-full">
+
+                <!-- District dropdown -->
+                <div class="relative col-span-3 rounded-lg shadow-sm">
+                    <div
+                        class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                        :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
+                        @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
+                        v-click-outside="() => address.editor.dropdownDistrictOpen = false"
+                    >
+                        <p class="flex items-center opacity-60 text-[14px]">
+                            {{ address.region_id || 'Select district' }}
+                        </p>
+                        <img :src="selectIcon" alt="selectIcon" class="duration-500"
+                             :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
+                    </div>
+
+                    <ul
+                        v-if="address.editor.dropdownDistrictOpen"
+                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                    >
+                        <li
+                            v-for="district in regions"
+                            :key="district"
+                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                            @click="address.region_id = district; address.editor.dropdownDistrictOpen = false"
+                        >
+                            {{ district.name[locale] }}
+                        </li>
+                    </ul>
+
+                </div>
+
                 <!-- City dropdown -->
                 <div class="relative col-span-3 rounded-lg shadow-sm">
                     <div
                         class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center "
-                        :class="{'cursor-not-allowed': !address.isEditing,'': address.isEditing}"
-                        @click="address.isEditing && (address.dropdownCityOpen = !address.dropdownCityOpen)"
-                        v-click-outside="() => address.dropdownCityOpen = false"
+                        :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
+                        @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
+                        v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
                             {{ address.city || 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
-                             :class="{'opacity-0': !address.isEditing,'opacity-40': address.isEditing}"  />
+                             :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"  />
                     </div>
 
                     <ul
-                        v-if="address.dropdownCityOpen"
+                        v-if="address.editor.dropdownCityOpen"
                         class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
-                            v-for="city in cityOptions"
+                            v-for="city in cities"
                             :key="city"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.city = city; address.dropdownCityOpen = false"
+                            @click="address.city = city; address.editor.dropdownCityOpen = false"
 
                         >
                             {{ city }}
@@ -453,69 +454,38 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     </ul>
                 </div>
 
-                <!-- District dropdown -->
-                <div class="relative col-span-3 rounded-lg shadow-sm">
-                    <div
-                        class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
-                        :class="{'cursor-not-allowed': !address.isEditing,'': address.isEditing}"
-                        @click="address.isEditing && (address.dropdownDistrictOpen = !address.dropdownDistrictOpen)"
-                        v-click-outside="() => address.dropdownDistrictOpen = false"
-                    >
-                        <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.district || 'Select district' }}
-                        </p>
-                        <img :src="selectIcon" alt="selectIcon" class="duration-500"
-                             :class="{'opacity-0': !address.isEditing,'opacity-40': address.isEditing}"   />
-                    </div>
-
-                    <ul
-                        v-if="address.dropdownDistrictOpen"
-                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
-                    >
-                        <li
-                            v-for="district in districtOptions"
-                            :key="district"
-                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.district = district; address.dropdownDistrictOpen = false"
-                        >
-                            {{ district }}
-                        </li>
-                    </ul>
-
-                </div>
-
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 h-7.5 placeholder-text-sm"
                     name="street"
                     id="street"
-                    :value="address.street"
-                    v-model="address.street"
+                    :value="address.street_name"
+                    v-model="address.street_name"
                     aria-label="street"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="houseNumber"
-                    id="houseNumber"
-                    :value="address.houseNumber"
-                    v-model="address.houseNumber"
-                    aria-label="houseNumber"
+                    name="building"
+                    id="building"
+                    :value="address.building"
+                    v-model="address.building"
+                    aria-label="building"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="apartmentNumber"
-                    id="apartmentNumber"
-                    :value="address.apartmentNumber"
-                    v-model="address.apartmentNumber"
-                    aria-label="apartmentNumber"
+                    name="apartment"
+                    id="apartment"
+                    :value="address.apartment"
+                    v-model="address.apartment"
+                    aria-label="apartment"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="entrance"
                     id="entrance"
@@ -525,7 +495,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
-                    :disabled="!address.isEditing"
+                    :disabled="!address.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="floor"
                     id="floor"
@@ -536,13 +506,14 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                 />
             </div>
             <div class="flex justify-end">
-                <Button type="submit" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.isEditing}">Save</Button>
+                <Button type="submit" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
             </div>
         </form>
         <button>
+<!--            Type 4 = Billing-->
             <Button
                 customClass="py-2 md:py-2 w-fit"
-                @click="addNewAddress('shipping')"
+                @click="addNewAddress(4)"
                 class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
             </Button>
         </button>

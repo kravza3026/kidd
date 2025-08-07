@@ -213,7 +213,7 @@ class CartController extends Controller
                 'title' => $variant->product->name,
                 'type' => "info",
                 'message' => __('alerts.cart.updated'),
-                'icon' => 'success', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
 //                'button' => [
 //                    'label' => __('menu.cart'),
 //                    'href' => route('cart'),

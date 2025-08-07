@@ -4,7 +4,6 @@ import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/ui/Button.vue';
-import { useI18n } from 'vue-i18n';
 import { emitter } from '@/eventBus';
 
 export default {
@@ -20,7 +19,7 @@ export default {
         const locale = document.documentElement.lang || 'ro';
         const getCartItems = async () => {
             try {
-                const response = await window.axios.get(`cart/items`);
+                const response = await window.axios.get('cart');
                 cartItems.value = response.data.items;
                 cartGrandTotal.value = response.data.grand_total;
             } catch (error) {

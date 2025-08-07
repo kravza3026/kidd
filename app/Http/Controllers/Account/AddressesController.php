@@ -22,7 +22,9 @@ class AddressesController extends Controller
 
         $countries = Country::all();
 
-//        dd($user->addresses->toJson());
+        if($request->wantsJson()){
+            return $user->addresses->toJson();
+        }
 
         return view('store.account.addresses.index',
             compact('user', 'countries')
