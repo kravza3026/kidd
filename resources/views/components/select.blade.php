@@ -1,4 +1,5 @@
 @props([
+    'id',
     'name',
     'label',
     'options' => [],
@@ -11,7 +12,8 @@
 
 <div>
     <!-- Select -->
-    <select name="{{ $name }}" class="py-2 px-3 pe-8 flex w-auto text-charcoal text-sm leading-none border-darkest-snow rounded-lg">
+    <label for=""></label>
+    <select name="{{ $name }}" id="{{$id}}" class="py-2 px-3 pe-8 flex w-full text-charcoal text-sm leading-none border border-light-border rounded-lg">
         @if($placeholder)
             <option value="{{ $placeholder_option[0] }}">{{ $placeholder_option[1] }}</option>
         @endif
