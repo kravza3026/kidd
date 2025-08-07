@@ -11,8 +11,8 @@
         <div class="bg-card-bg rounded-xl p-6">
             <div class="flex justify-between items-start mb-4">
                 <h2 class="text-[18px] font-bold">{{ __('checkout.review.shipping_info') }}</h2>
-                <a href="{{ route('checkout.index') }}" class="text-[14px] text-olive hover:underline">
-                    {{ __('checkout.review.edit') }}
+                <a href="{{ route('checkout.previous', ['step' => 'contact']) }}" class="text-[14px] text-olive hover:underline">
+                    {{ __('checkout.shipping.edit') }}
                 </a>
             </div>
             <div class="text-[14px] space-y-1">
@@ -26,8 +26,8 @@
         <div class="bg-card-bg rounded-xl p-6">
             <div class="flex justify-between items-start mb-4">
                 <h2 class="text-[18px] font-bold">{{ __('checkout.review.contact_info') }}</h2>
-                <a href="{{ route('checkout.index') }}" class="text-[14px] text-olive hover:underline">
-                    {{ __('checkout.review.edit') }}
+                <a href="{{ route('checkout.previous', ['step' => 'payment']) }}" class="text-[14px] text-olive hover:underline">
+                    {{ __('checkout.contact.edit') }}
                 </a>
             </div>
             <div class="text-[14px] space-y-1">
@@ -41,8 +41,8 @@
         <div class="bg-card-bg rounded-xl p-6">
             <div class="flex justify-between items-start mb-4">
                 <h2 class="text-[18px] font-bold">{{ __('checkout.review.payment_info') }}</h2>
-                <a href="{{ route('checkout.index') }}" class="text-[14px] text-olive hover:underline">
-                    {{ __('checkout.review.edit') }}
+                <a href="{{ route('checkout.previous', ['step' => 'review']) }}" class="text-[14px] text-olive hover:underline">
+                    {{ __('checkout.payment.edit') }}
                 </a>
             </div>
             <div class="text-[14px] space-y-1">

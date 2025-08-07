@@ -16,10 +16,8 @@ class FamilyController extends Controller
     {
 
         $family = [
-            'gender_id' => Gender::BOY,
-//            'gender_id' => $request->gender_id,
-//            'name' => $request->name,
-            'name' => 'Baby Boy',
+            'gender_id' => $request->gender_id,
+            'name' => $request->name,
             'birth_date' => Carbon::now()->year(rand(0, 2))->subMonths(rand(1, 9)),
             'height' => 55, // in centimeters
             'weight' => 3445, // in grams

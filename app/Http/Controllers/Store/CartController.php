@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Coupons\FreeDeliveryCoupon;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Vite;
@@ -16,9 +17,10 @@ class CartController extends Controller
     public function index()
     {
 
-//        $cart = LaraCart::setInstance('default');
-//        $cart = $cart->cart;
-//                LaraCart::emptyCart();
+        $cart = LaraCart::setInstance('default');
+        $cart = $cart->cart;
+//        LaraCart::emptyCart();
+//        dd($cart);
 //                LaraCart::destroyCart();
 
 //        $product = Product::findOrFail(123);
@@ -48,10 +50,10 @@ class CartController extends Controller
             'taxable' => false,
         ]);
 
-//        $coupons[] = new Fixed('test_fixed', 10000, [
-//            'description' => '100 MDL reducere',
-//            'taxable' => false,
-//        ]);
+        $coupons[] = new Fixed('test_fixed', 10000,[
+            'description' => '100 MDL reducere',
+            'taxable' => false,
+        ]);
 
 //        $coupons[] = new FreeDeliveryCoupon('free_delivery', 10000, [
 //            'description' => 'Livrare gratuită',
@@ -64,8 +66,8 @@ class CartController extends Controller
         //        LaraCart::removeCoupon('free_delivery');
 //                LaraCart::removeCoupon('test_fixed');
 
-//        LaraCart::addFee('delivery', 50 * 100, $taxable = false, $options = ['description' => 'Delivery fee']);
-//        LaraCart::addFee('free_delivery', -50 * 100, $taxable = false, $options = ['description' => 'Free delivery']);
+//        LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
+//        LaraCart::addFee('free_delivery', (-50 * 100), $taxable = false, $options = ['description' => 'Free delivery']);
 
 //        LaraCart::addFee('gift', 300 * 100, $taxable = false, $options = ['description' => 'Gift wrap']);
         LaraCart::addFee('express_delivery', 100 * 100, $taxable = false, $options = ['description' => 'Express delivery']);
@@ -100,13 +102,14 @@ class CartController extends Controller
         //        itemTotals
 
         //        dd(LaraCart::total($formatted = false) / 100); // $24.23 | USD 24.23 LaraCart::total();
+
         return view('store.cart.index', [
             'items' => LaraCart::getItems(),
             'fees' => LaraCart::getFees(),
             'coupons' => LaraCart::getCoupons(),
             'count' => LaraCart::count($withItemQty = false),
-            'sub_total' => LaraCart::subTotal($formatted = false, $withDiscount = true) / 100,
-            'fee_sub_total' => LaraCart::feeSubTotal($formatted = false, $withDiscount = true) / 100,
+            'sub_total' => LaraCart::subTotal($formatted = false, $withDiscount = false) / 100,
+            'fee_sub_total' => LaraCart::feeSubTotal($formatted = false, $withDiscount = false) / 100,
             'total_discount' => LaraCart::discountTotal($formatted = false) / 100,
             'total' => LaraCart::total($formatted = false, true) / 100,
         ]);
@@ -117,28 +120,38 @@ class CartController extends Controller
         $cartItems = LaraCart::getItems();
         $response = [
             'items' => [],
+
+            'fees' => LaraCart::getFees(),
+            'coupons' => LaraCart::getCoupons(),
+            'count' => LaraCart::count($withItemQty = false),
+            'sub_total' => LaraCart::subTotal($formatted = false, $withDiscount = true) / 100,
+            'fee_sub_total' => LaraCart::feeSubTotal($formatted = false, $withDiscount = true) / 100,
+            'total_discount' => LaraCart::discountTotal($formatted = false) / 100,
+
             'total' => LaraCart::total($formatted = false, $withDiscount = false),
             'grand_total' => LaraCart::total($formatted = false, $withDiscount = true),
         ];
+
         foreach ($cartItems as $hash => $cartItem) {
             $response['items'][] = [
                 'hash' => $hash,
-                'name' => $cartItem->options['model']->product->name,
+                'name' => $cartItem->options['name'],
                 'quantity' => $cartItem->options['qty'],
                 'price' => $cartItem->options['price'],
                 'color' => [
-                    'id' => $cartItem->options['model']->color->id,
-                    'hex' => $cartItem->options['model']->color->hex,
-                    'name' => $cartItem->options['model']->color->name,
+                    'id' => $cartItem->options['variant']->color->id,
+                    'hex' => $cartItem->options['variant']->color->hex,
+                    'name' => $cartItem->options['variant']->color->name,
                 ],
-                'img' => Vite::image($cartItem->options['model']->product->main_image),
+                'img' => Vite::image($cartItem->options['model']->main_image),
                 'size' => [
-                    'id' => $cartItem->options['model']->size->id,
-                    'name' => $cartItem->options['model']->size->name,
+                    'id' => $cartItem->options['variant']->size->id,
+                    'name' => $cartItem->options['variant']->size->name,
                 ],
 //                'obj' => $cartItem,
-//                'variant' => $cartItem->options['model'],
-                'product' => $cartItem->options['model']->product,
+                'product' => $cartItem->options['model'],
+//                'variants' => $cartItem->options['variant'],
+//                'variant' => $cartItem->options['variant'],
             ];
 
         }
@@ -151,26 +164,34 @@ class CartController extends Controller
     {
 
         $productVariant = ProductVariant::findOrFail($request->variant_id);
+        $product = $productVariant->product;
 
         LaraCart::add(
-            $productVariant,
-            $request->quantity,
+            itemID: $product,
+            price: (int) $productVariant->price_final,
+            qty: $request->quantity,
+            options: [
+                'variant' => $productVariant,
+                'color' => $productVariant->color,
+                'size' => $productVariant->size,
+                'price' => (int) $productVariant->price_final,
+                'price_online' => (int) $productVariant->price_online,
+                'price_final' => (int) $productVariant->price_final,
+            ]
         );
 
-//        return response([
-//            'alert' => [
-//                'title' => $productVariant->product->name,
-//                'type' => "cart",
-//                'message' => __('alerts.addedToCart'),
-//                'icon' => 'cart', // Example: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
-//                'button' => [
-//                    'label' => __('menu.cart'),
-//                    'href' => route('cart'),
-//                ],
-//            ],
-//        ], status: 200);
-
-        return response(content: null, status: 204);
+        return response([
+            'alert' => [
+                'title' => $product->name,
+                'type' => "cart",
+                'message' => __('alerts.addedToCart'),
+                'icon' => 'cart', // Example: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
+                'button' => [
+                    'label' => __('menu.cart'),
+                    'href' => route('cart'),
+                ],
+            ],
+        ], status: 200);
 
     }
 
@@ -179,29 +200,13 @@ class CartController extends Controller
 
         $variant = ProductVariant::findOrFail($request->variant_id);
 
-//        $item = LaraCart::updateItem($itemHash, $productVariant, $request->variant_id);
-//        LaraCart::updateItem($itemHash, 'id', $variant->id);
-//        LaraCart::updateItem($itemHash, 'options[id]', $variant->id);
-//        LaraCart::updateItem($itemHash, 'itemID', $variant->id);
-//        LaraCart::updateItem($itemHash, 'itemModel', $variant);
-//        LaraCart::updateItem($itemHash, 'model', $variant);
         LaraCart::updateItem($itemHash, 'qty', $request->quantity);
-//        $item = LaraCart::getItem($itemHash);
-//        $item->model->id = $request->variant_id;
-//        $item->update();
-
-        $matches = LaraCart::find([$itemHash]);
-        $matches2 = LaraCart::find(['model.id' => $request->variant_id]);;
-        $matches3 = LaraCart::find(['options.product.id' => $request->variant_id]);
-
-//        return response([
-//            $request->variant_id,
-//            LaraCart::get(),
-////            $item,
-//            $matches,
-//            $matches2,
-//            $matches3
-//        ], status: 200);
+        LaraCart::updateItem($itemHash, 'price', $variant->price_final);
+        LaraCart::updateItem($itemHash, 'price_online', $variant->price_online);
+        LaraCart::updateItem($itemHash, 'price_final', $variant->price_final);
+        LaraCart::updateItem($itemHash, 'variant', $variant);
+        LaraCart::updateItem($itemHash, 'color', $variant->color);
+        LaraCart::updateItem($itemHash, 'size', $variant->size);
 
         return response([
             'alert' => [

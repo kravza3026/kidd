@@ -22,6 +22,8 @@ class AddressesController extends Controller
 
         $countries = Country::all();
 
+//        dd($user->addresses);
+
         return view('store.account.addresses.index',
             compact('user', 'countries')
         );

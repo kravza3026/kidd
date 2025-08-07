@@ -75,7 +75,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'tax' => null,
+    'tax' => '20',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'item_model' => \App\Models\ProductVariant::class,
+    'item_model' => \App\Models\Product::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -117,16 +117,19 @@ return [
     */
     'item_model_bindings' => [
         \LukePOLO\LaraCart\CartItem::ITEM_ID => 'id',
-        \LukePOLO\LaraCart\CartItem::ITEM_NAME => 'product.name',
-        \LukePOLO\LaraCart\CartItem::ITEM_PRICE => 'price_final',
+        \LukePOLO\LaraCart\CartItem::ITEM_NAME => 'name',
+        \LukePOLO\LaraCart\CartItem::ITEM_PRICE => 0,
         \LukePOLO\LaraCart\CartItem::ITEM_TAXABLE => false,
         \LukePOLO\LaraCart\CartItem::ITEM_OPTIONS => [
-//            'name' => 'product.name',
-            'description' => 'product.description',
-            'price_online' => 'price_online',
-            'price_final' => 'price_final',
-            'discount_final' => 'discount_final',
-            'discount_display' => 'discount_display',
+            'name' => 'name',
+            'description' => 'description',
+            'variant' => 'variant',
+//            'variants' => 'variants',
+            'color' => 'variant.color',
+            'size' => 'variant.size',
+            'price' => 'variant.price_final',
+            'price_online' => 'variant.price_online',
+            'price_final' => 'variant.price_final',
             //            'product' => 'product',
             //            'your_key' => 'price_relation.value', // this will go to the price relation then get the value!
             //            'your_other_key' => 'price_relation.sub_relation.value', // This also works
@@ -137,7 +140,7 @@ return [
     ],
 
     'free_delivery_after' => 1000, // free delivery after total MDL amount (Without discounts)
-    'delivery_price' => 50 * 100, // delivery price in MDL
+    'delivery_price' => 50, // delivery price in MDL
 
     /*
     |--------------------------------------------------------------------------
@@ -146,7 +149,7 @@ return [
     |
     */
     'item_model_relations' => [
-//        'product',
+        'variants',
     ],
 
     /*

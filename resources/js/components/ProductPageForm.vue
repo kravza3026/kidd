@@ -83,29 +83,19 @@ const selectedVariantId = computed(() => selectedVariant.value?.id || null)
 const addToCart = async (event) => {
     if (!selectedVariantId.value) return
 
-    try {
-        const response = await window.axios.post(`cart`, { // ${locale.value}/
-            variant_id: selectedVariantId.value,
-            quantity: 1
-        })
-
+    await window.axios.post(`cart`, {
+        variant_id: selectedVariantId.value,
+        quantity: 1
+    }).then((response) => {
+        if (response.data?.alert){
+            showAlert(response.data?.alert);
+        }
         emitter.emit('cart-updated');
 
-        showAlert({
-            title: props.product.name[locale.value],
-            type: 'cart',
-            message: t('alerts.addedToCart'),
-            icon: 'cart',
-            button: {
-                label: t('menu.cart'),
-                href: `/${locale.value}/cart`,
-            }
-        });
-
-    } catch (error) {
-        console.error('Server error:', error)
-        // TODO Remove in production
-    }
+        console.log('Product added to cart successfully');
+    }).catch(error => {
+        console.error('Error adding product to cart:', error);
+    });
 }
 
 // --- Selected color name (optional, but convenient)

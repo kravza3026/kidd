@@ -77,7 +77,7 @@ import BaseInput from "@/components/ui/BaseInput.vue";
              dropdownOpen: false,
              dropdownCityOpen: false,
              iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
-             districtOptions: ['Shevchenkivskyi', 'Solomianskyi', 'Holosiivskyi'],
+             districtOptions: ['District #1', 'District #2', 'District #3'],
              cityOptions: ['Shevchenkivskyi', 'Solomianskyi', 'Holosiivskyi'],
 
          }
@@ -85,8 +85,6 @@ import BaseInput from "@/components/ui/BaseInput.vue";
      setup(){
          const dropdownOpen = ref(false)
          const dropdownCityOpen = ref(false)
-
-
      },
      methods: {
          addNewAddress(type) {
@@ -531,7 +529,6 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                 customClass="py-2 md:py-2 w-fit"
                 @click="addNewAddress('shipping')"
                 class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
-
             </Button>
         </button>
     </div>

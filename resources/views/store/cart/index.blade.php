@@ -8,6 +8,14 @@
     <div class="w-full flex gap-x-16">
         <div class="w-full flex grow basis-full shrink-1 mt-4">
             <div class="flex flex-col space-y-6 w-full last:[&>div]:border-b-0">
+{{--                items: {{ var_dump($items) }}</br>--}}
+                fees: {{ var_dump($fees) }}</br>
+                coupons: {{ var_dump($coupons) }}</br>
+                count: {{ $count }}</br>
+                sub_total: {{ $sub_total }}</br>
+                fee_sub_total: {{ $fee_sub_total }}</br>
+                total_discount: {{ $total_discount }}</br>
+                total: {{ $total }}</br>
                 <div data-vue-component="Cart"></div>
             </div>
         </div>
