@@ -83,10 +83,22 @@ import BaseInput from "@/components/ui/BaseInput.vue";
          }
      },
      setup(){
+
          const dropdownOpen = ref(false)
          const dropdownCityOpen = ref(false)
      },
      methods: {
+
+         async getAddresses() {
+             try {
+                 const response = await window.axios.get(`/addresses`)
+                 console.log(response.data)
+
+             } catch (error) {
+                 console.error('Server error:', error)
+             }
+         },
+
          addNewAddress(type) {
              if (this._isAddingAddress) return;
              this._isAddingAddress = true;
@@ -129,6 +141,9 @@ import BaseInput from "@/components/ui/BaseInput.vue";
                  this.addresses.splice(index, 1);
              }
          }
+     },
+     mounted() {
+         this.getAddresses()
      }
  }
 </script>

@@ -4,10 +4,11 @@ import Button from "@/components/ui/Button.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseTextarea from "@/components/ui/BaseTextarea.vue";
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
+import BaseInputLabel from "@/components/ui/BaseInputLabel.vue";
 
 export default {
     name: 'HelpMain',
-    components: {BaseCheckbox, BaseTextarea, Button, BaseInput},
+    components: {BaseInputLabel, BaseCheckbox, BaseTextarea, Button, BaseInput},
 
     data() {
         return {
@@ -261,7 +262,7 @@ export default {
                 <p class="text-[30px] font-bold leading-8 lg:text-[32px]">Didn't found what you were looking for?</p>
                 <p class="text-[14px] opacity-60">Message us and we will get back as soon as possible</p>
                 <form>
-                    <BaseInput
+                    <BaseInputLabel
                         label="E-mail"
                         type="email"
                         name="emailHelp"

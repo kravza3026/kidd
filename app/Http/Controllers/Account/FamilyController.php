@@ -51,8 +51,9 @@ class FamilyController extends Controller
         ]);
     }
 
-    public function update(Family $family)
+    public function update(Request $request,Family $family)
     {
+
 //        $family->update($this->validate(request(), [
 //            'gender_id' => 'required|integer',
 //            'name' => 'required|string',
@@ -61,6 +62,18 @@ class FamilyController extends Controller
 //            'weight' => 'required|integer',
 //            'notes' => 'string',
 //        ]));
+
+
+        $validated = $request->validate([
+            'gender_id' => 'required|integer',
+            'name' => 'required|string',
+            'birth_date' => 'required|date',
+            'height' => 'required|integer',
+            'weight' => 'required|integer',
+            'notes' => 'nullable|string',
+        ]);
+
+        $family->update($validated);
 
         return view('store.account.profile.partials.family-row', [
             'member' => $family

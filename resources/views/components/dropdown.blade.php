@@ -25,7 +25,8 @@
             $width = 'w-auto min-w-[150%]';
             break;
         case 'full':
-            $width = 'w-full max-w-[25%]';
+            $width = 'w-full ';
+            $alignmentClasses .= ' left-0 right-0';
             break;
         case 'w-size':
             $width = 'w-[240px]';

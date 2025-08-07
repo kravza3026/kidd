@@ -1,3 +1,4 @@
+<div data-member-id="{{ $member->id }}">
 <div class="w-full rounded-xl border border-gray-100 p-4">
     <div class="flex flex-col items-start gap-1">
         <div class="flex flex-1 w-full justify-between items-center">
@@ -18,8 +19,12 @@
             </div>
             <div class="flex gap-2">
                 @can('update', $member)
-                    <button class="inline-flex items-center p-[7px] bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
-                            hx-trigger="click" hx-get="{{ route('family.edit', $member) }}">
+                    <button
+                        class="inline-flex items-center p-[7px] bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
+                        hx-get="{{ route('family.edit', $member) }}"
+                        hx-target="closest div[data-member-id='{{ $member->id }}']"
+                        hx-swap="outerHTML"
+                    >
                         <img src="{{ Vite::image('common/edit.svg') }}" alt="">
                     </button>
                 @endcan
@@ -32,29 +37,33 @@
             </div>
         </div>
 
-        <div class="flex mt-3 flex-1 w-full items-center">
-            <div class="text-charcoal">
-                <p class="font-medium text-gray-500">
-                    {{ $member->birth_date->format('d M Y') }}
-                </p>
+        <div class="flex gap-x-2 mt-3 flex-1 w-full items-center">
+            <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
+
+                <div class="flex items-center gap-x-2 text-[14px] ">
+                    <img src="{{ Vite::image('icons/date.png') }}" alt="date" class="opacity-50">
+                    <p class="pt-1">{{ $member->birth_date->format('d M Y') }}</p>
+                </div>
             </div>
 
-            <div class="text-charcoal">
-                <p class="text-sm font-medium text-gray-500">
+            <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
+                <p class="text-sm text-[14px]">
+
                     {{ $member->gender->name }}
                 </p>
             </div>
-            <div class="text-charcoal">
-                <p class="text-sm font-medium text-gray-500">
-                    {{ $member->height }} {{ __('general.cm') }}
+            <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
+                <p class="text-sm text-[14px]">
+                    {{ $member->height }} <span class="text-charcoal/40">{{ __('general.cm') }}</span>
                 </p>
             </div>
 
-            <div class="text-charcoal">
-                <p class="text-sm font-medium text-gray-500">
-                    {{ $member->weight / 1000 }} {{ __('general.kg') }}
+            <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
+                <p class="text-sm text-[14px]">
+                    {{ $member->weight / 1000 }} <span class="text-charcoal/40">{{ __('general.kg') }}</span>
                 </p>
             </div>
         </div>
     </div>
+</div>
 </div>

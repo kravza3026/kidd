@@ -28,7 +28,7 @@ Route::group([
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::resource('family', FamilyController::class)->only(['edit', 'store', 'update', 'destroy']);
+    Route::resource('family', FamilyController::class)->only(['edit', 'store', 'update', 'destroy','show']);
     Route::resource('favorites', FavoritesController::class)->only(['index', 'store', 'destroy']);
     Route::resource('orders', OrdersController::class)->only(['index', 'show']);
     Route::resource('addresses', AddressesController::class)->only(['index', 'store', 'update', 'destroy']);

@@ -1,59 +1,69 @@
-<form class="w-full rounded-xl border border-gray-100 p-4" hx-put="{{ route('family.update', $member) }}" hx-target="this" hx-swap="outerHTML">
-    <div class="flex flex-col items-start gap-1">
-        <div class="flex flex-1 w-full justify-between items-center">
-            <div class="flex">
-                <div class="size-9 flex items-center justify-center {{ $member->gender->id == 2 ? 'bg-baby-eyes' : 'bg-baby-pink' }} rounded-full">
-                    {!! $member->gender->svg !!}
+@php
+    $genders = \App\Models\Gender::all(['id', 'name'])->toArray();
+@endphp
+<div data-member-id="{{ $member->id }}">
+    <form
+        hx-put="{{ route('family.update', $member) }}"
+        hx-target="div[data-member-id='{{ $member->id }}']"
+        hx-swap="outerHTML"
+        class="w-full rounded-xl border border-gray-100 p-4"
+    >
+        @csrf
+        @method('PUT')
+
+        <div class="flex flex-col gap-4">
+            <div>
+                <div class="mt-4">
+                    <x-ui.input-label for="name" value="{{ $member->name }}" :type="'name'" :placeholder="'Enter yor e-mail'" name="name" :label="__('Name')" required autocomplete="name"/>
+                    <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                 </div>
-                <div class="ml-4 flex items-center">
-                    <h3 class="text-lg leading-5 font-medium text-gray-900">
-                        {{ $member->name }}
-                    </h3>
-                    <span class="inline-block mx-3 h-6 w-[1px] bg-gray-300"></span>
-                    <span class="text-base leading-5 font-normal text-gray-400">
-                        {{ $member->birth_date->diffForHumans(['parts' => 2, 'short'=> false, 'options' => Carbon\Carbon::SEQUENTIAL_PARTS_ONLY, 'syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) }}
-                    </span>
-                </div>
+
             </div>
+
+            <div>
+                <label for="gender_id" class="block font-medium text-gray-700">Gender</label>
+                <select id="gender_id" name="gender_id" class="mt-1 block w-full border rounded px-2 py-1" required>
+                    @foreach(\App\Models\Gender::all() as $gender)
+                        <option value="{{ $gender->id }}" @if($gender->id == $member->gender_id) selected @endif>
+                            {{ $gender->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label for="birth_date" class="block font-medium text-gray-700">Birth Date</label>
+                <input type="date" id="birth_date" name="birth_date" value="{{ $member->birth_date->format('Y-m-d') }}" class="mt-1 block w-full border rounded px-2 py-1" required>
+            </div>
+
+            <div>
+                <label for="height" class="block font-medium text-gray-700">Height (cm)</label>
+                <input type="number" id="height" name="height" value="{{ $member->height }}" min="10" max="300" class="mt-1 block w-full border rounded px-2 py-1" required>
+            </div>
+
+            <div>
+                <label for="weight" class="block font-medium text-gray-700">Weight (grams)</label>
+                <input type="number" id="weight" name="weight" value="{{ $member->weight }}" min="100" max="200000" class="mt-1 block w-full border rounded px-2 py-1" required>
+            </div>
+
+            <div>
+                <label for="notes" class="block font-medium text-gray-700">Notes</label>
+                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full border rounded px-2 py-1">{{ $member->notes }}</textarea>
+            </div>
+
             <div class="flex gap-2">
-                <button class="inline-flex gap-x-2 items-center px-3 py-2.5 bg-olive border border-darkest-snow rounded-full font-semibold text-xs text-snow tracking-widest hover:bg-dark-olive">
-                    <img src="{{ Vite::image('check.png') }}" alt=""> Save
+                <button type="submit" class="bg-olive text-white px-4 py-2 rounded hover:bg-olive-dark">
+                    Save
                 </button>
-                <button class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive tracking-widest hover:bg-dark-snow"
-                        hx-get="{{ route('family.show', $member) }}">
+                <button type="button"
+                        hx-get="{{ route('family.show', $member) }}"
+                        hx-target="div[data-member-id='{{ $member->id }}']"
+                        hx-swap="outerHTML"
+                        class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                >
                     Cancel
                 </button>
             </div>
         </div>
-        <div class="flex mt-3 flex-1 w-full items-center">
-            <div class="h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="w-4 h-4 relative opacity-40"></div>
-                <div class="grow shrink basis-0 text-charcoal text-sm font-normal  leading-[14px]">
-                    {{ $member->birth_date->format('d M Y') }}
-                </div>
-            </div>
-            <div class="h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0 text-charcoal text-sm font-normal  leading-[14px]">
-                    {{ $member->gender->name }}
-                </div>
-                <div class="w-4 h-4 relative opacity-40"></div>
-            </div>
-            <div class="w-[72px] h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0"><span class="text-charcoal text-sm font-normal  leading-[14px]">
-                        {{ $member->height }}
-                    </span><span
-                        class="text-charcoal/60 text-sm font-normal  leading-[14px]"> cm</span></div>
-            </div>
-            <div class="w-[72px] h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0">
-                    <span class="text-charcoal text-sm font-normal  leading-[14px]">
-                        {{ $member->weight / 1000 }}
-                    </span>
-                    <span class="text-charcoal/60 text-sm font-normal  leading-[14px]">
-                        {{ __('general.kg') }}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

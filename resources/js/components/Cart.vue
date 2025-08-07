@@ -228,8 +228,6 @@ export default {
                 const response = await window.axios.get(`cart/items`) //${this.locale}/
                 const grandTotal = response.data.grand_total;
                 const total = response.data.total;
-                // console.log('total:', total / 100 );
-                // console.log('Grand total:', grandTotal / 100); // MDL
                 this.cartItems = response.data.items.map(item => {
                     const selectedVariant = item.product.variants.find(v =>
                         v.size.id === item.size.id && v.color.id === item.color.id
