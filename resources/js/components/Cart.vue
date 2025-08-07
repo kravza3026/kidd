@@ -11,7 +11,6 @@ import { useI18n } from 'vue-i18n'
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 import SubscribeForm from "@/components/ui/subscribeForm.vue";
 import selectIcon from "@img/icons/select-arrows.svg"
-import logger from "pusher-js/src/core/logger.js";
 import Button from "@/components/ui/Button.vue";
 export default {
     name: 'Cart',
@@ -225,7 +224,7 @@ export default {
 
         async getCartItems() {
             try {
-                const response = await window.axios.get(`cart/items`) //${this.locale}/
+                const response = await window.axios.get(`cart`)
                 const grandTotal = response.data.grand_total;
                 const total = response.data.total;
                 this.cartItems = response.data.items.map(item => {

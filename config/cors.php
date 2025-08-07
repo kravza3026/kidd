@@ -15,13 +15,26 @@ return [
     |
     */
 
-    'paths' => ['v1/*', 'sanctum/csrf-cookie'],
+    'paths' => [
+        'v1/*',
+        'sanctum/csrf-cookie'
+    ],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+//        'https://kidd.md',
+//        'https://api.kidd.md',
+//        'https://cp.kidd.md',
 
-    'allowed_origins_patterns' => [],
+        'http://kidd.test', // TODO Remove on production
+        'https://kidd.test',
+    ],
+
+    'allowed_origins_patterns' => [
+//        '^https?://.*\.kidd\.md',
+//        '^https?://.*\.kidd\.test$',
+    ],
 
     'allowed_headers' => ['*'],
 
@@ -29,6 +42,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

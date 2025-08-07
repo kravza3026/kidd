@@ -83,7 +83,7 @@ const selectedVariantId = computed(() => selectedVariant.value?.id || null)
 const addToCart = async (event) => {
     if (!selectedVariantId.value) return
 
-    await window.axios.post(`cart`, {
+    await window.axios.post(window.location.origin + `/${locale.value}/` + `cart`, {
         variant_id: selectedVariantId.value,
         quantity: 1
     }).then((response) => {
