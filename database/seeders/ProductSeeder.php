@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     {
         Product::factory()
             ->has(ProductVariant::factory()->count(5), 'variants')
-            ->count(3000)
+            ->count(300)
             ->create();
     }
 }

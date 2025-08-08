@@ -14,13 +14,20 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('iso2_code', 2);
-            $table->string('iso3_code', 3);
-            $table->string('phone_code', 6);
-            $table->boolean('active')->default(true);
+            $table->string('iso_alpha2', 2);
+            $table->string('iso_alpha3', 3)->nullable();
+            $table->string('phone_code', 5)->nullable();
+            $table->string('currency_code', 3)->nullable();
+            $table->string('flag')->nullable();
+            $table->string('language')->nullable();
+            $table->string('language_code', 2)->nullable();
+            $table->string('timezone')->default('Europe/Chisinau');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->index(['iso2_code', 'iso3_code']);
+            $table->unique('iso_alpha2');
         });
 
     }

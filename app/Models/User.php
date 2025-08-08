@@ -47,7 +47,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
         'email_marketing',
         'sms_marketing',
 
-
         'default_locale',
     ];
 

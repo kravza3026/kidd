@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -18,7 +20,7 @@ class CheckoutController extends Controller
             'rules' => [
                 'shipping_address' => 'required|string',
                 'shipping_city' => 'required|string',
-                'shipping_country' => 'required|string',
+                'shipping_region' => 'required|string',
                 'shipping_postcode' => 'required|string',
             ],
         ],
@@ -52,9 +54,12 @@ class CheckoutController extends Controller
         $currentStep = Session::get('checkout_step', 'shipping');
         $checkoutData = Session::get('checkout_data', []);
 
+        $regions = Region::all();
+
         return view($this->steps[$currentStep]['view'], [
             'checkoutData' => $checkoutData,
             'currentStep' => $currentStep,
+            'regions' => $regions,
             'items' => LaraCart::getItems(),
             'fees' => LaraCart::getFees(),
             'coupons' => LaraCart::getCoupons(),

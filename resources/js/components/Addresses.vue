@@ -44,7 +44,36 @@ export default {
              await window.axios.get(`/user/addresses`)
                  .then((response) => {
                      this.addresses = response.data.addresses;
+                    console.log(response.data)
+                 }).catch((error) => {
+                    console.error('Server error:', error)
+                 });
+
+         },
+         async getRegions() {
+
+             await window.axios.get(`/regions`, {
+                     params: {
+                         region_id: region_id ?? null
+                     }
+                 })
+                 .then((response) => {
                      this.regions = response.data.regions;
+                    console.log(response.data)
+                 }).catch((error) => {
+                    console.error('Server error:', error)
+                 });
+
+         },
+         async getCities(region_id = null) {
+
+             await window.axios.get(`/cities`, {
+                     params: {
+                         region_id: region_id ?? null
+                     }
+                 })
+                 .then((response) => {
+                     this.cities = response.data.cities;
                     console.log(response.data)
                  }).catch((error) => {
                     console.error('Server error:', error)

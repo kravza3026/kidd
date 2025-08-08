@@ -35,4 +35,15 @@ class HomeController extends Controller
         return response()->json(compact('results'));
     }
 
+    public function favorites(Request $request)
+    {
+        if(auth()->check()){
+            return redirect()->route('favorites.index');
+        }
+
+        $products = Product::whereIn('id', json_decode($request->cookie('favorites', '[]')))->paginate(3)->withQueryString();
+
+        return view('store.pages.favorites.index', compact('products'));
+    }
+
 }

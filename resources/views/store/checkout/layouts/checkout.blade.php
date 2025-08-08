@@ -39,51 +39,7 @@
                 @yield('checkout-form')
             </div>
 
-            <!-- Right Column - Order Summary -->
-            <div class="order-1 lg:order-2 bg-card-bg rounded-2xl p-6">
-                <h2 class="text-lg font-bold mb-6">Order Summary</h2>
-
-                <!-- Order Items -->
-                <div class="space-y-4 max-h-[40vh] overflow-y-auto">
-                    @foreach($items as $item)
-                        <div class="flex gap-4">
-                            <div class="bg-white rounded-xl p-2 w-[72px] h-[72px]">
-                                <img src="{{ Vite::image($item->model->product->main_image) }}"
-                                     alt="{{ $item->model->product->name }}"
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-bold">{{ $item->model->product->name }}</p>
-                                <div class="flex gap-2 text-sm text-charcoal/60">
-                                    <span>{{ $item->model->color->name }}</span>
-                                    <span>|</span>
-                                    <span>{{ $item->model->size->name }}</span>
-                                </div>
-                                <div class="flex justify-between mt-1">
-                                    <span class="text-sm text-charcoal/60">x{{ $item->qty }}</span>
-                                    <span class="font-bold">${{ number_format($item->price / 100, 2) }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Order Totals -->
-                <div class="mt-6 space-y-3 pt-6 border-t border-gray-200">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-charcoal/60">Subtotal</span>
-                        <span class="font-bold">${{ number_format($sub_total, 2) }}</span>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-charcoal/60">Shipping</span>
-                        <span class="font-bold">${{ number_format($sub_total, 2) }}</span>
-                    </div>
-                    <div class="flex justify-between text-lg font-bold pt-3 border-t border-gray-200">
-                        <span>Total</span>
-                        <span>${{ number_format($total, 2) }}</span>
-                    </div>
-                </div>
-            </div>
+            @include('store.checkout.layouts.summary')
         </div>
     </div>
 </x-app-layout>

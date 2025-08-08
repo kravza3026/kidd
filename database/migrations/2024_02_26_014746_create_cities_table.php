@@ -14,8 +14,10 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Region::class);
+            $table->foreignIdFor(Region::class)->constrained()->cascadeOnDelete();
             $table->json('name');
+            $table->unsignedSmallInteger('sort_order')->default(1);
+            $table->unsignedInteger('external_code')->nullable();
             $table->timestamps();
         });
     }

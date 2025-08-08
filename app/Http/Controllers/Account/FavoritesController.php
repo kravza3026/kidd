@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Models\Favorite;
 use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
@@ -14,7 +13,9 @@ class FavoritesController extends Controller
     public function index()
     {
 
-        return view('store.account.favorites.index');
+        $products = auth()->user()->favorites()->paginate(request()->get('per_page', 3) )->withQueryString();
+
+        return view('store.account.favorites.index', compact('products'));
     }
 
     /**

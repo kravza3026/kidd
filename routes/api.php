@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cookie;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('search', [HomeController::class, 'search'])
     ->middleware('localize')
     ->name('search');
+
+Route::get('/favorites',function (Request $request){
+
+    $favorites = json_decode($request->cookie('favorites', '[]'));
+    //$user_favorites = $request->user()->favorites->pluck('id')->toArray();
+    $request->user()->favorites()->sync($favorites);
+
+    return response(null, 200);
+
+});
+
 
 Route::get('cart', [CartController::class, 'show'])
     ->name('cart.show');

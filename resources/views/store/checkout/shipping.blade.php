@@ -52,20 +52,20 @@
             </div>
 
             <div>
-                <label for="shipping_country" class="block text-sm font-medium text-charcoal">
+                <label for="shipping_region" class="block text-sm font-medium text-charcoal">
                     Country
                 </label>
-                <select name="shipping_country" id="shipping_country"
+                <select name="shipping_region" id="shipping_region"
                         class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive bg-white transition-colors">
                     <option value="">Select a country</option>
-                    <option value="RO" {{ (old('shipping_country', $checkoutData['shipping_country'] ?? '') == 'RO') ? 'selected' : '' }}>
-                        Romania
-                    </option>
-                    <option value="MD" {{ (old('shipping_country', $checkoutData['shipping_country'] ?? '') == 'MD') ? 'selected' : '' }}>
-                        Moldova
-                    </option>
+                    @foreach($regions as $region)
+                        <option value="{{ $region->id }}"
+                                {{ old('shipping_region', $checkoutData['shipping_region'] ?? '') == $region->id ? 'selected' : '' }}>
+                            {{ $region->name }}
+                        </option>
+                    @endforeach
                 </select>
-                @error('shipping_country')
+                @error('shipping_region')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>

@@ -21,6 +21,9 @@ Route::group([
     Route::get('search', [HomeController::class, 'search'])
         ->name('search');
 
+    Route::get('favorites', [HomeController::class, 'favorites']);
+
+
     Route::get('catalog/', [ProductsController::class, 'index'])
         ->name('products.index');
     Route::get('catalog/{category}', [ProductsController::class, 'index'])

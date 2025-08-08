@@ -202,11 +202,13 @@ class CartController extends Controller
 
         LaraCart::updateItem($itemHash, 'qty', $request->quantity);
         LaraCart::updateItem($itemHash, 'price', $variant->price_final);
+        LaraCart::updateItem($itemHash, 'options.price', $variant->price_final);
         LaraCart::updateItem($itemHash, 'price_online', $variant->price_online);
         LaraCart::updateItem($itemHash, 'price_final', $variant->price_final);
         LaraCart::updateItem($itemHash, 'variant', $variant);
         LaraCart::updateItem($itemHash, 'color', $variant->color);
         LaraCart::updateItem($itemHash, 'size', $variant->size);
+        LaraCart::update();
 
         return response([
             'alert' => [

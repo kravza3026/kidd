@@ -1,6 +1,6 @@
 
 import Cookies from 'js-cookie'
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAlert } from './useAlert'
 const COOKIE_KEY = 'favorites'
@@ -16,7 +16,15 @@ export function useFavorites() {
     }
 
     function saveToCookie() {
-        Cookies.set(COOKIE_KEY, JSON.stringify(favorites.value), { expires: 30 })
+        Cookies.set(COOKIE_KEY, JSON.stringify(favorites.value), {
+            expires: 30,
+            domain: '.' + window.location.hostname, // Available on example.com and its subdomains
+            secure: true, // Only sent over HTTPS
+            httpOnly: false, // Prevents client-side JS from accessing the cookie
+            sameSite: 'Lax' // Controls when cookies are sent with cross-site requests
+        })
+
+        window.axios.get('favorites');
     }
 
     const toggleFavorite = (id, name) => {

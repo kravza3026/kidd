@@ -170,7 +170,7 @@ export default {
             )
             if (!variant) return;
             try {
-                await axios.put(`cart/${item.hash}`, {
+                await axios.put(window.location.origin + `/${locale.value}/` + `cart/${item.hash}`, {
                    variant_id: variant.id,
                    quantity: item.quantity
                 }).then(response => {

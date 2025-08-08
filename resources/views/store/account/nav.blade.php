@@ -34,7 +34,7 @@
                     Favorites
                 </span>
                 <span class="group-hover:bg-olive inline-flex items-center gap-x-1.5 py-[2px] px-[4px] -ml-2 rounded-full text-xs leading-3 font-extrabold tracking-[02%] bg-[#020202]/40 text-white">
-                    24
+                    {{ auth()->user()->favorites()->count() }}
                 </span>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -77,7 +77,7 @@
                     Addresses
                 </span>
                 <span class="group-hover:bg-olive inline-flex items-center gap-x-1.5 py-[2px] px-[4px] -ml-2 rounded-full text-xs leading-3 font-extrabold -tracking-[2%] bg-[#020202]/40 text-white">
-                    {{ auth()->user()->addresses()->count() }}
+                    {{ auth()->user()->addresses()->whereIn('address_type', [3,4])->count() }}
                 </span>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
