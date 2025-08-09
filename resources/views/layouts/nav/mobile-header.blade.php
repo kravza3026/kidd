@@ -7,7 +7,7 @@
         <img height="13" src="{{ Vite::image('icons/phone_i.svg') }}" alt="">
     </a>
     <div class="flex items-center relative" x-data="{ open: false }" x-effect="document.body.classList.toggle('overflow-hidden', open)">
-        <div @click="open = !open" class="menu-controll relative group z-50">
+        <div @click="open = !open" class="menu-control relative group z-50">
             <div class="relative border border-black/10 flex overflow-hidden items-center justify-center rounded-full w-[33px] h-[33px] transform transition-all duration-200 ">
                 <div class="flex flex-col justify-between w-[15px] h-[15px] transform transition-all duration-300 origin-center overflow-hidden">
                     <!-- Верхня лінія -->

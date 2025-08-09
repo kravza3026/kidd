@@ -3,18 +3,17 @@
         <section class="pt-section">
             <div data-vue-component="HelpMain"></div>
 
-            {{-- Таби як шаблони --}}
             <script type="text/x-template" id="tab-DeliveryTab">
-                @include('.store.static.helpPage.tabs.delivery')
+                @include('.store.pages.help.tabs.delivery')
             </script>
             <script type="text/x-template" id="tab-PaymentsTab">
-                @include('.store.static.helpPage.tabs.payments')
+                @include('.store.pages.help.tabs.payments')
             </script>
             <script type="text/x-template" id="tab-AccountTab">
-                @include('.store.static.helpPage.tabs.account')
+                @include('.store.pages.help.tabs.account')
             </script>
             <script type="text/x-template" id="tab-TechnicalTab">
-                @include('.store.static.helpPage.tabs.technical')
+                @include('.store.pages.help.tabs.technical')
             </script>
 
         </section>

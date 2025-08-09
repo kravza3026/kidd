@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,12 +15,23 @@ return new class extends Migration
     {
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
+
+            //[Rel] Company
+            $table->foreignIdFor(Company::class)->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
+            //[Rel] Vacancy Location (HQ if Remote) default is Headquarter
+            $table->foreignIdFor(Location::class)->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
             // Job Title
             $table->json('title');
+            // Job Slug
+            $table->json('slug');
             // Job Remote?
             $table->boolean('remote')->default(false);
-            //[Rel] Vacancy Location (HQ if Remote) default is Headquarter
-            $table->foreignIdFor(Location::class)->constrained()->onUpdate('cascade')->onDelete('restrict');
             // Job Summary
             $table->json('summary')->nullable();
             // Job Responsibilities
@@ -30,6 +42,7 @@ return new class extends Migration
             $table->json('extra')->nullable();
             // Job notes.
             $table->text('notes')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

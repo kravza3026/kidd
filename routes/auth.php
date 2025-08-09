@@ -24,64 +24,78 @@ Route::group([
     'middleware' => ['auth'],
     'prefix' => 'account',
 ], function () {
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::resource('family', FamilyController::class)->only(['edit', 'store', 'update', 'destroy','show']);
-    Route::resource('favorites', FavoritesController::class)->only(['index', 'store', 'destroy']);
-    Route::resource('orders', OrdersController::class)->only(['index', 'show']);
-    Route::resource('addresses', AddressesController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::get('profile', [ProfileController::class, 'index'])
+        ->name('profile.index');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::resource('family', FamilyController::class)
+        ->only(['edit', 'store', 'update', 'destroy','show']);
+
+    Route::resource('favorites', FavoritesController::class)
+        ->only(['index', 'store', 'destroy']);
+
+    Route::resource('orders', OrdersController::class)
+        ->only(['index', 'show']);
+
+    Route::resource('addresses', AddressesController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
 
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
-
+        ->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-                ->name('password.request');
-
+        ->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->name('password.email');
+        ->name('password.email');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-                ->name('password.reset');
-
+        ->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
-                ->name('password.store');
+        ->name('password.store');
+
 });
 
 Route::middleware('auth')->group(function () {
+
+    // Email verification
     Route::get('verify-email', EmailVerificationPromptController::class)
-                ->name('verification.notice');
-
+        ->name('verification.notice');
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['signed', 'throttle:6,1'])
-                ->name('verification.verify');
-
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware('throttle:6,1')
-                ->name('verification.send');
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 
+    // Phone verification
     Route::get('verify-phone', PhoneVerificationPromptController::class)
         ->name('phone.verification.notice');
-    Route::get('verify-phone/{id}/{code}', VerifyPhoneController::class)->middleware(['signed', 'throttle:6,1'])
+    Route::get('verify-phone/{id}/{code}', VerifyPhoneController::class)
+        ->middleware(['signed', 'throttle:6,1'])
         ->name('phone.verification.verify');
-    Route::post('phone/verification-notification', [PhoneVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')
+    Route::post('phone/verification-notification', [PhoneVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
         ->name('phone.verification.send');
 
+    // Password confirmation
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-                ->name('password.confirm');
-
+        ->name('password.confirm');
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
+    // Logout
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+        ->name('logout');
 });

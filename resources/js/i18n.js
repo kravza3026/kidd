@@ -20,7 +20,7 @@ const numberFormats = {
             currency: 'MDL',
             useGrouping: true,
             notation: 'standard', // notation: 'standart' | 'compact'
-            currencyDisplay: 'code', // currencyDisplay: 'code' | 'symbol' | 'name'
+            currencyDisplay: 'symbol', // currencyDisplay: 'code' | 'symbol' | 'name'
             maximumFractionDigits: 0
         },
         decimal: {

@@ -74,12 +74,12 @@
                 <p class="text-center leading-[175%] opacity-60 pb-10">We are hiring now so please don’t hesitate to contact</p>
                 <div class="positions">
                     <hr class="border-light-border">
-                    @foreach($jobs as $job)
+                    @foreach($vacancies as $vacancy)
                         <div class="flex justify-between my-5">
                             <div>
-                                <p class="text-[20px] leading-[130%] font-medium">{{ $job['title'] }}</p>
-                                <p class="opacity-40 text-[12px] leading-[175%]">Last updated {{ $job['updated'] }}</p>
-                                <a href="{{ $job['link'] }}" class="text-olive flex items-center gap-x-2 mt-5">
+                                <p class="text-[20px] leading-[130%] font-medium">{{ $vacancy->title }}</p>
+                                <p class="opacity-40 text-[12px] leading-[175%]">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
+                                <a href="{{ route('vacancies.show', $vacancy) }}" class="text-olive flex items-center gap-x-2 mt-5">
                                     Apply now
                                     <span>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -91,8 +91,8 @@
                                 </a>
                             </div>
                             <div class="max-w-1/2 flex gap-x-2 flex-wrap">
-                                @foreach($job['tags'] as $tag)
-                                    <span class="bg-white font-bold text-[14px] h-fit border-light-border border-1 py-2 px-3 rounded-full">{{ $tag }}</span>
+                                @foreach($vacancy->tags as $tag)
+                                    <span class="bg-white font-bold text-[14px] h-fit border-light-border border-1 py-2 px-3 rounded-full">{{ $tag->name }}</span>
                                 @endforeach
                             </div>
                         </div>

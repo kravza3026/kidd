@@ -70,7 +70,7 @@
                     <div class="flex-1 group">
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 "
-                            :href="`/${locale}/help`"
+                            :href="`/${locale}/ajutor`"
                         >
                           <span  class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                             <img
@@ -166,7 +166,7 @@ export default {
     },
     computed: {
         locale() {
-            return document.documentElement.lang || 'en';
+            return document.documentElement.lang || 'ro';
         },
         isHelpActive() {
             return window.location.pathname.includes('/help');

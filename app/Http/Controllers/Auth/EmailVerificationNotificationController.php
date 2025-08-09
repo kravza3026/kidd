@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class EmailVerificationNotificationController extends Controller
 {
@@ -19,6 +20,15 @@ class EmailVerificationNotificationController extends Controller
 
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('status', 'verification-link-sent');
+        Session::flash('toast', [
+            'title' => 'Account', // TODO - Translate.
+            'type' => 'success',
+            'message' => 'A new verification code has been sent to your email.', // TODO - Translate.
+//            'button' => [
+//                'href' => '/',
+//                'label' => 'Account'
+//            ]
+        ]);
+        return back();
     }
 }

@@ -55,9 +55,9 @@ class ProfileController extends Controller
 
         // TODO - Unified user notification for messages && translations.
         Session::flash('toast', [
-            'title' => 'Account',
-            'type' => 'info',
-            'message' => 'Profile updated successfully.',
+            'title' => 'Account', // TODO - Translate.
+            'type' => 'success',
+            'message' => 'Profile updated successfully.', // TODO - Translate.
 //            'button' => [
 //                'href' => '/',
 //                'label' => 'Account'

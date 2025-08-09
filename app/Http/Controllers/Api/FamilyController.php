@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Store;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Vacancy;
+use App\Models\Family;
+use Illuminate\Http\Request;
 
-class VacancyController extends Controller
+class FamilyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return auth()->user()->family;
     }
 
     /**
@@ -26,7 +27,7 @@ class VacancyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVacancyRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -34,7 +35,7 @@ class VacancyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Vacancy $vacancy)
+    public function show(Family $family)
     {
         //
     }
@@ -42,7 +43,7 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vacancy $vacancy)
+    public function edit(Family $family)
     {
         //
     }
@@ -50,7 +51,7 @@ class VacancyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
+    public function update(Request $request, Family $family)
     {
         //
     }
@@ -58,7 +59,7 @@ class VacancyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vacancy $vacancy)
+    public function destroy(Family $family)
     {
         //
     }

@@ -47,17 +47,11 @@
                                 {{ __('Click here to re-send the verification email.') }}
                             </button>
                         </p>
-
-                        @if (session('status') === 'verification-link-sent')
-                            <p class="mt-2 font-medium text-sm text-green-600">
-                                {{ __('A new verification link has been sent to your email address.') }}
-                            </p>
-                        @endif
                     </div>
                 @endif
             </div>
             <div class="w-full">
-                <x-ui.input-label for="phone" :value="old('phone', $user->phone)" type="text" name="phone" :label="__('Phone number')"/>
+                <x-ui.input-label for="phone" id="phone" autocomplete="phone" placeholder="+373 60 123 456" :value="old('phone', $user->phone)" type="text" name="phone" :label="__('Phone number')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('phone')"/>
                 @if ($user instanceof App\MustVerifyPhone && ! $user->hasVerifiedPhone())
@@ -70,12 +64,6 @@
                                 {{ __('Click here to re-send the verification code.') }}
                             </button>
                         </p>
-
-                        @if (session('status') === 'verification-code-sent')
-                            <p class="mt-2 font-medium text-sm text-green-600">
-                                {{ __('A new verification code has been sent to your phone number.') }}
-                            </p>
-                        @endif
                     </div>
                 @endif
             </div>

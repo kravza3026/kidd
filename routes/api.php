@@ -1,64 +1,50 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\FamilyController;
+use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Store\CartController;
-use App\Models\City;
-use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Cookie;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
 */
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group([
+    'middleware' => ['auth:sanctum'],
+    'prefix' => 'user'
+], function () {
 
-    Route::get('/user/addresses', function (Request $request) {
-        $user = $request->user();
-        $user->load('addresses');
-        $user->load('addresses.region');
+    Route::resource('family', FamilyController::class);
 
-        $response = [
-            'addresses' => $user->addresses,
-            'regions' => Region::get(['id', 'name']),
-        ];
+    Route::get('addresses', [AccountController::class, 'addresses'])
+        ->name('addresses');
 
-        return response($response, 200);
-
-    });
-
-    Route::get('/user', fn (Request $r) => $r->user())->name('user');
+    Route::get('/', fn (Request $r) => $r->user())
+        ->name('user');
 
 });
 
-Route::get('search', [HomeController::class, 'search'])
-    ->middleware('localize')
-    ->name('search');
+Route::group([
+    'middleware' => ['localize']
+], function () {
 
-Route::get('/favorites',function (Request $request){
+    Route::get('search', [GeneralController::class, 'search'])
+        ->name('search');
 
-    $favorites = json_decode($request->cookie('favorites', '[]'));
-    //$user_favorites = $request->user()->favorites->pluck('id')->toArray();
-    $request->user()->favorites()->sync($favorites);
+    Route::get('/favorites',[GeneralController::class, 'favorites'])
+        ->name('favorites');
 
-    return response(null, 200);
+    Route::get('cart', [CartController::class, 'show'])
+        ->name('cart.index');
+    Route::post('cart', [CartController::class, 'store'])
+        ->name('cart.store');
+    Route::put('cart/{itemHash}', [CartController::class, 'update'])
+        ->name('cart.update');
+    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
+        ->name('cart.destroy');
 
 });
-
-
-Route::get('cart', [CartController::class, 'show'])
-    ->name('cart.show');
-Route::post('cart', [CartController::class, 'store'])
-    ->name('cart.store');
-Route::put('cart/{itemHash}', [CartController::class, 'update'])
-    ->name('cart.update');
-Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
-    ->name('cart.destroy');

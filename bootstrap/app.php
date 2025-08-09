@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
 //        $middleware->throttleApi('api', true);
 
         $middleware->validateCsrfTokens(except: [
-//            'https://api.kidd.test/v1/*',
+            'api.kidd.test/v1/*',
         ]);
         $middleware->encryptCookies(except: [
             'favorites',

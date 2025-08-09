@@ -7,12 +7,8 @@
         <div class="opacity-80 text-black text-5xl font-bold leading-10">
             {{ __('header.topline.locations') }}
         </div>
-
-
-
-
-</section>
-<div class="block w-full h-full min-h-[90vh] -mb-7" id="map"></div>
+    </section>
+<div class="block w-full h-full min-h-[90vh] -mb-7 sm:mb-0" id="map"></div>
 
 @push('scripts')
 <script>
@@ -94,7 +90,7 @@
 
             if (selectedLocation) {
                 map.panTo(selectedLocation.position);
-                map.setZoom(15);
+                map.setZoom(14);
             }
         });
 
@@ -119,7 +115,6 @@
             // Якщо потрібен доступ до content для фільтрації
             store_location.content = markerView.content;
         }
-
 
     }
 

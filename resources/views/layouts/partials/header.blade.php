@@ -21,11 +21,6 @@
         </div>
 
     </nav>
-    <div class="container flex justify-start relative">
-        <div class="w-8/11 -left-13 mx-auto relative ">
-            {{--           <div id="search-results-container" class="left-0 pl-5 pr-12 w-full z-40"></div>--}}
-        </div>
-    </div>
 
     @include('layouts.nav.mega-menu')
 </header>

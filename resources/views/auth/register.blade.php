@@ -105,8 +105,6 @@
 
 
     <script>
-
-
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('loginBtn').addEventListener('click', function (e) {
                 Swal.fire({
@@ -126,9 +124,6 @@
                     }
                 });
             })
-
-
-
         });
     </script>
     <style>

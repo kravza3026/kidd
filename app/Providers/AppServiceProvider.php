@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Gender;
 use App\Models\Season;
 use App\Models\Size;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
@@ -41,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
 
         Number::useLocale(config('app.locale_format'));
+        Carbon::setLocale(app()->getLocale());
 
         Blade::stringable(function (Money $money) {
             $currencies = new ISOCurrencies;
