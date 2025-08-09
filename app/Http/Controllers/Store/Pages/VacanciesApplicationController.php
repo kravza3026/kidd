@@ -8,7 +8,7 @@ use App\Models\VacancyApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class VacancyApplicationController extends Controller
+class VacanciesApplicationController extends Controller
 {
 
     /**

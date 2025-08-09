@@ -3,33 +3,81 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Size;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PagesController extends Controller
 {
 
-    public function careers()
-    {
-        return view('store.static.careers');
+    /**
+     * Display favorite products page for guests or redirect for users.
+     *
+     * @return View | RedirectResponse
+     */
+    public function favorites(Request $request): View | RedirectResponse {
+        if(auth()->check()){
+            return redirect()->route('favorites.index');
+        }
+
+        $products = Product::whereIn('id', json_decode($request->cookie('favorites', '[]')))->paginate(3)->withQueryString();
+
+        return view('store.pages.favorites.index', [
+            'products' => $products,
+        ]);
     }
 
-    public function terms_conditions()
-    {
-        return view('store.static.terms');
+    /**
+     * Display search results page.
+     *
+     * @return View
+     */
+    public function search(Request $request): View {
+        $products = Product::whereIn('id', json_decode($request->cookie('favorites', '[]')))->paginate(3)->withQueryString();
+
+        return view('store.pages.favorites.index', [
+            'products' => $products,
+        ]);
     }
 
-    public function about()
-    {
-        return view('store.static.about');
+    /**
+     * Display the terms and conditions page.
+     */
+    public function terms() {
+        return view('store.pages.static.terms');
     }
 
-    public function help()
-    {
-        return view('store.static.help');
+    /**
+     * Display the about page.
+     */
+    public function about() {
+        return view('store.pages.static.about');
     }
 
-    public function contacts()
-    {
-        return view('store.static.contacts');
+    /**
+     * Display the help page.
+     */
+    public function help() {
+        return view('store.pages.help.index');
     }
+
+    /**
+     * Display the contacts page.
+     */
+    public function contacts() {
+        return view('store.pages.static.contacts');
+    }
+
+    /**
+     * Display size-chart page.
+     */
+    public function size_chart() {
+
+        $sizes = Size::all();
+
+        return view('store.pages.static.size-chart', compact('sizes'));
+    }
+
 }

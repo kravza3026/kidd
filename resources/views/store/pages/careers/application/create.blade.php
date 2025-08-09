@@ -11,7 +11,7 @@
 
                     <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
                         <div class="w-full">
-                            <x-select label="test" :disabled="false" name="vacancy_id" id="vacancy_{{ $vacancy->id }}" :placeholder="false"
+                            <x-select label="" :disabled="true" name="vacancy_id" id="vacancy_{{ $vacancy->id }}" :placeholder="false"
                             :options="$vacancies" :selected="old('vacancy_id', $vacancy->id)">
                             </x-select>
                         </div>

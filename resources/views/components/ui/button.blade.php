@@ -4,6 +4,7 @@
     'right_icon' => true,
     'stroke_width' => 2,
     'stroke_color' => 'white',
+    'as' => 'div'
 ])
 
 @php
@@ -19,7 +20,9 @@
     }
 @endphp
 
-<div {{ $attributes->merge(['class' => ' cursor-pointer border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit py-3 md:py-4 px-10 my-5 rounded-2xl text-white']) }}>
+<{{$as}} {{ $attributes->merge(['class' => ' cursor-pointer border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit py-3
+md:py-4
+ px-10 my-5 rounded-2xl text-white']) }}>
     @if(filter_var($left_icon, FILTER_VALIDATE_BOOLEAN))
     <svg
         class="size-3.5 md:size-4"
@@ -56,4 +59,4 @@
             />
         </svg>
     @endif
-</div>
+</{{$as}}>

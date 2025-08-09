@@ -32,4 +32,8 @@ return [
         '{category}/{product}' => 'catalog/{category}/{product}',
     ],
 
+    'footer' => [
+        'size-chart' => 'tabel-marimi',
+    ]
+
 ];

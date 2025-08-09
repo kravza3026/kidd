@@ -10,7 +10,7 @@
                     <p class="text-snow text-sm md:text-base lg:leading-[175%]">
                         Discover a variety of vibrant colours, playful patterns, and trendy designs that will make your baby girl shine.
                     </p>
-                    <x-ui.button class="my-5">Shop now</x-ui.button>
+                    <x-ui.button as="a" href="{{ route('products.index', ['filters[gender]' => [\App\Models\Gender::UNISEX => true, \App\Models\Gender::GIRL => true] ]) }}"  class="my-5">Shop now</x-ui.button>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                     <p class="text-snow text-sm md:text-base lg:leading-[175%]">
                         Shop our selection of durable and high-quality clothing, designed to keep up with your baby boy's active lifestyle.
                     </p>
-                    <x-ui.button class="my-5">Shop now</x-ui.button>
+                    <x-ui.button as="a" href="{{ route('products.index', ['filters[gender]' => [\App\Models\Gender::UNISEX => true, \App\Models\Gender::BOY => true] ]) }}"  class="my-5">Shop now</x-ui.button>
                 </div>
             </div>
         </div>

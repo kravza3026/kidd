@@ -46,7 +46,7 @@
                 <a href="#">{{ __('footer.menu.help.faq') }}</a>
             </li>
             <li class="opacity-40 hover:opacity-60 text-base py-2">
-                <a href="#">{{ __('footer.menu.help.size_chart') }}</a>
+                <a href="{{ route('size-chart') }}">{{ __('footer.menu.help.size_chart') }}</a>
             </li>
             <li class="opacity-40 hover:opacity-60 text-base py-2">
                 <a href="#">{{ __('footer.menu.help.returns') }}</a>
@@ -55,7 +55,7 @@
                 <a href="#">{{ __('footer.menu.help.delivery') }}</a>
             </li>
             <li class="opacity-40 hover:opacity-60 text-base py-2">
-                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.menu.contacts') }}">{{ __('footer.menu.help.contacts') }}</a>
+                <a href="{{ route('contacts') }}">{{ __('footer.menu.help.contacts') }}</a>
             </li>
         </ul>
     </div>

@@ -12,7 +12,8 @@ class GeneralController extends Controller
     /**
      * Show the form for creating the resource.
      */
-    public function favorites (Request $request){
+    public function favorites (Request $request): \Illuminate\Http\Response
+    {
 
         if(auth()->check()) {
             $favorites = json_decode($request->cookie('favorites', '[]'));
@@ -23,11 +24,11 @@ class GeneralController extends Controller
 
     }
 
-    public function search(Request $request)
+    public function search(Request $request): \Illuminate\Http\Response
     {
+
         $results = [];
 
-        // TODO - Move this endpoint to API Route & Controllers
         // TODO - Add Search Validation & Limitations (20 results)
         if($request->has('term') && (Str::length($request->term) > 2)) {
             $results = Product::search($request->input('term'))->take(20)->get();

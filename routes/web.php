@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\Store\PagesController;
 use App\Http\Controllers\Store\CartController;
 use App\Http\Controllers\Store\CheckoutController;
 use App\Http\Controllers\Store\Pages\LocationsController;
 use App\Http\Controllers\Store\Pages\VacanciesController;
-use App\Http\Controllers\Store\Pages\VacancyApplicationController;
+use App\Http\Controllers\Store\Pages\VacanciesApplicationController;
 use App\Http\Controllers\Store\ProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +20,13 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    Route::get('search', [PageController::class, 'search'])
+    Route::get('search', [PagesController::class, 'search'])
         ->name('search'); // TODO - Implement search page/view
 
-    Route::get('favorites', [PageController::class, 'favorites']);
+    Route::get('favorites', [PagesController::class, 'favorites']);
 
 
-    Route::get('catalog/', [ProductsController::class, 'index'])
+    Route::get('catalog', [ProductsController::class, 'index'])
         ->name('products.index');
     Route::get(LaravelLocalization::transRoute('catalog/{category}'), [ProductsController::class, 'index'])
         ->name('products.category.index');
@@ -69,36 +69,27 @@ Route::group([
         Route::get(LaravelLocalization::transRoute('routes.topline.locations'), [LocationsController::class, 'index'])
             ->name('locations');
 
-//        Route::resource(LaravelLocalization::transRoute('routes.topline.careers'), VacanciesController::class)
-//            ->only(['index', 'show'])
-//            ->parameters([
-//                'cariere' => 'vacancy',
-//                'карьера' => 'vacancy',
-//                'careers' => 'vacancy',
-//            ])
-//            ->names([
-//                'index' => 'vacancies.index',
-//                'show' => 'vacancies.show',
-//            ]);
 
         Route::get(LaravelLocalization::transRoute('routes.topline.careers.careers'), [VacanciesController::class, 'index'])
             ->name('vacancy.index');
         Route::get(LaravelLocalization::transRoute('routes.topline.careers.vacancy.vacancy'), [VacanciesController::class, 'show'])
             ->name('vacancy.show');
-
-        Route::get(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacancyApplicationController::class, 'create'])
+        Route::get(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacanciesApplicationController::class, 'create'])
             ->name('vacancy.application.create');
-        Route::post(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacancyApplicationController::class, 'store'])
+        Route::post(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacanciesApplicationController::class, 'store'])
             ->name('vacancy.application.store');
 
-        Route::get(LaravelLocalization::transRoute('routes.topline.terms'), [PageController::class, 'terms'])
+        Route::get(LaravelLocalization::transRoute('routes.topline.terms'), [PagesController::class, 'terms'])
             ->name('terms');
-        Route::get(LaravelLocalization::transRoute('routes.menu.about'), [PageController::class, 'about'])
+        Route::get(LaravelLocalization::transRoute('routes.menu.about'), [PagesController::class, 'about'])
             ->name('about');
-        Route::get(LaravelLocalization::transRoute('routes.menu.help'), [PageController::class, 'help'])
+        Route::get(LaravelLocalization::transRoute('routes.menu.help'), [PagesController::class, 'help'])
             ->name('help');
-        Route::get(LaravelLocalization::transRoute('routes.menu.contacts'), [PageController::class, 'contacts'])
+        Route::get(LaravelLocalization::transRoute('routes.menu.contacts'), [PagesController::class, 'contacts'])
             ->name('contacts');
+
+        Route::get(LaravelLocalization::transRoute('routes.footer.size-chart'), [PagesController::class, 'size_chart'])
+            ->name('size-chart');
     });
 
 });
