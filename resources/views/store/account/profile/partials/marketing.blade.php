@@ -70,18 +70,18 @@
                         </div>
                     </div>
 
-{{--                    <div class="w-full flex justify-between items-center">--}}
-{{--                        <label for="order-status-sms-toggle" class="text-sm font-medium text-gray-900">--}}
-{{--                            Order status updates by SMS--}}
-{{--                        </label>--}}
-{{--                        <div class="relative inline-block w-11 h-5">--}}
-{{--                            <input @disabled(!$user->hasVerifiedPhone()) @checked($user->order_status_sms && $user->hasVerifiedPhone()) name="order_status_sms" value="1" id="order-status-sms-toggle" type="checkbox"--}}
-{{--                                   class="peer appearance-none w-[48px] h-[28px] bg-slate-100 rounded-full checked:bg-olive cursor-pointer transition-colors duration-300" />--}}
-{{--                            <label for="order-status-sms-toggle" class="absolute checkboxLabelCircle top-1 left-1 w-5 h-5 bg-white rounded-full  shadow-sm transition-transform duration-300 peer-checked:translate-x-5--}}
-{{--                            peer-checked:border-dark-olive cursor-pointer flex items-center justify-center">--}}
-{{--                            </label>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="w-full flex justify-between items-center">
+                        <label for="order-status-sms-toggle" class="text-sm font-medium text-gray-900">
+                            Order status updates by SMS
+                        </label>
+                        <div class="relative inline-block w-11 h-5">
+                            <input @disabled(!$user->hasVerifiedPhone()) @checked($user->order_status_sms && $user->hasVerifiedPhone()) name="order_status_sms" value="1" id="order-status-sms-toggle" type="checkbox"
+                                   class="peer appearance-none w-[48px] h-[28px] bg-slate-100 rounded-full checked:bg-olive cursor-pointer transition-colors duration-300" />
+                            <label for="order-status-sms-toggle" class="absolute checkboxLabelCircle top-1 left-1 w-5 h-5 bg-white rounded-full  shadow-sm transition-transform duration-300 peer-checked:translate-x-5
+                            peer-checked:border-dark-olive cursor-pointer flex items-center justify-center">
+                            </label>
+                        </div>
+                    </div>
 
                 </div>
 

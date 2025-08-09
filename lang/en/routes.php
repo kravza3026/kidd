@@ -10,7 +10,13 @@ return [
 
     'topline' => [
         'locations' => 'pick-up-locations',
-        'careers' => 'careers',
+        'careers' => [
+            'careers' => 'careers',
+            'vacancy' => [
+                'vacancy' => 'careers/{vacancy}',
+                'create' => 'careers/{vacancy}/apply'
+            ]
+        ],
         'terms' => 'terms-and-conditions',
     ],
 

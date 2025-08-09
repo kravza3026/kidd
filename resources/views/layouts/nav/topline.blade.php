@@ -4,7 +4,7 @@
             <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-[13px] font-medium">
                 {{ __('header.topline.locations') }}
             </a>
-            <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-[13px] font-medium">
+            <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers.careers') }}" class="text-[13px] font-medium">
                 {{ __('header.topline.careers') }}
             </a>
             <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-[13px] font-medium">

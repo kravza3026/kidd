@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="pageContent ">
-        <section class="py-section  container grid lg:grid-cols-12 justify-between">
+    <div class="pageContent">
+        <section class="py-section container grid lg:grid-cols-12 justify-between">
             <div class="pr-5 col-span-6">
                 <h2 class="font-bold text-[30px] lg:text-[24px] leading-[-2%]">
                     {{ $vacancy->title }}
@@ -12,6 +12,7 @@
                             {{ $tag->name }}
                         </span>
                     @endforeach
+
                     <br>
                     <br>
                     <span class="font-bold">Summary:</span>
@@ -32,7 +33,10 @@
                     <br>
                     <span class="font-bold">Notes:</span>
                     {{ $vacancy->notes }}
+                    <br>
+                    <br>
 
+                    <a class="button px-5 py-4" href="{{ route('vacancy.application.create', $vacancy) }}">Apply for vacancy</a>
                 </p>
             </div>
         </section>

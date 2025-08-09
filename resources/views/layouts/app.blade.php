@@ -42,11 +42,21 @@
 
         @stack('scripts')
 
-        @if(session()->has('toast'))
+        @if(session()->has('toast') || session()->has('modal'))
             <script>
                 window.addEventListener("load", function () {
                     @if(session('toast'))
                         window.toast(@json(session('toast')));
+                    @endif
+                    @if(session('modal'))
+                        // TODO - Customise params
+                        // Write down here required params to display modal with success messages
+                        // for placed orders, applied vacancies and so on...
+
+                        // Example of modal obj:
+                        // modal: {
+                        // object with fields required to display modal with the right message and images/icons
+                        // }
                     @endif
                 });
             </script>

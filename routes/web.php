@@ -6,6 +6,7 @@ use App\Http\Controllers\Store\CartController;
 use App\Http\Controllers\Store\CheckoutController;
 use App\Http\Controllers\Store\Pages\LocationsController;
 use App\Http\Controllers\Store\Pages\VacanciesController;
+use App\Http\Controllers\Store\Pages\VacancyApplicationController;
 use App\Http\Controllers\Store\ProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::group([
 
     Route::get('catalog/', [ProductsController::class, 'index'])
         ->name('products.index');
-    Route::get('catalog/{category}', [ProductsController::class, 'index'])
+    Route::get(LaravelLocalization::transRoute('catalog/{category}'), [ProductsController::class, 'index'])
         ->name('products.category.index');
     Route::get(LaravelLocalization::transRoute('catalog/{category}/{product}'), [ProductsController::class, 'show'])->scopeBindings()
         ->name('products.show');
@@ -68,17 +69,27 @@ Route::group([
         Route::get(LaravelLocalization::transRoute('routes.topline.locations'), [LocationsController::class, 'index'])
             ->name('locations');
 
-        Route::resource(LaravelLocalization::transRoute('routes.topline.careers'), VacanciesController::class)
-            ->only(['index', 'show'])
-            ->parameters([
-                'cariere' => 'vacancy',
-                'карьера' => 'vacancy',
-                'careers' => 'vacancy',
-            ])
-            ->names([
-                'index' => 'vacancies.index',
-                'show' => 'vacancies.show',
-            ]);
+//        Route::resource(LaravelLocalization::transRoute('routes.topline.careers'), VacanciesController::class)
+//            ->only(['index', 'show'])
+//            ->parameters([
+//                'cariere' => 'vacancy',
+//                'карьера' => 'vacancy',
+//                'careers' => 'vacancy',
+//            ])
+//            ->names([
+//                'index' => 'vacancies.index',
+//                'show' => 'vacancies.show',
+//            ]);
+
+        Route::get(LaravelLocalization::transRoute('routes.topline.careers.careers'), [VacanciesController::class, 'index'])
+            ->name('vacancy.index');
+        Route::get(LaravelLocalization::transRoute('routes.topline.careers.vacancy.vacancy'), [VacanciesController::class, 'show'])
+            ->name('vacancy.show');
+
+        Route::get(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacancyApplicationController::class, 'create'])
+            ->name('vacancy.application.create');
+        Route::post(LaravelLocalization::transRoute('routes.topline.careers.vacancy.create'), [VacancyApplicationController::class, 'store'])
+            ->name('vacancy.application.store');
 
         Route::get(LaravelLocalization::transRoute('routes.topline.terms'), [PageController::class, 'terms'])
             ->name('terms');

@@ -94,16 +94,4 @@ window.addEventListener("load", function () {
             placeholderChar: "_", // defaults to '_'
         });
     }
-
-
-    // Get display names of currency code in English
-    let currencyNames = new Intl.DisplayNames(["ru"], { type: "currency" });
-    currencyNames.of("USD"); // "US Dollar"
-    currencyNames.of("EUR"); // "Euro"
-
-    console.log(currencyNames.of("USD"));
-    console.log(currencyNames.of("MDL"));
-    console.log(currencyNames.of("UAH"));
-    // To override, you would typically define your own custom mapping or use a library that allows customization
-
 });

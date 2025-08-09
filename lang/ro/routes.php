@@ -10,7 +10,13 @@ return [
 
     'topline' => [
         'locations' => 'locatii-magazine',
-        'careers' => 'cariere',
+        'careers' => [
+            'careers' => 'cariere',
+            'vacancy' => [
+                'vacancy' => 'cariere/{vacancy}',
+                'create' => 'cariere/{vacancy}/aplica'
+            ]
+        ],
         'terms' => 'termeni-si-conditii',
     ],
 

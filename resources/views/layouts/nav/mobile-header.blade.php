@@ -66,7 +66,7 @@
                     <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.locations') }}" class="text-black text-[32px] hover:text-olive">
                             {{ __('header.topline.locations') }}
                         </a></li>
-                    <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers') }}" class="text-black text-[32px] hover:text-olive">
+                    <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.careers.careers') }}" class="text-black text-[32px] hover:text-olive">
                             {{ __('header.topline.careers') }}
                         </a></li>
                     <li><a href="{{ LaravelLocalization::getURLFromRouteNameTranslated( App::currentLocale(), 'routes.topline.terms') }}" class="text-black text-[32px] hover:text-olive">

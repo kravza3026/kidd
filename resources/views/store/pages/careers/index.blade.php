@@ -79,7 +79,7 @@
                             <div>
                                 <p class="text-[20px] leading-[130%] font-medium">{{ $vacancy->title }}</p>
                                 <p class="opacity-40 text-[12px] leading-[175%]">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
-                                <a href="{{ route('vacancies.show', $vacancy) }}" class="text-olive flex items-center gap-x-2 mt-5">
+                                <a href="{{ $vacancy->url }}" class="text-olive flex items-center gap-x-2 mt-5">
                                     Apply now
                                     <span>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"

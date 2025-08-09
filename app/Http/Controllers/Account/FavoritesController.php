@@ -10,28 +10,12 @@ class FavoritesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function __invoke()
     {
 
-        $products = auth()->user()->favorites()->paginate(request()->get('per_page', 3) )->withQueryString();
+        $products = auth()->user()->favorites()->paginate(request()->get('per_page', 16) )->withQueryString();
 
         return view('store.account.favorites.index', compact('products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Favorite $favorite)
-    {
-        //
-    }
 }

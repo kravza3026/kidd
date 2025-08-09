@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request)
     {
         return view('store.account.index', [
             'user' => $request->user(),

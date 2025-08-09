@@ -10,7 +10,13 @@ return [
 
     'topline' => [
         'locations' => 'местоположения-магазинов',
-        'careers' => 'карьера',
+        'careers' => [
+            'careers' => 'карьера',
+            'vacancy' => [
+                'vacancy' => 'карьера/{vacancy}',
+                'create' => 'карьера/{vacancy}/заявка'
+            ],
+        ],
         'terms' => 'условия-использования',
     ],
 

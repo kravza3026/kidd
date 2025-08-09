@@ -25,18 +25,15 @@ Route::group([
     'prefix' => 'account',
 ], function () {
 
-    Route::get('profile', [ProfileController::class, 'index'])
-        ->name('profile.index');
-    Route::get('profile/edit', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
-    Route::put('profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
+    Route::singleton('profile', ProfileController::class);
 
     Route::resource('family', FamilyController::class)
         ->only(['edit', 'store', 'update', 'destroy','show']);
 
-    Route::resource('favorites', FavoritesController::class)
-        ->only(['index', 'store', 'destroy']);
+    Route::get('favorites', FavoritesController::class)
+    ->name('favorites.index');
+//    Route::resource('favorites', FavoritesController::class)
+//        ->only(['index', 'store', 'destroy']);
 
     Route::resource('orders', OrdersController::class)
         ->only(['index', 'show']);

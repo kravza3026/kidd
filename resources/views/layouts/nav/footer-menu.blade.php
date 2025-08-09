@@ -85,7 +85,7 @@
                 <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.locations') }}">{{ __('footer.menu.company.locations') }}</a>
             </li>
             <li class="opacity-40 hover:opacity-60 text-base py-2">
-                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.careers') }}">{{ __('footer.menu.company.careers') }}</a>
+                <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.careers.careers') }}">{{ __('footer.menu.company.careers') }}</a>
             </li>
             <li class="opacity-40 hover:opacity-60 text-base py-2">
                 <a href="{{ LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.terms') }}">{{ __('footer.menu.company.terms') }}</a>

@@ -19,13 +19,13 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full">
-                <x-ui.input-label for="first_name" :value="old('first_name', $user->first_name)" name="first_name" :label="__('First name')"/>
+                <x-ui.input-label id="first_name" :value="old('first_name', $user->first_name)" name="first_name" :label="__('First name')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('first_name')"/>
             </div>
 
             <div class="w-full">
-                <x-ui.input-label for="last_name" :value="old('last_name', $user->last_name)" name="last_name" :label="__('Last name')"/>
+                <x-ui.input-label id="last_name" :value="old('last_name', $user->last_name)" name="last_name" :label="__('Last name')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('last_name')"/>
             </div>
@@ -33,7 +33,7 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full mt-6 sm:mt-0">
-                <x-ui.input-label for="email" :value="old('email', $user->email)" type="email" name="email" :label="__('E-mail address')"/>
+                <x-ui.input-label id="email" :value="old('email', $user->email)" type="email" name="email" :label="__('E-mail address')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('email')"/>
 
@@ -51,7 +51,7 @@
                 @endif
             </div>
             <div class="w-full">
-                <x-ui.input-label for="phone" id="phone" autocomplete="phone" placeholder="+373 60 123 456" :value="old('phone', $user->phone)" type="text" name="phone" :label="__('Phone number')"/>
+                <x-ui.input-label id="phone" id="phone" autocomplete="phone" placeholder="+373 60 123 456" :value="old('phone', $user->phone)" type="text" name="phone" :label="__('Phone number')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('phone')"/>
                 @if ($user instanceof App\MustVerifyPhone && ! $user->hasVerifiedPhone())
@@ -71,17 +71,14 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full mt-6 sm:mt-0">
-                <x-ui.input-label for="password"  type="password" name="password" :label="__('Password')" autocomplete="new-password"/>
+                <x-ui.input-label id="password"  type="password" name="password" :label="__('Password')" autocomplete="new-password"/>
 
 
                 <x-input-error :messages="$errors->profile->get('password')" class="mt-2"/>
             </div>
 
             <div class="w-full">
-                <x-ui.input-label for="password_confirmation"  type="password" name="password" :label="__('Password confirmation')" autocomplete="new-password"/>
-
-{{--                <x-input-label for="password_confirmation" :value="__('Password confirmation')"/>--}}
-{{--                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-3 block w-full" autocomplete="new-password"/>--}}
+                <x-ui.input-label id="password_confirmation"  type="password" name="password_confirmation" :label="__('Password confirmation')" autocomplete="new-password"/>
                 <x-input-error :messages="$errors->profile->get('password_confirmation')" class="mt-2"/>
             </div>
         </div>

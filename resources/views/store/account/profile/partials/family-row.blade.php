@@ -3,7 +3,7 @@
     <div class="flex flex-col items-start gap-1">
         <div class="flex flex-1 w-full justify-between items-center">
             <div class="flex">
-                <div class="size-9 flex items-center justify-center {{ $member->gender->id == 2 ? 'bg-baby-eyes' : 'bg-baby-pink' }} rounded-full">
+                <div class="size-9 flex items-center justify-center {{ $member->gender->id == \App\Models\Gender::BOY ? 'bg-baby-eyes' : 'bg-baby-pink' }} rounded-full">
                     {{--                        <img class="size-5 rounded-full" src="{{ Vite::image($member->gender->icon) }}" alt="{{ $member->gender->name }}">--}}
                     {!! $member->gender->svg !!}
                 </div>

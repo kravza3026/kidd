@@ -10,16 +10,14 @@
 
 <div class="flex flex-col gap-3 mt-3 {{ $customClass }}">
     @if ($label)
-        <label for="{{ $id }}" class="text-[14px] font-bold">
+        <label for="{{ $id ?? Str::kebab($name) }}" class="text-[14px] font-bold">
             {{ $label }}
         </label>
     @endif
     <input
         type="{{ $type }}"
         name="{{ $name }}"
-        @if($id)
-        id="{{ $id }}"
-        @endif
+        id="{{ $id ?? Str::kebab($name) }}"
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value) }}"
         {{ $attributes->merge([
