@@ -19,6 +19,12 @@ export function useAlert() {
 <path d="M1 3.4L5.375 7L11 1" stroke="#A8BA66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `
+    const iconError = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+
+`
     const iconInfo = `
 <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24">
     <path d="M 12 2 C 10.343 2 9 3.343 9 5 C 9 6.657 10.343 8 12 8 C 13.657 8 15 6.657 15 5 C 15 3.343 13.657 2 12 2 z M 9 10 A 1.0001 1.0001 0 1 0 9 12 L 10 12 L 10 20 L 9 20 A 1.0001 1.0001 0 1 0 9 22 L 15 22 A 1.0001 1.0001 0 1 0 15 20 L 14 20 L 14 11 C 14 10.448 13.552 10 13 10 L 11 10 L 9 10 z" fill="white" stroke="white" stroke-width="1" stroke-linecap="round"></path>
@@ -51,6 +57,8 @@ export function useAlert() {
             icon = iconInfo
         }else if (type === 'success') {
             icon = iconSuccess
+        }else if (type === 'error') {
+            icon = iconError
         }
         Swal.fire({
             toast: true,

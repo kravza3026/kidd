@@ -21,4 +21,15 @@ return [
 
     'products' => 'Каталог',
 
+    'placeholder' => [
+        'select' => [
+            'common' => 'Выберите',
+            'vacancy' => 'Выберите желаемую вакансию..',
+        ],
+
+    ],
+
+    'checkbox' => [
+        'terms' => 'Я прочитал(а) и полностью согласен(на) с <a href=":url" class="underline font-bold">Условиями и Положениями</a>',
+    ]
 ];

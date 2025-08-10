@@ -17,7 +17,6 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        // section 'profile' || 'marketing'
 
         if ($this->has('section') && $this->get('section') === 'profile') {
 

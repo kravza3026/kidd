@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VacancyApplicationStoreRequest;
 use App\Models\Vacancy;
 use App\Models\VacancyApplication;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class VacanciesApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Vacancy $vacancy)
+    public function store(VacancyApplicationStoreRequest $request, Vacancy $vacancy)
     {
 
         // TODO - Vacancy Application logic.
@@ -35,10 +36,10 @@ class VacanciesApplicationController extends Controller
             'title' => 'Vacancy', // TODO - Translate.
             'type' => 'success',
             'message' => 'Application submitted successfully.', // TODO - Translate.
-            'button' => [
-                'href' => route('vacancy.index'),
-                'label' => 'Vacancies', // TODO - Translate.
-            ]
+//            'button' => [
+//                'href' => route('vacancy.index'),
+//                'label' => 'Vacancies', // TODO - Translate.
+//            ]
         ]);
         return redirect()->route('vacancy.show', $vacancy);
     }

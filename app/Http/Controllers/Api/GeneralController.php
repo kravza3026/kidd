@@ -24,7 +24,7 @@ class GeneralController extends Controller
 
     }
 
-    public function search(Request $request): \Illuminate\Http\Response
+    public function search(Request $request): \Illuminate\Http\Response | \Illuminate\Http\JsonResponse
     {
 
         $results = [];

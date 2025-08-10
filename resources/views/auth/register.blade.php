@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div class="container">
         <div class="py-section grid grid-cols-1 lg:grid-cols-2 gap-x-10">
             <div>
@@ -23,17 +22,17 @@
                     </div>
 
                     <div class="mt-4">
-                        <x-ui.input-label :id="'phone'" for="phone" :type="'text'"  name="phone" :label="__('Phone')"  :value="old('phone')" required autocomplete="phone"/>
+                        <x-ui.input-label :id="'phone'" for="phone" :type="'text'"  name="phone" :label="__('Phone number')"  :value="old('phone')" required autocomplete="phone"/>
                         <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
                     </div>
 
                     <div class="grid grid-cols-2 justify-between gap-x-2">
                         <div class="mt-4">
-                            <x-ui.input-label :id="'password'" for="password" :type="'password'" :placeholder="'Enter account password'"  name="password" :label="__('Password')"  :value="old('password')" required autocomplete="password"  required autocomplete="new-password"/>
+                            <x-ui.input-label :id="'password'" for="password" :type="'password'" :placeholder="'Enter password'"  name="password" :label="__('Password')"  :value="old('password')" required autocomplete="password"  required autocomplete="new-password"/>
                             <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                         </div>
                         <div class="mt-4">
-                            <x-ui.input-label :id="'confirm-password'" for="confirm-password" :type="'password'" :placeholder="'Confirm account password'" name="password_confirmation" :label="__('Confirm
+                            <x-ui.input-label :id="'confirm-password'" for="confirm-password" :type="'password'" :placeholder="'Confirm password'" name="password_confirmation" :label="__('Confirm
                             password')"  :value="old('password')" required autocomplete="confirm-password"/>
                             <x-input-error :messages="$errors->get('confirm-password')" class="mt-2"/>
                         </div>
@@ -59,7 +58,7 @@
             <div class="hidden lg:block">
                 <div style="background-image:url('{{Vite::image('contactUs_bg.jpg')}}')" class="relative  bg-no-repeat bg-center bg-cover rounded-2xl flex items-end min-h-[400px] md:min-h-[500px] h-full">
                     <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 to-charcoal/50 z-0 rounded-2xl"></div>
-                    <div class="p-10 w-full relative grid justify-center lg:gap-3 xl:gap-[24px] z-10 text-white grid-cols-3 select-none">
+                    <div class="py-10 md:px-3 lg:px-4 xl:px-6 w-full relative grid justify-center lg:gap-4 xl:gap-6 z-10 text-white grid-cols-3 select-none">
                         <div class="flex flex-col items-center gap-2">
                             <div class="flex items-center justify-center gap-2 bg-light-orange w-fit p-3 rounded-full">
                                 <img src="{{Vite::image('icons/gradients/g_like.png')}}" alt="">

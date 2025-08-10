@@ -1,5 +1,16 @@
 @php
 $texts = [
+    'page_title' => [
+        'ro' => 'Termeni și condiții',
+        'ru' => 'Условия и Положения',
+        'en' => 'Terms & Conditions',
+    ],
+    'last_update' => [
+        'ro' => 'Ultima actualizare',
+        'ru' => 'Последнее обновление',
+        'en' => 'Last updated',
+    ],
+
     'intro' => [
         'en' => 'Please read these Terms & Conditions carefully before using our website or making a purchase from KIDD. These Terms & Conditions outline the rules and regulations governing the use of our website and the purchase of products from our online store. By accessing or using our website and placing an order, you agree to be bound by these Terms & Conditions. If you do not agree with any part of these Terms & Conditions, please refrain from using our website or making a purchase.',
         'ro' => 'Vă rugăm să citiți cu atenție acești Termeni și Condiții înainte de a utiliza site-ul nostru sau de a face o achiziție de la KIDD. Acești Termeni și Condiții stabilesc regulile și reglementările care guvernează utilizarea site-ului nostru și achiziționarea de produse din magazinul nostru online. Prin accesarea sau utilizarea site-ului nostru și plasarea unei comenzi, sunteți de acord să respectați acești Termeni și Condiții. Dacă nu sunteți de acord cu oricare parte a acestor Termeni și Condiții, vă rugăm să nu utilizați site-ul nostru și să nu faceți achiziții.',
@@ -9,11 +20,6 @@ $texts = [
         'en' => 'By using our website and making a purchase, you acknowledge that you have read, understood, and agreed to these Terms & Conditions. These Terms & Conditions may be updated or revised from time to time, and it is your responsibility to review them periodically. If you have any questions or concerns regarding these Terms & Conditions, please contact our customer support team.',
         'ro' => 'Prin utilizarea site-ului nostru și efectuarea unei achiziții, confirmați că ați citit, înțeles și sunteți de acord cu acești Termeni și Condiții. Acești Termeni și Condiții pot fi actualizați sau modificați periodic, iar responsabilitatea de a-i verifica vă aparține. Dacă aveți întrebări sau nelămuriri privind acești Termeni și Condiții, vă rugăm să contactați echipa noastră de asistență pentru clienți.',
         'ru' => 'Используя наш сайт и совершая покупку, вы подтверждаете, что прочитали, поняли и согласны с настоящими Условиями и Положениями. Настоящие Условия и Положения могут время от времени обновляться или изменяться, и вы несете ответственность за их периодическую проверку. Если у вас есть вопросы или сомнения по поводу настоящих Условий и Положений, пожалуйста, свяжитесь с нашей службой поддержки клиентов.',
-    ],
-    'checkbox' => [
-        'en' => 'I have read and I totally agree to the <a href="/" class="underline font-bold">Terms and Conditions</a>',
-        'ro' => 'Am citit și sunt pe deplin de acord cu <a href="/" class="underline font-bold">Termenii și Condițiile</a>',
-        'ru' => 'Я прочитал(а) и полностью согласен(на) с <a href="/" class="underline font-bold">Условиями и Положениями</a>',
     ],
 ];
 
@@ -221,8 +227,13 @@ $sections['ru'] = [
     <div class="pageContent">
         <section class="container py-section">
 
-            <h1 class="text-[30px] lg:text-[48px] font-bold opacity-80 leading-[100%]">Terms and Conditions</h1>
-            <p class="opacity-40 text-[12px] lg:text-[14px]">Last updated 5 days ago</p>
+            <h1 class="text-3xl lg:text-5xl font-bold opacity-80 leading-[100%]">
+                {{ $texts['page_title'][app()->getLocale()] }}
+            </h1>
+            <p class="mt-4 opacity-40 text-xs lg:text-sm">
+                {{ $texts['last_update'][app()->getLocale()] }}
+                {{ \Carbon\Carbon::parse('25-08-2022')->diffForHumans(parts: 2) }}
+            </p>
             <hr class="my-5 border-light-border">
             <div class="content opacity-80">
                 {{ $texts['intro'][app()->getLocale()] }}
@@ -231,7 +242,7 @@ $sections['ru'] = [
                     @foreach($sections[app()->getLocale()] as $index => $section)
                         <li>
                             <p class="flex items-center gap-x-3 font-bold">
-                                <span class="w-[18px] h-[18px] bg-olive rounded-full text-white flex items-center justify-center p-3 text-[13px]">
+                                <span class="size-[18px] bg-olive rounded-full text-white flex items-center justify-center p-3 text-[13px]">
                                     {{ $index + 1 }}
                                 </span>
                                 <span class="opacity-80 text-[18px] leading-[150%]">{{ $section['title'] }}</span>
@@ -251,12 +262,15 @@ $sections['ru'] = [
                     {{ $texts['conclusion'][app()->getLocale()] }}
                 </p>
             </div>
+
+            {{-- // TODO - Move checkbox from page (Not belongs here)--}}
             <div class="flex items-start justify-start gap-3 mt-5">
-                <x-ui.checkbox></x-ui.checkbox>
-                <div class="leading-[150%]">
-                    {!! $texts['checkbox'][app()->getLocale()] !!}
-                </div>
+                <x-ui.checkbox :name="'consent'"></x-ui.checkbox>
+                <label for="consent" class="leading-[150%]">
+                    {!! __('general.checkbox.terms', ['url' => route('terms')]) !!}
+                </label>
             </div>
+
         </section>
     </div>
 </x-app-layout>

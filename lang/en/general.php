@@ -21,4 +21,15 @@ return [
 
     'products' => 'Catalog',
 
+    'placeholder' => [
+        'select' => [
+            'common' => 'Choose',
+            'vacancy' => 'Choose desired vacancy..',
+        ],
+
+    ],
+
+    'checkbox' => [
+        'terms' => 'I have read and I totally agree to the <a href=":url" class="underline font-bold">Terms and Conditions</a>',
+    ]
 ];

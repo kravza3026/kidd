@@ -169,10 +169,17 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     public function getUrlAttribute(): string
     {
-        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+        $url = route('products.show', [
             'category' => $this->category->slug,
             'product' => $this->slug,
         ]);
+
+        return LaravelLocalization::localizeURL($url);
+
+//        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+//            'category' => $this->category->slug,
+//            'product' => $this->slug,
+//        ]);
     }
 
     /**

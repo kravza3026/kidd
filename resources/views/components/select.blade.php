@@ -5,26 +5,32 @@
     'options' => [],
     'selected' => null,
     'placeholder' => true,
-    'placeholder_option' => [0, '---'],
     'icon' => null,
     'disabled' => false,
     'toggleTag' => '<button type="button" aria-expanded="false"><span class="me-4" data-icon></span><span class="text-gray-800 " data-title></span></button>',
+    'customClass' => '',
 ])
 
-<div>
+@php
+    $disabled_class = $disabled ? 'bg-[#F8F7F2]' : 'bg-white';
+@endphp
+
+<div class="flex flex-col gap-3 mt-3 {{ $customClass }}">
     <!-- Select -->
-    <label for="{{$id}}">
-        {{ $label }}
-        <select @disabled($disabled) name="{{ $name }}" id="{{$id}}" class="py-2 px-3 pe-8 flex w-full text-charcoal {{ $disabled ? 'bg-gray-100' : '' }} text-sm leading-none border border-light-border rounded-lg">
+    @if ($label)
+        <label for="{{ $id ?? Str::kebab($name) }}" class="text-[14px] font-bold">
+            {{ $label }}
+        </label>
+    @endif
+        <select @disabled($disabled) name="{{$name}}" id="{{$id}}"
+                {{ $attributes->merge(['class' => "p-3 pe-8 flex w-full text-charcoal ${disabled_class} text-sm leading-none
+                border border-light-border focus:outline-hidden rounded-xl"]) }}>
             @if($placeholder)
-                <option value="{{ $placeholder_option[0] }}">{{ $placeholder_option[1] }}</option>
+                <option value="0">{{ $placeholder }}</option>
             @endif
             @foreach($options as $key => $option)
-                <option value="{{ $key }}" @selected($key == $selected)>
-                    {{ $option }}
-                </option>
+                <option value="{{ $key }}" @selected($key == $selected)>{{$option}}</option>
             @endforeach
         </select>
-    </label>
     <!-- End Select -->
 </div>

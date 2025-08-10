@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="pageContent">
-        <section class="py-section container grid lg:grid-cols-12 justify-between">
-            <div class="pr-5 col-span-6">
-                <h2 class="font-bold text-[30px] lg:text-[24px] leading-[-2%]">
+        <section class="py-section container">
+            <div class="mx-auto max-w-5xl">
+                <h2 class="font-bold text-xl lg:text-2xl leading-[-2%]">
                     {{ $vacancy->title }}
                 </h2>
                 <p>
@@ -36,8 +36,15 @@
                     <br>
                     <br>
 
-                    <a class="button px-5 py-4" href="{{ route('vacancy.application.create', $vacancy) }}">Apply for vacancy</a>
+
                 </p>
+
+                <div class="flex">
+                    <a class="button px-5 py-4" href="{{ route('vacancy.application.create', $vacancy) }}">
+                        {{ __('Apply now') }}
+                    </a>
+                </div>
+
             </div>
         </section>
     </div>

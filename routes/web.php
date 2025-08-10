@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localize', 'localizationRedirect', 'localeSessionRedirect', 'localeCookieRedirect']
+    'middleware' => ['localize', 'localizationRedirect', 'localeSessionRedirect', 'localeCookieRedirect'],
 ], function () {
-    require __DIR__.'/auth.php';
 
 
     Route::get('/', [HomeController::class, 'index'])
@@ -51,15 +50,7 @@ Route::group([
 
 
     Route::get('cart', [CartController::class, 'index'])
-        ->name('cart');
-    Route::get('cart/items', [CartController::class, 'show'])
-        ->name('cart.items');
-    Route::post('cart', [CartController::class, 'store'])
-        ->name('cart.store');
-    Route::put('cart/{itemHash}', [CartController::class, 'update'])
-        ->name('cart.update');
-    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
-        ->name('cart.destroy');
+        ->name('cart.index');
 
 
     Route::group([

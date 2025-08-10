@@ -11,22 +11,32 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
-        apiPrefix: 'v1',
         then: function () {
+
+            Route::middleware([
+                'web',
+                'localize',
+                'localizationRedirect',
+                'localeSessionRedirect',
+                'localeCookieRedirect',
+            ])
+                ->prefix(LaravelLocalization::setLocale())
+                ->group(base_path('routes/auth.php'));
 
             Route::middleware('web')
                 ->domain(config('app.admin_url'))
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-
             Route::middleware('api')
                 ->domain(config('app.api_url'))
                 ->name('api.')
                 ->prefix('v1')
                 ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->domain(config('app.shop_url'))
+                ->group(base_path('routes/web.php'));
 
         },
     )
@@ -35,7 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
 //        $middleware->throttleApi('api', true);
 
         $middleware->validateCsrfTokens(except: [
-            'api.kidd.test/v1/*',
+//            'api.kidd.test/v1/*',
         ]);
         $middleware->encryptCookies(except: [
             'favorites',
@@ -44,6 +54,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->prependToPriorityList(
             before: \Illuminate\Routing\Middleware\SubstituteBindings::class,
             prepend: \App\Http\Middleware\SetDefaultLocaleForUrls::class,
+        );
+
+        $middleware->appendToPriorityList(
+            after: \App\Http\Middleware\SetDefaultLocaleForUrls::class,
+            append: \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         );
 
         $middleware->alias([

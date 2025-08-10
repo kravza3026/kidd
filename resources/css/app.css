@@ -150,6 +150,16 @@ ul.markers{
         opacity: 80%;
     }
 }
+
+select {
+    -webkit-appearance: none; /* For older Safari */
+    appearance: none;
+
+    background-image: url("../images/icons/select-arrows.svg");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+}
+
 /* <span class= "border border-slate-300 rounded-full w-2 h-2 peer-checked:hidden"> </span> */
 .checkboxLabelCircle::after {
     content: '';

@@ -8,7 +8,7 @@
     <label class="flex items-center cursor-pointer relative">
         <input
             type="checkbox"
-            id="{{ $id }}"
+            id="{{ $id ?? Str::kebab($name) }}"
             name="{{ $name }}"
             @checked(old($name, $modelValue))
             {{ $attributes->merge([

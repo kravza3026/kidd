@@ -26,15 +26,20 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'min:1', 'max:30'],
+            'last_name' => ['required', 'string', 'min:1', 'max:30'],
             'phone' => [
                 'required',
                 Rule::unique(User::class, 'phone'),
                 (new Phone)->country(['MD', 'RO'])->type('mobile')],
 
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', 'min:8'],
+            'email' => [
+                'required',
+                'email',
+                'max:200',
+                Rule::unique(User::class, 'email')
+            ],
+            'password' => ['required', 'confirmed', 'min:6'],
         ];
     }
 
@@ -59,8 +64,8 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone.unique' => __('validation.custom.phone.unique', locale: 'ro'),
-            'phone.required' => __('validation.custom.phone.required', locale: 'ro'),
+            'phone.unique' => __('validation.custom.phone.unique'),
+            'phone.required' => __('validation.custom.phone.required'),
         ];
     }
 

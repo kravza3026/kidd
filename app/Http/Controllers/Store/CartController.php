@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Store;
 
 use App\Coupons\FreeDeliveryCoupon;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Vite;
@@ -183,12 +182,11 @@ class CartController extends Controller
         return response([
             'alert' => [
                 'title' => $product->name,
-                'type' => "cart",
+                'type' => "cart", // Example: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
                 'message' => __('alerts.addedToCart'),
-                'icon' => 'cart', // Example: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
                 'button' => [
                     'label' => __('menu.cart'),
-                    'href' => route('cart'),
+                    'href' => route('cart.index'),
                 ],
             ],
         ], status: 200);
@@ -198,7 +196,9 @@ class CartController extends Controller
     public function update(Request $request, $itemHash)
     {
 
-        $variant = ProductVariant::findOrFail($request->variant_id);
+        $variant = ProductVariant::findOrFail($request->input('variant_id'));
+
+        LaraCart::updateItem($itemHash, 'itemID', $variant->product);
 
         LaraCart::updateItem($itemHash, 'qty', $request->quantity);
         LaraCart::updateItem($itemHash, 'price', $variant->price_final);
@@ -208,20 +208,18 @@ class CartController extends Controller
         LaraCart::updateItem($itemHash, 'variant', $variant);
         LaraCart::updateItem($itemHash, 'color', $variant->color);
         LaraCart::updateItem($itemHash, 'size', $variant->size);
-        LaraCart::update();
 
         return response([
             'alert' => [
-                'title' => $variant->product->name,
-                'type' => "info",
-                'message' => __('alerts.cart.updated'),
-                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'title' => 'Cart', // TODO - Translation
+                'type' => "success", // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'message' => __('alerts.cart.updated'), // TODO - Translation
 //                'button' => [
 //                    'label' => __('menu.cart'),
 //                    'href' => route('cart'),
 //                ],
                 'options' => [
-                    'timer' => 1000,
+                    'timer' => 10000,
                 ],
             ],
         ], status: 200);
@@ -234,10 +232,9 @@ class CartController extends Controller
 
         return response([
             'alert' => [
-                'title' => "Success",
-                'type' => "info",
-                'message' => __('alerts.cart.removed'),
-                'icon' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'title' => "Cart", // TODO - Translation
+                'type' => "info", // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'message' => __('alerts.cart.removed'), // TODO - Translation
 //                'button' => [
 //                    'label' => __('menu.cart'),
 //                    'href' => route('cart'),
