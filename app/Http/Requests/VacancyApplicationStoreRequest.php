@@ -31,8 +31,8 @@ class VacancyApplicationStoreRequest extends FormRequest
             'last_name' => ['required', 'string', 'min:1', 'max:30'],
             'phone' => ['required', (new Phone)->country(['MD'])->type('mobile')],
             'email' => ['required', 'string', 'min:1', 'max:30'],
-            'cv' => ['required_without:cv_url', 'file', 'mimes:pdf'],
-            'cv_url' => ['required_without:cv', 'nullable', 'active_url:secure'],
+            'cv' => ['required_without:cv_url', 'nullable', 'file', 'mimes:pdf,doc,docx,img,jpeg,png'],
+            'cv_url' => ['required_without:cv', 'nullable', 'active_url'],
             'terms' => 'accepted',
         ];
     }
