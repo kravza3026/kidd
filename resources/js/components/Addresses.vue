@@ -130,6 +130,45 @@ export default {
              }, 300);
          },
 
+         async saveAddress(id) {
+             const index = this.addresses.findIndex(addr => addr.id === id);
+             if (index === -1) {
+                 console.error("Address with id", id, "not found");
+                 return;
+             }
+             const address = this.addresses[index];
+
+
+             try {
+
+                 const { data } = await window.axios.post(
+                     `/account/addresses`,
+                     {
+                         region_id: address.region_id || 0,
+                         city_id: address.city_id || 0,
+                         street_name: address.street_name,
+                         building: address.building,
+                         apartment: address.apartment,
+                         entrance: address.entrance,
+                         floor: address.floor,
+                         address_type: String(address.address_type),
+                     },
+                     { withCredentials: true }
+                 );
+
+                 console.log("Address saved:", data);
+
+                 // Оновлюємо ID, якщо він приходить з сервера
+                 if (data.address?.id) {
+                     address.id = data.address.id;
+                 }
+
+             } catch (error) {
+
+                 console.error("Save error:", error.response?.data || error);
+             }
+         },
+
          confirmRemoveAddress(id) {
              const index = this.addresses.findIndex(addr => addr.id === id);
              if (index !== -1) {
@@ -257,6 +296,7 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
+                        <input type="hidden"  name="region_id" v-model="address.region_id" >
                         <p class="flex items-center opacity-60 text-[14px]">
                             {{ address.region.name[locale] || 'Select district' }}
                         </p>
@@ -288,6 +328,7 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
+                        <input type="hidden"  name="city_id" v-model="address.city_id" >
                         <p class="flex items-center opacity-60 text-[14px]">
                             {{ address.city?.name[locale ?? 'ro'] || 'Select city' }}
                         </p>
@@ -316,6 +357,7 @@ export default {
                     customClass="p-0 h-7.5 placeholder-text-sm"
                     name="street"
                     id="street"
+                    placeholder="str."
                     :value="address.street_name"
                     v-model="address.street_name"
                     aria-label="street"
@@ -326,6 +368,7 @@ export default {
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="building"
                     id="building"
+                    placeholder="bl."
                     :value="address.building"
                     v-model="address.building"
                     aria-label="building"
@@ -336,6 +379,7 @@ export default {
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="apartment"
                     id="apartment"
+                    placeholder="ap."
                     :value="address.apartment"
                     v-model="address.apartment"
                     aria-label="apartment"
@@ -346,6 +390,7 @@ export default {
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="entrance"
                     id="entrance"
+                    placeholder="sc."
                     :value="address.entrance"
                     v-model="address.entrance"
                     aria-label="entrance"
@@ -356,6 +401,7 @@ export default {
                     customClass="p-0 min-h-7.5 placeholder-text-sm"
                     name="floor"
                     id="floor"
+                    placeholder="et."
                     :value="address.floor"
                     v-model="address.floor"
                     aria-label="floor"
@@ -363,7 +409,7 @@ export default {
                 />
                 </div>
             <div class="flex justify-end">
-                <Button customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
+                <Button @click="saveAddress(index)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
             </div>
         </div>
 <!--            Type 4 = Shipping -->

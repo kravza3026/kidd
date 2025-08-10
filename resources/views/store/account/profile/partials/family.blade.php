@@ -11,15 +11,16 @@
     </header>
 
     <div class="family_list mt-6 mb-8 flex flex-col flex-grow gap-y-4">
-        @foreach($user->family as $member)
-            @include('store.account.profile.partials.family-row')
-        @endforeach
+{{--        @foreach($user->family as $member)--}}
+{{--            @include('store.account.profile.partials.family-row')--}}
+{{--        @endforeach--}}
+        <div data-vue-component="AddMember"></div>
     </div>
 
-    <div class="items-center gap-4 flex">
-        <x-primary-button class="!w-auto py-5" type="button">
-            {{ __('+ Add child') }}
-        </x-primary-button>
-    </div>
+{{--    <div class="items-center gap-4 flex">--}}
+{{--        <x-primary-button class="!w-auto py-5" type="button">--}}
+{{--            {{ __('+ Add child') }}--}}
+{{--        </x-primary-button>--}}
+{{--    </div>--}}
 
 </section>

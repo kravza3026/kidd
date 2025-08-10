@@ -29,6 +29,8 @@ return [
 
         'http://kidd.test', // TODO Remove on production
         'https://kidd.test',
+        'http://api.kidd.test',  // API HTTP
+        'https://api.kidd.test', // API HTTPS
     ],
 
     'allowed_origins_patterns' => [

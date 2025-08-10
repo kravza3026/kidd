@@ -42,10 +42,40 @@ class AddressesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        $validated = $request->validate([
+            'address_type' => 'required|string',
+            'region_id' => 'required|integer',
+            'city_id' => 'required|integer',
+            'street_name' => 'required|string',
+            'building' => 'required|string',
+            'apartment' => 'nullable|string',
+            'entrance' => 'nullable|string',
+            'floor' => 'nullable|string',
+            'intercom' => 'nullable|string',
+            'postal_code' => 'nullable|string',
+        ]);
+
+        $user = $request->user();
+
+        $address = $user->addresses()->create($validated);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Address created successfully',
+                'address' => $address
+            ], 201);
+        }
+
+        return redirect()
+            ->route('account.addresses.index')
+            ->with('success', 'Address created successfully');
     }
+
+
 
     /**
      * Display the specified resource.
