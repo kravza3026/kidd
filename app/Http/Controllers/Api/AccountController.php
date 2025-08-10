@@ -16,11 +16,11 @@ class AccountController extends Controller
 
     $user = $request->user();
     $user->load('addresses');
-    $user->load('addresses.region');
+//    $user->load('addresses.region');
 
     $response = [
         'addresses' => $user->addresses,
-        'regions' => Region::get(['id', 'name']),
+//        'regions' => Region::get(['id', 'name']),
     ];
 
     return response($response, 200);

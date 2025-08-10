@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -35,6 +36,19 @@ class GeneralController extends Controller
         }
 
         return response()->json(compact('results'));
+    }
+
+    public function regions(Request $request)
+    {
+        return response()->json(['regions' => Region::orderBy('sort_order')->orderBy('id')->get(['name', 'id'])] );
+    }
+
+    public function cities(Request $request)
+    {
+        return response()->json([
+            'region' => $request->get('region_id'),
+            'cities' => Region::findOrFail($request->get('region_id', 9))->cities()->get(['name', 'id']),
+        ]);
     }
 
 }
