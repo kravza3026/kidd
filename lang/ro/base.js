@@ -52,5 +52,23 @@ export default {
         'removedFromFavorites':'șters din Favorite',
         'addedToCart':'adăugat în Coș',
         'removedFromCart':'șters din Coș',
+    },
+    'address': {
+        'delete': 'Șterge adresa',
+        'edit': 'Editează adresa',
+        'add': 'Adaugă adresa',
+        'new': 'Adresă noua',
+        'save': 'Salvează adresa',
+        'select': 'Alege adresa',
+        'default': 'Implicită',
+        'name': 'Nume',
+        'street': 'Strada',
+        'building': 'Nr.',
+        'entrance': 'Scara',
+        'floor': 'Etaj',
+        'interfon': 'Interfon',
+        'region': 'Regiune',
+        'city': 'Localitate',
+        'zip': 'Cod Poștal',
     }
 }

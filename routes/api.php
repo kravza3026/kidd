@@ -38,6 +38,12 @@ Route::group([
     Route::get('/favorites',[GeneralController::class, 'favorites'])
         ->name('favorites');
 
+    Route::get('regions', [GeneralController::class, 'regions'])
+        ->name('regions');
+
+    Route::get('cities', [GeneralController::class, 'cities'])
+        ->name('cities');
+
     Route::get('cart', [CartController::class, 'show'])
         ->name('cart.index');
     Route::post('cart', [CartController::class, 'store'])

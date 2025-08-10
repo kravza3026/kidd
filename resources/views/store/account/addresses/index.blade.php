@@ -8,7 +8,7 @@
     </div>
 
     @push('scripts')
-{{--        <script src="https://unpkg.com/htmx.org@1.9.2" />--}}
+        <script src="https://unpkg.com/htmx.org@1.9.2" />
     @endpush
 
 </x-app-layout>

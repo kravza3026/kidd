@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue'
+import {reactive, ref} from 'vue'
 import Button from "@/components/ui/Button.vue";
 import SubscribeForm from "@/components/ui/subscribeForm.vue";
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
@@ -12,6 +12,7 @@ import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
+import {debounce} from "lodash";
 
 export default {
      name: 'Addresses',
@@ -23,20 +24,16 @@ export default {
      data(){
          return {
              locale: document.documentElement.lang || 'ro',
-             addresses: [],
-             regions: [],
+             addresses: reactive([]),
+             regions: reactive([]),
              cities: [],
-             dropdownOpen: false,
-             dropdownCityOpen: false,
+             currentRegion: ref(null),
+             _isAddingAddress: false,
              iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
 
          }
      },
-     setup(){
 
-         const dropdownOpen = ref(false)
-         const dropdownCityOpen = ref(false)
-     },
      methods: {
 
          async getAddresses() {
@@ -50,7 +47,8 @@ export default {
                  });
 
          },
-         async getRegions() {
+
+         async getRegions(region_id = null) {
 
              await window.axios.get(`/regions`, {
                      params: {
@@ -65,6 +63,7 @@ export default {
                  });
 
          },
+
          async getCities(region_id = null) {
 
              await window.axios.get(`/cities`, {
@@ -84,18 +83,28 @@ export default {
          addNewAddress(address_type) {
              if (this._isAddingAddress) return;
              this._isAddingAddress = true;
+
              const newAddress = {
                  id: Date.now(), // унікальний ID
                  address_type: address_type,
                  label: '',
                  city_id: 0,
+                 city: {
+                     id: 0,
+                     name: {
+                         'ro': 'Select City',
+                         'ru': 'Select City',
+                         'en': 'Select City',
+                    },
+                 },
+                 region_id: 0,
                  region: {
                      id: 0,
-                     name: [
-                         {'ro': 'Select district'},
-                         {'ru': 'Select district'},
-                         {'en': 'Select district'},
-                     ],
+                     name: {
+                         'ro': 'Select district',
+                         'ru': 'Select district',
+                         'en': 'Select district',
+                    },
                  },
                  street_name: '',
                  building: '',
@@ -111,9 +120,14 @@ export default {
                      confirmingDelete: false
                  },
              };
+
+
              this.addresses.push(newAddress);
 
-             setTimeout(() => (this._isAddingAddress = false), 500);
+             setTimeout(() => {
+                 this._isAddingAddress = false
+                 newAddress.editor.dropdownDistrictOpen = true
+             }, 300);
          },
 
          confirmRemoveAddress(id) {
@@ -138,14 +152,15 @@ export default {
      },
      mounted() {
          this.getAddresses()
+         this.getRegions()
      }
  }
 </script>
 <template>
     <div class=" bg-white shadow sm:rounded-xl p-5">
         <h1 class="text-[24px] font-bold">Shipping addresses</h1>
-<!--    Type 4 = Shipping-->
-        <div v-for="(address, index) in addresses.filter(a => a.address_type === 3)"
+        <!--    Type 4 = Shipping-->
+        <div v-for="(address, index) in addresses.filter(a => a.address_type === 4)"
              :key="address.id" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
@@ -177,7 +192,7 @@ export default {
                     </button>
                     <button v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make is_default</p>
+                            <p class="text-olive font-bold text-[14px]">Make default</p>
                         </div>
                     </button>
                     <div
@@ -243,7 +258,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.region_id || 'Select district' }}
+                            {{ address.region.name[locale] || 'Select district' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
                              :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
@@ -256,8 +271,8 @@ export default {
                         <li
                             v-for="region in regions"
                             :key="region.id"
-                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.region_id = region.id; address.editor.dropdownDistrictOpen = false"
+                            class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                            @click="this.getCities(region.id); address.region_id = region.id; address.region = region; address.editor.dropdownDistrictOpen = false"
                         >
                             {{ region.name[locale] }}
                         </li>
@@ -274,7 +289,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.city || 'Select city' }}
+                            {{ address.city?.name[locale ?? 'ro'] || 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
                         :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"  />
@@ -282,16 +297,16 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownCityOpen"
-                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
                             v-for="city in cities"
-                            :key="city"
+                            :key="city.id"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.city = city; address.editor.dropdownCityOpen = false"
+                            @click="address.city_id = city.id; address.city = city; address.editor.dropdownCityOpen = false"
 
                         >
-                            {{ city }}
+                            {{ city.name[locale ?? 'ro'] }}
                         </li>
                     </ul>
                 </div>
@@ -351,9 +366,9 @@ export default {
                 <Button customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
             </div>
         </div>
-<!--            Type 3 = Shipping -->
+<!--            Type 4 = Shipping -->
         <Button
-            @click="addNewAddress(3)"
+            @click="addNewAddress(4)"
             customClass="py-2 md:py-2 w-fit"
             class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
 
@@ -363,7 +378,7 @@ export default {
     <div class=" mt-5 bg-white shadow sm:rounded-xl p-5">
         <h1 class="text-[24px] font-bold">Billing addresses</h1>
 <!--        Type 4 = Billing-->
-        <form v-for="(address, index) in addresses.filter(a => a.address_type === 4)"
+        <form v-for="(address, index) in addresses.filter(a => a.address_type === 3)"
              :key="address.id" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
@@ -396,7 +411,7 @@ export default {
                     </button>
                     <button type="button" v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make is_default</p>
+                            <p class="text-olive font-bold text-[14px]">Make default</p>
                         </div>
                     </button>
                     <button type="button"
@@ -430,7 +445,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.region_id || 'Select district' }}
+                            {{ address.region.name[locale ?? 'ro'] ?? 'Select district' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
                              :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
@@ -438,15 +453,15 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownDistrictOpen"
-                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
-                            v-for="district in regions"
-                            :key="district"
+                            v-for="region in regions"
+                            :key="region.id"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.region_id = district; address.editor.dropdownDistrictOpen = false"
+                            @click="this.getCities(region.id); address.region_id = region.id; address.region = region; address.editor.dropdownDistrictOpen = false"
                         >
-                            {{ district.name[locale] }}
+                            {{ region.name[locale ?? 'ro'] }}
                         </li>
                     </ul>
 
@@ -461,7 +476,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
                         <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.city || 'Select city' }}
+                            {{ address.city?.name[locale ?? 'ro'] ?? 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
                              :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"  />
@@ -469,16 +484,16 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownCityOpen"
-                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
                             v-for="city in cities"
-                            :key="city"
+                            :key="city.id"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.city = city; address.editor.dropdownCityOpen = false"
+                            @click="address.city_id = city.id; address.city = city; address.editor.dropdownCityOpen = false"
 
                         >
-                            {{ city }}
+                            {{ city.name[locale ?? 'ro'] }}
                         </li>
                     </ul>
                 </div>
@@ -542,7 +557,7 @@ export default {
 <!--            Type 4 = Billing-->
             <Button
                 customClass="py-2 md:py-2 w-fit"
-                @click="addNewAddress(4)"
+                @click="addNewAddress(3)"
                 class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
             </Button>
         </button>
