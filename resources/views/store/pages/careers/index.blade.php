@@ -1,37 +1,4 @@
-@php
-    $jobs = [
-        [
-            'title' => 'SEO Marketing Manager',
-            'updated' => '2 days ago',
-            'link' => '/',
-            'tags' => ['Part-time', 'Remote'],
-        ],
-        [
-            'title' => 'Frontend Developer',
-            'updated' => '5 days ago',
-            'link' => '/frontend',
-            'tags' => ['Full-time', 'On-site'],
-        ],
-        [
-            'title' => 'Content Writer',
-            'updated' => '1 week ago',
-            'link' => '/writer',
-            'tags' => ['Freelance', 'Remote'],
-        ],
-        [
-            'title' => 'Product Manager',
-            'updated' => '3 days ago',
-            'link' => '/product',
-            'tags' => ['Full-time', 'Hybrid'],
-        ],
-        [
-            'title' => 'UI/UX Designer',
-            'updated' => '2 hours ago',
-            'link' => '/designer',
-            'tags' => ['Part-time', 'Remote'],
-        ],
-    ];
-@endphp
+
 <x-app-layout>
     <div class="pageContent ">
         <section class="py-section  container grid lg:grid-cols-12 justify-between">
@@ -69,33 +36,33 @@
         </section>
 
         <section class="py-section bg-light-orange">
-            <div class="container px-48">
-                <h2 class="text-center opacity-80 text-[48px] font-bold leading-[175%]">Do the work that matters</h2>
-                <p class="text-center leading-[175%] opacity-60 pb-10">We are hiring now so please don’t hesitate to contact</p>
+            <div class="container lg:px-48">
+                <h2 class="text-center opacity-80 text-[30px] lg:text-[48px] font-bold leading-[175%]">Do the work that matters</h2>
+                <p class="text-center leading-[175%] opacity-60 pb-10 text-[14px] lg:text-base">We are hiring now so please don’t hesitate to contact</p>
                 <div class="positions">
                     <hr class="border-light-border">
                     @foreach($vacancies as $vacancy)
-                        <div class="flex justify-between my-5">
+                        <a href="{{ $vacancy->url }}" class="group grid lg:flex justify-between my-5 relative">
                             <div>
                                 <p class="text-[20px] leading-[130%] font-medium">{{ $vacancy->title }}</p>
                                 <p class="opacity-40 text-[12px] leading-[175%]">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
-                                <a href="{{ $vacancy->url }}" class="text-olive flex items-center gap-x-2 mt-5">
-                                    Apply now
-                                    <span>
+                                <div  class="text-olive flex items-center gap-x-2 mt-5">
+                                    <span class="hidden lg:block">Apply now</span>
+                                    <span class="text-charcoal/20 group-hover:text-olive lg:text-olive absolute top-1 right-1 lg:top-0 lg:relative">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path d="M3.73334 2.66666H12.6667C13.0349 2.66666 13.3333 2.96513 13.3333 3.33332V12.2667M2.66667 13.3333L12.8 3.19999"
                                                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </span>
-                                </a>
+                                </div>
                             </div>
-                            <div class="max-w-1/2 flex gap-x-2 flex-wrap">
+                            <div class="lg:max-w-1/2 flex gap-x-2 flex-wrap">
                                 @foreach($vacancy->tags as $tag)
                                     <span class="bg-white font-bold text-[14px] h-fit border-light-border border-1 py-2 px-3 rounded-full">{{ $tag->name }}</span>
                                 @endforeach
                             </div>
-                        </div>
+                        </a>
                         <hr class="border-light-border">
                     @endforeach
                 </div>

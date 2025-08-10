@@ -1,5 +1,6 @@
 @props([
     'label' => null,
+    'required' => false,
     'type' => 'text',
     'name' => null,
     'id' => null,
@@ -16,6 +17,7 @@
         </label>
     @endif
     <input
+        @required($required)
         type="{{ $type }}"
         name="{{ $name }}"
         id="{{ $id ?? Str::kebab($name) }}"

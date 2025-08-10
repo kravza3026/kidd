@@ -2,11 +2,13 @@
     'modelValue' => false,
     'id' => null,
     'name' => null,
+    'required' => false
 ])
 
 <div>
     <label class="flex items-center cursor-pointer relative">
         <input
+            @required($required)
             type="checkbox"
             id="{{ $id ?? Str::kebab($name) }}"
             name="{{ $name }}"

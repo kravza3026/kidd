@@ -1,3 +1,4 @@
+
 <div data-member-id="{{ $member->id }}">
 <div class="w-full rounded-xl border border-gray-100 p-4">
     <div class="flex flex-col items-start gap-1">
@@ -17,6 +18,8 @@
                     </span>
                 </div>
             </div>
+
+
             <div class="flex gap-2">
                 @can('update', $member)
                     <button

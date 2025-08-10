@@ -1,5 +1,5 @@
 @php
-    $genders = \App\Models\Gender::all(['id', 'name'])->toArray();
+    $genders = \App\Models\Gender::all(['id', 'name']);
 @endphp
 <div data-member-id="{{ $member->id }}">
     <form
@@ -19,32 +19,48 @@
                 </div>
 
             </div>
+            <x-select
+                id="gender_id"
+                name="gender_id"
+                :label="'Gender'"
+                :options="$genders"
+                :selected="old('gender_id', $member->gender_id ?? null)"
+                :placeholder="true"
+                :placeholder-option="[0, 'Select gender']"
+                class="mt-1 block w-full border rounded px-2 py-1"
+            >
 
-            <div>
-                <label for="gender_id" class="block font-medium text-gray-700">Gender</label>
-                <select id="gender_id" name="gender_id" class="mt-1 block w-full border rounded px-2 py-1" required>
-                    @foreach(\App\Models\Gender::all() as $gender)
-                        <option value="{{ $gender->id }}" @if($gender->id == $member->gender_id) selected @endif>
-                            {{ $gender->name }}
-                        </option>
-                    @endforeach
-                </select>
+            </x-select>
+
+{{--            <div>--}}
+{{--                <label for="gender_id" class="block font-medium text-gray-700">Gender</label>--}}
+{{--                <select id="gender_id" name="gender_id" class="mt-1 block w-full border rounded px-2 py-1" required>--}}
+{{--                    @foreach(\App\Models\Gender::all() as $gender)--}}
+{{--                        <option value="{{ $gender->id }}" @if($gender->id == $member->gender_id) selected @endif>--}}
+{{--                            {{ $gender->name }}--}}
+{{--                        </option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
+
+
+
+            <div class="mt-4">
+                <x-ui.input-label id="birth_date" for="birth_date" value="{{ $member->birth_date->format('Y-m-d') }}" :type="'date'" required :placeholder="'Birth Date'" name="name" :label="'Height (cm)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
 
-            <div>
-                <label for="birth_date" class="block font-medium text-gray-700">Birth Date</label>
-                <input type="date" id="birth_date" name="birth_date" value="{{ $member->birth_date->format('Y-m-d') }}" class="mt-1 block w-full border rounded px-2 py-1" required>
+            <div class="mt-4">
+                <x-ui.input-label id="height" for="height" value="{{ $member->height }}" :type="'name'" :placeholder="'Height (cm)'" name="name" :label="'Height (cm)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
 
-            <div>
-                <label for="height" class="block font-medium text-gray-700">Height (cm)</label>
-                <input type="number" id="height" name="height" value="{{ $member->height }}" min="10" max="300" class="mt-1 block w-full border rounded px-2 py-1" required>
+            <div class="mt-4">
+                <x-ui.input-label id="weight" for="weight" value="{{ $member->weight }}" :type="'number'" :placeholder="'Weight (grams)'" name="weight" :label="'Weight (grams)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
 
-            <div>
-                <label for="weight" class="block font-medium text-gray-700">Weight (grams)</label>
-                <input type="number" id="weight" name="weight" value="{{ $member->weight }}" min="100" max="200000" class="mt-1 block w-full border rounded px-2 py-1" required>
-            </div>
+
 
             <div>
                 <label for="notes" class="block font-medium text-gray-700">Notes</label>

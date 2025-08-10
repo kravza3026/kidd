@@ -1,55 +1,79 @@
-<form class="w-full bg-white rounded-xl border border-gray-100 p-4" hx-post="{{ route('family.store') }}" hx-target="this" hx-swap="outerHTML">
-    <div class="flex flex-col items-start gap-1">
-        <div class="flex flex-1 w-full justify-between items-center">
-            <div class="flex">
-                <div class="size-9 flex items-center justify-center rounded-full">
-                    <img src="{{ Vite::image('baby_unknown.svg') }}" alt="Gender icon"/>
+@php
+    $genders = \App\Models\Gender::all(['id', 'name']);
+@endphp
+<div data-member-id="new">
+<form class="w-full bg-white rounded-xl border border-gray-100 p-4"
+      method="POST" action="{{ route('family.store') }}" hx-post="{{ route('family.store') }}" hx-target="closest div[data-member-id='new']" hx-swap="outerHTML">
+    @csrf
+
+    <div class="flex flex-col items-start gap-1 w-full">
+        <div class="flex flex-col gap-4 w-full">
+            <div>
+                <div class="mt-4">
+                    <x-ui.input-label for="name" value="{{ $member->name }}" :type="'name'" name="name" :label="__('Name')" required autocomplete="name"/>
+                    <x-input-error :messages="$errors->get('name')" class="mt-2"/>
                 </div>
-                <div class="ml-4 flex items-center">
-                    <h3 class="text-lg leading-5 font-medium text-gray-900">
-                        Name
-                    </h3>
-                </div>
+
             </div>
-            <div class="flex gap-2">
-                <button type="submit" class="inline-flex gap-x-2 items-center px-3 py-2.5 bg-olive border border-darkest-snow rounded-full font-semibold text-xs text-snow tracking-widest hover:bg-dark-olive">
-                    <img src="{{ Vite::image('check.png') }}" alt=""> Save
-                </button>
-                <button hx-on="click remove closest form" type="button" class="inline-flex items-center px-3 py-2.5 bg-white border border-darkest-snow rounded-full font-semibold text-xs text-olive
-                tracking-widest hover:bg-dark-snow">
-                    Cancel
-                </button>
+            <x-select
+                id="gender_id"
+                name="gender_id"
+                :label="'Gender'"
+                :options="$genders"
+                :selected="old('gender_id', $member->gender_id ?? null)"
+                :placeholder="true"
+                :placeholder-option="[0, 'Select gender']"
+                class="mt-1 block w-full border rounded px-2 py-1"
+            >
+
+            </x-select>
+
+            {{--            <div>--}}
+            {{--                <label for="gender_id" class="block font-medium text-gray-700">Gender</label>--}}
+            {{--                <select id="gender_id" name="gender_id" class="mt-1 block w-full border rounded px-2 py-1" required>--}}
+            {{--                    @foreach(\App\Models\Gender::all() as $gender)--}}
+            {{--                        <option value="{{ $gender->id }}" @if($gender->id == $member->gender_id) selected @endif>--}}
+            {{--                            {{ $gender->name }}--}}
+            {{--                        </option>--}}
+            {{--                    @endforeach--}}
+            {{--                </select>--}}
+            {{--            </div>--}}
+
+
+
+            <div class="mt-4">
+                <x-ui.input-label id="birth_date" for="birth_date" value="" :type="'date'" required :placeholder="'Birth Date'" name="name" :label="'Height (cm)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
-        </div>
-        <div class="flex mt-3 flex-1 w-full items-center">
-            <div class="h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="w-4 h-4 relative opacity-40"></div>
-                <div class="grow shrink basis-0 text-charcoal text-sm font-normal  leading-[14px]">
-                    {{ \Illuminate\Support\Carbon::now()->format('d M Y') }}
-                </div>
+
+            <div class="mt-4">
+                <x-ui.input-label id="height" for="height" value="" :type="'name'" :placeholder="'Height (cm)'" name="name" :label="'Height (cm)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
-            <div class="h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0 text-charcoal text-sm font-normal  leading-[14px]">
-                    Gender
-                </div>
-                <div class="w-4 h-4 relative opacity-40"></div>
+
+            <div class="mt-4">
+                <x-ui.input-label id="weight" for="weight" value="" :type="'number'" :placeholder="'Weight (grams)'" name="weight" :label="'Weight (grams)'" />
+                <x-input-error :messages="$errors->get('height')" class="mt-2"/>
             </div>
-            <div class="w-[72px] h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0"><span class="text-charcoal text-sm font-normal  leading-[14px]">
-                        height
-                    </span><span
-                        class="text-charcoal/60 text-sm font-normal  leading-[14px]"> cm</span></div>
+
+
+
+            <div>
+                <label for="notes" class="block font-medium text-gray-700">Notes</label>
+                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full border rounded px-2 py-1">{{ $member->notes }}</textarea>
             </div>
-            <div class="w-[72px] h-8 px-2.5 py-2 bg-white rounded-lg shadow border border-[#eeeeee] justify-start items-center gap-2 flex">
-                <div class="grow shrink basis-0">
-                    <span class="text-charcoal text-sm font-normal  leading-[14px]">
-                        weight
-                    </span>
-                    <span class="text-charcoal/60 text-sm font-normal  leading-[14px]">
-                        {{ __('general.kg') }}
-                    </span>
-                </div>
-            </div>
+
+
         </div>
     </div>
+    <div class="flex justify-end mt-4 gap-3">
+        <x-secondary-button type="button" onclick="this.closest('div[data-member-id]').remove()">
+            {{ __('Cancel') }}
+        </x-secondary-button>
+
+        <x-primary-button type="submit">
+            {{ __('Save') }}
+        </x-primary-button>
+    </div>
 </form>
+</div>

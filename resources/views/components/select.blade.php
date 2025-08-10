@@ -23,7 +23,7 @@
         </label>
     @endif
         <select @disabled($disabled) name="{{$name}}" id="{{$id}}"
-                {{ $attributes->merge(['class' => "p-3 pe-8 flex w-full text-charcoal ${disabled_class} text-sm leading-none
+                {{ $attributes->merge(['class' => "p-3 pe-8 flex w-full text-charcoal ${disabled_class} text-sm
                 border border-light-border focus:outline-hidden rounded-xl"]) }}>
             @if($placeholder)
                 <option value="0">{{ $placeholder }}</option>
