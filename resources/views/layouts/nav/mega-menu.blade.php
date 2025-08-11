@@ -30,7 +30,7 @@
                             {!! $category->icon !!}
                         </div>
                         <div class="pl-3 lg:pl-0 small-cart-title grid items-end">
-                            <p class="p-0 m-0 font-[600] group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">
+                            <p class="p-0 m-0 font-normal group-hover:text-white duration-500 transition-all ease-in-out lg:text-[20px]">
                                 {{ $category->name }}
                             </p>
                         </div>

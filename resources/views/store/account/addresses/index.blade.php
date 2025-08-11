@@ -3,7 +3,16 @@
     <div class="max-w-5xl mx-auto bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
         <div class="bg-white shadow sm:rounded-xl">
             @include('store.account.nav')
-           <div data-vue-component="Addresses" class="p-10"></div>
+            <div data-vue-component="Addresses" class="p-10"></div>
+
+            <div class="flex flex-col justify-center items-center my-12 py-12">
+                <div class="flex justify-center items-center -mb-6">
+                    <img src="{{ Vite::image('common/empty_addresses.jpg') }}" alt=""/>
+                </div>
+                <h3 class="flex justify-center items-center font-extrabold text-lg text-gray-900">
+                    {{ __('No saved addresses') }}
+                </h3>
+            </div>
         </div>
     </div>
 

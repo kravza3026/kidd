@@ -19,7 +19,11 @@ class VacanciesApplicationController extends Controller
     {
 
         $vacancies = Vacancy::pluck('title', 'id');
-        return view('store.pages.careers.application.create', compact('vacancy', 'vacancies'));
+
+        return view('store.pages.careers.application.create', [
+            'vacancies' => $vacancies,
+            'vacancy' => $vacancy,
+        ]);
     }
 
     /**
@@ -27,15 +31,23 @@ class VacanciesApplicationController extends Controller
      */
     public function store(VacancyApplicationStoreRequest $request, Vacancy $vacancy)
     {
+        $applicationData = $request->validatedExcept(['cv', 'terms']);
 
-        // TODO - Vacancy Application logic.
+        if($request->hasFile('cv')) {
+            $applicationData['cv_file_path'] = $request->file('cv')
+                ->store('vacancies/'.$request->vacancy_id.'/cv', 'local');
+        }
 
+        VacancyApplication::create($applicationData);
 
         // TODO - Make into success modal.
         Session::flash('toast', [
             'title' => 'Vacancy', // TODO - Translate.
             'type' => 'success',
             'message' => 'Application submitted successfully.', // TODO - Translate.
+            'options' => [
+                'timer' => 10000,
+            ],
 //            'button' => [
 //                'href' => route('vacancy.index'),
 //                'label' => 'Vacancies', // TODO - Translate.
@@ -44,35 +56,4 @@ class VacanciesApplicationController extends Controller
         return redirect()->route('vacancy.show', $vacancy);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(VacancyApplication $vacancyApplication)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(VacancyApplication $vacancyApplication)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, VacancyApplication $vacancyApplication)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(VacancyApplication $vacancyApplication)
-    {
-        //
-    }
 }

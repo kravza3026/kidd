@@ -6,9 +6,9 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Sluggable\SlugOptions;
@@ -55,6 +55,15 @@ class Vacancy extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Relation for applicants for this vacancy.
+     * @return HasMany
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(VacancyApplication::class);
     }
 
     /**

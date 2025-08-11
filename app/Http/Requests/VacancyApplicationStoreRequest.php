@@ -26,20 +26,31 @@ class VacancyApplicationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vacancy' => ['required', 'exists:vacancies,id'],
-            'first_name' => ['required', 'string', 'min:1', 'max:30'],
-            'last_name' => ['required', 'string', 'min:1', 'max:30'],
+            'vacancy_id' => ['required', 'exists:vacancies,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
+            'first_name' => ['required', 'string', 'min:1', 'max:40'],
+            'last_name' => ['required', 'string', 'min:1', 'max:40'],
             'phone' => ['required', (new Phone)->country(['MD'])->type('mobile')],
-            'email' => ['required', 'string', 'min:1', 'max:30'],
-            'cv' => ['required_without:cv_url', 'nullable', 'file', 'mimes:pdf,doc,docx,img,jpeg,png'],
-            'cv_url' => ['required_without:cv', 'nullable', 'active_url'],
-            'terms' => 'accepted',
+            'email' => ['required', 'email', 'min:1', 'max:150'],
+            'cv' => ['required_without:cv_url', 'missing_if:cv_url,any', 'file', 'mimes:pdf,doc,docx,img,jpeg,png'],
+            'cv_url' => ['required_without:cv', 'sometimes'],
+            'terms' => ['accepted'],
         ];
     }
 
 
     protected function prepareForValidation(): void
     {
+        // Inject the current vacancy (ID) into the request from the route parameter
+        $this->merge([
+            'vacancy_id' => $this->route()->parameter('vacancy')->id,
+        ]);
+
+        // Inject the current authenticated user into the request if its available
+        $this->merge([
+            'user_id' => auth()->check() ? $this->user()->id : null,
+        ]);
+
         // Normalize phone number by removing spaces, parentheses, dashes, and dots
         if ($this->has('phone')) {
             $this->merge([
@@ -47,6 +58,11 @@ class VacancyApplicationStoreRequest extends FormRequest
             ]);
         }
 
+    }
+
+    protected function passedValidation(): void
+    {
+//        $this->dd($this->replace(['user_id' => 111]), $this->validatedExcept(['cv_url', 'cv', 'terms']),$this->validated(), $this->data());
     }
 
 }

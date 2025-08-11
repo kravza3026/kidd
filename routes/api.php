@@ -22,7 +22,10 @@ Route::group([
     Route::resource('family', FamilyController::class);
 
     Route::get('addresses', [AccountController::class, 'addresses'])
-        ->name('addresses');
+        ->name('addresses.index');
+
+    Route::post('addresses', [AccountController::class, 'storeAddress'])
+        ->name('addresses.store');
 
     Route::get('/', fn (Request $r) => $r->user())
         ->name('user');

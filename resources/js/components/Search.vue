@@ -36,7 +36,11 @@ export default {
             const query = this.searchQuery.trim().toLowerCase();
 
             // TODO - set url from global storage and easy accessible.
-            await axios.get(this.route('search', {term:query}, false) )
+            await axios.get('search', {
+                params: {
+                    term: query
+                }
+            })
                 .then(response => {
                     this.products = response.data.results;
                     this.processed = true;
@@ -55,7 +59,7 @@ export default {
 
         handleType: _.debounce(function() {
             this.search();
-        }, 350),
+        }, 300),
 
         openSearchFromOutside() {
             this.$refs.searchInput?.focus();
@@ -145,6 +149,7 @@ export default {
                         ref="searchInput"
                         v-model="searchQuery"
                         @input="handleType"
+                        name="term"
                         type="text"
                         class="w-full focus:outline-hidden h-[50px] m-2 pl-12 lg:mx-0 lg:pl-5 pr-12 rounded-md bg-light-orange"
                         placeholder=""
