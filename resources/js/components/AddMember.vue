@@ -6,7 +6,7 @@ import SubscribeForm from "@/components/ui/subscribeForm.vue";
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 import clickOutside from "@/clickOutside.js";
 import iconMarker from "@img/icons/marker_outline.png"
-import iconFavorite from "@img/icons/favorite_white.png"
+import iconUnknow from "@img/common/baby_unknown.svg"
 import iconTrash from "@img/common/trash.svg"
 import iconSettings from "@img/icons/Settings_base.svg"
 import iconClose from '@img/icons/close.svg'
@@ -25,13 +25,14 @@ export default {
     data(){
         return {
             family:[],
+            genders:reactive([]),
             locale: document.documentElement.lang || 'ro',
             addresses: reactive([]),
             regions: reactive([]),
             cities: [],
             currentRegion: ref(null),
             _isAddingAddress: false,
-            iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
+            iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck
 
         }
     },
@@ -45,7 +46,19 @@ export default {
         }
     },
     methods: {
+        async getGenders() {
 
+            await window.axios.get(`/genders`, {
+
+            })
+                .then((response) => {
+                  this.genders = response.data
+                    console.log('Genders ', this.genders)
+                }).catch((error) => {
+                    console.error('Server error:', error)
+                });
+
+        },
         async getFamily() {
 
             await window.axios.get(`/user/family`, {
@@ -76,9 +89,10 @@ export default {
                 name:'',
                 birth_date: '',
                 gender: {
-                    id: 1,
-                    name: '',
-                    bg_color: 'bg-olive',
+                    gender_id: 1,
+                    name: {},
+                    bg_color: '',
+                    svg:''
                 },
                 height: '',
                 weight: '',
@@ -169,6 +183,7 @@ export default {
     },
     mounted() {
         this.getFamily()
+        this.getGenders()
     }
 }
 </script>
@@ -179,14 +194,17 @@ export default {
              :key="child.id" class="duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
-                    <div class="p-2 rounded-full" :class="child.gender.bg_color">
-                       <p v-html="child.gender.svg"></p>
+                    <div class="p-2 rounded-full border border-light-border" :class="child.gender.bg_color || 'bg-light-orange '">
+                       <p v-if="child.gender.svg" class="size-5 flex items-center justify-center"
+                           v-html="child.gender.svg || genders[0].svg"></p>
+                        <img v-else :src="iconUnknow" alt="">
                     </div>
                     <BaseInput
                         :disabled="!child.editor.isEditing"
                         customClass="p-0 min-h-7.5 placeholder-text-sm"
                         name="label"
                         id="label"
+                        placeholder="Enter name"
                         :value="child.name"
                         v-model="child.name"
                         aria-label="label"
@@ -226,7 +244,7 @@ export default {
                                 <!-- Confirm -->
                                 <div
                                     class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
-                                    @click.stop="confirmRemove(child.id)"
+                                    @click.stop="removeChild(child.id)"
                                 >
                                     <img :src="iconCheck" alt="" />
                                 </div>
@@ -253,7 +271,39 @@ export default {
 
             <div class="grid grid-cols-12 justify-between gap-x-4 my-4 w-full">
 
+                <div class="relative col-span-3 rounded-lg shadow-sm">
+                    <div
+                        class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                        :class="{'cursor-not-allowed': !child.editor.isEditing,'': child.editor.isEditing}"
+                        @click="child.editor.isEditing && (child.editor.dropdownDistrictOpen = !child.editor.dropdownDistrictOpen)"
+                        v-click-outside="() => child.editor.dropdownDistrictOpen = false"
+                    >
+                        <input type="hidden"  name="region_id" v-model="child.gender.id" >
+                        <p class="flex items-center opacity-60 text-[14px]">
+                            {{ child.gender.name[locale] || 'Gender' }}
+                        </p>
+                        <img :src="selectIcon" alt="selectIcon" class="duration-500"
+                             :class="{'opacity-0': !child.editor.isEditing,'opacity-40': child.editor.isEditing}"   />
+                    </div>
 
+                    <ul
+                        v-if="child.editor.dropdownDistrictOpen"
+                        class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                    >
+                        <li
+                            v-for="gender in genders"
+                            :key="gender.id"
+                            class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                            @click="
+                            child.editor.dropdownDistrictOpen = false;
+                            child.gender = gender
+"
+                        >
+                            {{ gender.name[locale] }}
+                        </li>
+                    </ul>
+
+                </div>
 
                 <BaseInput
                     type="date"
@@ -267,16 +317,7 @@ export default {
                     aria-label="street"
                     class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
-                <BaseInput
-                    :disabled="!child.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="building"
-                    id="building"
-                    placeholder="Gender"
-                    v-model="child.gender.name[locale]"
-                    aria-label="building"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
+
                 <BaseInput
                     :disabled="!child.editor.isEditing"
                     customClass="p-0 min-h-7.5 placeholder-text-sm"

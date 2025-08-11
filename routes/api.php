@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\FamilyController;
+use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Store\CartController;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ Route::group([
 Route::group([
     'middleware' => ['localize']
 ], function () {
-
+    Route::get('/genders', [GenderController::class, 'index']);
     Route::get('search', [GeneralController::class, 'search'])
         ->name('search');
 
