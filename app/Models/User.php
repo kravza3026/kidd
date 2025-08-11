@@ -51,8 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     ];
 
     protected $with = [
-        'favorites',
-        'family',
+        'family', // TODO - Remove/replace when implementing family compatibility functionality/feature.
     ];
 
     /**

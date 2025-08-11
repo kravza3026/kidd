@@ -20,16 +20,6 @@ class VacanciesController extends Controller
         ]);
     }
 
-    public function form(Vacancy $vacancy)
-    {
-        $vacancies = Vacancy::all();
-
-        return view('store.pages.careers.form', [
-            'vacancies' => $vacancies,
-            'vacancy' => $vacancy
-        ]);
-    }
-
     /**
      * Display the specified resource.
      */

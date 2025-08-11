@@ -22,11 +22,11 @@
                         <div class="w-full">
                             <x-select class="p-4"
                                 :label="__('Job title')"
-                                :disabled="false"
+                                :disabled="true"
                                 name="vacancy_id"
                                 id="vacancy_{{ $vacancy->id }}"
-                                :placeholder="__('general.placeholder.select.vacancy')"
-                                :options="$vacancies"
+                                :placeholder="false"
+                                :options="$vacancies->prepend(__('general.placeholder.select.vacancy'), 0)"
                                 :selected="old('vacancy_id', $vacancy->id)
                             ">
                             </x-select>
@@ -67,7 +67,7 @@
                                 </label>
                                 <div id="upload-area" class="border border-dashed border-light-border rounded-xl px-5 py-24 text-center relative">
                                     <div id="upload-button" class="absolute inset-0 grid place-items-center justify-center items-center">
-                                        <input type="file" id="cv" name="cv" class="hidden" />
+                                        <input type="file" id="cv" name="cv" value="{{ old('cv') }}" class="hidden" />
                                         <label for="cv" class="cursor-pointer rounded-lg absolute inset-0 flex flex-col items-center justify-center">
                                             <img src="{{ Vite::image('icons/file.png') }}" class="size-10 mx-auto mb-4" alt="">
                                             <span>Select a file to upload</span>
@@ -84,7 +84,7 @@
                                                         stroke-linecap="round" stroke-dasharray="219.91" stroke-dashoffset="219.91" />
                                             </svg>
                                             <p>Uploading file...</p>
-                                            <div id="progress-text" class="absolute top-[20%] left-[43%] mt-2 text-sm font-bold opacity-65">0%</div>
+                                            <div id="progress-text" class="absolute top-[23%] left-[39%] mt-2 text-sm font-bold opacity-65">0%</div>
                                         </div>
                                         <div class="mt-2 text-olive font-medium bg-light-orange px-3 py-1 rounded-lg cursor-pointer" id="cancel-upload">Cancel</div>
                                     </div>
@@ -109,9 +109,12 @@
                             <x-input-error class="mt-2" :messages="$errors->get('cv_url')"/>
                         </div>
                     </div>
-                    <div class="flex gap-x-4 my-2 items-center">
-                        <x-ui.checkbox required></x-ui.checkbox>
-                        <p class="leading-[-2%]">By applying, I agree to the <a class="font-bold underline" href="/">Privacy Policy</a></p>
+                    <div class="flex gap-x-4 my-8 items-center">
+                        <x-ui.checkbox required name="terms"></x-ui.checkbox>
+                        <label for="terms" class="leading-[-2%]">
+                            {!! __('general.checkbox.terms', ['url' => route('terms')]) !!}
+                        </label>
+                        <x-input-error class="mt-2" :messages="$errors->get('terms')"/>
                     </div>
                     <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
                         <div class="w-full">

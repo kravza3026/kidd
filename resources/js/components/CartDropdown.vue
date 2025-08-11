@@ -80,31 +80,31 @@ export default {
         <transition name="slide-fade" @click.stop>
             <div
                 v-if="open"
-                class="fixed inset-0 h-[calc(100%-162px)] md:h-fit md:inset-auto left-0 md:-right-10 w-full p-5 md:p-0  md:absolute cursor-auto border-t md:border-light-border  top-[72px] md:top-full md:mt-4 md:w-100 bg-white md:shadow-xl md:rounded-md z-50 "
+                class="fixed inset-0 h-[calc(100%-162px)] md:h-fit md:inset-auto left-0 md:-right-12 w-full p-4 md:p-0  md:absolute cursor-auto border-t md:border-light-border  top-[72px] md:top-full md:mt-4 md:w-105 bg-white md:shadow-xl md:rounded-xl z-50 "
             >
                 <i class="w-[15px] h-[15px] hidden md:block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
 
                 <div v-if="cartItems.length > 0">
-                    <div class="flex justify-between p-4 md:border-b md:border-b-light-border">
-                        <h3 class="text-lg font-bold mb-2">{{ $t('cart.title') }}</h3>
-                        <p class="font-bold text-[14px] opacity-40">{{ $t('cart.products_count', cartItems.length) }}</p>
+                    <div class="flex justify-between items-baseline p-4 md:p-6 md:border-b md:border-b-light-border">
+                        <h3 class="text-2xl font-bold">{{ $t('cart.title') }}</h3>
+                        <p class="font-medium text-sm opacity-40">{{ $t('cart.products_count', cartItems.length) }}</p>
                     </div>
-                    <ul  class="p-4 space-y-3 border-b border-b-light-border max-h-[40vh] overflow-y-auto">
+                    <ul  class="p-4 md:px-6 space-y-3 border-b border-b-light-border max-h-[40vh] overflow-y-auto">
                         <li v-for="item in cartItems" :key="item.id" class="flex justify-between gap-4 mb-6">
                             <div class="flex text-start gap-x-2">
-                                <div class="bg-cart-bg p-1 rounded-2xl">
-                                    <img class="w-[54px] h-[54px]" :src="item.img" :alt="item.name">
+                                <div class="size-16 bg-cart-bg p-1 rounded-xl bg-[#F6F6F6]">
+                                    <img class="size-14" :src="item.img" :alt="item.name">
                                 </div>
-                                <div>
-                                    <p class="font-semibold">{{ item.name }}</p>
-                                    <div class="flex">
-                                        <div class="flex items-center gap-x-2 border-r pr-2 border-r-light-border">
-                                            <span class="h-4 w-4 light_border rounded-full" :style="{ backgroundColor: item.color.hex }"></span>
-                                            <p class="opacity-40 font-normal text-[14px]">{{item.color.name}}</p>
+                                <div class="grid grid-col gap-y-1">
+                                    <p class="text-charcoal font-medium text-sm">{{ item.name }}</p>
+                                    <div class="flex items-center">
+                                        <div class="flex items-center-safe gap-x-2 border-r pr-2 border-r-light-border">
+                                            <span class="size-3.5 shadow-xs inset-shadow-charcoal/12  border border-charcoal/10 rounded-full" :style="{ backgroundColor: item.color.hex }"></span>
+                                            <p class="opacity-40 font-normal text-sm">{{item.color.name}}</p>
                                         </div>
-                                        <p class="opacity-40 font-normal text-[14px] pl-2">{{item.size.name}}</p>
+                                        <p class="opacity-40 font-normal text-sm pl-2">{{item.size.name}}</p>
                                     </div>
-                                    <p class="text-sm text-black">x{{ item.quantity }}</p>
+                                    <p class="text-xs text-charcoal">x{{ item.quantity }}</p>
                                 </div>
                             </div>
                             <div>
@@ -112,24 +112,24 @@ export default {
                             </div>
                         </li>
                     </ul>
-                    <div class="flex justify-between p-4">
+                    <div class="flex justify-between p-4 md:px-6">
                         <h3 class="text-lg font-bold mb-2">{{ $t('cart.grand_total')}}</h3>
                         <p class=" text-[18px]">{{ $n(cartGrandTotal / 100, 'currency', 'ro') }}</p>
                     </div>
-                    <div class="px-4">
+                    <div class="px-4 md:px-6 md:pb-6">
                         <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >
                             {{ $t('cart.btn_view_cart')}}
                         </Button>
                     </div>
                 </div>
 
-                <div v-else class="text-center p-4 grid justify-center ">
+                <div v-else class="text-center p-4 md:p-6 grid justify-center ">
                     <img class="mx-auto py-4" :src="basket_empty" alt="">
                     <div class="py-4">
                         <p class="py-1 text-[18px]">
                             {{ $t('cart.empty') }}
                         </p>
-                        <p class="py-1 opacity-60 text-[14px] font-normal">
+                        <p class="py-1 opacity-60 text-sm font-normal">
                             {{ $t('cart.empty_description') }}
                         </p>
                     </div>

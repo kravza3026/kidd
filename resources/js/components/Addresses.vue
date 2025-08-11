@@ -25,12 +25,11 @@ export default {
          return {
              locale: document.documentElement.lang || 'ro',
              addresses: reactive([]),
-             regions: reactive([]),
+             regions: ref([]),
              cities: [],
              currentRegion: ref(null),
-             _isAddingAddress: false,
+             _isAddingAddress: ref(false),
              iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
-
          }
      },
 
@@ -142,18 +141,8 @@ export default {
              try {
 
                  const { data } = await window.axios.post(
-                     `/account/addresses`,
-                     {
-                         region_id: address.region_id || 0,
-                         city_id: address.city_id || 0,
-                         street_name: address.street_name,
-                         building: address.building,
-                         apartment: address.apartment,
-                         entrance: address.entrance,
-                         floor: address.floor,
-                         address_type: String(address.address_type),
-                     },
-                     { withCredentials: true }
+                     '/user/addresses',
+                     address
                  );
 
                  console.log("Address saved:", data);
@@ -298,7 +287,7 @@ export default {
                     >
                         <input type="hidden"  name="region_id" v-model="address.region_id" >
                         <p class="flex items-center opacity-60 text-[14px]">
-                            {{ address.region.name[locale] || 'Select district' }}
+                            {{ address.region.name[locale ?? 'ro'] || 'Select district' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
                              :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
@@ -311,10 +300,10 @@ export default {
                         <li
                             v-for="region in regions"
                             :key="region.id"
-                            class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                            class="px-3 text-xs flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
                             @click="this.getCities(region.id); address.region_id = region.id; address.region = region; address.editor.dropdownDistrictOpen = false"
                         >
-                            {{ region.name[locale] }}
+                            {{ region.name[locale ?? 'ro'] }}
                         </li>
                     </ul>
 
@@ -338,7 +327,7 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownCityOpen"
-                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-xs mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
                             v-for="city in cities"
@@ -499,7 +488,7 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownDistrictOpen"
-                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-xs mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
                             v-for="region in regions"
@@ -530,7 +519,7 @@ export default {
 
                     <ul
                         v-if="address.editor.dropdownCityOpen"
-                        class="absolute z-10 w-full text-sm mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                        class="absolute z-10 w-full text-xs mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
                             v-for="city in cities"

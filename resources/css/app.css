@@ -18,7 +18,6 @@
     --color-olive: #A8BA66;
     --color-dark-olive: #94A652;
     --color-danger: #FD3333;
-    --color-charcoal: #020202;
     --color-light-charcoal: #F8F7F2;
     --color-light-border: #EEEEEE;
 
@@ -34,7 +33,7 @@
     --color-dark-olive: hsla(73, 34%, 49%, 1);
     --color-secondary: hsla(50, 30%, 96%, 1);
     --color-secondary-dark: hsla(70, 35%, 90%, 1);
-    --color-charcoal: hsla(0, 0%, 1%, 1);
+    --color-charcoal: hsl(0, 0%, 1%);
     --color-baby-eyes: hsla(213, 98%, 79%, 1);
     --color-baby-pink: hsla(359, 49%, 84%, 1);
 

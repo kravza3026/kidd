@@ -10,8 +10,8 @@
             @include('store.catalog.products._filters')
         </div>
 
-        <div class="mb-24 space-y-20">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 gap-y-6">
+        <div class="mb-24">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 sm:gap-x-2 lg:gap-x-3 gap-y-12 lg:gap-y-20">
                 <!-- Product grid -->
                 @forelse ($products as $product)
                     <div data-vue-component="ProductCard"

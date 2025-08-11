@@ -9,8 +9,10 @@ use App\Models\Gender;
 use App\Models\Season;
 use App\Models\Size;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Number;
@@ -40,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         Vite::macro('css', fn (string $asset) => $this->asset("resources/css/{$asset}"));
         Vite::macro('js', fn (string $asset) => $this->asset("resources/js/{$asset}"));
         Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
+
+        Request::macro('validatedExcept', function ($except = []) {
+            return Arr::except($this->validated(), $except);
+        });
 
         Number::useLocale(config('app.locale_format'));
         Carbon::setLocale(app()->getLocale());
