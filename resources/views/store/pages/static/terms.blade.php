@@ -245,10 +245,10 @@ $sections['ru'] = [
                                 <span class="size-[18px] bg-olive rounded-full text-white flex items-center justify-center p-3 text-[13px]">
                                     {{ $index + 1 }}
                                 </span>
-                                <span class="opacity-80 text-[18px] leading-[150%]">{{ $section['title'] }}</span>
+                                <span class="opacity-80 text-lg leading-[150%]">{{ $section['title'] }}</span>
                             </p>
 
-                            <ul class="markers pl-13 grid gap-y-3 text-[18px] leading-[150%] pt-2">
+                            <ul class="markers pl-13 grid gap-y-3 text-lg leading-[150%] pt-2">
                                 @foreach($section['items'] as $item)
                                     <li>
                                         <p> {{ $item }}</p>
@@ -258,7 +258,7 @@ $sections['ru'] = [
                         </li>
                     @endforeach
                 </ul>
-                <p class="opacity-80 text-[18px] leading-[175%]">
+                <p class="opacity-80 text-lg leading-[175%]">
                     {{ $texts['conclusion'][app()->getLocale()] }}
                 </p>
             </div>

@@ -19,7 +19,7 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full">
-                <x-ui.input-label id="first_name" :value="old('first_name', $user->first_name)" name="first_name" :label="__('First name')"/>
+                <x-ui.input-label id="first_name" autocomplete="given-name" :value="old('first_name', $user->first_name)" name="first_name" :label="__('First name')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('first_name')"/>
             </div>
@@ -33,7 +33,7 @@
 
         <div class="flex flex-col sm:flex-row items-start gap-6 justify-between">
             <div class="w-full mt-6 sm:mt-0">
-                <x-ui.input-label id="email" :value="old('email', $user->email)" type="email" name="email" :label="__('E-mail address')"/>
+                <x-ui.input-label id="email" autocomplete="email" :value="old('email', $user->email)" type="email" name="email" :label="__('E-mail address')"/>
 
                 <x-input-error class="mt-2" :messages="$errors->profile->get('email')"/>
 

@@ -40,20 +40,11 @@ class VacanciesApplicationController extends Controller
 
         VacancyApplication::create($applicationData);
 
-        // TODO - Make into success modal.
-        Session::flash('toast', [
-            'title' => 'Vacancy', // TODO - Translate.
-            'type' => 'success',
-            'message' => 'Application submitted successfully.', // TODO - Translate.
-            'options' => [
-                'timer' => 10000,
-            ],
-//            'button' => [
-//                'href' => route('vacancy.index'),
-//                'label' => 'Vacancies', // TODO - Translate.
-//            ]
-        ]);
-        return redirect()->route('vacancy.show', $vacancy);
+        // TODO - Make into success modal (store.pages.careers.application.alert).
+
+
+        return redirect()->route('vacancy.show', $vacancy)
+            ->with('success', 'Ваша заявка успішно відправлена!');
     }
 
 }

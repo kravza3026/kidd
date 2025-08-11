@@ -28,7 +28,7 @@
                                         <p class="col-span-4 px-2">Weight</p>
                                     </div>
                                     <hr class="border-light-border">
-                                    <div class="text-[14px]">
+                                    <div class="text-sm">
                                         <div class="grid grid-cols-12 mt-2 p-3 rounded-2xl gap-2 cursor-pointer hover:bg-gray-100">
                                             <p class="font-bold col-span-3">Preemie</p>
                                             <p class="col-span-4">&lt; 55 cm</p>

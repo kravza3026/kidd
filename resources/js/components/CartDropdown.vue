@@ -114,7 +114,7 @@ export default {
                     </ul>
                     <div class="flex justify-between p-4 md:px-6">
                         <h3 class="text-lg font-bold mb-2">{{ $t('cart.grand_total')}}</h3>
-                        <p class=" text-[18px]">{{ $n(cartGrandTotal / 100, 'currency', 'ro') }}</p>
+                        <p class=" text-lg">{{ $n(cartGrandTotal / 100, 'currency', 'ro') }}</p>
                     </div>
                     <div class="px-4 md:px-6 md:pb-6">
                         <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >
@@ -126,7 +126,7 @@ export default {
                 <div v-else class="text-center p-4 md:p-6 grid justify-center ">
                     <img class="mx-auto py-4" :src="basket_empty" alt="">
                     <div class="py-4">
-                        <p class="py-1 text-[18px]">
+                        <p class="py-1 text-lg">
                             {{ $t('cart.empty') }}
                         </p>
                         <p class="py-1 opacity-60 text-sm font-normal">

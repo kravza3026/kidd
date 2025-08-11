@@ -173,7 +173,7 @@ const handleFavoriteClick = (id, name) => {
             </div>
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
-                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 w-fit text-nowrap -top-full bg-danger text-white text-[14px] px-2 py-0 rounded-full ">
+                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 w-fit text-nowrap -top-full bg-danger text-white text-sm px-2 py-0 rounded-full ">
                     -{{ product.variants[0]?.discount_display }}%
                     <div
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>

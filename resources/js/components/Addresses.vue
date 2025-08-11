@@ -215,12 +215,12 @@ export default {
                         <span class="absolute inset-0 bg-black/15 rounded-full"></span>
                         <div class="flex items-center gap-x-2 relative z-10 py-2 px-3">
                             <img :src="iconFavorite" alt="">
-                            <p class="text-white font-bold text-[14px]">Default</p>
+                            <p class="text-white font-bold text-sm">Default</p>
                         </div>
                     </button>
                     <button v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make default</p>
+                            <p class="text-olive font-bold text-sm">Make default</p>
                         </div>
                     </button>
                     <div
@@ -286,7 +286,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
                         <input type="hidden"  name="region_id" v-model="address.region_id" >
-                        <p class="flex items-center opacity-60 text-[14px]">
+                        <p class="flex items-center opacity-60 text-sm">
                             {{ address.region.name[locale ?? 'ro'] || 'Select district' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
@@ -318,7 +318,7 @@ export default {
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
                         <input type="hidden"  name="city_id" v-model="address.city_id" >
-                        <p class="flex items-center opacity-60 text-[14px]">
+                        <p class="flex items-center opacity-60 text-sm">
                             {{ address.city?.name[locale ?? 'ro'] || 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
@@ -350,7 +350,7 @@ export default {
                     :value="address.street_name"
                     v-model="address.street_name"
                     aria-label="street"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -361,7 +361,7 @@ export default {
                     :value="address.building"
                     v-model="address.building"
                     aria-label="building"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -372,7 +372,7 @@ export default {
                     :value="address.apartment"
                     v-model="address.apartment"
                     aria-label="apartment"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -383,7 +383,7 @@ export default {
                     :value="address.entrance"
                     v-model="address.entrance"
                     aria-label="entrance"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -394,7 +394,7 @@ export default {
                     :value="address.floor"
                     v-model="address.floor"
                     aria-label="floor"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 </div>
             <div class="flex justify-end">
@@ -441,12 +441,12 @@ export default {
                         <span class="absolute inset-0 bg-black/15 rounded-full"></span>
                         <div class="flex items-center gap-x-2 relative z-10 py-2 px-3">
                             <img :src="iconFavorite" alt="">
-                            <p class="text-white font-bold text-[14px]">Default</p>
+                            <p class="text-white font-bold text-sm">Default</p>
                         </div>
                     </button>
                     <button type="button" v-else class=" relative border border-light-border shadow-sm cursor-pointer rounded-full">
                         <div class="flex items-center justify-center gap-x-2 relative z-10 py-2 px-3">
-                            <p class="text-olive font-bold text-[14px]">Make default</p>
+                            <p class="text-olive font-bold text-sm">Make default</p>
                         </div>
                     </button>
                     <button type="button"
@@ -479,7 +479,7 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
-                        <p class="flex items-center opacity-60 text-[14px]">
+                        <p class="flex items-center opacity-60 text-sm">
                             {{ address.region.name[locale ?? 'ro'] ?? 'Select district' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
@@ -510,7 +510,7 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
-                        <p class="flex items-center opacity-60 text-[14px]">
+                        <p class="flex items-center opacity-60 text-sm">
                             {{ address.city?.name[locale ?? 'ro'] ?? 'Select city' }}
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
@@ -541,7 +541,7 @@ export default {
                     :value="address.street_name"
                     v-model="address.street_name"
                     aria-label="street"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -551,7 +551,7 @@ export default {
                     :value="address.building"
                     v-model="address.building"
                     aria-label="building"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -561,7 +561,7 @@ export default {
                     :value="address.apartment"
                     v-model="address.apartment"
                     aria-label="apartment"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -571,7 +571,7 @@ export default {
                     :value="address.entrance"
                     v-model="address.entrance"
                     aria-label="entrance"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 <BaseInput
                     :disabled="!address.editor.isEditing"
@@ -581,7 +581,7 @@ export default {
                     :value="address.floor"
                     v-model="address.floor"
                     aria-label="floor"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
             </div>
             <div class="flex justify-end">

@@ -10,7 +10,7 @@
                 </x-ui.size-tag>
             @endforeach
         </ul>
-        <a href="{{ route('products.index') }}" class="text-olive light_border px-4 py-2 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-[14px] mx-2">View all products</a>
+        <a href="{{ route('products.index') }}" class="text-olive light_border px-4 py-2 bg-light-orange hover:bg-light-border animated flex items-center text-nowrap text-sm mx-2">View all products</a>
     </div>
 
     <div class="mt-5">

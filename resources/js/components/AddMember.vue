@@ -83,16 +83,26 @@ export default {
 
         addChild() {
             if (this._isAddingChild) return;
+
+            // Перевіряємо, чи вже є форма для нової дитини
+            const hasUnsaved = this.family.some(child => child.isNew);
+            if (hasUnsaved) {
+                console.warn("Вже є незбережена форма дитини");
+                return;
+            }
+
             this._isAddingChild = true;
+
             const newChild = {
-                id: Date.now(), // унікальний ID
-                name:'',
+                isNew: true,
+                id: Date.now(),
+                name: '',
                 birth_date: '',
                 gender: {
                     gender_id: 1,
                     name: {},
                     bg_color: '',
-                    svg:''
+                    svg: ''
                 },
                 height: '',
                 weight: '',
@@ -101,47 +111,81 @@ export default {
                     dropdownCityOpen: false,
                     dropdownDistrictOpen: false,
                     confirmingDelete: false
-                },
+                }
             };
 
-
             this.family.push(newChild);
-
-            setTimeout(() => {
-                this._isAddingChild = false
-                newChild.editor.dropdownDistrictOpen = true
-            }, 300);
+            this._isAddingChild = false;
         },
 
-        async saveChild(id) {
+        async saveNewChild(id) {
+            const index = this.family.findIndex(child => child.id === id);
+            if (index === -1) return;
+
+            const child = this.family[index];
+            const payload = {
+                id: child.isNew ? null : child.id,
+                name: child.name,
+                birth_date: child.birth_date,
+                gender: child.gender,
+                height: child.height,
+                weight: child.weight,
+            };
+
+            try {
+                const { data } = await window.axios.post(
+                    `/addChild`,
+                    payload,
+                    { withCredentials: true }
+                );
+
+                if (data.child) {
+                    this.family[index] = {
+                        ...this.family[index],
+                        ...data.child,
+                        isNew: false
+                    };
+                }
+            } catch (error) {
+                console.error("Save error:", error.response?.data || error);
+            }
+        },
+
+
+        async updateChild(id) {
             const index = this.family.findIndex(child => child.id === id);
             if (index === -1) {
                 console.error("id", id, "not found");
                 return;
             }
-            const family = this.family[index];
-
-
+            const updatingChild = this.family[index];
+            const options = {
+                id: updatingChild.id,
+                name: updatingChild.name,
+                birth_date: updatingChild.birth_date,
+                gender: updatingChild.gender,
+                height: updatingChild.height,
+                weight: updatingChild.weight,
+            };
+            console.log('update ', options)
             try {
 
                 const { data } = await window.axios.post(
-                    `/`,
-                    {
-
-                    },
+                    `/addChild`,
+                    options,
                     { withCredentials: true }
                 );
 
-
-                // if (data.child?.id) {
-                //     child.id = data.child.id;
-                // }
+                if (data.child) {
+                    this.family[index] = { ...this.family[index], ...data.child };
+                }
 
             } catch (error) {
 
                 console.error("Save error:", error.response?.data || error);
             }
         },
+
         formatBirthDateToInput(birth_date) {
             if (!birth_date) return '';
             return birth_date.split('T')[0];
@@ -174,8 +218,8 @@ export default {
                 this.family[index].editor.isEditing = !this.family[index].editor.isEditing;
             }
         },
-        removeChild(id) {
-            const index = this.family.findIndex(child => child.id === id);
+        removeNewChild(id) {
+            const index = this.family.findIndex(child => child.id === id && child.isNew);
             if (index !== -1) {
                 this.family.splice(index, 1);
             }
@@ -191,7 +235,7 @@ export default {
     <div class=" bg-white">
 
         <div v-for="(child, index) in family"
-             :key="child.id" class="duration-500 my-4 border border-light-border rounded-xl p-5">
+             :key="child.id" class="duration-500  my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
                     <div class="p-2 rounded-full border border-light-border" :class="child.gender.bg_color || 'bg-light-orange '">
@@ -203,8 +247,9 @@ export default {
                         :disabled="!child.editor.isEditing"
                         customClass="p-0 min-h-7.5 placeholder-text-sm"
                         name="label"
-                        id="label"
+                        :id="'label-' + child.id"
                         placeholder="Enter name"
+                        autocomplate="given-name"
                         :value="child.name"
                         v-model="child.name"
                         aria-label="label"
@@ -215,7 +260,7 @@ export default {
 <!--                     TO DO: calculate age-->
 
                 </div>
-                <div class="flex items-center gap-x-2">
+                <div v-if="!child.editor.isEditing" class="flex items-center gap-x-2">
 
                     <div
                         class="cursor-pointer group p-2 border border-light-border rounded-full shadow-sm relative"
@@ -267,6 +312,16 @@ export default {
 
                     </button>
                 </div>
+                <div v-else-if="child.editor.isEditing && !child.isNew" class="flex gap-x-2 items-center">
+                    <Button @click="updateChild(child.id)" :customClass="'w-fit !px-3 !py-1 h-fit !rounded-full font-bold !m-0'">Save child</Button>
+                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1 h-fit text-olive !rounded-full font-bold !m-0'" >Cancel</Button>
+
+                </div>
+                <div v-else class="flex gap-x-2 items-center">
+                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-3 !py-1 h-fit !rounded-full font-bold'">Save child</Button>
+                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1 h-fit text-olive !rounded-full font-bold'" >Cancel</Button>
+
+                </div>
             </div>
 
             <div class="grid grid-cols-12 justify-between gap-x-4 my-4 w-full">
@@ -279,7 +334,7 @@ export default {
                         v-click-outside="() => child.editor.dropdownDistrictOpen = false"
                     >
                         <input type="hidden"  name="region_id" v-model="child.gender.id" >
-                        <p class="flex items-center opacity-60 text-[14px]">
+                        <p class="flex items-center opacity-60 text-sm">
                             {{ child.gender.name[locale] || 'Gender' }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
@@ -294,7 +349,7 @@ export default {
                             v-for="gender in genders"
                             :key="gender.id"
                             class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="
+                            @click="updateChild(child.id);
                             child.editor.dropdownDistrictOpen = false;
                             child.gender = gender
 "
@@ -315,36 +370,39 @@ export default {
                     :value="formatBirthDateToInput(child.birth_date)"
                     v-model="child.birth_date"
                     aria-label="street"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-3 duration-500"
+                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
 
-                <BaseInput
-                    :disabled="!child.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="height"
-                    id="height"
-                    placeholder="height"
-                    v-model="child.height"
-                    aria-label="apartment"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
-                <BaseInput
-                    :disabled="!child.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="weight"
-                    id="weight"
-                    placeholder="weight"
-                    v-model="child.weight"
-                    aria-label="entrance"
-                    class="shadow-sm text-charcoal/60 text-[14px] rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
+                <div class="relative flex items-center col-span-2">
+                    <label class="absolute inset-0 pl-2 text-sm flex items-center w-fit" :for="'height-' + child.id" >cm:</label>
+                    <BaseInput
+                        :disabled="!child.editor.isEditing && !child.isNew"
+                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-9 leading-none"
+                        name="height"
+                        :id="'height-' + child.id"
+                        placeholder="height"
+                        v-model="child.height"
+                        aria-label="apartment"
+                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
+                    />
+                </div>
+                <div class="relative flex items-center col-span-2">
+                    <label class="absolute inset-0 pl-2 text-sm flex items-center w-fit" :for="'weight-' + child.id">gram:</label>
+                    <BaseInput
+                        :disabled="!child.editor.isEditing && !child.isNew"
+                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-12 leading-none"
+                        name="weight"
+                        :id="'weight-' + child.id"
+                        placeholder="weight"
+                        v-model="child.weight"
+                        aria-label="entrance"
+                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
+                    />
+                </div>
 
             </div>
-            <div class="flex justify-end">
-                <Button @click="saveAddress(index)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!child.editor.isEditing}">Save</Button>
-            </div>
+
         </div>
-        <!--            Type 4 = Shipping -->
         <Button
             @click="addChild()"
             customClass="py-2 md:py-2 w-fit"

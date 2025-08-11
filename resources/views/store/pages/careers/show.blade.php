@@ -20,7 +20,7 @@
                    </div>
 
                     <div>
-                        <p class="text-[14px] opacity-40">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
+                        <p class="text-sm opacity-40">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
                     </div>
                 </div>
                 <hr class="my-5 border-light-border">
@@ -69,4 +69,39 @@
 
         </section>
     </div>
+{{--        @include('store.pages.careers.application.alert')--}}
 </x-app-layout>
+<script>
+    @if(session('success'))
+window.addEventListener('DOMContentLoaded', () => {
+    Swal.fire({
+        imageUrl: '{{Vite::image('icons/file.png')}}',
+        imageWidth: 200,
+        imageHeight: 200,
+        imageAlt: 'Custom icon',
+        showCloseButton: true,
+        showConfirmButton: false,
+        didOpen: () => {
+            document.getElementById('close-alert').addEventListener('click', () => {
+                Swal.close();
+            });
+        },
+        customClass: {
+            popup: 'bg-white shadow-xl !rounded-lg !p-4',  // головний контейнер
+            title: 'text-xl font-bold text-green-700',
+            htmlContainer: 'text-gray-600 ',
+        },
+        html: `{!! str_replace("\n", '', trim(view('store.pages.careers.application.alert')->render())) !!}`,
+
+    });
+});
+    @endif
+</script>
+<style>
+    .swal2-close:hover{
+        color: var(--color-olive)!important;
+    }
+    .swal2-close:focus-visible{
+        box-shadow: none!important;
+    }
+</style>

@@ -20,13 +20,13 @@
                     <div class="mt-4">
                         <form id="loginForm" name="authLogin" @keydown.enter.prevent="handleLogin">
                             <div>
-                                <label class="text-[14px]" for="email">E-mail</label>
-                                <input type="email" name="email" id="email" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-3 border-1 rounded-xl border-light-border">
+                                <label class="text-sm" for="email">E-mail</label>
+                                <input type="email" name="email" autocomplete="email" id="email" class="focus:border-light-border focus:outline-hidden w-full mt-1 p-3 border-1 rounded-xl border-light-border">
                                 <p v-if="errors.email" class="text-danger text-sm mt-1">{{ errors.email[0] }}</p>
                             </div>
 
                             <div class="mt-4">
-                                <label class="text-[14px]" for="password">Password</label>
+                                <label class="text-sm" for="password">Password</label>
                                 <input type="password" name="password" id="password" placeholder="Enter your password"
                                        class="focus:border-light-border focus:outline-hidden w-full mt-1 p-3 border-1 rounded-xl border-light-border">
                                 <p v-if="errors.password" class="text-danger text-sm mt-1">{{ errors.password[0] }}</p>
@@ -41,7 +41,7 @@
                         {{ $t ? $t('user-dropdown.login') : 'Sign In' }}
                     </Button>
 
-                    <p class="font-normal  text-center opacity-60 text-[14px]">{{ $t('user-dropdown.new-customer')}} <a :href="route('register')" class="underline cursor-pointer font-bold">{{
+                    <p class="font-normal  text-center opacity-60 text-sm">{{ $t('user-dropdown.new-customer')}} <a :href="route('register')" class="underline cursor-pointer font-bold">{{
                             $t('user-dropdown.register')
                         }}</a></p>
 
@@ -54,7 +54,7 @@
                             <a :href="route('profile.edit')" class="flex justify-between items-center rounded-t-xl  animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Account" alt="arrow">
-                                    <p class="text-[18px] font-normal">
+                                    <p class="text-lg font-normal">
                                         {{ $t('user-dropdown.profile')}}
                                     </p>
                                 </div>
@@ -63,7 +63,7 @@
                             <a :href="route('favorites.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Favorite" alt="arrow">
-                                    <p class="text-[18px] font-normal">{{ $t('user-dropdown.favorites')}}</p>
+                                    <p class="text-lg font-normal">{{ $t('user-dropdown.favorites')}}</p>
                                     <p class="text-[12px] bg-charcoal/20 flex justify-center items-center px-1 font-[800] leading-0 rounded-full min-w-[16px] min-h-[16px] text-white">
                                         {{ user.favorites_count }}</p>
                                 </div>
@@ -72,7 +72,7 @@
                             <a :href="route('orders.index')" class="flex justify-between items-center animated border-b border-b-light-border hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Order" alt="arrow">
-                                    <p class="text-[18px] font-normal">{{ $t('user-dropdown.orders')}}</p>
+                                    <p class="text-lg font-normal">{{ $t('user-dropdown.orders')}}</p>
                                     <p class="text-[12px] bg-charcoal/20 flex justify-center items-center px-1 font-[800] leading-0 rounded-full min-w-[16px] min-h-[16px] text-white">
                                         {{ user.orders_count }}
                                     </p>
@@ -82,7 +82,7 @@
                             <a :href="route('addresses.index')" class="flex justify-between items-center rounded-b-xl animated  hover:bg-card-bg py-3 px-3  cursor-pointer">
                                 <div class="flex items-center gap-x-4">
                                     <img class="w-[24px] h-[24px]" :src="Address" alt="arrow">
-                                    <p class="text-[18px] font-normal">{{ $t('user-dropdown.addresses')}}</p>
+                                    <p class="text-lg font-normal">{{ $t('user-dropdown.addresses')}}</p>
                                     <p class="text-[12px] bg-charcoal/20 flex justify-center items-center px-1 font-[800] leading-0 rounded-full min-w-[16px] min-h-[16px] text-white">
                                         {{ user.addresses_count }}
                                     </p>

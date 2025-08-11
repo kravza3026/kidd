@@ -65,5 +65,8 @@ export default {
         'street': 'Street',
         'city': 'City',
         'zip': 'Zip',
+    },
+    'child':{
+        'edit': 'Edit',
     }
 }

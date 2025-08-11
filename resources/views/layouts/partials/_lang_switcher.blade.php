@@ -40,7 +40,7 @@
             <div class="p-1 flex flex-col gap-y-1" role="none">
 
                 @foreach(LaravelLocalization::getLocalesOrder() as $code => $locale)
-                    <a href="{{ LaravelLocalization::getLocalizedURL($code) }}" class="flex justify-between items-center gap-x-2 px-4 py-2 text-[14px] text-gray-700  rounded-lg
+                    <a href="{{ LaravelLocalization::getLocalizedURL($code) }}" class="flex justify-between items-center gap-x-2 px-4 py-2 text-sm text-gray-700  rounded-lg
                                     hover:bg-light-charcoal animated {{ (LaravelLocalization::getCurrentLocale() === $code) ? 'bg-light-charcoal' : 'hover:bg-light-charcoal' }}" role="menuitem">
                         <div class="flex gap-x-2">
                             <img width="24" height="24" src="{{ Vite::image($locale['flag']) }}" alt="flag">

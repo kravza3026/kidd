@@ -2,7 +2,7 @@
     <div
         :class="customClass"
         class="flex flex-col gap-3 mt-3">
-        <label v-if="label" :for="id" class="text-[14px] font-bold">
+        <label v-if="label" :for="id" class="text-sm font-bold">
             {{ label }}
         </label>
         <input

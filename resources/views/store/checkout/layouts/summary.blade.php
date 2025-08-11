@@ -1,6 +1,6 @@
 <!-- Right Column - Order Summary -->
 <div class="order-1 lg:order-2 bg-card-bg rounded-2xl p-6">
-    <h2 class="text-[18px] font-bold mb-6">{{ __('checkout.order_summary') }}</h2>
+    <h2 class="text-sm font-bold mb-6">{{ __('checkout.order_summary') }}</h2>
 
     <!-- Order Items -->
     <div class="space-y-4 max-h-[40vh] overflow-y-auto">
@@ -11,13 +11,13 @@
                 </div>
                 <div class="flex-1">
                     <p class="font-bold">{{ $item->model->name }}</p>
-                    <div class="flex gap-2 text-[14px] text-charcoal/60">
+                    <div class="flex gap-2 text-sm text-charcoal/60">
                         <span>{{ $item->variant->color->name }}</span>
                         <span>|</span>
                         <span>{{ $item->variant->size->name }}</span>
                     </div>
                     <div class="flex justify-between mt-1">
-                        <span class="text-[14px] text-charcoal/60">x{{ $item->qty }}</span>
+                        <span class="text-sm text-charcoal/60">x{{ $item->qty }}</span>
                         <span class="font-bold">{{ $item->price / 100 }}</span>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
     <!-- Order Totals -->
     <div class="mt-6 space-y-3 pt-6 border-t">
         @foreach($fees as $fee)
-            <div class="flex justify-between text-[14px]">
+            <div class="flex justify-between text-sm">
                 <span class="text-charcoal/60 font-bold">
                     {{ $fee->options['description'] }}
                 </span>
@@ -38,7 +38,7 @@
             </div>
         @endforeach
         @foreach($coupons as $coupon)
-            <div class="flex justify-between text-[14px]">
+            <div class="flex justify-between text-sm">
                 <span class="text-charcoal/60 font-bold">
                     {{ $coupon->options['description'] }}
                 </span>
@@ -47,19 +47,19 @@
                 </span>
             </div>
         @endforeach
-        <div class="flex justify-between text-[14px]">
+        <div class="flex justify-between text-sm">
             <span class="text-charcoal/60">{{ __('checkout.sub_total') }}</span>
             <span class="font-bold">{{ $sub_total }}</span>
         </div>
-        <div class="flex justify-between text-[14px]">
+        <div class="flex justify-between text-sm">
             <span class="text-charcoal/60">{{ __('checkout.fee_sub_total') }}</span>
             <span class="font-bold">{{ $fee_sub_total }}</span>
         </div>
-        <div class="flex justify-between text-[14px]">
+        <div class="flex justify-between text-sm">
             <span class="text-charcoal/60">{{ __('checkout.total_discount') }}</span>
             <span class="font-bold">{{ $total_discount }}</span>
         </div>
-        <div class="flex justify-between text-[18px] font-bold pt-3 border-t">
+        <div class="flex justify-between text-sm font-bold pt-3 border-t">
             <span>{{ __('checkout.total') }}</span>
             <span>{{ $total }}</span>
         </div>

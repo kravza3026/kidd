@@ -180,7 +180,7 @@
                 </svg>
         </div>
         <div class="absolute w-fit min-w-[100px] opacity-0 group-hover:opacity-100 duration-300 top-8 left-10/12  bg-white text-xs text-black p-3 rounded ">
-            <p class="text-[18px]"> ${property.name} </p>
+            <p class="text-lg"> ${property.name} </p>
             <p class="text-[14px opacity-80 leading-[140%] text-nowrap py-1">${property.address}</p>
             <p class="text-[14px opacity-40 leading-[140%] text-nowrap">${property.description.hours}</p>
             <p class="text-[14px opacity-40 leading-[140%] text-nowrap">${property.description.dayOff}</p>

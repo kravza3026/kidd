@@ -38,7 +38,7 @@
                 </x-primary-button>
             </div>
         </form>
-        <div class="mt-4 text-[14px] opacity-60 text-center flex gap-x-2 justify-center">
+        <div class="mt-4 text-sm opacity-60 text-center flex gap-x-2 justify-center">
             <p>New customer? </p>
             <button class="closeSignIn underline font-bold cursor-pointer focus:outline-none "
                >

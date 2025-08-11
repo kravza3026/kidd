@@ -38,7 +38,7 @@
         <section class="py-section bg-light-orange">
             <div class="container lg:px-48">
                 <h2 class="text-center opacity-80 text-[30px] lg:text-[48px] font-bold leading-[175%]">Do the work that matters</h2>
-                <p class="text-center leading-[175%] opacity-60 pb-10 text-[14px] lg:text-base">We are hiring now so please don’t hesitate to contact</p>
+                <p class="text-center leading-[175%] opacity-60 pb-10 text-sm lg:text-base">We are hiring now so please don’t hesitate to contact</p>
                 <div class="positions">
                     <hr class="border-light-border">
                     @foreach($vacancies as $vacancy)
@@ -59,7 +59,7 @@
                             </div>
                             <div class="lg:max-w-1/2 flex gap-x-2 flex-wrap">
                                 @foreach($vacancy->tags as $tag)
-                                    <span class="bg-white font-bold text-[14px] h-fit border-light-border border-1 py-2 px-3 rounded-full">{{ $tag->name }}</span>
+                                    <span class="bg-white font-bold text-sm h-fit border-light-border border-1 py-2 px-3 rounded-full">{{ $tag->name }}</span>
                                 @endforeach
                             </div>
                         </a>

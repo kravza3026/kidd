@@ -4,7 +4,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 pb-section">
                 <div class="form">
                     <h1 class="text-[24px] lg:text-[32px] font-bold">We’d love to hear from you</h1>
-                    <p class="opacity-60 leading-[175%] text-[14px] lg:text-base">Message us and we will get back as soon as possible</p>
+                    <p class="opacity-60 leading-[175%] text-sm lg:text-base">Message us and we will get back as soon as possible</p>
                     <form action="" class="w-full">
                         <x-ui.input-label
                             customClass="w-full"
@@ -57,7 +57,7 @@
                         <p class="text-[20px] lg:text-[32px] text-white leading-[150%] lg:mb-10">“I'm so grateful to have discovered KIDD. The fabrics are soft and gentle, and the attention to details is outstanding.”</p>
                         <div>
                             <p class="font-bold lg:text-[20px]">Ana-Maria Parahonco</p>
-                            <p class="text-[12px] lg:text-[14px]">Mother of little princess</p>
+                            <p class="text-[12px] lg:text-sm">Mother of little princess</p>
                         </div>
                     </div>
                 </div>

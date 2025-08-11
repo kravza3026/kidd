@@ -40,29 +40,29 @@
             </div>
         </div>
 
-        <div class="flex gap-x-2 mt-3 flex-1 w-full items-center">
+        <div class="flex gap-x-2 mt-3 flex-1 w-full items-center">F
             <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
 
-                <div class="flex items-center gap-x-2 text-[14px] ">
+                <div class="flex items-center gap-x-2 text-sm ">
                     <img src="{{ Vite::image('icons/date.png') }}" alt="date" class="opacity-50">
                     <p class="pt-1">{{ $member->birth_date->format('d M Y') }}</p>
                 </div>
             </div>
 
             <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
-                <p class="text-sm text-[14px]">
+                <p class="text-sm text-sm">
 
                     {{ $member->gender->name }}
                 </p>
             </div>
             <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
-                <p class="text-sm text-[14px]">
+                <p class="text-sm text-sm">
                     {{ $member->height }} <span class="text-charcoal/40">{{ __('general.cm') }}</span>
                 </p>
             </div>
 
             <div class="text-charcoal border border-light-border py-1 px-3 rounded-lg">
-                <p class="text-sm text-[14px]">
+                <p class="text-sm text-sm">
                     {{ $member->weight / 1000 }} <span class="text-charcoal/40">{{ __('general.kg') }}</span>
                 </p>
             </div>

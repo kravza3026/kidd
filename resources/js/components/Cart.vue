@@ -289,9 +289,9 @@ export default {
                                         <div class="flex items-center gap-x-2 mt-1">
                                             <div class="border-r-light-border border-r-2 pr-2 flex items-center gap-x-2">
                                                 <div class="size-5 rounded-full border border-light-border" :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"></div>
-                                                <p class="text-[14px] opacity-40">{{cartItem.color.name}}</p>
+                                                <p class="text-sm opacity-40">{{cartItem.color.name}}</p>
                                             </div>
-                                            <p class="text-[14px] opacity-40">{{cartItem.size.name}}</p>
+                                            <p class="text-sm opacity-40">{{cartItem.size.name}}</p>
                                         </div>
                                     </div>
                                     <div class="flex justify-between items-center w-full">
@@ -299,7 +299,7 @@ export default {
                                             <p>
                                                 {{cartItem.quantity}} x
                                                 <span>{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</span>
-                                                <span class="text-[14px] opacity-40 line-through px-1">{{$n(cartItem.selectedPriceOnline / 100, 'currency')}}</span>
+                                                <span class="text-sm opacity-40 line-through px-1">{{$n(cartItem.selectedPriceOnline / 100, 'currency')}}</span>
                                             </p>
                                             <p class="text-olive text-[16px] font-bold">
                                                 {{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}
@@ -459,7 +459,7 @@ export default {
                                     @click="toggleConfirm(cartItem)"
                                     class="flex justify-end content-between h-fit w-fit gap-x-2 text-olive bg-light-orange border border-light-border py-2 px-4 rounded-lg shadow-sn shadow-olive cursor-pointer relative">
                                     <img :src="iconTrash" alt="" />
-                                    <p class="text-[14px] font-bold">Delete</p>
+                                    <p class="text-sm font-bold">Delete</p>
 
 
                                     <transition name="fade-slide" appear>
@@ -545,7 +545,7 @@ export default {
         contentWidth = "w-full lg:flex justify-between gap-x-5 items-end bg-light-orange py-6 px-5 my-16 rounded-2xl"
         titleClass = "text-[24px] text-black"
         formClass = "w-full mt-5 lg:mt-0 lg:w-5/12"
-        subtitleClass = "text-[14px]"
+        subtitleClass = "text-sm"
 
     ></SubscribeForm>
 </template>

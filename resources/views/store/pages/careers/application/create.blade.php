@@ -62,7 +62,7 @@
                         <div class="w-full">
 
                             <div class="flex flex-col gap-3 mt-3 ">
-                                <label for="cv" class="text-[14px] font-medium">
+                                <label for="cv" class="text-sm font-medium">
                                     {{ __('Resume') }}
                                 </label>
                                 <div id="upload-area" class="border border-dashed border-light-border rounded-xl px-5 py-24 text-center relative">
@@ -124,6 +124,7 @@
 
                 </form>
             </div>
+
         </section>
     </div>
     <script>
@@ -174,7 +175,7 @@
                 <span class="p-3 size-10 min-w-10 min-h-10 border bg-light-orange border-light-border rounded-full flex items-center justify-center">
                                                 <img src="{{ Vite::image('icons/gradients/g_file.png') }}" alt="file icon">
                                            </span>
-                <div class="grid justify-items-start text-[14px] lg:text-base"><span class="file-name truncate max-w-full" title="${file.name}">${file.name}</span> <span class="opacity-40 text-[12px]">${sizeInMB} Mb</span></div>`;
+                <div class="grid justify-items-start text-sm lg:text-base"><span class="file-name truncate max-w-full" title="${file.name}">${file.name}</span> <span class="opacity-40 text-[12px]">${sizeInMB} Mb</span></div>`;
                     return;
                 }
                 const offset = circumference - (percent / 100) * circumference;

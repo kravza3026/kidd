@@ -7,7 +7,7 @@
 
 <div class="flex flex-col gap-3 mt-5">
     @if ($label)
-        <label for="{{ $id }}" class="text-[14px] font-bold">
+        <label for="{{ $id }}" class="text-sm font-bold">
             {{ $label }}
         </label>
     @endif

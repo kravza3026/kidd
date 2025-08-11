@@ -12,7 +12,7 @@
 
 <div class="flex flex-col gap-3 mt-3 {{ $customClass }}">
     @if ($label)
-        <label for="{{ $id ?? Str::kebab($name) }}" class="text-[14px] {{ $labelClass }}">
+        <label for="{{ $id ?? Str::kebab($name) }}" class="text-sm {{ $labelClass }}">
             {{ $label }}
         </label>
     @endif

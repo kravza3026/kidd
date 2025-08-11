@@ -8,7 +8,7 @@
                 "contentWidth": "w-full lg:flex  justify-between gap-x-5 items-end",
                 "titleClass": "text-[24px] text-white",
                 "formClass": "w-full mt-5 lg:mt-0 lg:w-5/12",
-                "subtitleClass": "text-[14px] text-white"
+                "subtitleClass": "text-sm text-white"
             }'
         ></div>
     </div>

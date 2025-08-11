@@ -21,7 +21,7 @@
                     {{-- Previous Page Link --}}
                     @if ($paginator->onFirstPage())
                         <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
-                            <span class="relative mr-1.5 md:mr-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pr-5 md:px-4 md:py-3 font-bold text-[14px] leading-[16px]  bg-secondary border
+                            <span class="relative mr-1.5 md:mr-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pr-5 md:px-4 md:py-3 font-bold text-sm leading-[16px]  bg-secondary border
                                 border-secondary-dark
                                 rounded-full
                            hover:text-olive focus:z-10
@@ -35,7 +35,7 @@
                         </span>
                     @else
                         <a href="{{ $paginator->previousPageUrl() }}" rel="prev"
-                           class="relative mr-1.5 md:mr-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pr-5 md:px-4 md:py-3 font-bold text-[14px] leading-[16px]  bg-secondary border border-secondary-dark rounded-full
+                           class="relative mr-1.5 md:mr-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pr-5 md:px-4 md:py-3 font-bold text-sm leading-[16px]  bg-secondary border border-secondary-dark rounded-full
                            hover:text-olive focus:z-10
                            focus:outline-none focus:ring ring-gray-300 focus:border-secondary-dark active:bg-secondary-dark active:text-dark-olive transition ease-in-out duration-150"
                            aria-label="{{ __('pagination.previous') }}">
@@ -51,7 +51,7 @@
                         {{-- "Three Dots" Separator --}}
                         @if (is_string($element))
                             <span aria-disabled="true">
-                                <span class="relative inline-flex items-center px-4 py-4 text-[14px] font-bold text-black bg-white cursor-default leading-3">
+                                <span class="relative inline-flex items-center px-4 py-4 text-sm font-bold text-black bg-white cursor-default leading-3">
                                     {{ $element }}
                                 </span>
                             </span>
@@ -63,12 +63,12 @@
                                 @if ($page == $paginator->currentPage())
                                     <span aria-current="page">
                                         <span
-                                            class="relative inline-flex items-center px-4 py-3 text-[14px] font-bold text-white bg-olive rounded-full border border-secondary-dark cursor-default leading-3">{{ $page
+                                            class="relative inline-flex items-center px-4 py-3 text-sm font-bold text-white bg-olive rounded-full border border-secondary-dark cursor-default leading-3">{{ $page
                                             }}</span>
                                     </span>
                                 @else
                                     <a href="{{ $url }}"
-                                       class="relative inline-flex items-center px-3 py-3 text-[14px] font-bold text-black rounded-full border border-transparent leading-3 hover:text-olive focus:z-10 transition ease-in-out duration-150"
+                                       class="relative inline-flex items-center px-3 py-3 text-sm font-bold text-black rounded-full border border-transparent leading-3 hover:text-olive focus:z-10 transition ease-in-out duration-150"
                                        aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
                                         {{ $page }}
                                     </a>
@@ -80,7 +80,7 @@
                     {{-- Next Page Link --}}
                     @if ($paginator->hasMorePages())
                         <a href="{{ $paginator->nextPageUrl() }}" rel="next"
-                           class="relative ml-1.5 md:ml-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pl-5 md:px-4 md:py-3 font-bold text-[14px] leading-[16px]  bg-secondary border
+                           class="relative ml-1.5 md:ml-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pl-5 md:px-4 md:py-3 font-bold text-sm leading-[16px]  bg-secondary border
                            border-secondary-dark rounded-full hover:text-olive focus:z-10 active:bg-secondary-dark active:text-dark-olive transition ease-in-out duration-150"
                            aria-label="{{ __('pagination.next') }}">
                             <span class="hidden md:inline">{{ __('pagination.next') }}</span>
@@ -91,7 +91,7 @@
                     @else
                         <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                             <span
-                                class="relative ml-1.5 md:ml-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pl-5 md:px-4 md:py-3 font-bold text-[14px] leading-[16px]  bg-secondary border
+                                class="relative ml-1.5 md:ml-3 text-olive inline-flex items-center gap-1 px-2.5 py-2.5 md:pl-5 md:px-4 md:py-3 font-bold text-sm leading-[16px]  bg-secondary border
                                 border-secondary-dark rounded-full hover:text-olive focus:z-10 active:bg-secondary-dark active:text-dark-olive transition ease-in-out duration-150"
                                 aria-hidden="true">
                                 <span class="hidden md:inline">{{ __('pagination.next') }}</span>

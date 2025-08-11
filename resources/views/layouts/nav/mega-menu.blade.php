@@ -63,7 +63,7 @@
             <div class="bg-filter absolute rounded-2xl lg:rounded-none lg:rounded-br-2xl inset-0 bg-gradient-to-t from-charcoal/40 to-charcoal/10"></div>
             <div class="absolute bottom-8 inset-0 grid justify-center items-end content-end align-end h-full w-full">
                 <p class="text-center text-white text-[30px] lg:text-[40px] font-bold">Ready for summer</p>
-                <p class="text-center text-white text-[14px] font-normal">Buy 4 products and get 30% off your cart</p>
+                <p class="text-center text-white text-sm font-normal">Buy 4 products and get 30% off your cart</p>
                 <x-ui.button class="mx-auto">Shop now</x-ui.button>
             </div>
         </div>

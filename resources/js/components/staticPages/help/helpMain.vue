@@ -260,7 +260,7 @@ export default {
         <div class="container">
             <div class="mt-10 p-2 px-[20px] md:container lg:p-10 bg-light-orange">
                 <p class="text-[30px] font-bold leading-8 lg:text-[32px]">Didn't found what you were looking for?</p>
-                <p class="text-[14px] opacity-60">Message us and we will get back as soon as possible</p>
+                <p class="text-sm opacity-60">Message us and we will get back as soon as possible</p>
                 <form>
                     <BaseInputLabel
                         label="E-mail"
