@@ -142,6 +142,7 @@
         opacity: 1;
     }
 }
+
 ul.markers{
     list-style-image: url('../images/icons/list_marker.png');
 
@@ -187,6 +188,8 @@ input:checked + .checkboxLabelCircle::after {
 
 
 /* Sweet alert styling.*/
+
+/* Toast Styles */
 .swal2-popup{
     border-radius: 50px;
     padding: 1px!important;
@@ -198,4 +201,12 @@ input:checked + .checkboxLabelCircle::after {
 }
 .swal2-container{
     min-width: 360px!important;
+}
+
+/* Modal styles */
+.swal2-close:hover{
+    color: var(--color-olive)!important;
+}
+.swal2-close:focus-visible{
+    box-shadow: none!important;
 }

@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="pageContent ">
-{{--        {{dd($vacancy)}}--}}
         <section class="py-section  container grid lg:grid-cols-12 justify-between">
             <div class="pr-5 col-span-12">
                 <h2 class="font-bold text-[24px] lg:text-[48px] relative leading-[-2%] flex gap-x-4 items-center">
@@ -25,83 +24,43 @@
                 </div>
                 <hr class="my-5 border-light-border">
 
-               @if($vacancy->summary)
+                @if($vacancy->summary)
                     <div>
                         <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Job summary</h2>
-                        <p>{{ $vacancy->summary }}</p>
+                        <p>{!! $vacancy->summary !!}</p>
+                        {{-- add class "markers" if ul                   --}}
+                    </div>
+                @endif
+                @if ($vacancy->responsibilities)
+                    <div>
+                        <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Responsibilities</h2>
+                        <p>{!! $vacancy->responsibilities !!}</p>
                         {{-- add class "markers" if ul                   --}}
                     </div>
                @endif
-               @if ($vacancy->responsibilities)
-                    <div>
-                        <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Responsibilities</h2>
-                        <p>{{ $vacancy->responsibilities }}</p>
-                        {{-- add class "markers" if ul                   --}}
-                    </div>
-                @endif
                 @if ($vacancy->requirements)
                     <div>
                         <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Requirements</h2>
-                        <p>{{ $vacancy->requirements }}</p>
+                        <p>{!! $vacancy->requirements !!}</p>
                         {{-- add class "markers" if ul                   --}}
                     </div>
                 @endif
 
-
-            @if ($vacancy->extra)
+                @if ($vacancy->extra)
                     <div>
                         <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Extra</h2>
-                        <p>{{ $vacancy->extra }}</p>
+                        <p>{!! $vacancy->extra !!}</p>
                         {{-- add class "markers" if ul                   --}}
                     </div>
                 @endif
 
-            @if ($vacancy->notes)
-                <div class="mt-5">
-                    <p>{{ $vacancy->notes }}</p>
-                    {{-- add class "markers" if ul                   --}}
-                </div>
-            @endif
             </div>
             <a class="my-5" href="{{ route('vacancy.application.create', $vacancy) }}">
-                <x-primary-button class="text-nowrap cursor-pointer">Apply now</x-primary-button>
+                <x-primary-button class="text-nowrap cursor-pointer">
+                    Apply now
+                </x-primary-button>
+{{--                TODO - Translate--}}
             </a>
-
         </section>
     </div>
-{{--        @include('store.pages.careers.application.alert')--}}
 </x-app-layout>
-<script>
-    @if(session('success'))
-window.addEventListener('DOMContentLoaded', () => {
-    Swal.fire({
-        imageUrl: '{{Vite::image('icons/file.png')}}',
-        imageWidth: 200,
-        imageHeight: 200,
-        imageAlt: 'Custom icon',
-        showCloseButton: true,
-        showConfirmButton: false,
-        didOpen: () => {
-            document.getElementById('close-alert').addEventListener('click', () => {
-                Swal.close();
-            });
-        },
-        customClass: {
-            popup: 'bg-white shadow-xl !rounded-lg !p-4',  // головний контейнер
-            title: 'text-xl font-bold text-green-700',
-            htmlContainer: 'text-gray-600 ',
-        },
-        html: `{!! str_replace("\n", '', trim(view('store.pages.careers.application.alert')->render())) !!}`,
-
-    });
-});
-    @endif
-</script>
-<style>
-    .swal2-close:hover{
-        color: var(--color-olive)!important;
-    }
-    .swal2-close:focus-visible{
-        box-shadow: none!important;
-    }
-</style>

@@ -1,9 +1,9 @@
 <x-app-layout>
     @push('meta')
         @foreach(['en', 'ro', 'ru'] as $lang)
-            <link rel="alternate" hreflang="{{ $lang }}" href="{{ config('app.url') }}/{{ $lang }}" />
+            <link rel="alternate" hreflang="{{ $lang }}" href="{{ url('/') }}/{{ $lang }}" />
         @endforeach
-        <link rel="alternate" hreflang="x-default" href="{{ config('app.url') }}" />
+        <link rel="alternate" hreflang="x-default" href="{{ config('app.url') }}/{{ config('app.locale') }}" />
     @endpush
 
     <div class="pageContent">

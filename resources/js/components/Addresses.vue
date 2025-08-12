@@ -13,6 +13,7 @@ import iconCheck from '@img/icons/checked_white.svg'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
 import {debounce} from "lodash";
+import {useForm} from "laravel-precognition-vue";
 
 export default {
      name: 'Addresses',
@@ -23,12 +24,52 @@ export default {
      },
      data(){
          return {
+             form: useForm('post', '/user/addresses', {
+                 address_type: null,
+                 label: '',
+                 is_default: false,
+                 region_id: '',
+                 city_id: '',
+                 street_name: '',
+                 building: '',
+                 apartment: '',
+                 entrance: '',
+                 floor: '',
+                 postal_code: '',
+                 intercom: '',
+             }),
+
              locale: document.documentElement.lang || 'ro',
              addresses: reactive([]),
              regions: ref([]),
              cities: [],
-             currentRegion: ref(null),
              _isAddingAddress: ref(false),
+
+             defaults: {
+                 city: {
+                     id: 0,
+                     name: {
+                         'ro': 'Select City',
+                         'ru': 'Select City',
+                         'en': 'Select City',
+                     },
+                 },
+                 region: {
+                     id: 0,
+                     name: {
+                         'ro': 'Select district',
+                         'ru': 'Select district',
+                         'en': 'Select district',
+                     },
+                 },
+                 editor: {
+                     isEditing: true,
+                     dropdownCityOpen: false,
+                     dropdownDistrictOpen: false,
+                     confirmingDelete: false
+                 },
+             },
+
              iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,
          }
      },
@@ -88,23 +129,7 @@ export default {
                  address_type: address_type,
                  label: '',
                  city_id: 0,
-                 city: {
-                     id: 0,
-                     name: {
-                         'ro': 'Select City',
-                         'ru': 'Select City',
-                         'en': 'Select City',
-                    },
-                 },
                  region_id: 0,
-                 region: {
-                     id: 0,
-                     name: {
-                         'ro': 'Select district',
-                         'ru': 'Select district',
-                         'en': 'Select district',
-                    },
-                 },
                  street_name: '',
                  building: '',
                  apartment: '',
@@ -112,12 +137,6 @@ export default {
                  floor: '',
                  intercom: '',
                  postal_code: '',
-                 editor: {
-                     isEditing: true,
-                     dropdownCityOpen: false,
-                     dropdownDistrictOpen: false,
-                     confirmingDelete: false
-                 },
              };
 
 
@@ -127,6 +146,19 @@ export default {
                  this._isAddingAddress = false
                  newAddress.editor.dropdownDistrictOpen = true
              }, 300);
+         },
+
+         createAddress(address_type) {
+             this.form.address_type = address_type;
+             this.form.submit()
+                 .then(response => {
+                     this.form.reset();
+                     alert('Address created.');
+                     console.info(response.data);
+                 })
+                 .catch(error => {
+                     console.error(error.response.data.message);
+                 });
          },
 
          async saveAddress(id) {
@@ -408,6 +440,80 @@ export default {
             class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
 
         </Button>
+
+        <hr>
+        ===================================================================================================
+        <br>=== Validation Examples and methods / Playground
+        <br> input more than 3 characters for Error
+        <br> input less than 3 characters for Valid
+        ===================================================================================================
+        <hr>
+
+        <form @submit.prevent="createAddress(4)" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
+            <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-x-2">
+                    <div class="p-2 bg-light-orange rounded-full">
+                        <img class="opacity-65" :src="iconMarker" alt="">
+                    </div>
+                    <BaseInput
+                        customClass="p-0 min-h-7.5 placeholder-text-sm"
+                        name="label"
+                        id="label"
+                        :value="form.label"
+                        v-model="form.label"
+                        aria-label="label"
+                        class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
+                        @change="form.validate('label')"
+                    />
+
+                    <!--                // input specific-->
+                    <span v-if="form.valid('label')">
+                        ✅
+                    </span>
+                    <span v-else-if="form.invalid('label')">
+                        ❌
+                    </span>
+
+                </div>
+
+<!--                // input specific-->
+                <div>
+                    <br/>
+                    <span class="flex w-full text-xs text-red-500" v-if="form.invalid('label')">
+                        {{ form.errors.label }}
+                    </span>
+                </div>
+
+<!--                //form general-->
+                <div>
+                    <div v-if="form.invalid('label')">
+                        {{ form.errors.email }}
+                    </div>
+                    <div v-if="form.processing">
+                        Processing...
+                    </div>
+                    <div>
+                        <input class="size-3 disabled:bg-red-500" :disabled="form.processing">
+                    </div>
+                    <div v-if="form.validating">
+                        Validating...
+                    </div>
+                    <div v-if="form.hasErrors">
+                        Form has errors
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex justify-end">
+                <Button @click="createAddress(4)" display-as="a" type="submit" customClass="mx-auto !m-0 p-0 h-1">
+                    Save
+                </Button>
+            </div>
+        </form>
+
+        ===================================================================================================
     </div>
 
     <div class=" mt-5 bg-white shadow sm:rounded-xl p-5">

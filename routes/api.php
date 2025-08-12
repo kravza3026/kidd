@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Store\CartController;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::group([
         ->name('addresses.index');
 
     Route::post('addresses', [AccountController::class, 'storeAddress'])
+        ->middleware([HandlePrecognitiveRequests::class])
         ->name('addresses.store');
 
     Route::get('/', fn (Request $r) => $r->user())
@@ -35,7 +37,10 @@ Route::group([
 Route::group([
     'middleware' => ['localize']
 ], function () {
-    Route::get('/genders', [GenderController::class, 'index']);
+
+    Route::get('/genders', [GenderController::class, 'index'])
+        ->name('genders.index');
+
     Route::get('search', [GeneralController::class, 'search'])
         ->name('search');
 
@@ -44,17 +49,18 @@ Route::group([
 
     Route::get('regions', [GeneralController::class, 'regions'])
         ->name('regions');
-
     Route::get('cities', [GeneralController::class, 'cities'])
         ->name('cities');
 
+
+    Route::apiResource('cart', CartController::class);
     Route::get('cart', [CartController::class, 'show'])
-        ->name('cart.index');
-    Route::post('cart', [CartController::class, 'store'])
-        ->name('cart.store');
-    Route::put('cart/{itemHash}', [CartController::class, 'update'])
-        ->name('cart.update');
-    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
-        ->name('cart.destroy');
+        ->name('cart');
+//    Route::post('cart', [CartController::class, 'store'])
+//        ->name('cart.store');
+//    Route::put('cart/{itemHash}', [CartController::class, 'update'])
+//        ->name('cart.update');
+//    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
+//        ->name('cart.destroy');
 
 });

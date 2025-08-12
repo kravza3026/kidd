@@ -8,6 +8,7 @@ use App\Models\Vacancy;
 use App\Models\VacancyApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Vite;
 
 class VacanciesApplicationController extends Controller
 {
@@ -40,11 +41,17 @@ class VacanciesApplicationController extends Controller
 
         VacancyApplication::create($applicationData);
 
-        // TODO - Make into success modal (store.pages.careers.application.alert).
+        // TODO - Use it globally.
+        Session::flash('modal', [
+            'title' => __('general.modal.title-vacancy'),
+            'message' => __('general.modal.message-vacancy'),
+            'image' => [
+                'url' => Vite::image('icons/file.png'),
+                'alt' => __('general.modal.img_alt-vacancy'),
+            ],
+        ]);
 
-
-        return redirect()->route('vacancy.show', $vacancy)
-            ->with('success', 'Ваша заявка успішно відправлена!');
+        return redirect()->route('vacancy.show', $vacancy);
     }
 
 }

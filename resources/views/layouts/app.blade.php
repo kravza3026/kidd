@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <meta name="description" content="Discover adorable outfits for your little joy! From cozy onesies to trendy outfits, we have everything you need to keep your baby stylish, comfortable and oh-so-cute.">
 
         <title>{{ config('app.name') }} - Moldova</title>
@@ -46,19 +47,31 @@
 
         @if(session()->has('toast') || session()->has('modal'))
             <script>
-                window.addEventListener("load", function () {
+                window.addEventListener("DOMContentLoaded", function () {
                     @if(session('toast'))
                         window.toast(@json(session('toast')));
                     @endif
                     @if(session('modal'))
-                        // TODO - Customise params
-                        // Write down here required params to display modal with success messages
-                        // for placed orders, applied vacancies and so on...
+                        Swal.fire({
+                            imageUrl: '{{ isset(session('modal')['image']['url']) ? session('modal')['image']['url'] : Vite::image('icons/file.png')}}',
+                            imageWidth: 200,
+                            imageHeight: 200,
+                            imageAlt: '{{ isset(session('modal')['image']['alt']) ? session('modal')['image']['alt'] : __('general.modal.img_alt-generic') }}',
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                document.getElementById('close-alert').addEventListener('click', () => {
+                                    Swal.close();
+                                });
+                            },
+                            customClass: {
+                                popup: 'bg-white shadow-xl !rounded-lg !p-4',
+                                title: 'text-xl font-bold text-green-700',
+                                htmlContainer: 'text-gray-600 ',
+                            },
+                            html: `{!! str_replace("\n", '', trim(view('partials.modals.modal')->render())) !!}`,
 
-                        // Example of modal obj:
-                        // modal: {
-                        // object with fields required to display modal with the right message and images/icons
-                        // }
+                        });
                     @endif
                 });
             </script>
