@@ -171,7 +171,7 @@ export default {
             try {
 
                 const { data } = await window.axios.post(
-                    `/addChild`,
+                    `/updateChild`,
                     options,
                     { withCredentials: true }
                 );
@@ -349,7 +349,7 @@ export default {
                             v-for="gender in genders"
                             :key="gender.id"
                             class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="updateChild(child.id);
+                            @click="!child.isNew ? updateChild(child.id) : '';
                             child.editor.dropdownDistrictOpen = false;
                             child.gender = gender
 "
