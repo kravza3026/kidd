@@ -4,13 +4,13 @@
         <section class="py-section  container grid lg:grid-cols-12 justify-between">
             <div class="pr-5 col-span-12">
                 <h2 class="font-bold text-[24px] lg:text-[48px] relative leading-[-2%] flex gap-x-4 items-center">
-                    <a href="{{ route('vacancy.index') }}" class="lg:absolute size-10 border border-light-border rounded-full top-1/4 -left-14 flex justify-center items-center font-normal cursor-pointer">
+                    <a href="{{ route('vacancy.index') }}" class="relative lg:absolute size-10 min-w-10 min-h-10 border border-light-border rounded-full top-1/4 lg:-left-14 flex justify-center items-center font-normal cursor-pointer">
                         <img src="{{ Vite::image('icons/back.svg') }}" alt="date" class="opacity-50">
                     </a>
                     {{ $vacancy->title }}
                 </h2>
 
-                <div class="flex items-center justify-between  mt-3 mb-5">
+                <div class="flex items-center justify-between  mt-3 mb-5 ml-12 lg:ml-0">
                    <div class="flex flex-wrap gap-x-2">
                        @foreach ($vacancy->tags as $tag)
                            <span class="border border-light-border font-medium px-2.5 py-0.5 rounded-full">
