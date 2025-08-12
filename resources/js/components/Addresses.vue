@@ -15,6 +15,20 @@ import BaseInput from "@/components/ui/BaseInput.vue";
 import {debounce} from "lodash";
 import {useForm} from "laravel-precognition-vue";
 
+const addressTemplate = {
+    address_type: null,
+    label: '',
+    is_default: false,
+    region_id: '',
+    city_id: '',
+    street_name: '',
+    building: '',
+    apartment: '',
+    entrance: '',
+    floor: '',
+    postal_code: '',
+    intercom: '',
+};
 export default {
      name: 'Addresses',
      components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
@@ -24,42 +38,8 @@ export default {
      },
      data(){
          return {
-             newAddress:{
-                 label: '',
-                 city_id: 0,
-                 region_id: 0,
-                 street_name: '',
-                 building: '',
-                 apartment: '',
-                 entrance: '',
-                 floor: '',
-                 intercom: '',
-                 postal_code: '',
-                 region:{
-                     id:null,
-                     name:''
-                 },
-                 editor:{
-                     isEditing: true,
-                     dropdownCityOpen: false,
-                     dropdownDistrictOpen: false,
-                     confirmingDelete: false
-                 }
-             },
-             form: useForm('post', '/user/addresses', {
-                 address_type: null,
-                 label: '',
-                 is_default: false,
-                 region_id: '',
-                 city_id: '',
-                 street_name: '',
-                 building: '',
-                 apartment: '',
-                 entrance: '',
-                 floor: '',
-                 postal_code: '',
-                 intercom: '',
-             }),
+
+             form: useForm('post', '/user/addresses', { ...addressTemplate }),
 
              locale: document.documentElement.lang || 'ro',
              addresses: reactive([]),
@@ -102,8 +82,14 @@ export default {
 
              await window.axios.get(`/user/addresses`)
                  .then((response) => {
-                     this.addresses = response.data.addresses;
-                    console.log(response.data)
+                     this.addresses = response.data.addresses.map(address => ({
+                         ...address,
+                         form: useForm('post', '/user/addresses', {
+                             ...address
+                         })
+                     }));
+
+                     console.log(this.addresses)
                  }).catch((error) => {
                     console.error('Server error:', error)
                  });
@@ -145,45 +131,55 @@ export default {
          addNewAddress(address_type) {
              if (this._isAddingAddress) return;
              this._isAddingAddress = true;
-
              const newAddress = {
-                 address_type: address_type,
-                 label: '',
-                 city_id: 0,
-                 region_id: 0,
-                 street_name: '',
-                 building: '',
-                 apartment: '',
-                 entrance: '',
-                 floor: '',
-                 intercom: '',
-                 postal_code: '',
-                 region:{
-                   name:''
-                 },
-                 editor:{
-                     isEditing: true,
-                 },
+                 ...addressTemplate,
+                 address_type,
+                 form: useForm('post', '/user/addresses', {
+                     label: '',
+                     is_default: false,
+                     region_id: '',
+                     city_id: '',
+                     street_name: '',
+                     building: '',
+                     apartment: '',
+                     entrance: '',
+                     floor: '',
+                     postal_code: '',
+                     intercom: '',
+                 }),
+                 city: { ...this.defaults.city },
+                 region: { ...this.defaults.region },
+                 editor: { ...this.defaults.editor },
+                 isNew: true
              };
-
-
-             this.newAddress.push(newAddress);
+             console.log('newAddress== ', newAddress)
+             this.addresses.push(newAddress);
 
              setTimeout(() => {
-                 this._isAddingAddress = false
-                 newAddress.editor.dropdownDistrictOpen = true
+                 this._isAddingAddress = false;
+                 newAddress.editor.dropdownDistrictOpen = true;
              }, 300);
          },
 
+
+
          createAddress(address_type) {
-             this.form.address_type = address_type;
-             this.form.submit()
+             const newAddress = this.addresses.find(addr => addr.isNew);
+
+             if (!newAddress) {
+                 console.error('No new address found');
+                 return;
+             }
+             newAddress.form.address_type = address_type;
+             newAddress.form.submit()
                  .then(response => {
+                     console.log('response',response.data)
                      this.form.reset();
                      alert('Address created.');
                      console.info(response.data);
                  })
                  .catch(error => {
+
                      console.error(error.response.data.message);
                  });
          },
@@ -194,11 +190,11 @@ export default {
                  console.error("Address with id", id, "not found");
                  return;
              }
-             const address = this.addresses[index];
+             const address = this.addresses[0];
 
 
              try {
-
+                 console.log('address= ', address)
                  const { data } = await window.axios.post(
                      '/user/addresses',
                      address
@@ -229,8 +225,13 @@ export default {
              if (index !== -1) {
                  this.addresses[index].editor.isEditing = !this.addresses[index].editor.isEditing;
              }
+
          },
-         removeAddress(id) {
+         validateField(index, fieldName) {
+             this.addresses[index].form.validate(fieldName);
+         },
+         async removeAddress(id) {
+
              const index = this.addresses.findIndex(address => address.id === id);
              if (index !== -1) {
                  this.addresses.splice(index, 1);
@@ -247,24 +248,32 @@ export default {
     <div class=" bg-white shadow sm:rounded-xl p-5">
         <h1 class="text-[24px] font-bold">Shipping addresses</h1>
         <!--    Type 4 = Shipping-->
-        <div v-for="(address, index) in addresses.filter(a => a.address_type === 4)"
+        <form @submit.prevent="createAddress(4)" v-for="(address, index) in addresses.filter(a => a.address_type === 4)"
              :key="address.id" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
             <div  class="flex items-center justify-between ">
                 <div class="flex items-center gap-x-2">
                     <div class="p-2 bg-light-orange rounded-full">
                         <img class="opacity-65" :src="iconMarker" alt="">
                     </div>
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="label"
-                        id="label"
-                        :value="address.label"
-                        v-model="address.label"
-                        aria-label="label"
-                        class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
-                        :class="{'cursor-not-allowed border-none !shadow-none': !address.editor.isEditing,'': address.editor.isEditing}"
-                    />
+                    <div class="relative">
+                        <p v-if="address.form.invalid('label')" class="text-[12px] text-red-500 absolute w-full text-nowrap -top-5">{{ address.form.errors.label }}</p>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm"
+                            name="label"
+                            id="label"
+                            v-model="address.form.label"
+                            aria-label="label"
+                            @change="address.form.validate('label')"
+                            class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
+                            :class="{
+                          'cursor-not-allowed border-none !shadow-none': !address.editor.isEditing,
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('label'),
+                          '!shadow-olive': address.editor.isEditing && address.form.valid('label')
+                        }"
+
+                        />
+                    </div>
 
                 </div>
                 <div class="flex items-center gap-x-2">
@@ -318,6 +327,7 @@ export default {
                     </div>
                     <button class="settings cursor-pointer p-2 border border-light-border  rounded-full shadow-sm duration-500 relative group"
                             :class="{'text-olive': !address.editor.isEditing,'text-white bg-olive': address.editor.isEditing}"
+                            type="button"
                             @click="toggleEdit(address.id)"
                     >
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -344,9 +354,9 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
                         v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                     >
-                        <input type="hidden"  name="region_id" v-model="address.region_id" >
+                        <input type="hidden"  name="region_id" v-model="address.form.region_id" >
                         <p class="flex items-center opacity-60 text-sm">
-                            {{ address.region.name[locale] || 'Select district' }}
+                            {{ address.region.name[locale] ?? address.region.name['ro'] }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
                              :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"   />
@@ -360,9 +370,9 @@ export default {
                             v-for="region in regions"
                             :key="region.id"
                             class="px-3 text-xs flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="this.getCities(region.id); address.region_id = region.id; address.region = region; address.editor.dropdownDistrictOpen = false"
+                            @click="this.getCities(region.id); address.form.region_id = region.id; address.form.region = region; address.editor.dropdownDistrictOpen = false"
                         >
-                            {{ region.name[locale ?? 'ro'] }}
+                            {{ region.name[locale] ?? region.name['ro'] }}
                         </li>
                     </ul>
 
@@ -376,9 +386,11 @@ export default {
                         @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                         v-click-outside="() => address.editor.dropdownCityOpen = false"
                     >
-                        <input type="hidden"  name="city_id" v-model="address.city_id" >
+                        <input type="hidden"  name="city_id" v-model="address.form.city_id" >
                         <p class="flex items-center opacity-60 text-sm">
-                            {{ address.city?.name[locale ?? 'ro'] || 'Select city' }}
+
+                            {{ address.city?.name[locale] || address.city?.name['ro'] || 'Select city' }}
+
                         </p>
                         <img class="duration-500" :src="selectIcon"  alt="selectIcon"
                         :class="{'opacity-0': !address.editor.isEditing,'opacity-40': address.editor.isEditing}"  />
@@ -392,10 +404,10 @@ export default {
                             v-for="city in cities"
                             :key="city.id"
                             class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="address.city_id = city.id; address.city = city; address.editor.dropdownCityOpen = false"
+                            @click="address.form.city_id = city.id; address.form.city = city; address.editor.dropdownCityOpen = false"
 
                         >
-                            {{ city.name[locale ?? 'ro'] }}
+                            {{ city.name[locale] ?? city.name['ro'] }}
                         </li>
                     </ul>
                 </div>
@@ -407,7 +419,7 @@ export default {
                    name="street"
                    id="street"
                    placeholder="str."
-                   v-model="address.street_name"
+                   v-model="address.form.street_name"
                    aria-label="street"
                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                />
@@ -419,7 +431,7 @@ export default {
                     name="building"
                     id="building"
                     placeholder="bl."
-                    v-model="address.building"
+                    v-model="address.form.building"
                     aria-label="building"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
@@ -429,7 +441,7 @@ export default {
                     name="apartment"
                     id="apartment"
                     placeholder="ap."
-                    v-model="address.apartment"
+                    v-model="address.form.apartment"
                     aria-label="apartment"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
@@ -439,7 +451,7 @@ export default {
                     name="entrance"
                     id="entrance"
                     placeholder="sc."
-                    v-model="address.entrance"
+                    v-model="address.form.entrance"
                     aria-label="entrance"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
@@ -449,17 +461,20 @@ export default {
                     name="floor"
                     id="floor"
                     placeholder="et."
-                    v-model="address.floor"
+                    v-model="address.form.floor"
                     aria-label="floor"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                 />
                 </div>
             <div class="flex justify-end">
-                <Button @click="saveAddress(index)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
+                <Button  v-if="address.isNew" @click="createAddress(4)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Create {{index}}</Button>
+
+                <Button  v-else @click="updateAddress(address.id)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Save</Button>
             </div>
-        </div>
+        </form>
 <!--            Type 4 = Shipping -->
         <Button
+
             @click="addNewAddress(4)"
             customClass="py-2 md:py-2 w-fit"
             class="font-bold flex items-center"><span class="text-[24px]">+</span> Add new address
@@ -474,72 +489,35 @@ export default {
 <!--        ===================================================================================================-->
 <!--        <hr>-->
 
-        <form @submit.prevent="createAddress(4)" class="location duration-500 my-4 border border-light-border rounded-xl p-5">
-            <div class="flex items-center justify-between">
+<!--        <form @submit.prevent="createAddress(4)" class="location duration-500 my-4 border border-light-border rounded-xl p-5">-->
+<!--            <div class="flex items-center justify-between">-->
 
-                <div class="flex items-center gap-x-2">
-                    <div class="p-2 bg-light-orange rounded-full">
-                        <img class="opacity-65" :src="iconMarker" alt="">
-                    </div>
-                    <BaseInput
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="label"
-                        id="label"
-                        :value="form.label"
-                        v-model="form.label"
-                        aria-label="label"
-                        class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
-                        @change="form.validate('label')"
-                        :class="{
-                          'shadow-red-500': form.invalid('label'),
-                          'shadow-olive': form.valid('label')
-                        }"
-                    />
+<!--                <div class="flex items-center gap-x-2">-->
+<!--                    <div class="p-2 bg-light-orange rounded-full">-->
+<!--                        <img class="opacity-65" :src="iconMarker" alt="">-->
+<!--                    </div>-->
+<!--                    <BaseInput-->
+<!--                        customClass="p-0 min-h-7.5 placeholder-text-sm"-->
+<!--                        name="label"-->
+<!--                        id="label"-->
+<!--                        :value="form.label"-->
+<!--                        v-model="form.label"-->
+<!--                        aria-label="label"-->
+<!--                        class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"-->
+<!--                        @change="form.validate('label')"-->
+<!--                    />-->
 
-                    <!--                // input specific-->
+<!--                    &lt;!&ndash;                // input specific&ndash;&gt;-->
+<!--                    <span v-if="form.valid('label')">-->
+<!--                        ✅-->
+<!--                    </span>-->
+<!--                    <span v-else-if="form.invalid('label')">-->
+<!--                        ❌-->
+<!--                    </span>-->
 
-                </div>
+<!--                </div>-->
 
-                <div class="flex items-center gap-x-2">
-                    <Button @click="createAddress(4)" display-as="a" type="submit" customClass="mx-auto !m-0 !py-4 !rounded-full h-1">
-                        Save
-                    </Button>
-                    <div
-                        class="cursor-pointer group p-2 border border-light-border rounded-full shadow-sm relative"
-                        @click="newAddress.editor.confirmingDelete = !newAddress.editor.confirmingDelete"
-                        v-click-outside="() => newAddress.editor.confirmingDelete = false"
-                    >
-                        <img class="size-4" :src="iconTrash" alt="" />
-                        <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                            {{ $t('address.delete') }}
-                            <div class="absolute -bottom-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
-                        </div>
-                        <transition name="fade-slide" appear>
-                            <div
-                                v-if="newAddress.editor.confirmingDelete"
-
-                                class="absolute w-[100px] -right-9 flex gap-x-2 justify-between items-center -bottom-8"
-                            >
-                                <!-- Cancel -->
-                                <div
-                                    class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl  text-center py-1 flex justify-center bg-olive w-full h-5"
-                                    @click.stop=""
-                                >
-                                    <img :src="iconClose" alt="" />
-                                </div>
-
-                                <!-- Confirm -->
-                                <div
-                                    class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
-                                    @click.stop="confirmRemoveAddress()"
-                                >
-                                    <img :src="iconCheck" alt="" />
-                                </div>
-                            </div>
-                        </transition>
-                    </div>
-
-                </div>
+<!--                &lt;!&ndash;                // input specific&ndash;&gt;-->
 <!--                <div>-->
 <!--                    <br/>-->
 <!--                    <span class="flex w-full text-xs text-red-500" v-if="form.invalid('label')">-->
@@ -547,7 +525,7 @@ export default {
 <!--                    </span>-->
 <!--                </div>-->
 
-<!--                //form general-->
+<!--                &lt;!&ndash;                //form general&ndash;&gt;-->
 <!--                <div>-->
 <!--                    <div v-if="form.invalid('label')">-->
 <!--                        {{ form.errors.email }}-->
@@ -566,128 +544,14 @@ export default {
 <!--                    </div>-->
 <!--                </div>-->
 
-            </div>
-            <div class="grid grid-cols-17 justify-between gap-x-4 my-4 w-full">
+<!--            </div>-->
 
-
-            <div class="relative col-span-3 rounded-lg shadow-sm">
-                <div
-                    class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
-                    @click="newAddress.editor.isEditing && (newAddress.editor.dropdownDistrictOpen = !newAddress.editor.dropdownDistrictOpen)"
-                    v-click-outside="() => newAddress.editor.dropdownDistrictOpen = false"
-                >
-                    <input type="hidden"  name="region_id" >
-                    <p class="flex items-center opacity-60 text-sm">
-                        {{ newAddress.region.name[locale] || 'Select district' }}
-                    </p>
-                    <img :src="selectIcon" alt="selectIcon" class="duration-500"
-                           />
-                </div>
-
-                <ul
-                    v-if="newAddress.editor.dropdownDistrictOpen"
-                    class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
-                >
-                    <li
-                        v-for="region in regions"
-                        :key="region.id"
-                        class="px-3 text-xs flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                        @click="this.getCities(region.id); newAddress.region_id = region.id; newAddress.region = region; newAddress.editor.dropdownDistrictOpen = false"
-                    >
-                        {{ region.name[locale ?? 'ro'] }}
-                    </li>
-                </ul>
-
-            </div>
-
-                <!-- City dropdown -->
-                <div class="relative col-span-3 rounded-lg shadow-sm">
-                    <div
-                        class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center "
-                        :class="{'cursor-not-allowed': !newAddress.editor.isEditing,'': newAddress.editor.isEditing}"
-                        @click="newAddress.editor.isEditing && (newAddress.editor.dropdownCityOpen = !newAddress.editor.dropdownCityOpen)"
-                        v-click-outside="() => newAddress.editor.dropdownCityOpen = false"
-                    >
-                        <input type="hidden"  name="city_id" v-model="defaults.city.id" >
-                        <p class="flex items-center opacity-60 text-sm">
-                            {{ newAddress.city?.name[locale] || 'Select city' }}
-                        </p>
-                        <img class="duration-500" :src="selectIcon"  alt="selectIcon"
-                             :class="{'opacity-0': !newAddress.editor.isEditing,'opacity-40': newAddress.editor.isEditing}"  />
-                    </div>
-
-                    <ul
-                        v-if="newAddress.editor.dropdownCityOpen"
-                        class="absolute z-10 w-full text-xs mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
-                    >
-                        <li
-                            v-for="city in cities"
-                            :key="city.id"
-                            class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="newAddress.city_id = city.id; newAddress.city = city; newAddress.editor.dropdownCityOpen = false"
-
-                        >
-                            {{ city.name[locale] }}
-                        </li>
-                    </ul>
-                </div>
-
-
-                <BaseInput
-                    :disabled="!newAddress.editor.isEditing"
-                    customClass="p-0 h-7.5 placeholder-text-sm"
-                    name="street"
-                    id="street"
-                    placeholder="str."
-                    v-model="newAddress.street_name"
-                    aria-label="street"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
-                />
-
-
-                <BaseInput
-                    :disabled="!newAddress.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="building"
-                    id="building"
-                    placeholder="bl."
-                    v-model="newAddress.building"
-                    aria-label="building"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
-                <BaseInput
-                    :disabled="!newAddress.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="apartment"
-                    id="apartment"
-                    placeholder="ap."
-                    v-model="newAddress.apartment"
-                    aria-label="apartment"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
-                <BaseInput
-                    :disabled="!newAddress.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="entrance"
-                    id="entrance"
-                    placeholder="sc."
-                    v-model="newAddress.entrance"
-                    aria-label="entrance"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
-                <BaseInput
-                    :disabled="!newAddress.editor.isEditing"
-                    customClass="p-0 min-h-7.5 placeholder-text-sm"
-                    name="floor"
-                    id="floor"
-                    placeholder="et."
-                    v-model="newAddress.floor"
-                    aria-label="floor"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
-                />
-            </div>
-
-        </form>
+<!--            <div class="flex justify-end">-->
+<!--                <Button @click="createAddress(4)" display-as="a" type="submit" customClass="mx-auto !m-0 p-0 h-1">-->
+<!--                    Save-->
+<!--                </Button>-->
+<!--            </div>-->
+<!--        </form>-->
 
     </div>
 
