@@ -273,8 +273,7 @@ export default {
                             class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
                             :class="{
                           'cursor-not-allowed border-none !shadow-none': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('label'),
-                          '!shadow-olive': address.editor.isEditing && address.form.valid('label')
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('label')
                         }"
 
                         />
@@ -442,8 +441,7 @@ export default {
                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                    :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('street'),
-                          '!shadow-olive': address.editor.isEditing && address.form.valid('street')
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('street')
                         }"
                />
 
@@ -460,8 +458,7 @@ export default {
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                     :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('building'),
-                          '!shadow-olive': address.editor.isEditing && address.form.valid('building')
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('building')
                         }"
                 />
                 <BaseInput
@@ -476,8 +473,7 @@ export default {
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                     :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment'),
-                          '!shadow-olive': address.editor.isEditing && address.form.valid('apartment')
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment')
                         }"
                 />
                 <BaseInput
@@ -492,8 +488,7 @@ export default {
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-2 duration-500"
                     :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance'),
-                          '!shadow-olive': address.editor.isEditing && address.form.valid('entrance')
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance')
                         }"
                 />
                 <BaseInput
