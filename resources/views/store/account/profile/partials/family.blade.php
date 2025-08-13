@@ -1,6 +1,6 @@
 <section
-    class="rounded-xl border sm:border-dark-snow sm:border-0 p-4 sm:p-0 {{ ($user->family->count() > 0) ? 'bg-white' : 'sm:bg-none border-[#eeeeee]/50 bg-gradient-to-r from-olive/15 via-olive/25 to-olive/15' }}">
-    <header>
+    class="rounded-xl border border-light-border sm:border-dark-snow sm:border-0 lg:p-4 sm:p-0 {{ ($user->family->count() > 0) ? 'bg-white' : 'sm:bg-none border-[#eeeeee]/50 bg-gradient-to-r from-olive/15 via-olive/25 to-olive/15' }}">
+    <header class="p-2 lg:p-0">
         <h2 class="text-2xl font-bold text-gray-900">
             {{ __('My Family Filters') }}
         </h2>
