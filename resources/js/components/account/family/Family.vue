@@ -197,30 +197,41 @@ export default {
     <div class=" bg-white">
 
         <div v-for="(child, index) in family"
-             :key="child.id" class="duration-500  my-4 border border-light-border lg:rounded-xl p-2 lg:p-5">
-            <div  class="flex items-start lg:items-center justify-between ">
-                <div class="lg:flex items-start lg:items-center gap-x-2 w-full">
-                    <div class="flex gap-x-2">
+             :key="child.id"
+             class="duration-500  lg:my-4 border-b border-t lg:border border-light-border lg:rounded-xl p-2 py-4 lg:p-5"
+             :class="{ 'border-b-0 lg:border-b-1': index !== family.length - 1, 'border-t-1 lg:border-t-0': child.isNew  }"
+        >
+            <div  class="flex items-center justify-between ">
+                <div class="lg:flex items-start lg:items-center gap-x-2 w-fit">
+                    <div class="flex items-center gap-x-2">
                         <div class="p-2 rounded-full w-fit border border-light-border" :class="child.gender.bg_color || 'bg-light-orange '">
                             <p v-if="child.gender.svg" class="size-5 max-w-5 max-h-5 flex items-center justify-center"
                                v-html="child.gender.svg || genders[0].svg"></p>
                             <img v-else :src="iconUnknow" alt="">
                         </div>
-                        <BaseInput
-                            :disabled="!child.editor.isEditing"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm"
-                            name="label"
-                            :id="'label-' + child.id"
-                            :placeholder="$t('family_member.name_placeholder')"
-                            autocomplate="given-name"
-                            :value="child.name"
-                            v-model="child.name"
-                            aria-label="label"
-                            class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px] !max-w-[50vw]"
-                            :class="{'!w-max cursor-not-allowed border-none !shadow-none': !child.editor.isEditing,'': child.editor.isEditing}"
-                        />
+                        <div class="lg:flex items-center">
+                            <BaseInput
+                                :disabled="!child.editor.isEditing"
+                                customClass="min-w-40 max-w-fit lg:my-1 lg:min-h-7.5 !placeholder-text-sm !max-w-fit"
+                                :style="{ width: ((child.name?.length || 1) + 3) + 'ch' }"
+                                name="label"
+                                :id="'label-' + child.id"
+                                :placeholder="$t('family_member.name_placeholder')"
+                                autocomplate="given-name"
+                                v-model="child.name"
+                                aria-label="label"
+                                class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-base "
+                                :class="{' cursor-not-allowed border-none !shadow-none !px-0 lg:!px-4': !child.editor.isEditing,'  lg:!px-4': child.editor.isEditing}"
+                            />
+
+                            <div v-if="!child.isNew" class="flex flex-no-wrap gap-x-1">
+                                <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm p-0 lg: gap-x-1p-2 opacity-40 border-r border-r-charcoal/50 lg:border-none hidden lg:block"></p>
+                                <p   class="w-fit text-nowrap px-1 text-sm py-0 lg:p-2 opacity-40 border-r border-r-charcoal/50 uppercase lg:hidden">1Y 10M</p>
+                                <p class="text-sm opacity-40 w-fit px-1 border-r border-r-charcoal/50 text-start lg:hidden">{{child.height}} {{ $t('family_member.height_label') }}</p>
+                                <p class="text-sm opacity-40 w-fit px-1 text-start lg:hidden">{{(child.weight/100).toFixed(1) }} kg</p>
+                            </div>
+                        </div>
                     </div>
-                    <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm p-2 opacity-40"></p>
 
                 </div>
                 <div v-if="!child.editor.isEditing" class="flex items-center gap-x-2">
@@ -275,15 +286,15 @@ export default {
 
                     </button>
                 </div>
-                <div v-else-if="child.editor.isEditing && !child.isNew" class="flex flex-nowrap text-nowrap gap-x-2 my-2 lg:my-0 items-center">
+                <div v-else-if="child.editor.isEditing && !child.isNew" class="hidden lg:flex flex-nowrap text-nowrap gap-x-2 my-2 lg:my-0 items-center">
                     <Button @click="updateChild(child.id)" :customClass="'!my-0 !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-2" :src="iconCheck" alt="" /> Save child
                     </Button>
                     <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
-                <div v-else class="flex gap-x-2 items-center">
-                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
+                <div v-else class=" gap-x-2 items-center hidden lg:flex">
+                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-4 !py-1.5 h-fit text-nowrap flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save child
                     </Button>
                     <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
@@ -291,12 +302,14 @@ export default {
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-12 justify-between gap-x-4 my-4">
+            <div class="grid lg:grid-cols-12 justify-between gap-x-4 my-4"
+                 :class="{'cursor-not-allowed hidden lg:grid': !child.editor.isEditing,'': child.editor.isEditing}"
+            >
 
-                <div class="relative col-span-8 lg:col-span-3 rounded-lg mt-4 shadow-sm lg:order-first">
+                <div class="relative col-span-8 lg:col-span-3 rounded-lg mt-4 lg:mt-0 shadow-sm lg:order-first">
                     <div
                         class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
-                        :class="{'cursor-not-allowed': !child.editor.isEditing,'': child.editor.isEditing}"
+                        :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
                         @click="child.editor.isEditing && (child.editor.dropdownDistrictOpen = !child.editor.dropdownDistrictOpen)"
                         v-click-outside="() => child.editor.dropdownDistrictOpen = false"
                     >
@@ -316,7 +329,7 @@ export default {
                             v-for="gender in genders"
                             :key="gender.id"
                             class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="!child.isNew ? updateChild(child.id) : '';
+                            @click="
                             child.editor.dropdownDistrictOpen = false;
                             child.gender = gender
                             ">
@@ -337,9 +350,13 @@ export default {
                     v-model="child.birth_date"
                     aria-label="birthday"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-8 lg:col-span-3 mt-4 lg:mt-0 duration-500 order-first lg:order-2"
+                    :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
                 />
 
-                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-3 ">
+                <div
+                    class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-3 "
+                    :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
+                >
                     <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'height-' + child.id" >
                         {{ $t('family_member.height_label') }}
                     </label>
@@ -352,9 +369,12 @@ export default {
                         v-model="child.height"
                         aria-label="height"
                         class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
+
                     />
                 </div>
-                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-4">
+                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-4"
+                     :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
+                >
                     <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'weight-' + child.id">
                         {{ $t('family_member.weight_label') }}
                     </label>
@@ -370,10 +390,24 @@ export default {
                     />
                 </div>
             </div>
+            <div v-if="child.editor.isEditing && !child.isNew" class="grid lg:hidden flex-nowrap text-nowrap gap-y-2 my-2 lg:my-0 items-center">
+                <Button @click="updateChild(child.id)" :customClass="'w-full !my-0 !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
+                    <img class="size-2" :src="iconCheck" alt="" /> Save child
+                </Button>
+                <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-full px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+
+            </div>
+            <div v-else-if="child.editor.isEditing && child.isNew" class=" gap-y-2 items-center grid lg:hidden">
+                <Button @click="saveNewChild(child.id)" :customClass="'w-full !my-0 !px-4 !py-1.5 h-fit text-nowrap flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
+                    <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save child
+                </Button>
+                <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'!w-full px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+
+            </div>
         </div>
         <Button
             @click="addChild()"
-            customClass="py-2 md:py-2 w-fit"
+            customClass="!py-1 md:!py-2 w-11/12 mx-auto lg:mx-0 lg:w-fit"
             class="font-bold flex items-center"><span class="text-[24px]">+</span> Add child
 
         </Button>

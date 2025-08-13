@@ -261,7 +261,7 @@ export default {
                         <img class="opacity-65" :src="iconMarker" alt="">
                     </div>
                     <div class="relative">
-<!--                        <p v-if="address.form.invalid('label')" class="text-[12px] text-red-500 absolute w-full text-nowrap -top-5">{{ address.form.errors.label }}</p>-->
+
                         <BaseInput
                             :disabled="!address.editor.isEditing"
                             customClass="p-0 min-h-7.5 placeholder-text-sm"
@@ -515,6 +515,10 @@ export default {
                 </div>
             <p v-if="address.form.invalid('label')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.label }}</p>
             <p v-if="address.form.invalid('floor')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.floor }}</p>
+            <p v-if="address.form.invalid('street')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.street_name }}</p>
+            <p v-if="address.form.invalid('entrance')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.entrance }}</p>
+            <p v-if="address.form.invalid('apartment')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.apartment }}</p>
+
 
 <!--            <div class="flex justify-end">-->
 <!--                <Button  v-if="address.isNew" @click="createAddress(4)" customClass="mx-auto !m-0 p-0 h-1" :class="{'hidden':!address.editor.isEditing}">Create {{index}}</Button>-->
