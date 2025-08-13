@@ -18,7 +18,7 @@ class FamilyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true; // Allow all authenticated users to view their family members
     }
 
     /**
