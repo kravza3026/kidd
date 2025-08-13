@@ -13,59 +13,47 @@ import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
-import {debounce} from "lodash";
+import FamilyMember from "@/components/account/family/FamilyMember.vue";
+import {useForm} from "laravel-precognition-vue";
+import {useAlert} from "@/useAlert.js";
 
 export default {
-    name: 'AddMember',
-    components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
+    name: 'Family',
+    components: {FamilyMember, BaseInput, Button, SubscribeForm, BaseCheckbox},
 
     directives: {
         clickOutside,
     },
     data(){
         return {
-            family:[],
-            genders:reactive([]),
-            locale: document.documentElement.lang || 'ro',
-            addresses: reactive([]),
-            regions: reactive([]),
-            cities: [],
-            currentRegion: ref(null),
-            _isAddingAddress: false,
-            iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck
+            family:reactive([]),
+            genders:ref([]),
+            _isAddingChild: false,
 
+            locale: document.documentElement.lang || 'ro',
+            iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck
         }
     },
     setup(){
         const { locale, t, n } = useI18n();
+        const { showAlert } = useAlert();
 
         return {
+            showAlert,
             locale,
             t,
             n,
         }
     },
     methods: {
-        async getGenders() {
-
-            await window.axios.get(`/genders`, {
-
-            })
-                .then((response) => {
-                  this.genders = response.data
-                    console.log('Genders ', this.genders)
-                }).catch((error) => {
-                    console.error('Server error:', error)
-                });
-
-        },
         async getFamily() {
 
-            await window.axios.get(`/user/family`, {
-
-            })
+            await window.axios.get(this.route('api.family.index'))
                 .then((response) => {
-                    this.family = response.data.map(item => ({
+
+                    this.genders = response.data.genders;
+
+                    this.family = response.data.family.map(item => ({
                         ...item,
                         editor: {
                             isEditing: false,
@@ -74,7 +62,9 @@ export default {
                             confirmingDelete: false,
                         }
                     }));
-                    console.log('Family ', this.family)
+
+                    console.log('Genders ', this.genders);
+                    console.log('Family ', this.family);
                 }).catch((error) => {
                     console.error('Server error:', error)
                 });
@@ -123,93 +113,66 @@ export default {
             if (index === -1) return;
 
             const child = this.family[index];
-            const payload = {
-                id: child.isNew ? null : child.id,
-                name: child.name,
-                birth_date: child.birth_date,
-                gender: child.gender,
-                height: child.height,
-                weight: child.weight,
-            };
 
-            try {
-                const { data } = await window.axios.post(
-                    `/addChild`,
-                    payload,
-                    { withCredentials: true }
-                );
+            await window.axios.post(this.route('api.family.store'), child).then((response) => {
+                if (response.data) {
+                    this.getFamily(); // Refresh the family list after creating a new child
 
-                if (data.child) {
-                    this.family[index] = {
-                        ...this.family[index],
-                        ...data.child,
-                        isNew: false
-                    };
+                    this.showAlert({
+                        type: 'success',
+                        title: this.$t('family_member.alert.created_title'),
+                        message: this.$t('family_member.alert.created_message'),
+                    });
                 }
-            } catch (error) {
+
+            }).catch((error) => {
                 console.error("Save error:", error.response?.data || error);
-            }
+            });
+
         },
 
 
         async updateChild(id) {
             const index = this.family.findIndex(child => child.id === id);
             if (index === -1) {
-                console.error("id", id, "not found");
                 return;
             }
-            const updatingChild = this.family[index];
-            const options = {
-                id: updatingChild.id,
-                name: updatingChild.name,
-                birth_date: updatingChild.birth_date,
-                gender: updatingChild.gender,
-                height: updatingChild.height,
-                weight: updatingChild.weight,
-            };
-            console.log('update ', options)
-            try {
+            const member = this.family[index];
 
-                const { data } = await window.axios.post(
-                    `/updateChild`,
-                    options,
-                    { withCredentials: true }
-                );
+            await window.axios.put(this.route('api.family.update', member.id), member)
+                .then((response) => {
+                    this.getFamily(); // Refresh the family list after update
 
-                if (data.child) {
-                    this.family[index] = { ...this.family[index], ...data.child };
-                }
-
-            } catch (error) {
-
-                console.error("Save error:", error.response?.data || error);
-            }
+                    this.showAlert({
+                        type: 'info',
+                        title: this.$t('family_member.alert.update_title'),
+                        message: this.$t('family_member.alert.update_message'),
+                    });
+                }).catch((error) => {
+                    console.error("Update error:", error.response?.data || error);
+                });
         },
 
         formatBirthDateToInput(birth_date) {
             if (!birth_date) return '';
             return birth_date.split('T')[0];
         },
-        calculateAge(birth_date) {
-            if (!birth_date) return null;
 
-            const birthDate = new Date(birth_date.split('T')[0]);
-            const today = new Date();
+        async confirmRemove(member_id) {
+            await window.axios.delete(this.route('api.family.destroy', member_id))
+                .then(() => {
+                    this.getFamily(); // Refresh the family list after deletion
 
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
+                    this.showAlert({
+                        type: 'info',
+                        title: this.$t('family_member.alert.delete_title'),
+                        message: this.$t('family_member.alert.delete_message'),
+                    });
 
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
+                }).catch((error) => {
+                    console.error("Delete error:", error.response?.data || error);
+                });
 
-            return age;
-        },
-        confirmRemove(id) {
-            const index = this.addresses.findIndex(addr => addr.id === id);
-            if (index !== -1) {
-                this.addresses.splice(index, 1);
-            }
         },
 
         toggleEdit(id) {
@@ -227,7 +190,6 @@ export default {
     },
     mounted() {
         this.getFamily()
-        this.getGenders()
     }
 }
 </script>
@@ -248,16 +210,15 @@ export default {
                         customClass="p-0 min-h-7.5 placeholder-text-sm"
                         name="label"
                         :id="'label-' + child.id"
-                        placeholder="Enter name"
+                        :placeholder="$t('family_member.name_placeholder')"
                         autocomplate="given-name"
                         :value="child.name"
                         v-model="child.name"
                         aria-label="label"
                         class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold text-[20px]"
-                        :class="{'cursor-not-allowed border-none !shadow-none': !child.editor.isEditing,'': child.editor.isEditing}"
+                        :class="{'!w-max cursor-not-allowed border-none !shadow-none': !child.editor.isEditing,'': child.editor.isEditing}"
                     />
-                    <p>{{ calculateAge(child.birth_date) }}</p>
-<!--                     TO DO: calculate age-->
+                    <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm"></p>
 
                 </div>
                 <div v-if="!child.editor.isEditing" class="flex items-center gap-x-2">
@@ -269,7 +230,7 @@ export default {
                     >
                         <img class="size-4" :src="iconTrash" alt="" />
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                            {{ $t('address.delete') }}
+                            {{ $t('family_member.delete') }}
                             <div class="absolute -bottom-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
                         </div>
                         <transition name="fade-slide" appear>
@@ -289,7 +250,7 @@ export default {
                                 <!-- Confirm -->
                                 <div
                                     class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
-                                    @click.stop="removeChild(child.id)"
+                                    @click.stop="confirmRemove(child.id)"
                                 >
                                     <img :src="iconCheck" alt="" />
                                 </div>
@@ -301,7 +262,7 @@ export default {
                             @click="toggleEdit(child.id)"
                     >
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                            {{ $t('child.edit') }}
+                            {{ $t('family_member.edit') }}
                             <div class="absolute -bottom-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
                         </div>
                         <svg class="size-4" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,13 +274,17 @@ export default {
                     </button>
                 </div>
                 <div v-else-if="child.editor.isEditing && !child.isNew" class="flex gap-x-2 items-center">
-                    <Button @click="updateChild(child.id)" :customClass="'w-fit !px-3 !py-1 h-fit !rounded-full font-bold !m-0'">Save child</Button>
-                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1 h-fit text-olive !rounded-full font-bold !m-0'" >Cancel</Button>
+                    <Button @click="updateChild(child.id)" :customClass="'!my-0 !px-4 !py-1.5 h-fit !rounded-full !shadow-none text-sm font-medium'">
+                        <img class="size-2" :src="iconCheck" alt="" /> Save child
+                    </Button>
+                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
                 <div v-else class="flex gap-x-2 items-center">
-                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-3 !py-1 h-fit !rounded-full font-bold'">Save child</Button>
-                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1 h-fit text-olive !rounded-full font-bold'" >Cancel</Button>
+                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-4 !py-1.5 h-fit !rounded-full !shadow-none text-sm font-medium'">
+                        <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save child
+                    </Button>
+                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
             </div>
@@ -333,9 +298,9 @@ export default {
                         @click="child.editor.isEditing && (child.editor.dropdownDistrictOpen = !child.editor.dropdownDistrictOpen)"
                         v-click-outside="() => child.editor.dropdownDistrictOpen = false"
                     >
-                        <input type="hidden"  name="region_id" v-model="child.gender.id" >
+                        <input type="hidden"  name="gender_id" v-model="child.gender.id" >
                         <p class="flex items-center opacity-60 text-sm">
-                            {{ child.gender.name[locale] || 'Gender' }}
+                            {{ child.gender.name[locale] || $t('family_member.gender_placeholder') }}
                         </p>
                         <img :src="selectIcon" alt="selectIcon" class="duration-500"
                              :class="{'opacity-0': !child.editor.isEditing,'opacity-40': child.editor.isEditing}"   />
@@ -352,8 +317,7 @@ export default {
                             @click="!child.isNew ? updateChild(child.id) : '';
                             child.editor.dropdownDistrictOpen = false;
                             child.gender = gender
-"
-                        >
+                            ">
                             {{ gender.name[locale] }}
                         </li>
                     </ul>
@@ -366,42 +330,44 @@ export default {
                     customClass="p-0 h-7.5 placeholder-text-sm"
                     name="birthday"
                     id="birthday"
-                    placeholder="Birthday"
+                    :placeholder="$t('family_member.birthday_placeholder')"
                     :value="formatBirthDateToInput(child.birth_date)"
                     v-model="child.birth_date"
-                    aria-label="street"
+                    aria-label="birthday"
                     class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-3 duration-500"
                 />
 
                 <div class="relative flex items-center col-span-2">
-                    <label class="absolute inset-0 pl-2 text-sm flex items-center w-fit" :for="'height-' + child.id" >cm:</label>
+                    <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'height-' + child.id" >
+                        {{ $t('family_member.height_label') }}
+                    </label>
                     <BaseInput
                         :disabled="!child.editor.isEditing && !child.isNew"
                         customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-9 leading-none"
                         name="height"
                         :id="'height-' + child.id"
-                        placeholder="height"
+                        :placeholder="$t('family_member.height_placeholder')"
                         v-model="child.height"
-                        aria-label="apartment"
+                        aria-label="height"
                         class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
                     />
                 </div>
                 <div class="relative flex items-center col-span-2">
-                    <label class="absolute inset-0 pl-2 text-sm flex items-center w-fit" :for="'weight-' + child.id">gram:</label>
+                    <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'weight-' + child.id">
+                        {{ $t('family_member.weight_label') }}
+                    </label>
                     <BaseInput
                         :disabled="!child.editor.isEditing && !child.isNew"
-                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-12 leading-none"
+                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-8 leading-none"
                         name="weight"
                         :id="'weight-' + child.id"
-                        placeholder="weight"
+                        :placeholder="$t('family_member.weight_placeholder')"
                         v-model="child.weight"
-                        aria-label="entrance"
+                        aria-label="weight"
                         class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
                     />
                 </div>
-
             </div>
-
         </div>
         <Button
             @click="addChild()"

@@ -128,8 +128,8 @@ import cartIcon from '@img/icons/cart.svg';
 import faqIcon from '@img/icons/faq.svg';
 import faqOpenIcon from '@img/icons/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
-import CartDropdown from "@/components/CartDropdown.vue";
-import UserDropdown from "@/components/UserDropdown.vue";
+import CartDropdown from "@/components/cart/CartDropdown.vue";
+import UserDropdown from "@/components/account/UserDropdown.vue";
 
 const currentPath = '/' + (window.location.pathname.split('/')[2] || '')
 export default {

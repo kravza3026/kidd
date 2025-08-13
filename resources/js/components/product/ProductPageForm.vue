@@ -6,9 +6,9 @@ import favIcon from '@img/icons/fav_icon_active.svg'
 import cartWhite from '@img/icons/cart_white.svg'
 import SizeGuide from "@/components/ui/sizeGuide.vue";
 import Button from "@/components/ui/Button.vue";
-import { useFavorites } from '@/useFavorites'
+import { useFavorites } from '@/useFavorites.js'
 import {useAlert} from "@/useAlert.js";
-import { emitter } from '@/eventBus'
+import { emitter } from '@/eventBus.js'
 const { toggleFavorite, isFavorite } = useFavorites()
 const { showAlert } = useAlert()
 

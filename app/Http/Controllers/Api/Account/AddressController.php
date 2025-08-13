@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Account;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Address\AddressStoreRequest;
 use Illuminate\Http\Request;
 
-class AccountController extends Controller
+class AddressController extends Controller
 {
     /**
      * Handle the incoming request.
      */
 
-    public function addresses(Request $request)
+    public function index(Request $request)
     {
 
         $user = $request->user();
@@ -26,7 +26,7 @@ class AccountController extends Controller
 
     }
 
-    public function storeAddress(AddressStoreRequest $request)
+    public function store(AddressStoreRequest $request)
     {
 
         $address = $request->user()->addresses()

@@ -52,5 +52,18 @@ export default {
         'removedFromFavorites':'удалено из Избранных',
         'addedToCart':'добавлено в Корзину',
         'removedFromCart':'удалено из Корзины',
+    },
+
+    'family_member':{
+        'edit': 'Редактировать',
+        'delete': 'Удалить',
+
+        'placeholder_name': 'Имя',
+        'placeholder_gender': 'Пол',
+        'placeholder_birthday': 'дд.мм.гггг',
+        'height_label': 'см.',
+        'height_placeholder': 'Высота',
+        'weight_label': 'гр.',
+        'weight_placeholder': 'Вес',
     }
 };

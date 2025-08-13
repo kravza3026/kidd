@@ -23,19 +23,19 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix(LaravelLocalization::setLocale())
                 ->group(base_path('routes/auth.php'));
 
-            Route::middleware('web')
-                ->domain(config('app.admin_url'))
-                ->name('admin.')
-                ->group(base_path('routes/admin.php'));
-
-            Route::middleware('api')
-                ->domain(config('app.api_url'))
+            Route::domain(config('app.api_url'))
+                ->middleware('api')
                 ->name('api.')
                 ->prefix('v1')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->domain(config('app.shop_url'))
+            Route::domain(config('app.admin_url'))
+                ->middleware('web')
+                ->name('admin.')
+                ->group(base_path('routes/admin.php'));
+
+            Route::domain(config('app.shop_url'))
+                ->middleware('web')
                 ->group(base_path('routes/web.php'));
 
         },

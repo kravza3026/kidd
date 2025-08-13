@@ -161,8 +161,6 @@ export default {
              }, 300);
          },
 
-
-
          createAddress(address_type) {
              const newAddress = this.addresses.find(addr => addr.isNew);
 

@@ -65,12 +65,25 @@ const numberFormats = {
 
 }
 
+const datetimeFormats = {
+    'ro': {
+        short: {
+            year: 'numeric', month: 'short', day: 'numeric'
+        },
+        long: {
+            year: 'numeric', month: 'short', day: 'numeric',
+            weekday: 'short', hour: 'numeric', minute: 'numeric'
+        }
+    },
+}
+
 const i18n = createI18n({
     legacy: false, // для Vue 3 Composition API
     locale: document.documentElement.lang || 'ro', // мова за замовчуванням
     fallbackLocale: 'ro',
     messages,
     numberFormats,
+    datetimeFormats,
 })
 
 export default i18n

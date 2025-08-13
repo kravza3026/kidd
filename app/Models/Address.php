@@ -87,7 +87,7 @@ class Address extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function getEditorAttribute()
+    public function getEditorAttribute() // TODO - Double check before production if we still use this in the frontend
     {
         return [
             'isEditing' => false,

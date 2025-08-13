@@ -1,6 +1,3 @@
-@php
-    $genders = \App\Models\Gender::all(['id', 'name']);
-@endphp
 <div data-member-id="new">
 <form class="w-full bg-white rounded-xl border border-gray-100 p-4"
       method="POST" action="{{ route('family.store') }}" hx-post="{{ route('family.store') }}" hx-target="closest div[data-member-id='new']" hx-swap="outerHTML">

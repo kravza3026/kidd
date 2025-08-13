@@ -11,16 +11,16 @@ import { default as IMask } from "imask";
 
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
-import CartDropdown from './components/CartDropdown.vue';
-import UserDropdown from './components/UserDropdown.vue';
-import Addresses from './components/Addresses.vue';
-import AddMember from './components/AddMember.vue';
+import CartDropdown from './components/cart/CartDropdown.vue';
+import UserDropdown from './components/account/UserDropdown.vue';
+import Addresses from './components/account/addresses/Addresses.vue';
+import Family from './components/account/family/Family.vue';
 import Button from './components/ui/Button.vue';
-import ProductCard from './components/ProductCard.vue';
-import Cart from './components/Cart.vue';
-import ProductPageForm from './components/ProductPageForm.vue';
+import ProductCard from './components/product/ProductCard.vue';
+import Cart from './components/cart/Cart.vue';
+import ProductPageForm from './components/product/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
-import ProductsCardsSlider from './components/ProductsCardsSlider.vue';
+import ProductsCardsSlider from './components/product/ProductsCardsSlider.vue';
 import SubscribeForm from './components/ui/subscribeForm.vue';
 import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
@@ -42,7 +42,7 @@ window.toast = showAlert;
 // Масив компонентів
 const components = {
     Accordion,
-    Cart,Addresses,AddMember,
+    Cart,Addresses,Family,
     Search, mobileMenu: MobileMenu,
     CartDropdown,UserDropdown,
     Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,

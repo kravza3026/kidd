@@ -16,11 +16,11 @@ export default defineConfig({
         vue(),
         tailwindcss({
             config: {
-                // plugins: [
+                plugins: [
                     // "@tailwindcss/forms",
                     // "@tailwindcss/typography",
                     // "@tailwindcss/aspect-ratio",
-                // ],
+                ],
             }
         }),
     ],

@@ -38,9 +38,8 @@ Route::group([
     Route::resource('orders', OrdersController::class)
         ->only(['index', 'show']);
 
-    Route::resource('addresses', AddressesController::class)
-        ->only(['index', 'store', 'update', 'destroy']);
-
+    Route::get('addresses', [AddressesController::class, 'index'])
+        ->name('addresses.index');
 });
 
 Route::middleware('guest')->group(function () {

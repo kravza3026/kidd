@@ -1,5 +1,5 @@
 <script>
-import { useFavorites } from '@/useFavorites'
+import { useFavorites } from '@/useFavorites.js'
 import { useI18n } from 'vue-i18n'
 
 export default {

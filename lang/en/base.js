@@ -66,7 +66,16 @@ export default {
         'city': 'City',
         'zip': 'Zip',
     },
-    'child':{
+    'family_member':{
         'edit': 'Edit',
+        'delete': 'Remove',
+
+        'placeholder_name': 'Name',
+        'placeholder_gender': 'Gender',
+        'placeholder_birthday': 'dd.mm.yyyy',
+        'height_label': 'cm.',
+        'height_placeholder': 'Height',
+        'weight_label': 'gr.',
+        'weight_placeholder': 'Weight',
     }
 }

@@ -4,7 +4,7 @@ import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/ui/Button.vue';
-import { emitter } from '@/eventBus';
+import { emitter } from '@/eventBus.js';
 
 export default {
     name: 'CartDropdown',

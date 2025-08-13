@@ -14,7 +14,7 @@
 {{--        @foreach($user->family as $member)--}}
 {{--            @include('store.account.profile.partials.family-row')--}}
 {{--        @endforeach--}}
-        <div data-vue-component="AddMember"></div>
+        <div data-vue-component="Family"></div>
     </div>
 
 {{--    <div class="items-center gap-4 flex">--}}

@@ -188,7 +188,7 @@ export default {
                     <path d="M15.9375 5.12722C15.9375 7.58177 14.2846 9.0545 12 9.0545C9.71538 9.0545 8.0625 7.58177 8.0625 5.12722C8.0625 2.67268 9.8125 1.19995 12 1.19995C14.1875 1.19995 15.9375 2.67268 15.9375 5.12722Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <div class="tab-title ">Account</div>
+            <div class="tab-title">Account</div>
             <i
                 :class="activeTab === 'AccountTab' ? 'p-2' : 'group-hover:p-2 p-3'"
                 class="small-cart-arrow absolute right-0 lg:top-0   duration-500 ease-in-out transition-all hidden lg:block">
@@ -297,5 +297,3 @@ export default {
     </div>
 
 </template>
-
-

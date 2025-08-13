@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\AccountController;
-use App\Http\Controllers\Api\FamilyController;
+use App\Http\Controllers\Api\Account\AddressController;
+use App\Http\Controllers\Api\Account\FamilyController;
 use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Store\CartController;
@@ -16,21 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'middleware' => ['auth:sanctum'],
+    'middleware' => ['auth:sanctum', HandlePrecognitiveRequests::class],
     'prefix' => 'user'
 ], function () {
-
-    Route::resource('family', FamilyController::class);
-
-    Route::get('addresses', [AccountController::class, 'addresses'])
-        ->name('addresses.index');
-
-    Route::post('addresses', [AccountController::class, 'storeAddress'])
-        ->middleware([HandlePrecognitiveRequests::class])
-        ->name('addresses.store');
-
     Route::get('/', fn (Request $r) => $r->user())
         ->name('user');
+
+    Route::resource('family', FamilyController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+
+    Route::resource('addresses', AddressController::class)
+        ->only(['index', 'store']);
 
 });
 
@@ -38,11 +34,11 @@ Route::group([
     'middleware' => ['localize']
 ], function () {
 
-    Route::get('/genders', [GenderController::class, 'index'])
-        ->name('genders.index');
-
     Route::get('search', [GeneralController::class, 'search'])
         ->name('search');
+
+    Route::get('/genders', [GenderController::class, 'index'])
+        ->name('genders');
 
     Route::get('/favorites',[GeneralController::class, 'favorites'])
         ->name('favorites');

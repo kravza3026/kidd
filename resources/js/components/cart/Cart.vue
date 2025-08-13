@@ -1,8 +1,8 @@
 
 <script>
 import { ref, computed, watch, onMounted, onUnmounted,getCurrentInstance } from 'vue'
-import clickOutside from '@/clickOutside';
-import { emitter } from '@/eventBus'
+import clickOutside from '@/clickOutside.js';
+import { emitter } from '@/eventBus.js'
 import iconTrash from '@img/common/trash.svg'
 import iconTrashMobile from '@img/icons/trash_b.png'
 import iconCheck from '@img/icons/checked_white.svg'
@@ -546,7 +546,6 @@ export default {
         titleClass = "text-[24px] text-black"
         formClass = "w-full mt-5 lg:mt-0 lg:w-5/12"
         subtitleClass = "text-sm"
-
     ></SubscribeForm>
 </template>
 

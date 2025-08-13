@@ -70,5 +70,17 @@ export default {
         'region': 'Regiune',
         'city': 'Localitate',
         'zip': 'Cod Poștal',
+    },
+    'family_member':{
+        'edit': 'Modifică',
+        'delete': 'Șterge',
+
+        'name_placeholder': 'Numele',
+        'gender_placeholder': 'Genul',
+        'birthday_placeholder': 'dd.mm.yyyy',
+        'height_label': 'cm.',
+        'height_placeholder': 'Înălțime',
+        'weight_label': 'gr.',
+        'weight_placeholder': 'Greutate',
     }
 }

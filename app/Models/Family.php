@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 class Family extends Model
 {
@@ -40,9 +42,26 @@ class Family extends Model
         'birth_date' => 'date',
     ];
 
+    protected $appends = [
+        'age_diff',
+    ];
+
     protected $with = [
         'gender'
     ];
+
+
+    public function getAgeDiffAttribute(): ?string // TODO - Double check before production if we still use this in the frontend
+    {
+        return $this->birth_date
+            ? $this->birth_date->diffForHumans([
+                'parts' => 2,
+                'short'=> false,
+                'options' => CarbonInterface::SEQUENTIAL_PARTS_ONLY,
+                'syntax' => CarbonInterface::DIFF_ABSOLUTE
+            ])
+            : $this->birth_date->format('d.m.Y');
+    }
 
     public function user(): BelongsTo
     {
