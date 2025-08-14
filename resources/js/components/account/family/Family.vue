@@ -400,7 +400,7 @@ export default {
                         class="absolute p-1 right-2 text-sm left-0 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
                     ><span class="opacity-0">{{ child.height }}</span> <span class="pl-3">{{ $t('family_member.height_label') }}</span> </span>
                 </div>
-                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-3 "
+                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 "
                      :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
                 >
                     <BaseInput
