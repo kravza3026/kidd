@@ -33,7 +33,7 @@ return [
         'button_confirm' => 'Continuă',
 
         'placeholder_title' => 'Succes',
-        'placeholder_message' => 'Operatiunea a fost efectuată cu succes.',
+        'placeholder_message' => 'Operațiune efectuată cu succes.',
         'img_alt-generic' => 'Iconiță generică/ilustrativă',
 
         'title-vacancy' => 'Aplicație recepționată',
@@ -41,6 +41,10 @@ return [
         'img_alt-vacancy' => 'Imagine filă/fișier',
         'img_alt-subscription' => 'Imagine dialog',
         'img_alt-order' => 'Imagine cutie/comandă',
+
+        'title-contacts' => 'Mesaj recepționat',
+        'message-contacts' => 'Am primit mesajul tău și în scurt timp revenim cu un răspuns.<br> Îți mulțumim pentru că ești cu noi.',
+        'img_alt-contact' => 'Imagine dialog',
     ],
 
 ];

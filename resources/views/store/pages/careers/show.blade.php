@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="pageContent ">
-        <section class="py-section  container grid lg:grid-cols-12 justify-between">
+    <div class="pageContent">
+        <section class="py-section lg:px-48 container grid lg:grid-cols-12 justify-between">
             <div class="pr-5 col-span-12">
                 <h2 class="font-bold text-[24px] lg:text-[48px] relative leading-[-2%] flex gap-x-4 items-center">
                     <a href="{{ route('vacancy.index') }}" class="relative lg:absolute size-10 min-w-10 min-h-10 border border-light-border rounded-full top-1/4 lg:-left-14 flex justify-center items-center font-normal cursor-pointer">
@@ -19,7 +19,9 @@
                    </div>
 
                     <div>
-                        <p class="text-sm opacity-40">Last updated {{ $vacancy->updated_at->diffForHumans() }}</p>
+                        <p class="text-sm opacity-40">
+                            {{ __('careers.vacancies_latest_update', ['last_update' => $vacancy->updated_at->diffForHumans()]) }}
+                        </p>
                     </div>
                 </div>
                 <hr class="my-5 border-light-border">
@@ -28,6 +30,9 @@
                     <div>
                         <h2 class="leading-[-2%] text-[24px] font-bold py-2 mt-5">Job summary</h2>
                         <p>{!! $vacancy->summary !!}</p>
+{{--                        <ul class="ml-5 markers">--}}
+{{--                            <li>test</li>--}}
+{{--                        </ul>--}}
                         {{-- add class "markers" if ul                   --}}
                     </div>
                 @endif

@@ -64,13 +64,6 @@ class PagesController extends Controller
     }
 
     /**
-     * Display the contacts page.
-     */
-    public function contacts() {
-        return view('store.pages.static.contacts');
-    }
-
-    /**
      * Display size-chart page.
      */
     public function size_chart() {

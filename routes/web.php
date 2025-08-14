@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Store\Pages\ContactsController;
 use App\Http\Controllers\Store\PagesController;
 use App\Http\Controllers\Store\CartController;
 use App\Http\Controllers\Store\CheckoutController;
@@ -76,8 +77,10 @@ Route::group([
             ->name('about');
         Route::get(LaravelLocalization::transRoute('routes.menu.help'), [PagesController::class, 'help'])
             ->name('help');
-        Route::get(LaravelLocalization::transRoute('routes.menu.contacts'), [PagesController::class, 'contacts'])
+        Route::get(LaravelLocalization::transRoute('routes.menu.contacts'), [ContactsController::class, 'index'])
             ->name('contacts');
+        Route::post(LaravelLocalization::transRoute('routes.menu.contacts'), [ContactsController::class, 'store'])
+            ->name('contacts.store');
 
         Route::get(LaravelLocalization::transRoute('routes.footer.size-chart'), [PagesController::class, 'size_chart'])
             ->name('size-chart');
