@@ -21,7 +21,7 @@ const props = defineProps({
 })
 
 const { t, locale } = useI18n()
-
+console.log(props.product)
 // --- Selection states
 const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
 const selectedSizeId = ref(null)
@@ -129,7 +129,8 @@ const discountPercent = computed(() => {
 })
 
 const hasDiscount = computed(() => {
-    return selectedVariant.value?.has_discount
+    console.log(props.product)
+    return selectedVariant.value?.discount_display
 })
 
 let clickedRecently = false
@@ -160,6 +161,7 @@ const handleFavoriteClick = (id, name) => {
                         <div
                             class="absolute -bottom-0.5 left-1/3 rotate-90 w-0 h-0 border-l-8 -z-1 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></div>
                     </div>
+
                 </div>
             </div>
             <div class="overflow-hidden opacity-60 text-charcoal text-sm font-normal leading-normal">
@@ -175,7 +177,7 @@ const handleFavoriteClick = (id, name) => {
             <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
                 <div
                     class="absolute left-2/3 uppercase font-bold -translate-x-2/5 w-fit text-nowrap -top-full bg-danger text-white text-sm px-2 py-0 rounded-full ">
-                    -{{ product.variants[0]?.discount_display }}%
+                    -{{ selectedVariant.discount_display }}%
                     <div
                         class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
                 </div>
