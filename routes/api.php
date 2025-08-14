@@ -37,9 +37,6 @@ Route::group([
     Route::get('search', [GeneralController::class, 'search'])
         ->name('search');
 
-    Route::get('/genders', [GenderController::class, 'index'])
-        ->name('genders');
-
     Route::get('/favorites',[GeneralController::class, 'favorites'])
         ->name('favorites');
 

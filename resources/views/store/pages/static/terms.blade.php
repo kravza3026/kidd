@@ -225,7 +225,7 @@ $sections['ru'] = [
 
 <x-app-layout>
     <div class="pageContent">
-        <section class="container py-section">
+        <section class="lg:px-48 container py-section">
 
             <h1 class="text-3xl lg:text-5xl font-bold opacity-80 leading-[100%]">
                 {{ $texts['page_title'][app()->getLocale()] }}

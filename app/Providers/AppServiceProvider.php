@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \App\Models\ProductVariant::observe(\App\Observers\ProductVariantObserver::class);
 
         Vite::prefetch(7);
         Vite::useWaterfallPrefetching(7);

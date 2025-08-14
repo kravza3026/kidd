@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'accepted' => 'The :attribute field must be accepted.',
+    'accepted' => 'Acceptarea :attribute este obligatorie.',
     'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
     'active_url' => 'The :attribute field must be a valid URL.',
     'after' => 'The :attribute field must be a date after :date.',
@@ -200,14 +200,16 @@ return [
 
     'attributes' => [
         'first_name' => 'Nume',
-        'last_name' => 'Familie',
+        'last_name' => 'Prenume',
         'phone' => 'Telefon',
-        'email' => 'Email',
+        'email' => 'E-mail',
         'password' => 'Parola',
         'password_confirmation' => 'Confirmare parolă',
         'current_password' => 'Parolă curentă',
         'new_password' => 'Parolă nouă',
+        'message' => 'Mesaj',
+        'consent' => 'Politica de confidențialitate',
     ],
 
-    'phone' => 'Vă rugăm să introduceți un număr de telefon valid.',
+    'phone' => 'Introduceți un număr de telefon valid.',
 ];
