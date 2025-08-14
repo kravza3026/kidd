@@ -11,7 +11,7 @@
         </div>
 
         <div class="mb-24">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 sm:gap-x-2 lg:gap-x-3 gap-y-12 lg:gap-y-20">
+            <div class="mb-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 sm:gap-x-2 lg:gap-x-3 gap-y-12 lg:gap-y-20">
                 <!-- Product grid -->
                 @forelse ($products as $product)
                     <div data-vue-component="ProductCard"

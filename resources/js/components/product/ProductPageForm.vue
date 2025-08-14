@@ -2,7 +2,8 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import favIcon from '@img/icons/fav_icon_active.svg'
+import iconAddFavorite from '@img/icons/fav_icon_active.svg'
+import iconFavorited from '@img/icons/inFavorite.svg'
 import cartWhite from '@img/icons/cart_white.svg'
 import SizeGuide from "@/components/ui/sizeGuide.vue";
 import Button from "@/components/ui/Button.vue";
@@ -207,11 +208,11 @@ const handleFavoriteClick = (id, name) => {
                             />
                             <span
                                 class="h-8 w-8 rounded-full border relative p-1 border-black/10 border-opacity-10 bg-transparent peer-checked:ring">
-        <span
-            :style="{ backgroundColor: color.hex }"
-            class="rounded-full absolute inset-0 border border-black/10"
-        ></span>
-    </span>
+                                <span
+                                    :style="{ backgroundColor: color.hex }"
+                                    class="rounded-full absolute inset-0 border border-black/10"
+                                ></span>
+                            </span>
                         </label>
                     </div>
                 </fieldset>
@@ -225,7 +226,7 @@ const handleFavoriteClick = (id, name) => {
                     <div class="text-charcoal text-base font-normal inline-flex">
                         {{ t('product.desc.size') }}
                     </div>
-                    <sizeGuide ></sizeGuide>
+                    <sizeGuide></sizeGuide>
 
                 </div>
                 <fieldset aria-label="Choose a size">
@@ -262,7 +263,7 @@ const handleFavoriteClick = (id, name) => {
                     <Button
                         @click="handleFavoriteClick(product.id, product.name[locale],)"
                         buttonPrimary customClass="text-olive font-bold text-[15px] text-center w-[93vw] md:w-5/12"  >
-                        <img class="size-4" :src="isFavorite(product.id) ? '/assets/images/icons/inFavorite.svg' : favIcon" alt="">
+                        <img class="size-4" :src="isFavorite(product.id) ? iconFavorited : iconAddFavorite" alt="">
                         {{ isFavorite(product.id) ? t('product.remove-from-favorites') : t('product.add-to-favorite') }}
                     </Button>
 

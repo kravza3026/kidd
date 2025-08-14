@@ -51,14 +51,14 @@ class Family extends Model
     ];
 
 
-    public function getAgeDiffAttribute(): ?string // TODO - Double check before production if we still use this in the frontend
+    public function getAgeDiffAttribute(): Carbon | string
     {
         return $this->birth_date
             ? $this->birth_date->diffForHumans([
                 'parts' => 2,
-                'short'=> false,
-                'options' => CarbonInterface::SEQUENTIAL_PARTS_ONLY,
-                'syntax' => CarbonInterface::DIFF_ABSOLUTE
+                'short'=> true,
+                'options' => CarbonInterface::SEQUENTIAL_PARTS_ONLY | CarbonInterface::TWO_DAY_WORDS,
+                'syntax' => CarbonInterface::DIFF_ABSOLUTE,
             ])
             : $this->birth_date->format('d.m.Y');
     }

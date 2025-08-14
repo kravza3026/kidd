@@ -5,9 +5,6 @@ namespace Database\Factories;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
- */
 class ProductFactory extends Factory
 {
     /**
@@ -26,15 +23,58 @@ class ProductFactory extends Factory
             'season_id' => rand(1, 5),
             'fabric_id' => rand(1, 5),
 
+
             'name' => [
-                'ro' => '(ro) ' . fake('ro_RO')->sentence(rand(2, 3), false),
-                'ru' => '(ru) ' . fake('ru_RU')->sentence(rand(2, 3), false),
-                'en' => '(en) ' . fake('en_US')->sentence(rand(2, 3), false),
+                'ro' => fake()->randomElement([
+                    'Salopetă Bumbac Organic pentru Bebeluși',
+                    'Body cu Mânecă Lungă pentru Nou-născuți',
+                    'Pijama Pufoasă din Velur',
+                    'Set 3 Piese pentru Bebeluși',
+                    'Rochița de Vară pentru Fetițe',
+                    'Hanorac cu Glugă pentru Băieței',
+                    'Costum de Baie pentru Bebeluși',
+                    'Pantalonași cu Bretele Elegante',
+                    'Căciulița Caldă de Iarnă',
+                    'Costum Bumbac pentru Primii Pași',
+                ]),
+                'ru' => fake()->randomElement([
+                    'Органический Хлопковый Комбинезон',
+                    'Боди с Длинным Рукавом для Новорожденных',
+                    'Велюровая Пижама',
+                    'Комплект из 3 Предметов',
+                    'Летнее Платье для Девочек',
+                    'Худи с Капюшоном для Мальчиков',
+                    'Купальный Костюм для Малышей',
+                    'Штанишки с Подтяжками',
+                    'Теплая Зимняя Шапочка',
+                    'Мягкие Носочки для Первых Шагов',
+                ]),
+                'en' => fake()->randomElement([
+                    'Organic Cotton Baby Romper',
+                    'Long Sleeve Newborn Bodysuit',
+                    'Soft Velour Sleepsuit',
+                    '3-Piece Baby Set',
+                    'Girls Summer Dress',
+                    'Boys Hooded Sweatshirt',
+                    'Baby Swimsuit',
+                    'Suspender Pants',
+                    'Warm Winter Hat',
+                    'Soft First Steps Socks',
+                ])
             ],
             'description' => [
-                'ro' => '(ro) ' . fake('ro_RO')->paragraph(rand(2, 10)),
-                'ru' => '(ru) ' . fake('ru_RU')->paragraph(rand(2, 10)),
-                'en' => '(en) ' . fake('en_US')->paragraph(rand(2, 10)),
+                'ro' => fake()->randomElement([
+                    'Confecționat din bumbac organic 100%, acest articol este perfect pentru pielea sensibilă a bebelușului. Închidere cu capse pentru schimbare ușoară a scutecului. Disponibil în mărimi de la 0-24 luni.',
+                    'Design ergonomic special creat pentru copiii mici, cu zone elastice pentru mișcare liberă și confort maxim. Disponibil în culori vesele și prietenoase.'
+                ]),
+                'ru' => fake()->randomElement([
+                    'Изготовлено из 100% органического хлопка, идеально подходит для чувствительной кожи малыша. Застежки-кнопки для легкой смены подгузника. Доступно в размерах от 0-24 месяцев.',
+                    'Эргономичный дизайн, специально созданный для малышей, с эластичными зонами для свободного движения и максимального комфорта. Доступно в веселых и дружелюбных цветах.'
+                ]),
+                'en' => fake()->randomElement([
+                    'Complete baby set including bodysuit, pants, and matching bib. All pieces are OEKO-TEX Standard 100 certified materials.',
+                    'Ergonomic design specially created for toddlers, with elastic zones for free movement and maximum comfort. Available in cheerful and friendly colors.',
+                ])
             ],
 
             'main_image' => 'products/product_'.rand(1, 9).'.png',

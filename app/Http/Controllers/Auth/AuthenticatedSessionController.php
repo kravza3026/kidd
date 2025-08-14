@@ -30,8 +30,10 @@ class AuthenticatedSessionController extends Controller
 
         $favorites = json_decode($request->cookie('favorites', '[]'));
         $user_favorites = $request->user()->favorites->pluck('id')->toArray();
-        $merged_favorites = array_unique(array_merge( $user_favorites, $favorites));
-        $request->user()->favorites()->sync($merged_favorites);
+        $merged_favorites = array_merge( $user_favorites, $favorites);
+        if( count($merged_favorites) ){
+            $request->user()->favorites()->sync(array_unique($merged_favorites));
+        }
         $cookie = cookie('favorites', json_encode($merged_favorites, null,1), 60 * 24 * 30, null, null, true, false);
 
         return redirect()->intended()->withCookie($cookie);

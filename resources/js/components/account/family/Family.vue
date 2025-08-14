@@ -26,7 +26,7 @@ export default {
     },
     data(){
         return {
-            family:reactive([]),
+            family:ref([]),
             genders:ref([]),
             _isAddingChild: false,
 

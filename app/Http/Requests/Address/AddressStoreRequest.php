@@ -27,7 +27,7 @@ class AddressStoreRequest extends FormRequest
             'label' => [
                 'required',
                 'string',
-                'max:3'
+                'min:3'
             ],
             'is_default' => [
                 'boolean'
