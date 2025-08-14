@@ -142,7 +142,22 @@
         opacity: 1;
     }
 }
+@layer utilities {
+    /* Chrome, Safari, Edge */
+    .no-date-icon::-webkit-calendar-picker-indicator {
+        display: none;
+        -webkit-appearance: none;
+    }
+    .no-date-icon::-webkit-inner-spin-button,
+    .no-date-icon::-webkit-clear-button {
+        display: none;
+    }
 
+    /* Firefox */
+    .no-date-icon {
+        -moz-appearance: textfield;
+    }
+}
 ul.markers{
     list-style-image: url('../images/icons/list_marker.png');
 
@@ -190,10 +205,16 @@ input:checked + .checkboxLabelCircle::after {
 /* Sweet alert styling.*/
 
 /* Toast Styles */
-.swal2-popup{
+.swal2-popup {
     border-radius: 50px;
-    padding: 1px!important;
+    padding: 1px !important;
     margin-bottom: 25px;
+}
+
+@media screen and (max-width: 768px) {
+    .swal2-popup {
+        margin-bottom: 85px !important;
+    }
 }
 .swal2-html-container{
     margin: 0.5rem !important;

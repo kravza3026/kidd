@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <div class="px-4 sm:p-10 sm:shadow sm:rounded-xl {{ ($user->family->count() > 0) ? 'bg-white' : 'bg-white sm:bg-gradient-to-r sm:from-olive/15 sm:via-olive/25 sm:to-olive/15' }}">
+        <div class="px-4 lg:!py-4 sm:p-10 sm:shadow sm:rounded-xl {{ ($user->family->count() > 0) ? 'bg-white' : 'bg-white sm:bg-gradient-to-r sm:from-olive/15 sm:via-olive/25 sm:to-olive/15' }}">
             @include('store.account.profile.partials.family')
         </div>
 

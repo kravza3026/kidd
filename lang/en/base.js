@@ -73,9 +73,9 @@ export default {
         'placeholder_name': 'Name',
         'placeholder_gender': 'Gender',
         'placeholder_birthday': 'dd.mm.yyyy',
-        'height_label': 'cm.',
+        'height_label': 'cm',
         'height_placeholder': 'Height',
-        'weight_label': 'gr.',
+        'weight_label': 'kg',
         'weight_placeholder': 'Weight',
     }
 }

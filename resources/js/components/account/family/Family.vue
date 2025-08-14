@@ -11,12 +11,12 @@ import iconTrash from "@img/common/trash.svg"
 import iconSettings from "@img/icons/Settings_base.svg"
 import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
+import iconDate from '@img/icons/date.png'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
 import FamilyMember from "@/components/account/family/FamilyMember.vue";
 import {useForm} from "laravel-precognition-vue";
 import {useAlert} from "@/useAlert.js";
-
 export default {
     name: 'Family',
     components: {FamilyMember, BaseInput, Button, SubscribeForm, BaseCheckbox},
@@ -31,7 +31,7 @@ export default {
             _isAddingChild: false,
 
             locale: document.documentElement.lang || 'ro',
-            iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck
+            iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck,iconDate
         }
     },
     setup(){
@@ -186,6 +186,16 @@ export default {
             if (index !== -1) {
                 this.family.splice(index, 1);
             }
+        },
+        openDatePicker(id) {
+            const el = document.getElementById('birthday-'+id)
+            if (!el) return
+
+            if ('showPicker' in el) {
+                el.showPicker()
+            } else {
+                el.focus() // для iOS Safari та старих браузерів
+            }
         }
     },
     mounted() {
@@ -199,7 +209,7 @@ export default {
         <div v-for="(child, index) in family"
              :key="child.id"
              class="duration-500  lg:my-4 border-b border-t lg:border border-light-border lg:rounded-xl p-2 py-4 lg:p-5"
-             :class="{ 'border-b-0 lg:border-b-1': index !== family.length - 1, 'border-t-1 lg:border-t-0': child.isNew  }"
+             :class="{ 'border-b-0 lg:border-b-1': index !== family.length - 1, 'border-t-1 ': child.isNew  }"
         >
             <div  class="flex items-center justify-between ">
                 <div class="lg:flex items-start lg:items-center gap-x-2 w-fit">
@@ -225,7 +235,7 @@ export default {
                             />
 
                             <div v-if="!child.isNew" class="flex flex-no-wrap gap-x-1">
-                                <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm p-0 lg: gap-x-1p-2 opacity-40 border-r border-r-charcoal/50 lg:border-none hidden lg:block"></p>
+                                <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm uppercase lg: gap-x-1 px-2 opacity-40 border-l border-l-charcoal/40  hidden lg:block"></p>
                                 <p   class="w-fit text-nowrap px-1 text-sm py-0 lg:p-2 opacity-40 border-r border-r-charcoal/50 uppercase lg:hidden">1Y 10M</p>
                                 <p class="text-sm opacity-40 w-fit px-1 border-r border-r-charcoal/50 text-start lg:hidden">{{child.height}} {{ $t('family_member.height_label') }}</p>
                                 <p class="text-sm opacity-40 w-fit px-1 text-start lg:hidden">{{(child.weight/100).toFixed(1) }} kg</p>
@@ -302,11 +312,38 @@ export default {
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-12 justify-between gap-x-4 my-4"
+            <div class="grid lg:grid-cols-17 justify-between gap-x-4 my-4"
                  :class="{'cursor-not-allowed hidden lg:grid': !child.editor.isEditing,'': child.editor.isEditing}"
             >
+                <div class="relative col-span-8 lg:col-span-3 flex mt-4 lg:mt-0 items-center">
+                    <label
+                        for="birthday"
+                        class="absolute pl-2 opacity-40 cursor-pointer flex items-center duration-500"
+                        @click.prevent="openDatePicker"
+                    >
+                        <img :src="iconDate" alt="date" />
+                    </label>
 
-                <div class="relative col-span-8 lg:col-span-3 rounded-lg mt-4 lg:mt-0 shadow-sm lg:order-first">
+                    <BaseInput
+                        type="date"
+                        :disabled="false"
+                        customClass="p-0 !pl-8 h-7.5 placeholder-text-sm"
+                        name="birthday"
+                        :id="'birthday-' + child.id"
+                        :placeholder="$t('family_member.birthday_placeholder')"
+                        :value="formatBirthDateToInput(child.birth_date)"
+                        v-model="child.birth_date"
+                        aria-label="birthday"
+                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden   w-full duration-500 no-date-icon"
+                        :class="{
+                          'cursor-not-allowed pointer-events-none hidden lg:flex': !child.editor.isEditing,
+                          '': child.editor.isEditing
+                        }"
+                        @click="openDatePicker(child.id)"
+                    />
+                </div>
+
+                <div class="relative col-span-8 lg:col-span-2 rounded-lg mt-4 lg:mt-0 shadow-sm">
                     <div
                         class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
                         :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
@@ -339,31 +376,18 @@ export default {
 
                 </div>
 
-                <BaseInput
-                    type="date"
-                    :disabled="!child.editor.isEditing"
-                    customClass="p-0 h-7.5 placeholder-text-sm"
-                    name="birthday"
-                    id="birthday"
-                    :placeholder="$t('family_member.birthday_placeholder')"
-                    :value="formatBirthDateToInput(child.birth_date)"
-                    v-model="child.birth_date"
-                    aria-label="birthday"
-                    class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-8 lg:col-span-3 mt-4 lg:mt-0 duration-500 order-first lg:order-2"
-                    :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
-                />
+
 
                 <div
-                    class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-3 "
+                    class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 "
                     :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
                 >
-                    <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'height-' + child.id" >
-                        {{ $t('family_member.height_label') }}
-                    </label>
+
                     <BaseInput
                         :disabled="!child.editor.isEditing && !child.isNew"
-                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-9 leading-none"
+                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm  leading-none"
                         name="height"
+                        type=""
                         :id="'height-' + child.id"
                         :placeholder="$t('family_member.height_placeholder')"
                         v-model="child.height"
@@ -371,23 +395,28 @@ export default {
                         class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
 
                     />
+                    <span
+                        v-if="child.height > 0"
+                        class="absolute p-1 right-2 text-sm left-0 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                    ><span class="opacity-0">{{ child.height }}</span> <span class="pl-3">{{ $t('family_member.height_label') }}</span> </span>
                 </div>
-                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-2 lg:order-4"
+                <div class="relative flex items-center col-span-4 mt-4 lg:mt-0 lg:col-span-3 "
                      :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
                 >
-                    <label class="absolute text-charcoal/70 h-full inset-0 pl-3 text-sm flex items-center w-fit" :for="'weight-' + child.id">
-                        {{ $t('family_member.weight_label') }}
-                    </label>
                     <BaseInput
                         :disabled="!child.editor.isEditing && !child.isNew"
-                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm pl-8 leading-none"
+                        customClass="p-0 flex items-center min-h-7.5 placeholder-text-sm  leading-none"
                         name="weight"
                         :id="'weight-' + child.id"
                         :placeholder="$t('family_member.weight_placeholder')"
                         v-model="child.weight"
                         aria-label="weight"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
+                        class=" shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden w-full duration-500"
                     />
+                    <span
+                        v-if="child.weight > 0"
+                        class="absolute p-1 right-2 text-sm left-0 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                    ><span class="opacity-0">{{ child.weight }}</span> <span class="pl-3">{{ $t('family_member.weight_label') }}</span> </span>
                 </div>
             </div>
             <div v-if="child.editor.isEditing && !child.isNew" class="grid lg:hidden flex-nowrap text-nowrap gap-y-2 my-2 lg:my-0 items-center">

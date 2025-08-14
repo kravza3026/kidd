@@ -54,7 +54,7 @@ export default {
 <template>
 <div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
     <div
-        class="bg-white md:bg-card-bg overflow-hidden hover:overflow-visible group-hover:bg-white border border-light-border md:border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
+        class="bg-white md:bg-card-bg overflow-hidden hover:overflow-visible focus:overflow-visible group-hover:bg-white border border-light-border md:border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
     >
         <div class="relative flex justify-between">
             <div
@@ -127,7 +127,7 @@ export default {
         >
             <img :src="isFavorite(product.id) ? inFavIcon : favIcon" class="size-4 xl:size-5 flex justify-center items-center" width="20" height="20" alt="Add/Remove to/from favorite icon" />
             <div
-                class="absolute tooltip left-2/3 -translate-x-2/5 ml-[5px] mt-2 top-full px-4 py-2 w-max bg-black text-white text-sm rounded-full opacity-0 transition-opacity duration-300 z-[130]"
+                class="absolute hidden lg:block tooltip left-2/3 -translate-x-2/5 ml-[5px] mt-2 top-full px-4 py-2 w-max bg-black text-white text-sm rounded-full opacity-0 transition-opacity duration-300 z-[130]"
             >
                {{ isFavorite(product.id) ? 'Remove from Favorites' : 'Save to Favorites' }}
                 <div
