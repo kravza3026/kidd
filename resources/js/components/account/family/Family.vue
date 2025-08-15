@@ -431,12 +431,12 @@ export default {
 
             </div>
         </div>
-        <Button
-            @click="addChild()"
-            customClass="!py-1 md:!py-2 w-11/12 mx-auto lg:mx-0 lg:w-fit"
-            class="font-bold flex items-center"><span class="text-[24px]">+</span> Add child
-        </Button>
     </div>
+    <Button
+        @click="addChild()"
+        customClass="!py-1 md:!py-2 w-11/12 mx-auto lg:mx-0 lg:w-fit"
+        class="font-bold flex items-center"><span class="text-[24px]">+</span> Add child
+    </Button>
 
 
 </template>
