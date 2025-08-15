@@ -19,14 +19,10 @@ Route::group([
     'middleware' => ['auth:sanctum', HandlePrecognitiveRequests::class],
     'prefix' => 'user'
 ], function () {
-    Route::get('/', fn (Request $r) => $r->user())
-        ->name('user');
+    Route::get('/', fn (Request $r) => $r->user())->name('user');
 
-    Route::resource('family', FamilyController::class)
-        ->only(['index', 'store', 'update', 'destroy']);
-
-    Route::resource('addresses', AddressController::class)
-        ->only(['index', 'store', 'update', 'destroy']);;
+    Route::apiResource('addresses', AddressController::class)->except('show');
+    Route::apiResource('family', FamilyController::class)->except('show');
 
 });
 
@@ -44,7 +40,6 @@ Route::group([
         ->name('regions');
     Route::get('cities', [GeneralController::class, 'cities'])
         ->name('cities');
-
 
     Route::apiResource('cart', CartController::class);
     Route::get('cart', [CartController::class, 'show'])
