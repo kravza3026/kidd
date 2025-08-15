@@ -26,7 +26,7 @@ Route::group([
         ->only(['index', 'store', 'update', 'destroy']);
 
     Route::resource('addresses', AddressController::class)
-        ->only(['index', 'store']);
+        ->only(['index', 'store', 'update', 'destroy']);;
 
 });
 
