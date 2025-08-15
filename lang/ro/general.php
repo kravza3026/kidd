@@ -21,6 +21,9 @@ return [
         'select' => [
             'common' => 'Selectați',
             'vacancy' => 'Alegeți postul dorit..',
+
+            'gender' => 'Selectați genul..',
+            'gender_family' => 'Gen',
         ],
 
     ],

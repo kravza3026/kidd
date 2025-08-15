@@ -36,6 +36,7 @@ class MemberStoreRequest extends FormRequest
     {
         $this->merge([
             'gender_id' => $this->get('gender')['id'],
+            'weight' => $this->get('weight') * 1000,
         ]);
     }
 }

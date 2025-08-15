@@ -35,7 +35,8 @@ class Size extends Model
 
     public function products(): Size|HasManyThrough
     {
-        return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id');
+        return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id')
+            ->groupBy('products.id');
     }
 
 

@@ -24,7 +24,10 @@ return [
     'placeholder' => [
         'select' => [
             'common' => 'Choose',
-            'vacancy' => 'Choose desired vacancy..',
+            'vacancy' => 'Choose vacancy..',
+
+            'gender' => 'Choose gender..',
+            'gender_family' => 'Gender',
         ],
 
     ],

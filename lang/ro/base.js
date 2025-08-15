@@ -78,9 +78,9 @@ export default {
         'name_placeholder': 'Numele',
         'gender_placeholder': 'Genul',
         'birthday_placeholder': 'dd.mm.yyyy',
-        'height_label': 'cm.',
+        'height_label': 'cm',
         'height_placeholder': 'Înălțime',
-        'weight_label': 'gr.',
+        'weight_label': 'kg',
         'weight_placeholder': 'Greutate',
     }
 }

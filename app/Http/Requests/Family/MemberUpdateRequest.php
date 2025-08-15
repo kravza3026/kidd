@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Family;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class MemberUpdateRequest extends FormRequest
@@ -35,6 +36,7 @@ class MemberUpdateRequest extends FormRequest
     {
         $this->merge([
             'gender_id' => $this->get('gender')['id'],
+            'weight' => $this->get('weight') * 1000,
         ]);
     }
 }

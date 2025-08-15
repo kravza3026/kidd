@@ -47,9 +47,13 @@ class Family extends Model
     ];
 
     protected $with = [
-        'gender'
+        'gender',
     ];
 
+    public function getWeightAttribute()
+    {
+        return $this->attributes['weight'] / 1000; // Convert grams to kilograms
+    }
 
     public function getAgeDiffAttribute(): Carbon | string
     {

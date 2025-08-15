@@ -20,12 +20,16 @@ class FamilyController extends Controller
         Gate::authorize('viewAny', Family::class);
 
         $family = auth()->user()->family;
+        $genders = cache()->remember('family_genders',1,function () {
+            return Gender::where('code', '=','b')
+                ->orWhere('code', '=','g')
+                ->get();
+        });
 
         return response()->json([
             'family' => $family,
-            'genders' => Gender::all(),
-            'status' => 'success',
-        ]);
+            'genders' => $genders,
+        ], 200);
 
     }
 
