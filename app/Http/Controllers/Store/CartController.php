@@ -182,10 +182,10 @@ class CartController extends Controller
         return response([
             'alert' => [
                 'title' => $product->name,
-                'type' => "cart", // Example: 'favorites' | 'cart' | 'success (checkmark)' | 'info (i letter)' | 'error (cross "x")',
+                'type' => "cart",
                 'message' => __('alerts.addedToCart'),
                 'button' => [
-                    'label' => __('menu.cart'),
+                    'label' => __('header.mobile-menu.cart'),
                     'href' => route('cart.index'),
                 ],
             ],

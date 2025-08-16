@@ -47,14 +47,11 @@ export default {
         'empty_description': 'Să găsim ceva drăguț',
         'btn_explore': 'Explorează ținute',
     },
-    'alerts':{
-        'savedToFavorites':'salvat la Favorite',
-        'removedFromFavorites':'șters din Favorite',
-        'addedToCart':'adăugat în Coș',
-        'removedFromCart':'șters din Coș',
-    },
     'address': {
         'delete': 'Șterge',
+        'delete_confirm': 'Вы уверены, что хотите удалить этот адрес?',
+        'delete_success': 'Адрес успешно удален',
+        'delete_error': 'Ошибка при удалении адреса',
         'edit': 'Editează',
         'add': 'Adaugă adresa',
         'new': 'Adresă noua',

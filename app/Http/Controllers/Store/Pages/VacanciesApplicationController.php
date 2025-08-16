@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Store\Pages;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VacancyApplicationStoreRequest;
+use App\Http\Requests\Vacancy\VacancyApplicationStoreRequest;
 use App\Models\Vacancy;
 use App\Models\VacancyApplication;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Vite;
 

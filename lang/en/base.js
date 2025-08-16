@@ -47,12 +47,6 @@ export default {
         'empty_description': 'Let’s find something cute',
         'btn_explore': 'Explore outfits',
     },
-    'alerts':{
-        'savedToFavorites':'saved to Favorites',
-        'removedFromFavorites':'removed from Favorites',
-        'addedToCart':'added to Сart',
-        'removedFromCart':'removed from Сart',
-    },
     'address': {
         'delete': 'Delete address',
         'edit': 'Edit address',

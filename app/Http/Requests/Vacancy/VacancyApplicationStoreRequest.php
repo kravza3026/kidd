@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vacancy;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Propaganistas\LaravelPhone\Rules\Phone;
+use Illuminate\Support\Str;
 
 class VacancyApplicationStoreRequest extends FormRequest
 {

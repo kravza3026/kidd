@@ -21,7 +21,7 @@ class FamilyController extends Controller
         Gate::authorize('viewAny', Family::class);
 
         $family = auth()->user()->family;
-        $genders = Cache::rememberForever('family_genders',function () {
+        $genders = Cache::rememberForever('family_genders_' . app()->getLocale(),function () {
             return Gender::where('code', '=','b')
                 ->orWhere('code', '=','g')
                 ->get();

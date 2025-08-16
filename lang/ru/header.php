@@ -21,6 +21,14 @@ return [
         'contacts' => 'Контакты',
     ],
 
+    'mobile-menu' => [
+        'catalog' => 'Каталог',
+        'search' => 'Поиск',
+        'cart' => 'Корзина',
+        'help' => 'Помощь',
+        'account' => 'Аккаунт',
+    ],
+
     'search' => [
         'placeholder' => '',
         'button' => 'Поиск',

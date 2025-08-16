@@ -13,14 +13,14 @@ class TagFactory extends Factory
     {
         return [
             'name' => [
-                'ro' => $this->faker->word(),
-                'ru' => $this->faker->word(),
-                'en' => $this->faker->word(),
+                'ro' => fake('ro_RO')->word(),
+                'ru' => fake('ru_RU')->word(),
+                'en' => fake('en_US')->word(),
             ],
             'slug' => [
-                'ro' => $this->faker->slug(),
-                'ru' => $this->faker->slug(),
-                'en' => $this->faker->slug(),
+                'ro' => fake('ro_RO')->slug(),
+                'ru' => fake('ru_RU')->slug(),
+                'en' => fake('en_US')->slug(),
             ],
             'type' => null,
         ];

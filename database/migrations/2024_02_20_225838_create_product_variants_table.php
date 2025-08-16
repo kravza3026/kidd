@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->foreignIdFor(Size::class)->constrained()->cascadeOnDelete();
 //            $table->foreignId('pattern_id')->constrained()->onDelete('cascade');
 
+            $table->boolean('is_visible')->default(1); // Variant is available
+
             $table->string('sku', 50)->unique()->nullable(); // Stock Keeping Unit
             $table->unsignedInteger('quantity')->default(0); // Quantity
 
@@ -34,11 +36,6 @@ return new class extends Migration {
             $table->unsignedInteger('discount_display')->default(0); // Discount display
 
             $table->unsignedInteger('price_shipping')->default(0); // Shipping cost
-
-            $table->boolean('is_visible')->default(1); // Variant is available
-
-            $table->json('images')->nullable(); // Images
-            $table->json('videos')->nullable(); // Videos
 
             $table->json('shipping_sizes')
                 ->default(json_encode([

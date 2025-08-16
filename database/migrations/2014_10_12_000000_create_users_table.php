@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('phone', 16)->unique(); // +37360558844
             $table->string('email')->unique();
-            $table->string('cart_session_id')->nullable()->default(null); // Cart session ID
+            $table->string('cart_session_id')->nullable(); // Cart session ID
             $table->timestamp('phone_verified_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

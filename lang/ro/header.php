@@ -21,6 +21,14 @@ return [
         'contacts' => 'Contacte',
     ],
 
+    'mobile-menu' => [
+        'catalog' => 'Catalog',
+        'search' => 'Căutare',
+        'cart' => 'Coș',
+        'help' => 'Ajutor',
+        'account' => 'Cont',
+    ],
+
     'search' => [
         'placeholder' => '',
         'button' => 'Căutare',

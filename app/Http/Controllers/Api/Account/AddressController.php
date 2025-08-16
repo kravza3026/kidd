@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Account;
 
-use App\Enums\AddressType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Address\AddressStoreRequest;
 use App\Http\Requests\Address\AddressUpdateRequest;

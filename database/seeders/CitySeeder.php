@@ -25,7 +25,11 @@ class CitySeeder extends Seeder
 
             foreach ($request->json()['results'] as $city) {
                 $region->cities()->create([
-                    'name' => ['ro' => $city['name'], 'ru' => $city['name']],
+                    'name' => [
+                        'ro' => $city['name'],
+                        'ru' => $city['name'],
+                        'en' => $city['name'],
+                    ],
                     'external_code' => $city['code'],
                 ]);
             }

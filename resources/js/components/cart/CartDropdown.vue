@@ -5,6 +5,7 @@ import cartIconOpen from '@img/icons/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/ui/Button.vue';
 import { emitter } from '@/eventBus.js';
+import {useI18n} from "vue-i18n";
 
 export default {
     name: 'CartDropdown',
@@ -12,19 +13,22 @@ export default {
         Button,
     },
     setup() {
+        const { locale, t, n } = useI18n();
         const cartItems = ref([]);
         const cartGrandTotal = ref(0);
         const open = ref(false);
         const dropdown = ref(null);
-        const locale = document.documentElement.lang || 'ro';
         const getCartItems = async () => {
-            try {
-                const response = await window.axios.get('cart');
+            await window.axios.get('cart')
+                .then((response) => {
                 cartItems.value = response.data.items;
                 cartGrandTotal.value = response.data.grand_total;
-            } catch (error) {
+            }).catch((error) => {
                 console.error('Server error:', error);
-            }
+                cartItems.value = [];
+                cartGrandTotal.value = 0;
+            });
+
         };
         getCartItems.fetched = false;
 
@@ -34,20 +38,19 @@ export default {
             }
         };
 
-        // 🔄 Додаємо слухач
         onMounted(() => {
             getCartItems();
             document.addEventListener('click', handleClickOutside);
             emitter.on('cart-updated', getCartItems);
         });
 
-        // ❌ Прибираємо слухач
         onUnmounted(() => {
             document.removeEventListener('click', handleClickOutside);
             emitter.off('cart-updated', getCartItems);
         });
 
         return {
+            locale,
             cartItems,
             cartGrandTotal,
             open,
@@ -78,8 +81,7 @@ export default {
 
         <!-- full dropdown cart menu -->
         <transition name="slide-fade" @click.stop>
-            <div
-                v-if="open"
+            <div v-if="open"
                 class="fixed inset-0 h-[calc(100%-162px)] md:h-fit md:inset-auto left-0 md:-right-12 w-full p-4 md:p-0  md:absolute cursor-auto border-t md:border-light-border  top-[72px] md:top-full md:mt-4 md:w-105 bg-white md:shadow-xl md:rounded-xl z-50 "
             >
                 <i class="w-[15px] h-[15px] hidden md:block absolute right-1/7 -top-2 rotate-45 border-l border-t border-light-border bg-white translate-x-2/5 "></i>
@@ -117,7 +119,7 @@ export default {
                         <p class=" text-lg">{{ $n(cartGrandTotal / 100, 'currency', 'ro') }}</p>
                     </div>
                     <div class="px-4 md:px-6 md:pb-6">
-                        <Button display-as="a" :href="route('cart')" customClass="mx-auto mt-0 w-full" withArrow >
+                        <Button display-as="a" :href="`/${locale}/cart`" customClass="mx-auto mt-0 w-full" withArrow >
                             {{ $t('cart.btn_view_cart')}}
                         </Button>
                     </div>

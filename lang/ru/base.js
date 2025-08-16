@@ -47,12 +47,6 @@ export default {
         'empty_description': 'Найдём что-нибудь милое',
         'btn_explore': 'Каталог нарядов',
     },
-    'alerts':{
-        'savedToFavorites':'сохранено в Избранных',
-        'removedFromFavorites':'удалено из Избранных',
-        'addedToCart':'добавлено в Корзину',
-        'removedFromCart':'удалено из Корзины',
-    },
     'address': {
         'delete': 'Удалить',
         'delete_confirm': 'Вы уверены, что хотите удалить этот адрес?',

@@ -2,7 +2,6 @@
     <component
         :is="displayAs"
         :class="mergedClasses"
-        @click="$emit('click')"
     >
         <div v-if="stickyOnMobile && isSticky" class="h-[20px] md:hidden"></div>
         <slot />

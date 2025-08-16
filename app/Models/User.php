@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -156,9 +157,9 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     /**
      * Get all the user's orders.
      */
-    public function orders(): HasMany
+    public function orders(): HasManyThrough
     {
-        return $this->hasMany(Order::class);
+        return $this->hasManyThrough(Order::class, Customer::class, 'user_id', 'customer_id', 'id', 'id');
     }
 
     /**

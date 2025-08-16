@@ -14,7 +14,10 @@ class CountrySeeder extends Seeder
     public function run(): void
     {
         Country::create([
-            'name' => ['ro' => 'Moldova', 'ru' => 'Молдова'],
+            'name' => [
+                'ro' => 'Moldova',
+                'ru' => 'Молдова'
+            ],
             'iso_alpha2' => 'MD',
             'iso_alpha3' => 'MDA',
             'phone_code' => '+373',
@@ -28,7 +31,10 @@ class CountrySeeder extends Seeder
         ]);
 
         Country::create([
-            'name' => ['ro' => 'România', 'ru' => 'Румыния'],
+            'name' => [
+                'ro' => 'România',
+                'ru' => 'Румыния'
+            ],
             'iso_alpha2' => 'RO',
             'iso_alpha3' => 'ROU',
             'phone_code' => '+40',

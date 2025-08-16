@@ -14,12 +14,10 @@ import iconCheck from '@img/icons/checked_white.svg'
 import iconDate from '@img/icons/date.png'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
-import FamilyMember from "@/components/account/family/FamilyMember.vue";
-import {useForm} from "laravel-precognition-vue";
 import {useAlert} from "@/useAlert.js";
 export default {
     name: 'Family',
-    components: {FamilyMember, BaseInput, Button, SubscribeForm, BaseCheckbox},
+    components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
 
     directives: {
         clickOutside,

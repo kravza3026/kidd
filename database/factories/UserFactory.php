@@ -25,8 +25,8 @@ class UserFactory extends Factory
     {
         return [
             'company_id' => 1,
-            'first_name' => fake()->firstName(),
-            'last_name' => fake()->lastName(),
+            'first_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->firstName(),
+            'last_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->lastName(),
             'phone' => fake()->unique()->e164PhoneNumber(),
             'phone_verified_at' => now(),
             'email' => fake()->unique()->safeEmail(),

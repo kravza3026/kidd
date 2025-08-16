@@ -21,6 +21,14 @@ return [
         'contacts' => 'Contacts',
     ],
 
+    'mobile-menu' => [
+        'catalog' => 'Explore',
+        'search' => 'Search',
+        'cart' => 'Cart',
+        'help' => 'Help',
+        'account' => 'Account',
+    ],
+
     'search' => [
         'placeholder' => '',
         'button' => 'Search',

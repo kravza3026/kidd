@@ -19,6 +19,8 @@ class ProductVariant extends Model
         'color_id',
         'size_id',
 
+        'is_visible',
+
         'sku',
         'quantity',
 
@@ -32,19 +34,12 @@ class ProductVariant extends Model
         'discount_display',
         'price_shipping',
 
-        'is_visible',
-
-        'images',
-        'videos',
-
         'shipping_sizes',
     ];
 
     protected $casts = [
         'is_visible' => 'boolean',
         'quantity' => 'integer',
-        'images' => 'json',
-        'videos' => 'json',
         'shipping_sizes' => 'array',
         'price_vendor' => MoneyCast::class.':MDL',
         'price_wholesale' => MoneyCast::class.':MDL',
