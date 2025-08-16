@@ -202,7 +202,7 @@ export default {
 }
 </script>
 <template>
-    <div class=" bg-white">
+    <div class=" bg-white rounded-xl">
 
         <div v-for="(child, index) in family"
              :key="child.id"

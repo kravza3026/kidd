@@ -41,7 +41,7 @@
                                             <p class="col-span-4">4 kg — 5.7 kg</p>
                                             <p class="col-span-1"></p>
                                         </div>
-                                        <div class="grid grid-cols-12 mt-2 p-3 rounded-2xl gap-4 cursor-pointer hover:bg-gray-100">
+                                        <div class="grid grid-cols-12 mt-2 p-3 rounded-2xl gap-4 cursor-pointer hover:bg-gray-100 items-center">
                                             <p class="font-bold col-span-3">6–9M</p>
                                             <p class="col-span-4">68 – 74 cm</p>
                                             <p class="col-span-4">5.7 kg — 7.5 kg</p>

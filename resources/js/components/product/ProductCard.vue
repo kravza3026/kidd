@@ -155,7 +155,7 @@ export default {
             </div>
         </div>
         <a class="space-y-1" :href="product.url">
-            <p class="text-sm text-charcoal sm:text-base">
+            <p class="text-sm text-charcoal sm:text-base truncate">
                 {{ product.name[locale] }}</p>
             <p class="font-bold text-charcoal text-base">
                 {{ $n(finalPrice, 'currency') }}

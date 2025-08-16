@@ -13,7 +13,6 @@
 
         {{-- Quick access to categories (e.g., Men, Women, Kids) --}}
         @include('store.pages.home.sections.fastCategories')
-
         {{-- Section displaying newly arrived products --}}
         @include('store.pages.home.sections.newArrivals')
 

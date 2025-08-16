@@ -72,7 +72,7 @@
                         </p>
                     </div>
                     <div class="order-first  flex justify-start py-5 lg:py-0 lg:mt-[-10%] xl:mt-[-25%]">
-                        <img  class="max-w-full mx-auto" width="500" height="600" alt="Who we are" src={{ Vite::image('staticPages/about/b_2.png') }}>
+                        <img  class="max-w-full mx-auto" width="500" height="600" alt="Who we are" src={{ Vite::image('staticPages/about/b_3.png') }}>
                     </div>
                 </div>
             </div>
