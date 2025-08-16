@@ -27,7 +27,7 @@ class AddressStoreRequest extends FormRequest
             'label' => [
                 'required',
                 'string',
-                'min:3'
+                'min:5'
             ],
             'is_default' => [
                 'boolean'
@@ -47,6 +47,7 @@ class AddressStoreRequest extends FormRequest
             'street_name' => [
                 'required',
                 'string',
+                'max:70',
             ],
             'building' => [
                 'required',
@@ -60,14 +61,17 @@ class AddressStoreRequest extends FormRequest
             'floor' => [
                 'nullable',
                 'numeric',
+                'max:15',
             ],
             'apartment' => [
                 'nullable',
                 'string',
+                'max:5',
             ],
             'intercom' => [
                 'nullable',
                 'string',
+                'max:5',
             ],
             'postal_code' => [
                 'required',

@@ -27,13 +27,8 @@ Route::group([
 
     Route::singleton('profile', ProfileController::class);
 
-    Route::resource('family', FamilyController::class)
-        ->only(['edit', 'store', 'update', 'destroy','show']);
-
     Route::get('favorites', FavoritesController::class)
     ->name('favorites.index');
-//    Route::resource('favorites', FavoritesController::class)
-//        ->only(['index', 'store', 'destroy']);
 
     Route::resource('orders', OrdersController::class)
         ->only(['index', 'show']);

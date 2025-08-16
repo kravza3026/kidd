@@ -97,7 +97,7 @@ export default {
                          })
                      }));
 
-                     console.log(this.addresses)
+                     console.log(this.addresses) // TODO - remove in production
                  }).catch((error) => {
                     console.error('Server error:', error)
                  });
@@ -113,7 +113,7 @@ export default {
                  })
                  .then((response) => {
                      this.regions = response.data.regions;
-                    console.log(response.data)
+                    console.log(response.data) // TODO - remove in production
                  }).catch((error) => {
                     console.error('Server error:', error)
                  });
@@ -129,7 +129,7 @@ export default {
                  })
                  .then((response) => {
                      this.cities = response.data.cities;
-                    console.log(response.data)
+                    console.log(response.data) // TODO - remove in production
                  }).catch((error) => {
                     console.error('Server error:', error)
                  });
@@ -141,6 +141,7 @@ export default {
                  addr => addr.isNew && addr.address_type === address_type
              );
              if (exists) {
+                 // TODO - remove in production
                  console.warn(`Address with type ${address_type} already exists as new`);
                  return;
              }
@@ -198,7 +199,6 @@ export default {
                      this.getAddresses();
                  })
                  .catch(error => {
-
                      console.error(error.response.data.message);
                  });
          },
@@ -232,7 +232,7 @@ export default {
 
                  const type = current.address_type;
 
-                 // await window.axios.put(this.route('api.addresses.setDefault', id));
+                 await window.axios.put(this.route('api.addresses.default', id));
 
                  this.addresses = this.addresses.map(addr => {
                      // Якщо це той самий тип — обнуляємо всі дефолтні крім поточного

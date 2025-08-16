@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Account;
 
+use App\Enums\AddressType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Address\AddressStoreRequest;
 use App\Http\Requests\Address\AddressUpdateRequest;
@@ -55,6 +56,18 @@ class AddressController extends Controller
         $address->delete();
 
         return response()->json( status: 204);
+
+    }
+
+
+    public function default(Request $request, Address $address)
+    {
+        // TODO - Check if the user owns the address
+
+        $request->user()->addresses()->type($address->address_type)->update(['is_default' => false]);
+        $address->update(['is_default' => true]);
+
+        return response()->json( 204);
 
     }
 

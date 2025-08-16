@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\Account\AddressController;
 use App\Http\Controllers\Api\Account\FamilyController;
-use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Store\CartController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -16,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'middleware' => ['auth:sanctum', HandlePrecognitiveRequests::class],
+    'middleware' => ['auth:sanctum', 'localize', HandlePrecognitiveRequests::class],
     'prefix' => 'user'
 ], function () {
+
     Route::get('/', fn (Request $r) => $r->user())->name('user');
 
+    Route::put('addresses/{address}/default', [AddressController::class, 'default'])
+        ->name('addresses.default');
     Route::apiResource('addresses', AddressController::class)->except('show');
     Route::apiResource('family', FamilyController::class)->except('show');
 

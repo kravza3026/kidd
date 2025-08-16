@@ -8,6 +8,7 @@ use App\Http\Requests\Family\MemberUpdateRequest;
 use App\Models\Family;
 use App\Models\Gender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class FamilyController extends Controller
@@ -20,7 +21,7 @@ class FamilyController extends Controller
         Gate::authorize('viewAny', Family::class);
 
         $family = auth()->user()->family;
-        $genders = cache()->remember('family_genders',1,function () {
+        $genders = Cache::rememberForever('family_genders',function () {
             return Gender::where('code', '=','b')
                 ->orWhere('code', '=','g')
                 ->get();
@@ -31,14 +32,6 @@ class FamilyController extends Controller
             'genders' => $genders,
         ], 200);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -54,22 +47,6 @@ class FamilyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Family $family)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Family $family)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(MemberUpdateRequest $request, Family $family)
@@ -80,7 +57,7 @@ class FamilyController extends Controller
 
         $family->update($request->validated());
 
-        return response()->json(status:200);
+        return response()->json(status: 200);
     }
 
     /**
