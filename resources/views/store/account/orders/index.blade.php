@@ -4,10 +4,9 @@
             @include('store.account.nav')
             <div class="p-6 md:px-10">
 
-                <h2>
-                    Это надо верстать заново ( плохо сгенерил AI ))
-                </h2>
 
+
+                @include('store.account.orders.order-list')
                 <table class="w-full divide-y divide-gray-300 text-sm text-left">
 
                     @forelse($user->orders as $order)

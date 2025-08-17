@@ -29,6 +29,7 @@ import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
 import Swal from 'sweetalert2';
 
+
 window.Swal = Swal;
 window.Alpine = Alpine;
 window.IMask = IMask;
@@ -70,6 +71,7 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
         const app = createApp(components[name], props);
         app.use(i18n);
         app.use(ZiggyVue, Ziggy); // php artisan ziggy:generate
+
         app.mount(el);
     }
 });

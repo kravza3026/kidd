@@ -13,7 +13,7 @@
             v-bind="attrs"
 
             :class="[
-        'border rounded-lg px-4 bg-white', customClass,
+        'border rounded-lg px-2 bg-white', customClass,
         error ? 'border-red-500' : 'border-light-border',
         disabled ? 'bg-gray-100 cursor-not-allowed' : ''
       ]"
