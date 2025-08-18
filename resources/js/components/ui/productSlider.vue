@@ -5,9 +5,9 @@
             :loop="true"
             :modules="modules"
             :thumbs="{ swiper: thumbsSwiper }"
-            class="mySwiper2 bg-light-orange rounded-2xl lg:!h-[550px]">
-            <swiper-slide class="w-full bg-light-orange max-h-[350px]  items-center" v-for="(slide, index) in slides" :key="index">
-                <img :src="getImageUrl(slide)" class="mx-auto" width="500" height="300"  alt="">
+            class="mySwiper2 bg-light-orange rounded-2xl lg:w-full lg:!h-[550px]">
+            <swiper-slide class=" bg-light-orange max-h-[350px]  items-center" v-for="(slide, index) in slides" :key="index">
+                <img :src="getImageUrl(slide)" class="mx-auto w-full h-full !max-h-[300px]" width="500" height="300"  alt="">
             </swiper-slide>
         </swiper>
         <swiper
@@ -33,7 +33,7 @@
             }"
             class="mySwiper mt-5"
         >
-            <swiper-slide class=" h-[100px]  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
+            <swiper-slide class=" h-[100px] max-w-[70px]  grow shrink aspect-1" v-for="(slide, index) in slides" :key="index">
                 <img  :src="getImageUrl(slide)" loading="lazy" height="100" class="max-h-[50px] max-w-[70px] mx-auto" alt="">
             </swiper-slide>
         </swiper>

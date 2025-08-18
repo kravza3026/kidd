@@ -1,3 +1,22 @@
+{{--{{dd($product)}}--}}
+
+<div class="my-6 w-full">
+    <div class="flex justify-between items-center">
+        <h2 class="font-medium text-base">{{ __('product-show.desc.title') }}</h2>
+        <p><</p>
+    </div>
+    <div class="">
+        <ul>
+            <li class="flex items-center">
+                <p class="opacity-40">Article</p>
+                <span class="flex-1 mx-2 opacity-10 mt-3"
+                      style="height: 2px; background-image: repeating-linear-gradient(to right, #000 0 2px, transparent 2px 6px);">
+                </span>
+                <p>#156936</p>
+            </li>
+        </ul>
+    </div>
+</div>
 
 
 <div  class="pb-4 w-full border-b border-zinc-100">

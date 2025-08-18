@@ -1,44 +1,62 @@
+
+
 <div class="border border-light-border rounded-2xl accordion-item my-2">
-    <div class="hidden accordion-header lg:grid lg:grid-cols-12 items-center relative bg-light-orange duration-300 p-6">
-        <p class="font-bold text-lg col-span-3">Order #<span>00000</span></p>
-        <p class="text-xs col-span-2 "><span class="bg-olive text-white px-2 py-1 rounded-full font-bold">Shipped</span></p>
-        <p class="text-base col-span-1">2</p>
-        <p class="text-base col-span-2">12 Apr 2023</p>
-        <p class="text-base col-span-2">17 Apr 2023</p>
-        <p class="text-base font-bold text-olive col-span-2">440 lei</p>
-        <span class="absolute  right-6 border border-light-border rounded-full p-2 w-8 h-8 flex items-center justify-center bg-white">
-            <img class="rotate-180 accordion-arrow opacity-40" src="{{ Vite::image('icons/top_arrow.svg') }}" alt="">
+    <input type="checkbox" checked id="acc{{ $index }}" class="peer hidden" />
+    <label for="acc{{ $index }}"
+           class="hidden lg:grid lg:grid-cols-12 items-center relative rounded-2xl bg-light-orange duration-300 p-6
+         cursor-pointer
+         peer-checked:[&_.accordion-arrow]:rotate-180">
+        <span class="font-bold text-lg col-span-3">Order #<span>00000</span></span>
+        <span class="text-xs col-span-2"><span class="bg-olive text-white px-2 py-1 rounded-full font-bold">Shipped</span></span>
+        <span class="text-base col-span-1">2</span>
+        <span class="text-base col-span-2">12 Apr 2023</span>
+        <span class="text-base col-span-2">17 Apr 2023</span>
+        <span class="text-base font-bold text-olive col-span-2">440 lei</span>
+
+        <span class="absolute right-6 border border-light-border rounded-full p-2 w-8 h-8 flex items-center justify-center bg-white">
+      <img
+          class="accordion-arrow opacity-40 transition-transform duration-300"
+          src="{{ Vite::image('icons/top_arrow.svg') }}"
+          alt=""
+      >
+    </span>
+    </label>
+
+
+
+    <label for="acc{{ $index }}"
+           class="block rounded-2xl lg:hidden accordion-header border border-light-border duration-300 p-0
+              peer-checked:[&_.accordion-arrow]:rotate-0 peer-checked:[&_.accordion-arrow]:text-olive"
+
+    > <!-- arbitrary variant для svg -->
+        <span class="grid grid-cols-2 items-center relative rounded-2xl bg-light-orange p-6 peer-checked:!rounded-b-0">
+        <span class="col-span-1">
+            <span class="flex items-center gap-x-2 font-bold">
+                <span class="text-xl">#874720</span>
+                <span class="size-4 rounded-full bg-olive"></span>
+            </span>
+            <span class="opacity-40 text-sm leading-0 py-1">Placed 15 Apr 2023</span>
         </span>
-    </div>
-{{--    <div class="grid lg:hidden accordion-header border border-light-border grid-cols-2 items-center relative bg-light-orange duration-300 p-6">--}}
-{{--        <div>--}}
-{{--            <div class="col-span-1 flex items-center gap-x-2 font-bold">--}}
-{{--                <p class="text-xl">#874720</p>--}}
-{{--                <p class="size-4 rounded-full bg-olive"></p>--}}
-{{--            </div>--}}
-{{--            <p class="opacity-40 text-sm leading-0 py-1">Placed 15 Apr 2023</p>--}}
-{{--        </div>--}}
-{{--        <div class="col-span-1 flex justify-end items-center gap-x-2 font-bold">--}}
-{{--            <p class="font-bold text-olive">889 lei</p>--}}
-{{--            <span>--}}
-{{--                <svg class="rotate-180 accordion-arrow " width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
-{{--                <path d="M12.3346 6.66668L7.0013 1.33334L1.66797 6.66668" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>--}}
-{{--            </svg>--}}
-{{--            </span>--}}
+        <span class="col-span-1 flex justify-end items-center gap-x-2 font-bold">
+            <span class="font-bold text-olive">889 lei</span>
+            <span>
+                <svg class="accordion-arrow rotate-180 transition-transform duration-300"
+                     width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.3346 6.66668L7.0013 1.33334L1.66797 6.66668" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+        </span>
+    </span>
+    </label>
 
-
-{{--        </div>--}}
-
-
-{{--    </div>--}}
-    <div class="accordion-body ">
+    <div class="origin-top scale-y-0 h-0 opacity-0 transition-transform duration-300 peer-checked:scale-y-100 peer-checked:h-auto peer-checked:opacity-100">
         <div class="p-6 ">
             <div class="flex justify-between items-center font-bold">
                 <p class="text-lg">Delivery details</p>
-                <p class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
+                <a href="#" class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
                     <img src="{{ Vite::image('icons/truck_active.svg') }}" alt="">
                     <span class="text-olive text-sm">Track order</span>
-                </p>
+                </a>
             </div>
             <div class="flex flex-wrap justify-start gap-9 items-center mt-6">
                 <p class="grid text-base min-w-1/6">
@@ -97,10 +115,10 @@
         <div class="p-6 border-y border-light-border">
             <div class="flex justify-between items-center font-bold">
                 <p class="text-lg">Contact info</p>
-                <p class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
+                <a href="#" class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
                     <img src="{{ Vite::image('icons/user_active.svg') }}" alt="">
                     <span class="text-olive text-sm">Edit profile</span>
-                </p>
+                </a>
             </div>
             <div class="flex flex-wrap justify-start gap-9 items-center mt-6">
                 <p class="grid text-base min-w-1/6">
@@ -122,12 +140,12 @@
 
             </div>
         </div>
-        <div class="p-6 ">
+        <div class="p-1 lg:p-6 ">
             <h2 class="text-lg font-bold">Products </h2>
-            <div class="py-2 grid grid-cols-4 gap-4">
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-1.png') }}" alt="product name">
+            <div class="py-2 grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div class=" lg:border flex items-center lg:block border-light-border lg:rounded-2xl p-1 lg:p-0">
+                    <div class="bg-light-orange rounded-2xl lg:rounded-t-2xl lg:rounded-b-none max-w-1/4 lg:max-w-full h-fit">
+                        <img class=" lg:max-w-full" src="{{ Vite::image('common/product-1.png') }}" alt="product name">
                     </div>
                     <div class="p-4">
                         <p class=" text-nowrap truncate text-sm font-medium">Summer Cotton Jumpsuit</p>
@@ -142,101 +160,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-3.png') }}" alt="product name">
-                    </div>
-                    <div class="p-4">
-                        <p class=" text-nowrap truncate text-sm font-medium">Flutter Sleeve Dress</p>
-                        <div class="flex justify-start items-center gap-x-1 py-1">
-                            <span class="size-4 bg-olive rounded-full border border-light-border"></span>
-                            <span class="opacity-40 text-sm">Beige</span>
-                            <p class="pl-2 border-l border-l-light-border opacity-40 text-sm"> 0–3M</p>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-olive font-bold text-base">207 lei</p>
-                            <p class="flex items-center">× <span>1</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-1.png') }}" alt="product name">
-                    </div>
-                    <div class="p-4">
-                        <p class=" text-nowrap truncate text-sm font-medium">Summer Cotton Jumpsuit</p>
-                        <div class="flex justify-start items-center gap-x-1 py-1">
-                            <span class="size-4 bg-olive rounded-full border border-light-border"></span>
-                            <span class="opacity-40 text-sm">Beige</span>
-                            <p class="pl-2 border-l border-l-light-border opacity-40 text-sm"> 0–3M</p>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-olive font-bold text-base">240 lei</p>
-                            <p class="flex items-center">× <span>1</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-3.png') }}" alt="product name">
-                    </div>
-                    <div class="p-4">
-                        <p class=" text-nowrap truncate text-sm font-medium">Flutter Sleeve Dress</p>
-                        <div class="flex justify-start items-center gap-x-1 py-1">
-                            <span class="size-4 bg-olive rounded-full border border-light-border"></span>
-                            <span class="opacity-40 text-sm">Beige</span>
-                            <p class="pl-2 border-l border-l-light-border opacity-40 text-sm"> 0–3M</p>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-olive font-bold text-base">207 lei</p>
-                            <p class="flex items-center">× <span>1</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-1.png') }}" alt="product name">
-                    </div>
-                    <div class="p-4">
-                        <p class=" text-nowrap truncate text-sm font-medium">Summer Cotton Jumpsuit</p>
-                        <div class="flex justify-start items-center gap-x-1 py-1">
-                            <span class="size-4 bg-olive rounded-full border border-light-border"></span>
-                            <span class="opacity-40 text-sm">Beige</span>
-                            <p class="pl-2 border-l border-l-light-border opacity-40 text-sm"> 0–3M</p>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-olive font-bold text-base">240 lei</p>
-                            <p class="flex items-center">× <span>1</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-light-border rounded-2xl">
-                    <div class="bg-light-orange rounded-t-2xl">
-                        <img class="max-w-full" src="{{ Vite::image('common/product-3.png') }}" alt="product name">
-                    </div>
-                    <div class="p-4">
-                        <p class=" text-nowrap truncate text-sm font-medium">Flutter Sleeve Dress</p>
-                        <div class="flex justify-start items-center gap-x-1 py-1">
-                            <span class="size-4 bg-olive rounded-full border border-light-border"></span>
-                            <span class="opacity-40 text-sm">Beige</span>
-                            <p class="pl-2 border-l border-l-light-border opacity-40 text-sm"> 0–3M</p>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-olive font-bold text-base">207 lei</p>
-                            <p class="flex items-center">× <span>1</span></p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
-        <div class="p-6 border-t border-light-border">
+        <div class="p-0 lg:p-6 lg:border-t lg:border-light-border">
             <div class="flex justify-between items-center font-bold">
                 <h2 class="text-lg">Payment details </h2>
-                <p class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
+                <a href="#" class="flex items-center gap-2 border border-light-border rounded-full py-2 px-3 ">
                     <img src="{{ Vite::image('icons/print.svg') }}" alt="">
-                    <span class="text-olive text-sm">Edit profile</span>
+                    <span class="text-olive text-sm">Print invoice</span>
                     <img class="rotate-180" src="{{ Vite::image('icons/top_arrow.svg') }}" alt="">
-                </p>
+                </a>
             </div>
             <div class="flex flex-wrap justify-start gap-9 items-center mt-6">
                 <p class="grid text-base min-w-1/6">
