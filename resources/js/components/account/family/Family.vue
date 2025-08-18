@@ -1,20 +1,22 @@
 <script>
-import {reactive, ref} from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Button from "@/components/ui/Button.vue";
-import SubscribeForm from "@/components/ui/subscribeForm.vue";
-import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
-import clickOutside from "@/clickOutside.js";
+import Button from "@/components/ui/Button.vue"
+import SubscribeForm from "@/components/ui/subscribeForm.vue"
+import BaseCheckbox from "@/components/ui/BaseCheckbox.vue"
+import BaseInput from "@/components/ui/BaseInput.vue"
+import clickOutside from "@/clickOutside.js"
+import { useAlert } from "@/useAlert.js"
+
+// icons
 import iconMarker from "@img/icons/marker_outline.png"
 import iconUnknow from "@img/common/baby_unknown.svg"
 import iconTrash from "@img/common/trash.svg"
 import iconSettings from "@img/icons/Settings_base.svg"
-import iconClose from '@img/icons/close.svg'
-import iconCheck from '@img/icons/checked_white.svg'
-import iconDate from '@img/icons/date.png'
+import iconClose from "@img/icons/close.svg"
+import iconCheck from "@img/icons/checked_white.svg"
+import iconDate from "@img/icons/date.png"
 import selectIcon from "@img/icons/select-arrows.svg"
-import BaseInput from "@/components/ui/BaseInput.vue";
-import {useAlert} from "@/useAlert.js";
 export default {
     name: 'Family',
     components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
@@ -24,10 +26,8 @@ export default {
     },
     data(){
         return {
-            family:ref([]),
-            genders:ref([]),
-            _isAddingChild: false,
-
+            family:[],
+            genders:[],
             locale: document.documentElement.lang || 'ro',
             iconMarker,iconTrash,selectIcon,iconSettings,iconClose,iconUnknow,iconCheck,iconDate
         }
@@ -35,8 +35,9 @@ export default {
     setup(){
         const { locale, t, n } = useI18n();
         const { showAlert } = useAlert();
-
+        const _isAddingChild = ref(false)
         return {
+            _isAddingChild,
             showAlert,
             locale,
             t,
@@ -60,13 +61,11 @@ export default {
                             confirmingDelete: false,
                         }
                     }));
-
                     console.log('Genders ', this.genders);
                     console.log('Family ', this.family);
                 }).catch((error) => {
                     console.error('Server error:', error)
                 });
-
         },
 
         addChild() {
@@ -78,9 +77,7 @@ export default {
                 console.warn("Вже є незбережена форма дитини");
                 return;
             }
-
             this._isAddingChild = true;
-
             const newChild = {
                 isNew: true,
                 id: Date.now(),
@@ -458,6 +455,7 @@ export default {
         </div>
     </div>
     <Button
+        v-if="!_isAddingChild"
         @keydown.enter="addChild()"
         @click="addChild()"
         customClass="!py-1 md:!py-2 w-11/12 mx-auto lg:mx-0 lg:w-fit"
