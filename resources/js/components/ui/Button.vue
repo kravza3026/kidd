@@ -1,5 +1,6 @@
 <template>
     <component
+        tabindex="0"
         :is="displayAs"
         :class="mergedClasses"
     >

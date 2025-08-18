@@ -505,8 +505,11 @@ export default {
                     <div class="relative col-span-12 lg:col-span-4 rounded-lg shadow-sm">
                         <div
                             class="border  border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                            tabindex="0"
+                            role="listbox"
                             :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
                             @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
+                            @focus="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
                             v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                         >
                             <input type="hidden"  name="region_id" v-model="address.form.region_id" >
@@ -524,7 +527,9 @@ export default {
                             <li
                                 v-for="region in regions"
                                 :key="region.id"
+                                tabindex="0"
                                 class="px-3 text-xs flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                                @keydown.enter="this.getCities(region.id); address.region.id = region.id; address.form.region = region;address.form.region_id =region.id;  address.editor.dropdownDistrictOpen = false"
                                 @click="this.getCities(region.id); address.region.id = region.id; address.form.region = region;address.form.region_id =region.id;  address.editor.dropdownDistrictOpen = false"
                             >
                                 {{ region.name[locale] ?? region.name['ro'] }}
@@ -537,7 +542,10 @@ export default {
                     <div class="relative col-span-12 lg:col-span-4 rounded-lg shadow-sm">
                         <div
                             class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center "
+                            tabindex="0"
+                            role="listbox"
                             :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
+                            @focus="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                             @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                             v-click-outside="() => address.editor.dropdownCityOpen = false"
                         >
@@ -558,7 +566,9 @@ export default {
                             <li
                                 v-for="city in cities"
                                 :key="city.id"
+                                tabindex="0"
                                 class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
+                                @keydown.enter="address.city_id = city.id; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
                                 @click="address.city_id = city.id; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
 
                             >

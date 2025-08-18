@@ -245,6 +245,7 @@ export default {
                 <div v-if="!child.editor.isEditing" class="flex items-center gap-x-2">
                     <button class="settings cursor-pointer p-2 border border-light-border  rounded-full shadow-sm duration-500 relative group"
                             :class="{'text-olive': !child.editor.isEditing,'text-white bg-olive': child.editor.isEditing}"
+                            @keydown.enter="toggleEdit(child.id)"
                             @click="toggleEdit(child.id)"
                     >
                         <div class="absolute left-2/3 -translate-x-2/5 -top-10 mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -258,7 +259,9 @@ export default {
                         </svg>
                     </button>
                     <div
+                        tabindex="0"
                         class="cursor-pointer group p-2 w-9 h-9 flex items-center justify-center border border-light-border rounded-full shadow-sm relative"
+                        @keydown.enter="child.editor.confirmingDelete = !child.editor.confirmingDelete"
                         @click="child.editor.confirmingDelete = !child.editor.confirmingDelete"
                         v-click-outside="() => child.editor.confirmingDelete = false"
                     >
@@ -274,7 +277,9 @@ export default {
                             >
                                 <!-- Cancel -->
                                 <div
+                                    tabindex="0"
                                     class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl  text-center py-1 flex justify-center bg-olive w-full h-5"
+                                    @keydown.enter="child.editor.confirmingDelete = false"
                                     @click.stop="child.editor.confirmingDelete = false"
                                 >
                                     <img :src="iconClose" alt="" />
@@ -282,7 +287,9 @@ export default {
 
                                 <!-- Confirm -->
                                 <div
+                                    tabindex="0"
                                     class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
+                                    @keydown.enter="confirmRemove(child.id)"
                                     @click.stop="confirmRemove(child.id)"
                                 >
                                     <img :src="iconCheck" alt="" />
@@ -292,17 +299,34 @@ export default {
                     </div>
                 </div>
                 <div v-else-if="child.editor.isEditing && !child.isNew" class="hidden lg:flex flex-nowrap text-nowrap gap-x-2 my-2 lg:my-0 items-center">
-                    <Button @click="updateChild(child.id)" :customClass="'!my-0 !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
+                    <Button
+                            tabindex="0"
+                            @keydown.enter="updateChild(child.id)"
+                            @click="updateChild(child.id)"
+                            :customClass="'!my-0 !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-2" :src="iconCheck" alt="" /> Save child
                     </Button>
-                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                    <Button
+                            tabindex="0"
+                            @keydown.enter="child.editor.isEditing = false"
+                            @click="child.editor.isEditing = false"
+                            buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
                 <div v-else class=" gap-x-2 items-center hidden lg:flex">
-                    <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-4 !py-1.5 h-fit text-nowrap flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
+                    <Button
+                        tabindex="0"
+                        @keydown.enter="saveNewChild(child.id)"
+                        @click="saveNewChild(child.id)"
+                        :customClass="'w-fit !px-4 !py-1.5 h-fit text-nowrap flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save child
                     </Button>
-                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                    <Button
+
+                        @click="removeNewChild(child.id)"
+                        @keydown.enter="removeNewChild(child.id)"
+                        buttonPrimary
+                        :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
             </div>
@@ -341,7 +365,10 @@ export default {
                 <div class="relative col-span-8 lg:col-span-2 rounded-lg mt-4 lg:mt-0 shadow-sm">
                     <div
                         class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                        tabindex="0"
+                        role="listbox"
                         :class="{'cursor-not-allowed hidden lg:flex': !child.editor.isEditing,'': child.editor.isEditing}"
+                        @focus="child.editor.isEditing && (child.editor.dropdownDistrictOpen = !child.editor.dropdownDistrictOpen)"
                         @click="child.editor.isEditing && (child.editor.dropdownDistrictOpen = !child.editor.dropdownDistrictOpen)"
                         v-click-outside="() => child.editor.dropdownDistrictOpen = false"
                     >
@@ -358,13 +385,13 @@ export default {
                         class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
                     >
                         <li
+                            tabindex="0"
                             v-for="gender in genders"
                             :key="gender.id"
                             class="px-3 text-sm flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                            @click="
-                            child.editor.dropdownDistrictOpen = false;
-                            child.gender = gender
-                            ">
+                            @keydown.enter="child.editor.dropdownDistrictOpen = false;child.gender = gender"
+                            @click="child.editor.dropdownDistrictOpen = false;child.gender = gender"
+                        >
                             {{ gender.name[locale] }}
                         </li>
                     </ul>
@@ -431,6 +458,7 @@ export default {
         </div>
     </div>
     <Button
+        @keydown.enter="addChild()"
         @click="addChild()"
         customClass="!py-1 md:!py-2 w-11/12 mx-auto lg:mx-0 lg:w-fit"
         class="font-bold flex items-center"><span class="text-[24px]">+</span> Add child
