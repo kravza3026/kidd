@@ -221,7 +221,7 @@ export default {
                             <BaseInput
                                 :disabled="!child.editor.isEditing"
                                 customClass="min-w-40 max-w-fit lg:my-1 lg:min-h-7.5 !placeholder-text-sm !max-w-fit"
-                                :style="{ width: ((child.name?.length || 1) + 3) + 'ch' }"
+
                                 name="label"
                                 :id="'label-' + child.id"
                                 :placeholder="$t('family_member.name_placeholder')"
@@ -292,17 +292,17 @@ export default {
                     </div>
                 </div>
                 <div v-else-if="child.editor.isEditing && !child.isNew" class="hidden lg:flex flex-nowrap text-nowrap gap-x-2 my-2 lg:my-0 items-center">
-                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
                     <Button @click="updateChild(child.id)" :customClass="'!my-0 !px-4 !py-1.5 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-2" :src="iconCheck" alt="" /> Save child
                     </Button>
+                    <Button @click="child.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
                 <div v-else class=" gap-x-2 items-center hidden lg:flex">
-                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
                     <Button @click="saveNewChild(child.id)" :customClass="'w-fit !px-4 !py-1.5 h-fit text-nowrap flex flex-nowrap !rounded-full !shadow-none text-sm font-medium'">
                         <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save child
                     </Button>
+                    <Button @click="removeNewChild(child.id)" buttonPrimary :customClass="'w-fit px-3 !py-1.5 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                 </div>
             </div>

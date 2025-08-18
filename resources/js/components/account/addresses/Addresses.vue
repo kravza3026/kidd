@@ -1,5 +1,5 @@
 <script>
-import {reactive, ref} from 'vue'
+import {reactive,onMounted, ref} from 'vue'
 import Button from "@/components/ui/Button.vue";
 import SubscribeForm from "@/components/ui/subscribeForm.vue";
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
@@ -8,6 +8,7 @@ import iconMarker from "@img/icons/marker_outline.png"
 import iconFavorite from "@img/icons/favorite_white.svg"
 import iconFavoriteOl from "@img/icons/favorite_olive.svg"
 import iconTrash from "@img/common/trash.svg"
+import iconNoAddress from "@img/common/empty_addresses.jpg"
 import iconSettings from "@img/icons/Settings_base.svg"
 import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
@@ -17,6 +18,8 @@ import {debounce} from "lodash";
 import {useForm} from "laravel-precognition-vue";
 import {useAlert} from "@/useAlert.js";
 import logger from "pusher-js/src/core/logger.js";
+
+
 
 const addressTemplate = {
     address_type: null,
@@ -37,11 +40,10 @@ export default {
      components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
 
      directives: {
-         clickOutside,
+         clickOutside
      },
         setup(){
             const { showAlert } = useAlert();
-
             return {showAlert}
         },
      data(){
@@ -54,7 +56,10 @@ export default {
              regions: ref([]),
              cities: [],
              isAdding: {},
-             types:['Shipping addresses', 'Billing addresses', 'Delivery addresses', 'Payment addresses'],
+             types:[
+                 {id:3, label: 'Shipping addresses'},
+                 {id:4, label: 'Billing addresses'},
+             ],
              defaults: {
                  city: {
                      id: 0,
@@ -81,7 +86,7 @@ export default {
                  },
              },
 
-             iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,iconFavoriteOl,
+             iconMarker,iconFavorite,iconTrash,selectIcon,iconSettings,iconClose,iconCheck,iconFavoriteOl,iconNoAddress
          }
      },
 
@@ -168,7 +173,7 @@ export default {
                  id: Date.now(),
                  address_type:address_type,
                  is_default:false,
-                 postal_code:'MD-0000',
+                 postal_code:'',
                  form: useForm('post', '/user/addresses', {
                      address_type:address_type,
                      label: '',
@@ -180,7 +185,7 @@ export default {
                      apartment: '',
                      entrance: '',
                      floor: '',
-                     postal_code: 'MD-0000',
+                     postal_code: '',
                      intercom: '',
                  }),
                  city: { ...this.defaults.city },
@@ -214,7 +219,7 @@ export default {
                  })
                  .catch(error => {
                      console.error(error.response.data.message);
-                     this.isAdding[address_type] = false;
+
                  });
          },
          async updateAddress(id) {
@@ -280,6 +285,7 @@ export default {
              const address = this.addresses[index];
              if (address.isNew){
                  this.addresses.splice(index, 1);
+
                  this.isAdding[address_type] = false
                  return
              }
@@ -340,23 +346,24 @@ export default {
          this.getAddresses()
          this.getRegions()
 
+     },
 
-     }
  }
 </script>
 <template>
     <section
-    v-for="(type,indexType) in types "
+    v-for="(type) in types "
     >
         <div class="mt-5 bg-white lg:shadow rounded-xl lg:p-5 duration-500">
-            <h1 class="text-[24px] font-bold border border-b-0 rounded-t-lg p-2 border-light-border lg:border-none">{{type}}</h1>
-            <!--    Type 4 = Shipping-->
-            <form @submit.prevent="createAddress(indexType+1)" v-for="(address, index) in addresses.filter(a => a.address_type === indexType+1)"
+            <h1 class="text-[24px] font-bold border border-b-0 rounded-t-lg p-2 border-light-border lg:border-none">{{type.label}}</h1>
+
+            <form v-if="addresses.filter(a => a.address_type === type.id).length > 0"
+                  @submit.prevent="createAddress(type.id)" v-for="(address, index) in addresses.filter(a => a.address_type === type.id)"
                   :key="address.id"
                   :class="{
                   'pb-8 lg:pb-5': address.editor.isEditing,
-                  'border-b-0 border border-light-border': index < addresses.filter(a => a.address_type === 4).length - 1,
-                  'border border-light-border': index === addresses.filter(a => a.address_type === 4).length - 1
+                  'border-b-0 border border-light-border': index < addresses.filter(a => a.address_type === type.id).length - 1,
+                  'border border-light-border': index === addresses.filter(a => a.address_type === type.id).length - 1
                 }"
                   class="location relative duration-500 lg:my-4  lg:border border-light-border lg:rounded-xl p-2 lg:p-5">
 
@@ -375,7 +382,6 @@ export default {
                                 v-model="address.form.label"
                                 aria-label="label"
                                 @change="address.form.validate('label')"
-                                :style="{ width: ((address.form.label?.length || 1) + 3) + 'ch' }"
                                 class="shadow-sm text-charcoal/60 rounded-2xl focus:outline-hidden duration-500 font-bold lg:text-[20px] max-w-1/2 lg:max-w-full"
                                 :class="{
                           '!p-1': address.editor.isEditing,
@@ -410,7 +416,7 @@ export default {
                                         </div>
                                     </button>
                                     <button v-else
-                                            @click="setDefaultAddress(address.id, 4)"
+                                            @click="setDefaultAddress(address.id)"
                                             class="relative border border-light-border shadow-sm cursor-pointer duration-500 rounded-full size-[34px] lg:size-8 !p-0 lg:!p-0 lg:w-fit lg:h-fit flex justify-center items-center">
                                         <div class="flex items-center justify-center gap-x-2 relative z-10 !w-full  p-0 lg:py-2 lg:px-3">
                                             <img class="size-4 lg:hidden" :src="iconFavoriteOl" alt="">
@@ -464,7 +470,7 @@ export default {
                                         <!-- Confirm -->
                                         <div
                                             class="col-span-6 hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
-                                            @click.stop="confirmRemoveAddress(address.id , indexType+1)"
+                                            @click.stop="confirmRemoveAddress(address.id , type.id)"
                                         >
                                             <img :src="iconCheck" alt="" />
                                         </div>
@@ -475,25 +481,24 @@ export default {
                         </div>
                         <div v-if="address.editor.isEditing && address.isNew" class="flex order-first gap-x-2 items-center">
                             <Button
-                                v-if="isAddressFormValid(address) && Object.keys(address.form.errors).length == 0"
-                                @click="createAddress(indexType+1); address.editor.isEditing = false" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
+                                @click="createAddress(type.id)" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
                                 <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save
                             </Button>
-                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,4)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,type.id)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                         </div>
                         <div v-else-if="address.editor.isEditing && !address.isNew" class="flex order-first gap-x-2 items-center">
                             <Button @click="updateAddress(address.id)" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
-                                <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save
+                                <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save changes
                             </Button>
-                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,indexType+1)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,type.id)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                         </div>
                     </div>
                 </div>
 
                 <div
-                    :class="{'hidden': !address.editor.isEditing,'gap-y-4': address.editor.isEditing}"
+                    :class="{'hidden lg:grid': !address.editor.isEditing && !address.isNew,'gap-y-4': address.editor.isEditing}"
                     class=" grid grid-cols-12 lg:grid-cols-18 justify-between gap-x-4 my-4 w-full">
 
                     <!-- District dropdown -->
@@ -580,99 +585,133 @@ export default {
                     />
 
 
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="building"
-                        id="building"
-                        placeholder="bl."
-                        v-model="address.form.building"
-                        aria-label="building"
-                        @change="address.form.validate('building')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
-                        :class="{
+                    <div class="col-span-4 lg:col-span-2 relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">bl.</label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            name="building"
+                            id="building"
+                            placeholder="--"
+                            v-model="address.form.building"
+                            aria-label="building"
+                            @change="address.form.validate('building')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('building')
                         }"
-                    />
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="apartment"
-                        id="apartment"
-                        placeholder="ap."
-                        v-model="address.form.apartment"
-                        aria-label="apartment"
-                        @change="address.form.validate('apartment')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
-                        :class="{
+                        />
+                    </div>
+
+                    <div class="col-span-4 lg:col-span-2  relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="apartment">ap.</label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            name="apartment"
+                            id="apartment"
+                            maxlength="3"
+                            placeholder="--"
+                            v-model="address.form.apartment"
+                            aria-label="apartment"
+                            @change="address.form.validate('apartment')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment')
                         }"
-                    />
+                        />
+                    </div>
                     <BaseInput
+                        :ref="'postalCodeInput-'+address.id"
+                        :key="'postal-'+address.id"
+                        :mask-options="{
+                            mask: 'MD-0000',
+                            lazy: false
+                          }"
+                        placeholder="MD-____"
                         :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="entrance"
-                        id="entrance"
-                        placeholder="sc."
-                        v-model="address.form.entrance"
-                        aria-label="entrance"
-                        @change="address.form.validate('entrance')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
-                        :class="{
-                          'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance')
-                        }"
-                    />
-
-                </div>
-                <div v-if="address.form.apartment && address.form.apartment.length > 0 && address.editor.isEditing" class="grid grid-cols-12 lg:grid-cols-18 lg:justify-end  gap-x-4 my-4 w-full">
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="floor"
-                        id="floor"
-                        placeholder="fl."
-                        v-model="address.form.floor"
-                        aria-label="floor"
-                        @change="address.form.validate('floor')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 lg:col-start-13 duration-500"
-                        :class="{
-                          'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor')
-                        }"
-                    />
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="p-0 min-h-7.5 placeholder-text-sm"
-                        name="intercom"
-                        id="intercom"
-                        placeholder="int."
-                        v-model="address.form.intercom"
-                        aria-label="floor"
-                        @change="address.form.validate('intercom')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
-                        :class="{
-                          'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom')
-                        }"
-                    />
-                    <BaseInput
-                        :disabled="!address.editor.isEditing"
-                        customClass="min-h-7.5 placeholder-text-sm"
+                        customClass="min-h-7.5 placeholder-text-sm placeholder-text-charcoal/40"
                         name="postal_code"
-                        id="postal_code"
-                        placeholder="pt."
+                        :id="'postal_code_'+address.id"
                         v-model="address.form.postal_code"
-                        aria-label="floor"
+                        aria-label="postal_code"
                         @change="address.form.validate('postal_code')"
-                        class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
+                        class="postal_code shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden col-span-4 lg:col-span-2 duration-500"
                         :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('postal_code')
                         }"
                     />
+
+
+
+                </div>
+                <div v-if="address.form.apartment && address.form.apartment.length > 0 && address.editor.isEditing" class="grid grid-cols-12 lg:grid-cols-18 lg:justify-end  gap-x-4 my-4 w-full">
+
+                    <div class="col-span-4 lg:col-span-2 lg:col-start-13 relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="floor">fl.</label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            name="floor"
+                            id="floor"
+                            placeholder="--"
+                            v-model="address.form.floor"
+                            aria-label="floor"
+                            maxlength="3"
+                            @change="address.form.validate('floor')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
+                          'cursor-not-allowed': !address.editor.isEditing,
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor')
+                        }"
+                        />
+                    </div>
+
+                    <div class="col-span-4 lg:col-span-2 relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="entrance">int.</label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            name="intercom"
+                            id="intercom"
+                            maxlength="3"
+                            placeholder="--"
+                            v-model="address.form.intercom"
+                            aria-label="intercom"
+                            @change="address.form.validate('intercom')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
+                          'cursor-not-allowed': !address.editor.isEditing,
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom')
+                        }"
+                        />
+                    </div>
+
+                    <div class="col-span-4 lg:col-span-2 relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="entrance">et.</label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            name="entrance"
+                            id="entrance"
+                            maxlength="3"
+                            placeholder="--"
+                            v-model="address.form.entrance"
+                            aria-label="entrance"
+                            @change="address.form.validate('entrance')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
+                          'cursor-not-allowed': !address.editor.isEditing,
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance')
+                        }"
+                        />
+                    </div>
+
+
+
                 </div>
                 <p v-if="address.form.invalid('label')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.label }}</p>
                 <p v-if="address.form.invalid('floor')" class="text-[12px] text-red-500 w-full text-nowrap ">{{ address.form.errors.floor }}</p>
@@ -686,10 +725,13 @@ export default {
 
 
             </form>
-            <!--            Type 4 = Shipping -->
+            <div v-else class="w-full flex flex-col justify-center items-center">
+                <img :src="iconNoAddress" alt="">
+                <h2 class="text-lg font-bold">No saved addresses</h2>
+            </div>
             <Button
-                v-show="!isAdding[indexType+1]"
-                @click="addNewAddress(indexType+1)"
+                v-show="!isAdding[type.id]"
+                @click="addNewAddress(type.id)"
                 customClass="!py-2 !px-5 lg:!py-2 md:py-2 w-fit"
                 class="font-bold flex items-center"><span class="text-base lg:text-[24px]">+</span> Add new address
 
