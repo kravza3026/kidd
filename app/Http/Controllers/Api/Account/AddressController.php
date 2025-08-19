@@ -18,7 +18,8 @@ class AddressController extends Controller
     {
 
         $user = $request->user();
-        $user->load('addresses');
+        $user->load('addresses.region.cities');
+        $user->load('addresses.city');
 
         $response = [
             'addresses' => $user->addresses,
@@ -52,6 +53,7 @@ class AddressController extends Controller
 
         // TODO - Check if the user owns the address
 
+        $address->
         $address->delete();
 
         return response()->json( status: 204);

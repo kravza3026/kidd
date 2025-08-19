@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Country;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -14,7 +14,7 @@ use LukePOLO\LaraCart\Facades\LaraCart;
 
 class CheckoutController extends Controller
 {
-    protected $steps = [
+    protected array $steps = [
         'shipping' => [
             'view' => 'store.checkout.shipping',
             'rules' => [
@@ -54,7 +54,13 @@ class CheckoutController extends Controller
         $currentStep = Session::get('checkout_step', 'shipping');
         $checkoutData = Session::get('checkout_data', []);
 
-        $regions = Region::all();
+        $regions = Cache::flexible('regions', [60, 1800],function () {
+            // TODO - Normalize caching timings across the app, maybe use a repository pattern.
+            return Region::with('cities')
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get();
+        });
 
         return view($this->steps[$currentStep]['view'], [
             'checkoutData' => $checkoutData,
@@ -69,6 +75,7 @@ class CheckoutController extends Controller
             'total_discount' => LaraCart::discountTotal($formatted = false) / 100,
             'total' => LaraCart::total($formatted = false, true) / 100,
         ]);
+
     }
 
     public function processStep(Request $request, string $step): RedirectResponse
@@ -155,17 +162,20 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.index');
         }
 
-        // Process the order here
         // TODO: Implement order processing
 
         Session::forget(['checkout_step', 'checkout_data']);
 
         Session::flash('toast', [
-            'title' => 'Order Completed',
+            'title' => __('Order Placed'),
             'type' => 'success',
-            'message' => 'Your order has been successfully placed.',
+            'message' => __('Your order has been successfully placed.'),
         ]);
 
-        return redirect()->route('orders.index');
+        if (auth()->check()) {
+            return redirect()->route('orders.index');
+        }
+
+        return redirect()->route('home');
     }
 }

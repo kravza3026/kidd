@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
+use Money\Currencies\ISOCurrencies;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+use NumberFormatter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,13 +55,23 @@ class AppServiceProvider extends ServiceProvider
         Number::useLocale(config('app.locale_format'));
         Carbon::setLocale(app()->getLocale());
 
-        Blade::stringable(function (Money $money) {
+        Blade::stringable('Money', function (Money $money) {
             $currencies = new ISOCurrencies;
             $numberFormatter = new NumberFormatter(config('app.locale_format'), NumberFormatter::CURRENCY);
             $numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
             $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
             return $moneyFormatter->format($money);
+
+
+//            $money = new Money(round(1234.56789, -2, PHP_ROUND_HALF_EVEN), new Currency('MDL'));
+//            $currencies = new ISOCurrencies();
+//
+//            $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY_CODE);
+//            $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+//
+//            echo $moneyFormatter->format($money); // outputs $1.00
+
         });
 
         if (! app()->runningInConsole()) {

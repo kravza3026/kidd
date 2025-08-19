@@ -48,6 +48,9 @@ export default {
         'btn_explore': 'Каталог нарядов',
     },
     'address': {
+        'type_shipping': 'Адрес доставки',
+        'type_billing': 'Адрес для фактуры',
+
         'delete': 'Удалить',
         'delete_confirm': 'Вы уверены, что хотите удалить этот адрес?',
         'delete_success': 'Адрес успешно удален',
@@ -59,15 +62,24 @@ export default {
         'save': 'Сохранить адрес',
         'select': 'Выбрать адрес',
         'default': 'По умолчанию',
-        'name': 'Имя',
+        'make_default': 'Сделать По умолчанию',
+
         'street': 'Улица',
+        'street_short': 'ул.',
         'building': 'Дом',
+        'building_short': 'д.',
+        'apartment': 'Квартира',
+        'apartment_short': 'кв.',
         'entrance': 'Подъезд',
+        'entrance_short': 'под.',
         'floor': 'Этаж',
-        'interfon': 'Домофон',
+        'floor_short': 'эт.',
+        'intercom': 'Домофон',
+        'intercom_short': 'дф.',
         'region': 'Регион',
         'city': 'Город',
-        'zip': 'Почтовый индекс',
+        'city_select': 'Выберите город',
+        'postal_code': 'Почтовый индекс',
     },
 
     'family_member':{

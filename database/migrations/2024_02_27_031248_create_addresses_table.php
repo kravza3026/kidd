@@ -20,11 +20,12 @@ return new class extends Migration
 
             $table->morphs('addressable');
 
-            $table->unsignedInteger('address_type')->default(AddressType::Private); // TODO implement address types, e.g. private, commercial, billing, shipping, etc.
+            $table->unsignedInteger('address_type')
+                ->default(AddressType::Shipping); // TODO implement address types, e.g. private, commercial, shipping, billingб etc.
 
             $table->boolean('is_default')->default(false);
 
-            $table->string('label');
+            $table->string('label', 100);
 
             $table->string('contact_first_name')->nullable();
             $table->string('contact_last_name')->nullable();

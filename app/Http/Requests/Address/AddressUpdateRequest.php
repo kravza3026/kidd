@@ -27,7 +27,7 @@ class AddressUpdateRequest extends FormRequest
             'label' => [
                 'required',
                 'string',
-                'min:3'
+                'min:5'
             ],
             'is_default' => [
                 'boolean'

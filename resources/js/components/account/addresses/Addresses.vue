@@ -14,10 +14,8 @@ import iconClose from '@img/icons/close.svg'
 import iconCheck from '@img/icons/checked_white.svg'
 import selectIcon from "@img/icons/select-arrows.svg"
 import BaseInput from "@/components/ui/BaseInput.vue";
-import {debounce} from "lodash";
 import {useForm} from "laravel-precognition-vue";
 import {useAlert} from "@/useAlert.js";
-import logger from "pusher-js/src/core/logger.js";
 
 
 
@@ -52,13 +50,13 @@ export default {
              form: useForm('post', '/user/addresses', { ...addressTemplate }),
 
              locale: document.documentElement.lang || 'ro',
-             addresses: reactive([]),
+             addresses: ref([]),
              regions: ref([]),
              cities: [],
              isAdding: {},
              types:[
-                 {id:3, label: 'Shipping addresses'},
-                 {id:4, label: 'Billing addresses'},
+                 {id:3, trans_key: 'address.type_shipping'},
+                 {id:4, trans_key: 'address.type_billing'},
              ],
              defaults: {
                  city: {
@@ -141,21 +139,6 @@ export default {
                  });
 
          },
-         getCityNameById(cityId) {
-
-             if (!cityId) return '';
-             console.log('cityId', this.cities)
-             const city = this.cities.find(c => c.id === cityId);
-             if (!city) return '';
-             console.log('city', city)
-             // якщо у відповіді API `name` має переклади по мовах
-             if (city.name && typeof city.name === 'object') {
-                 return city.name[this.locale] || city.name['ro'] || Object.values(city.name)[0];
-             }
-
-             // fallback якщо це просто рядок
-             return city.name || '';
-         },
 
          addNewAddress(address_type) {
              const exists = this.addresses.some(
@@ -173,7 +156,7 @@ export default {
                  id: Date.now(),
                  address_type:address_type,
                  is_default:false,
-                 postal_code:'',
+                 postal_code:'MD-',
                  form: useForm('post', '/user/addresses', {
                      address_type:address_type,
                      label: '',
@@ -195,7 +178,6 @@ export default {
              };
              console.log('newAddress== ', newAddress)
              this.addresses.push(newAddress);
-
 
          },
 
@@ -233,12 +215,12 @@ export default {
 
              await window.axios.put(this.route('api.addresses.update', address.id), address.form)
                  .then((response) => {
-                     this.getAddresses(); // Refresh the family list after update
+                     this.getAddresses(); // Refresh address list after update
 
                      this.showAlert({
                          type: 'info',
-                         title: this.$t('family_member.alert.update_title'),
-                         message: this.$t('family_member.alert.update_message'),
+                         title: this.$t('address.alert.update_title'),
+                         message: this.$t('address.alert.update_message'),
                      });
                  }).catch((error) => {
                      console.error("Update error:", error.response?.data || error);
@@ -274,8 +256,7 @@ export default {
              } catch (error) {
                  console.error("Set default error:", error.response?.data || error);
              }
-         }
-         ,
+         },
          async confirmRemoveAddress(address_id, address_type) {
              const index = this.addresses.findIndex(address => address.id === address_id);
              if (index === -1) {
@@ -294,8 +275,8 @@ export default {
                      this.getAddresses(); // Refresh the family list after deletion
                      this.showAlert({
                          type: 'info',
-                         title: this.$t('family_member.alert.delete_title'),
-                         message: this.$t('family_member.alert.delete_message'),
+                         title: this.$t('address.alert.delete_title'),
+                         message: this.$t('address.alert.delete_message'),
                      });
 
 
@@ -352,18 +333,18 @@ export default {
 </script>
 <template>
     <section
-    v-for="(type) in types "
+    v-for="addr_type in types "
     >
         <div class="mt-5 bg-white lg:shadow rounded-xl lg:p-5 duration-500">
-            <h1 class="text-[24px] font-bold border border-b-0 rounded-t-lg p-2 border-light-border lg:border-none">{{type.label}}</h1>
+            <h1 class="text-[24px] font-bold border border-b-0 rounded-t-lg p-2 border-light-border lg:border-none">{{ $t(addr_type.trans_key)}}</h1>
 
-            <form v-if="addresses.filter(a => a.address_type === type.id).length > 0"
-                  @submit.prevent="createAddress(type.id)" v-for="(address, index) in addresses.filter(a => a.address_type === type.id)"
+            <form v-if="addresses.filter(a => a.address_type === addr_type.id).length > 0"
+                  @submit.prevent="createAddress(addr_type.id)" v-for="(address, index) in addresses.filter(a => a.address_type === addr_type.id)"
                   :key="address.id"
                   :class="{
                   'pb-8 lg:pb-5': address.editor.isEditing,
-                  'border-b-0 border border-light-border': index < addresses.filter(a => a.address_type === type.id).length - 1,
-                  'border border-light-border': index === addresses.filter(a => a.address_type === type.id).length - 1
+                  'border-b-0 border border-light-border': index < addresses.filter(a => a.address_type === addr_type.id).length - 1,
+                  'border border-light-border': index === addresses.filter(a => a.address_type === addr_type.id).length - 1
                 }"
                   class="location relative duration-500 lg:my-4  lg:border border-light-border lg:rounded-xl p-2 lg:p-5">
 
@@ -470,7 +451,7 @@ export default {
                                         <!-- Confirm -->
                                         <div
                                             class="col-span-6 hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
-                                            @click.stop="confirmRemoveAddress(address.id , type.id)"
+                                            @click.stop="confirmRemoveAddress(address.id , addr_type.id)"
                                         >
                                             <img :src="iconCheck" alt="" />
                                         </div>
@@ -481,17 +462,20 @@ export default {
                         </div>
                         <div v-if="address.editor.isEditing && address.isNew" class="flex order-first gap-x-2 items-center">
                             <Button
-                                @click="createAddress(type.id)" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
+                                @click="createAddress(addr_type.id)"
+                                :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
                                 <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save
                             </Button>
-                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,type.id)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,addr_type.id)" buttonPrimary
+                                    :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                         </div>
                         <div v-else-if="address.editor.isEditing && !address.isNew" class="flex order-first gap-x-2 items-center">
                             <Button @click="updateAddress(address.id)" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
                                 <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save changes
                             </Button>
-                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,type.id)" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,addr_type.id)" buttonPrimary
+                                    :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                         </div>
                     </div>
@@ -552,7 +536,7 @@ export default {
                             <input type="hidden"  name="city_id" v-model="address.form.city_id" >
                             <p class="flex items-center opacity-60 text-sm">
 
-                                {{address.city_id || 'Select city'}}
+                                {{ address.city?.name[locale] || this.defaults.city.name[locale] || '' }}
 
                             </p>
                             <img class="duration-500" :src="selectIcon"  alt="selectIcon"
@@ -568,8 +552,8 @@ export default {
                                 :key="city.id"
                                 tabindex="0"
                                 class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
-                                @keydown.enter="address.city_id = city.id; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
-                                @click="address.city_id = city.id; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
+                                @keydown.enter="address.city_id = city.id; address.city = city; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
+                                @click="address.city_id = city.id; address.city = city; address.form.city = city; address.form.city_id = city.id; address.editor.dropdownCityOpen = false"
 
                             >
                                 {{ city.name[locale] ?? city.name['ro'] }}
@@ -583,7 +567,7 @@ export default {
                         customClass="p-0 h-7.5 placeholder-text-sm"
                         name="street"
                         id="street"
-                        placeholder="str."
+                        :placeholder="$t('address.street_short')"
                         v-model="address.form.street_name"
                         aria-label="street"
                         @change="address.form.validate('street')"
@@ -596,7 +580,9 @@ export default {
 
 
                     <div class="col-span-4 lg:col-span-2 relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">bl.</label>
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">
+                            {{ $t('address.building_short') }}
+                        </label>
                         <BaseInput
                             :disabled="!address.editor.isEditing"
                             customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
@@ -615,7 +601,9 @@ export default {
                     </div>
 
                     <div class="col-span-4 lg:col-span-2  relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="apartment">ap.</label>
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="apartment">
+                            {{ $t('address.apartment_short') }}
+                        </label>
                         <BaseInput
                             :disabled="!address.editor.isEditing"
                             customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
@@ -661,7 +649,9 @@ export default {
                 <div v-if="address.form.apartment && address.form.apartment.length > 0 && address.editor.isEditing" class="grid grid-cols-12 lg:grid-cols-18 lg:justify-end  gap-x-4 my-4 w-full">
 
                     <div class="col-span-4 lg:col-span-2 lg:col-start-13 relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="floor">fl.</label>
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="floor">
+                            {{ $t('address.floor_short') }}
+                        </label>
                         <BaseInput
                             :disabled="!address.editor.isEditing"
                             customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
@@ -681,7 +671,31 @@ export default {
                     </div>
 
                     <div class="col-span-4 lg:col-span-2 relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="entrance">int.</label>
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="entrance">
+                            {{ $t('address.entrance_short') }}
+                        </label>
+                        <BaseInput
+                            :disabled="!address.editor.isEditing"
+                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-11"
+                            name="entrance"
+                            id="entrance"
+                            maxlength="3"
+                            placeholder="--"
+                            v-model="address.form.entrance"
+                            aria-label="entrance"
+                            @change="address.form.validate('entrance')"
+                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
+                            :class="{
+                          'cursor-not-allowed': !address.editor.isEditing,
+                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance')
+                        }"
+                        />
+                    </div>
+
+                    <div class="col-span-4 lg:col-span-2 relative">
+                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="intercom">
+                            {{ $t('address.intercom_short') }}
+                        </label>
                         <BaseInput
                             :disabled="!address.editor.isEditing"
                             customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
@@ -696,26 +710,6 @@ export default {
                             :class="{
                           'cursor-not-allowed': !address.editor.isEditing,
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom')
-                        }"
-                        />
-                    </div>
-
-                    <div class="col-span-4 lg:col-span-2 relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="entrance">et.</label>
-                        <BaseInput
-                            :disabled="!address.editor.isEditing"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
-                            name="entrance"
-                            id="entrance"
-                            maxlength="3"
-                            placeholder="--"
-                            v-model="address.form.entrance"
-                            aria-label="entrance"
-                            @change="address.form.validate('entrance')"
-                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"
-                            :class="{
-                          'cursor-not-allowed': !address.editor.isEditing,
-                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance')
                         }"
                         />
                     </div>
@@ -740,8 +734,8 @@ export default {
                 <h2 class="text-lg font-bold">No saved addresses</h2>
             </div>
             <Button
-                v-show="!isAdding[type.id]"
-                @click="addNewAddress(type.id)"
+                v-show="!isAdding[addr_type.id]"
+                @click="addNewAddress(addr_type.id)"
                 customClass="!py-2 !px-5 lg:!py-2 md:py-2 w-fit"
                 class="font-bold flex items-center"><span class="text-base lg:text-[24px]">+</span> Add new address
 

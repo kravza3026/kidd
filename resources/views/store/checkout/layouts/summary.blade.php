@@ -1,3 +1,5 @@
+@use('Money\Currency;use Money\Money; use Money\Currencies\ISOCurrencies; use Money\Formatter\IntlMoneyFormatter')
+
 <!-- Right Column - Order Summary -->
 <div class="order-1 lg:order-2 bg-card-bg rounded-2xl p-6">
     <h2 class="text-sm font-bold mb-6">{{ __('checkout.order_summary') }}</h2>
@@ -17,7 +19,7 @@
                         <span>{{ $item->variant->size->name }}</span>
                     </div>
                     <div class="flex justify-between mt-1">
-                        <span class="text-sm text-charcoal/60">x{{ $item->qty }}</span>
+                        <span class="text-sm font-bold text-charcoal/60">x{{ $item->qty }}</span>
                         <span class="font-bold">{{ $item->price / 100 }}</span>
                     </div>
                 </div>
@@ -39,11 +41,12 @@
         @endforeach
         @foreach($coupons as $coupon)
             <div class="flex justify-between text-sm">
-                <span class="text-charcoal/60 font-bold">
-                    {{ $coupon->options['description'] }}
+                <span class="text-charcoal/60 font-medium">
+                    {{ $coupon->options['description'] }} [<i class="font-bold">{{ $coupon->code }}</i>]
                 </span>
                 <span class="font-bold">
-                    {{ $coupon->discounted / 100 }} MDL
+{{--                    {{ new Money($coupon->discounted, new Currency('MDL')) }} lei--}}
+                    -{{ round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN) }} MDL
                 </span>
             </div>
         @endforeach

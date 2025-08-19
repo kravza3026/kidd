@@ -44,15 +44,15 @@ class CartController extends Controller
 //                    'qty' => 1,
 //                ]);
 
-        $coupons[] = new Percentage('test_percent', '0.1', [
+        $coupons[] = new Percentage('SUMMER10', '0.1', [
             'description' => '10% Discount',
             'taxable' => false,
         ]);
 
-        $coupons[] = new Fixed('test_fixed', 10000,[
-            'description' => '100 MDL reducere',
-            'taxable' => false,
-        ]);
+//        $coupons[] = new Fixed('test_fixed', 10000,[
+//            'description' => '100 MDL reducere',
+//            'taxable' => false,
+//        ]);
 
 //        $coupons[] = new FreeDeliveryCoupon('free_delivery', 10000, [
 //            'description' => 'Livrare gratuită',
@@ -62,6 +62,7 @@ class CartController extends Controller
         foreach ($coupons as $coupon) {
             LaraCart::addCoupon($coupon);
         }
+//                LaraCart::removeCoupon('SUMMER10');
         //        LaraCart::removeCoupon('free_delivery');
 //                LaraCart::removeCoupon('test_fixed');
 
@@ -69,11 +70,11 @@ class CartController extends Controller
 //        LaraCart::addFee('free_delivery', (-50 * 100), $taxable = false, $options = ['description' => 'Free delivery']);
 
 //        LaraCart::addFee('gift', 300 * 100, $taxable = false, $options = ['description' => 'Gift wrap']);
-        LaraCart::addFee('express_delivery', 100 * 100, $taxable = false, $options = ['description' => 'Express delivery']);
+//        LaraCart::addFee('express_delivery', 100 * 100, $taxable = false, $options = ['description' => 'Express delivery']);
         //        LaraCart::addFee('free_express_delivery', -150 * 100, $taxable = false, $options = ['description' => 'Free Express delivery promo']);
 
         //        LaraCart::removeFee('gift');
-        //        LaraCart::removeFee('express_delivery');
+//                LaraCart::removeFee('express_delivery');
         //        LaraCart::removeFee('free_express_delivery');
 
         //        $items = LaraCart::getItems();
@@ -211,7 +212,7 @@ class CartController extends Controller
 
         return response([
             'alert' => [
-                'title' => 'Cart', // TODO - Translation
+                'title' => __('alerts.cart.title'), // TODO - Translation
                 'type' => "success", // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.updated'), // TODO - Translation
 //                'button' => [
@@ -219,7 +220,7 @@ class CartController extends Controller
 //                    'href' => route('cart'),
 //                ],
                 'options' => [
-                    'timer' => 10000,
+                    'timer' => 7000,
                 ],
             ],
         ], status: 200);

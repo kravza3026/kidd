@@ -21,7 +21,8 @@
         "spatie/laravel-sluggable": "^3.7",
         "spatie/laravel-tags": "^4.10",
         "spatie/laravel-translatable": "^6.11",
-        "tightenco/ziggy": "^2.5"
+        "tightenco/ziggy": "^2.5",
+        "ext-intl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
