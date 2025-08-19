@@ -385,8 +385,8 @@ export default {
                     <div class="flex items-center gap-x-2 max-w-1/3 lg:max-w-1/2">
 
 
-                        <div class="flex items-center gap-x-2" v-if="!address.isNew">
-                            <transition name="fade" mode="out-in">
+                        <div class="flex items-center gap-x-2" v-if="!address.isNew ">
+                            <transition v-if="!address.editor.isEditing" name="fade" mode="out-in">
                                 <div :key="address.is_default">
                                     <button v-if="address.is_default"
                                             class="gradient_r-b_dark border border-transparent duration-500 relative shadow-sm cursor-pointer rounded-full size-[34px] lg:size-8  !p-0 lg:!p-0 lg:w-fit lg:h-fit flex justify-center items-center">
@@ -406,7 +406,9 @@ export default {
                                     </button>
                                 </div>
                             </transition>
-                            <button class="settings cursor-pointer size-[34px] lg:size-8 lg:p-2 border border-light-border  rounded-full shadow-sm duration-500 relative group flex items-center justify-center"
+                            <button
+                                    v-if="!address.editor.isEditing"
+                                    class="settings cursor-pointer size-[34px] lg:size-8 lg:p-2 border border-light-border  rounded-full shadow-sm duration-500 relative group flex items-center justify-center"
                                     :class="{'text-olive': !address.editor.isEditing,'text-white bg-olive': address.editor.isEditing}"
                                     type="button"
                                     @click="toggleEdit(address.id); this.getCities(address.form.region_id)"
@@ -424,7 +426,7 @@ export default {
                             </button>
 
                             <div
-
+                                v-if="!address.editor.isEditing"
                                 class="cursor-pointer group size-[34px] lg:size-8 !p-0 lg:p-2 border border-light-border rounded-full shadow-sm relative flex items-center justify-center"
                                 @click="address.editor.confirmingDelete = !address.editor.confirmingDelete"
                                 v-click-outside="() => address.editor.confirmingDelete = false"
@@ -474,8 +476,7 @@ export default {
                             <Button @click="updateAddress(address.id)" :customClass="'w-fit !px-4 !my-0 !py-2 h-fit flex flex-nowrap !rounded-full !shadow-none text-sm font-medium absolute lg:static right-1 bottom-1'">
                                 <img class="size-3 -mr-3" :src="iconCheck" alt="" /> Save changes
                             </Button>
-                            <Button v-if="address.isNew" @click="confirmRemoveAddress(address.id,addr_type.id)" buttonPrimary
-                                    :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
+                            <Button v-if="!address.isNew" @click="address.editor.isEditing = false" buttonPrimary :customClass="'w-fit px-3 !py-2 h-fit !shadow-none bg-white text-olive !rounded-full font-medium text-sm !m-0'" >Cancel</Button>
 
                         </div>
                     </div>
@@ -493,7 +494,7 @@ export default {
                             role="listbox"
                             :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
                             @click="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
-                            @focus="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
+                            @keydown.enter="address.editor.isEditing && (address.editor.dropdownDistrictOpen = !address.editor.dropdownDistrictOpen)"
                             v-click-outside="() => address.editor.dropdownDistrictOpen = false"
                         >
                             <input type="hidden"  name="region_id" v-model="address.form.region_id" >
@@ -529,7 +530,7 @@ export default {
                             tabindex="0"
                             role="listbox"
                             :class="{'cursor-not-allowed': !address.editor.isEditing,'': address.editor.isEditing}"
-                            @focus="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
+                            @keydown.enter="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                             @click="address.editor.isEditing && (address.editor.dropdownCityOpen = !address.editor.dropdownCityOpen)"
                             v-click-outside="() => address.editor.dropdownCityOpen = false"
                         >
