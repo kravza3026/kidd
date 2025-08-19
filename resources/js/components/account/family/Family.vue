@@ -231,7 +231,7 @@ export default {
 
                             <div v-if="!child.isNew" class="flex flex-no-wrap gap-x-1">
                                 <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="text-sm uppercase lg: gap-x-1 px-2 opacity-40 border-l border-l-charcoal/40  hidden lg:block"></p>
-                                <p   class="w-fit text-nowrap px-1 text-sm py-0 lg:p-2 opacity-40 border-r border-r-charcoal/50 uppercase lg:hidden">1Y 10M</p>
+                                <p v-if="!child.editor.isEditing" v-text="child.age_diff" class="w-fit text-nowrap px-1 text-sm py-0 lg:p-2 opacity-40 border-r border-r-charcoal/50 lg:hidden"></p>
                                 <p class="text-sm opacity-40 w-fit px-1 border-r border-r-charcoal/50 text-start lg:hidden">{{child.height}} {{ $t('family_member.height_label') }}</p>
                                 <p class="text-sm opacity-40 w-fit px-1 text-start lg:hidden">{{(child.weight).toFixed(1) }} kg</p>
                             </div>
