@@ -79,9 +79,11 @@
                                     <div class="mt-6 flex justify-start">
 
                                             <Button
+                                                display-as="a"
+                                                :href="route('size-chart')"
                                                 class=""
                                             >
-                                                <a class="border-none outline-none" href="/">View full size chart</a>
+                                                <p class="border-none outline-none">View full size chart</p>
                                             </Button>
 
                                     </div>

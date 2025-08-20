@@ -578,18 +578,14 @@ export default {
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('street')
                         }"
                     />
+                    <div class="relative col-span-4 lg:col-span-2 ">
 
-
-                    <div class="col-span-4 lg:col-span-2 relative">
-                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">
-                            {{ $t('address.building_short') }}
-                        </label>
                         <BaseInput
                             :disabled="!address.editor.isEditing"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            customClass="p-0 min-h-7.5 peer w-full bg-transparent  text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow "
                             name="building"
-                            id="building"
-                            placeholder="--"
+                            :id="'building_'+address.id"
+                            placeholder=""
                             v-model="address.form.building"
                             aria-label="building"
                             @change="address.form.validate('building')"
@@ -599,7 +595,33 @@ export default {
                           '!shadow-red-500': address.editor.isEditing && address.form.invalid('building')
                         }"
                         />
+                        <label
+                            :class="{'!-top-2 left-2.5 text-xs scale-90 text-scale-200 text-slate-400' : address.form.building}"
+                            class=" absolute cursor-text bg-white px-1 left-2.5 top-1 text-slate-400  text-sm transition-all transform origin-left peer-focus:-top-2 peer-focus:left-2.5 peer-focus:text-xs peer-focus:scale-90" :for="'building_'+address.id">
+                            {{ $t('address.building_short') }}
+                        </label>
                     </div>
+
+<!--                    <div class="col-span-4 lg:col-span-2 relative">-->
+<!--                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">-->
+<!--                            {{ $t('address.building_short') }}-->
+<!--                        </label>-->
+<!--                        <BaseInput-->
+<!--                            :disabled="!address.editor.isEditing"-->
+<!--                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"-->
+<!--                            name="building"-->
+<!--                            id="building"-->
+<!--                            placeholder="&#45;&#45;"-->
+<!--                            v-model="address.form.building"-->
+<!--                            aria-label="building"-->
+<!--                            @change="address.form.validate('building')"-->
+<!--                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"-->
+<!--                            :class="{-->
+<!--                          'cursor-not-allowed': !address.editor.isEditing,-->
+<!--                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('building')-->
+<!--                        }"-->
+<!--                        />-->
+<!--                    </div>-->
 
                     <div class="col-span-4 lg:col-span-2  relative">
                         <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="apartment">

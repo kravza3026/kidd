@@ -95,6 +95,10 @@
     font-optical-sizing: auto;
     font-style: normal;
 
+
+}
+:focus{
+    outline: 1px solid var(--color-olive);
 }
 
 .light_border{
@@ -158,6 +162,31 @@
         -moz-appearance: textfield;
     }
 }
+
+
+
+@layer components {
+    /* Базова кнопка табу */
+    .tab-btn {
+        @apply px-5 py-2 border border-light-border uppercase rounded-full text-sm hover:bg-olive hover:text-white;
+    }
+
+    .pageContent:has(#tab1:checked) .tab-buttons label[for="tab1"],
+    .pageContent:has(#tab2:checked) .tab-buttons label[for="tab2"],
+    .pageContent:has(#tab3:checked) .tab-buttons label[for="tab3"] {
+        @apply bg-olive text-white;
+    }
+
+    .tab-panel { @apply hidden; }
+
+
+    .pageContent:has(#tab1:checked) .tab-panels [data-tab="tab1"],
+    .pageContent:has(#tab2:checked) .tab-panels [data-tab="tab2"],
+    .pageContent:has(#tab3:checked) .tab-panels [data-tab="tab3"] {
+        @apply block;
+    }
+}
+
 ul.markers{
     list-style-image: url('../images/icons/list_marker.png');
 

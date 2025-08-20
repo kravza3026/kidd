@@ -1,17 +1,22 @@
 <x-app-layout>
     <div class="pageContent  max-w-3xl mx-auto py-section">
+
 {{--        {{ app()->getLocale() }}--}}
             <div class="lg:flex justify-between items-center">
                 <div class="px-2 lg:px-0 pb-4 lg:pb-0 text-3xl lg:text-5xl font-bold flex items-center gap-x-2 mb-4 lg:mb-0 border-b lg:border-none border-b-light-border">
                     <h1>Size guide</h1>
                 </div>
-                <div class="flex items-center gap-x-2 px-2 lg:px-0">
-                    <a class="hover:bg-olive border border-light-border px-5 py-2 hover:text-white uppercase rounded-full text-sm" href="#">en</a>
-                    <a class="hover:bg-olive border border-light-border px-5 py-2 hover:text-white uppercase rounded-full text-sm" href="#">uk</a>
-                    <a class="hover:bg-olive border border-light-border px-5 py-2 hover:text-white uppercase rounded-full text-sm" href="#">us</a>
+                <input type="radio" name="tabs" id="tab1" class="hidden" checked>
+                <input type="radio" name="tabs" id="tab2" class="hidden">
+                <input type="radio" name="tabs" id="tab3" class="hidden">
+                <div class="tab-buttons flex items-center gap-x-2 px-2 lg:px-0">
+                    <label for="tab1"  class="tab-btn">en</label>
+                    <label for="tab2" class="tab-btn">uk</label>
+                    <label for="tab3" class="tab-btn">us</label>
                 </div>
             </div>
-        <div class="mt-5 lg:mt-10 ">
+        <div class="tab-panels">
+        <div class="tab-panel mt-5 lg:mt-10" data-tab="tab1">
             <div class="border lg:my-1 bg-white border-light-border lg:rounded-2xl">
                 <input id="jumpsuits" checked type="checkbox" class="peer hidden">
                 <label for="jumpsuits"
@@ -268,7 +273,15 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="tab-panel mt-5 lg:mt-10" data-tab="tab2">
+            <p>Content for UK</p>
+        </div>
+        <div class="tab-panel mt-5 lg:mt-10" data-tab="tab3">
+            <p>Content for US</p>
+        </div>
         </div>
     </div>
 </x-app-layout>
+
+
