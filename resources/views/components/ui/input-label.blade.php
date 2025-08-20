@@ -1,5 +1,6 @@
 @props([
     'label' => null,
+    'optional' => false,
     'required' => false,
     'type' => 'text',
     'name' => null,
@@ -14,6 +15,7 @@
     @if ($label)
         <label for="{{ $id ?? Str::kebab($name) }}" class="text-sm {{ $labelClass }}">
             {{ $label }}
+            @if($optional) <span class="opacity-40">(optional)</span> @endif
         </label>
     @endif
     <input
