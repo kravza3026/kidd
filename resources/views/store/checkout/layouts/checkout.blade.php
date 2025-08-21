@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto  py-5">
+    <div class="container mx-auto  py-section">
         <h1 class="text-5xl font-bold mb-5">Checkout</h1>
         <!-- Checkout Progress -->
 {{--        <div class="mb-12">--}}
@@ -34,7 +34,7 @@
 {{--            </div>--}}
 {{--        </div>--}}
 
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-6">
             <!-- Left Column - Form -->
             <div class="order-2 lg:order-1">
                 @yield('checkout-form')

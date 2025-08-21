@@ -1,82 +1,72 @@
 @extends('store.checkout.layouts.checkout')
 
 @section('checkout-form')
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold">Contact Information</h1>
-        <p class="text-sm text-charcoal/60 mt-2">Please enter your contact details</p>
-    </div>
+{{--    {{dd(auth()->user()->addresses()->first())}}--}}
+    <a href="{{ route('checkout.previous', ['step' => 'contact']) }}" class="grid grid-cols-17 items-center gap-x-2 font-medium mb-8">
+        <p class="size-8 col-span-1 bg-olive text-white flex items-center justify-center rounded-full">
+            <img src="{{Vite::image('icons/checked_white.svg')}}" alt="">
+        </p>
+        <div class="text-2xl col-span-15 font-bold">
+            <p>Shipping details</p>
+            <p class="text-base font-normal opacity-60">Regular shipping to mun. Chișinău, or. Chișinău, str. Alba Iulia 75, MD-2071</p>
+        </div>
+        <div class="col-span-1 flex h-full justify-end items-end">
+            <p class="size-8 flex items-center justify-center rounded-full border border-light-border">
+                <img class="rotate-180 opacity-20" src="{{Vite::image('icons/top_arrow.svg')}}" alt="arrow">
+            </p>
+        </div>
+    </a>
 
-    <form action="{{ route('checkout.process', ['step' => 'contact']) }}" method="POST" class="space-y-6">
+    <hr class="border-light-border mb-8">
+    <div class="grid grid-cols-17 items-center mb-8">
+            <p class="size-8 col-span-1 rounded-full bg-olive text-white flex items-center justify-center">1</p>
+            <p class="col-span-16 text-2xl font-bold">Contact information</p>
+    </div>
+    <form action="{{ route('checkout.process', ['step' => 'contact']) }}" method="POST" class="grid grid-cols-17">
         @csrf
 
-        <div class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="contact_first_name" class="block text-sm font-medium text-charcoal">
-                        First Name
-                    </label>
-                    <input type="text" name="contact_first_name" id="contact_first_name"
-                           value="{{ old('contact_first_name', $checkoutData['contact_first_name'] ?? '') }}"
-                           class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400 transition-colors"
-                           placeholder="Enter first name">
-                    @error('contact_first_name')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+        <div class="col-span-16 col-start-2">
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-1">
+                        <x-ui.input-label :placeholder="'Enter first name'" for="first_name" value="{{ old('contact_first_name', $checkoutData['contact_first_name'] ?? '') }}" :type="'text'" name="contact_first_name" :label="__('First name')"  autocomplete="first_name"/>
+                        @error('contact_first_name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-span-1">
+                        <x-ui.input-label :placeholder="'Enter your surname'" for="last_name" value="{{ old('contact_last_name', $checkoutData['contact_last_name'] ?? '') }}" :type="'text'" name="contact_last_name" :label="__('Last name')"  autocomplete="family-name"/>
+                        @error('contact_last_name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-span-1">
+
+                        <x-ui.input-label type="email" name="contact_email" for="contact_email" value="{{ old('contact_email', $checkoutData['contact_email'] ?? '') }}"  :label="__('E-mail address')"  placeholder="Enter email address"> </x-ui.input-label>
+                        @error('contact_email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-span-1">
+                        <x-ui.input-label :placeholder="'Enter your phone number'" for="phone" value="{{ old('contact_last_name', $checkoutData['contact_phone'] ?? '') }}" :type="'text'" name="contact_phone" :label="__('Phone number')"  autocomplete="phone"/>
+                        @error('contact_phone')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                 </div>
 
-                <div>
-                    <label for="contact_last_name" class="block text-sm font-medium text-charcoal">
-                        Last Name
-                    </label>
-                    <input type="text" name="contact_last_name" id="contact_last_name"
-                           value="{{ old('contact_last_name', $checkoutData['contact_last_name'] ?? '') }}"
-                           class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400 transition-colors"
-                           placeholder="Enter last name">
-                    @error('contact_last_name')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
             </div>
-
-            <div>
-                <label for="contact_email" class="block text-sm font-medium text-charcoal">
-                    Email Address
-                </label>
-                <input type="email" name="contact_email" id="contact_email"
-                       value="{{ old('contact_email', $checkoutData['contact_email'] ?? '') }}"
-                       class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400 transition-colors"
-                       placeholder="Enter email address">
-                @error('contact_email')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+            <div class="flex justify-start items-center pt-8">
+                <x-ui.button as="button" class="px-15 !py-3 mt-0" right_icon="false"  type="submit">Continue</x-ui.button>
             </div>
-
-            <div>
-                <label for="contact_phone" class="block text-sm font-medium text-charcoal">
-                    Phone Number
-                </label>
-                <input type="tel" name="contact_phone" id="contact_phone"
-                       value="{{ old('contact_phone', $checkoutData['contact_phone'] ?? '') }}"
-                       class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400 transition-colors"
-                       placeholder="Enter phone number">
-                @error('contact_phone')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-
-        <div class="flex justify-between items-center pt-8">
-            <a href="{{ route('checkout.previous', ['step' => 'contact']) }}"
-               class="flex items-center gap-2 text-sm text-charcoal/60 hover:text-charcoal transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                Back to Shipping
-            </a>
-            <button type="submit"
-                    class="bg-olive text-white px-6 py-3 rounded-xl hover:bg-olive-dark focus:outline-none focus:ring-2 focus:ring-olive focus:ring-offset-2 transition-colors">
-                Continue to Payment
-            </button>
         </div>
     </form>
+    <hr class="border-light-border my-4">
+    <div class="grid grid-cols-17 items-center gap-x-2 font-medium">
+        <p class="size-8 col-span-1 opacity-30 border-2 border-charcoal/30 flex items-center justify-center rounded-full">3</p>
+        <p class="text-2xl col-span-16">Payment details</p>
+    </div>
+    <hr class="border-light-border my-4">
+
 @endsection

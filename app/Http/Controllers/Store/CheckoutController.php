@@ -22,6 +22,7 @@ class CheckoutController extends Controller
                 'shipping_city' => 'required|string',
                 'shipping_region' => 'required|string',
                 'shipping_postcode' => 'required|string',
+                'shipping_building' => 'required|string',
             ],
         ],
         'contact' => [

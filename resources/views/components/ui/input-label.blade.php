@@ -28,7 +28,7 @@
         @endif
         value="{{ old($name, $value) }}"
         {{ $attributes->merge([
-            'class' => 'border-light-border border-1 focus:outline-hidden bg-white p-3 rounded-xl'
+            'class' => 'border-light-border border-1 focus:border-olive bg-white p-3 rounded-xl'
         ]) }}
     />
 </div>
