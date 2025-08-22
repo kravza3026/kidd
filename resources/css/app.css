@@ -197,12 +197,27 @@ ul.markers{
 }
 
 select {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+
     -webkit-appearance: none; /* For older Safari */
     appearance: none;
-
-    background-image: url("../images/icons/select-arrows.svg");
+    background-image: url("../images/icons/select-arrows_o.svg");
     background-repeat: no-repeat;
     background-position: right 1rem center;
+}
+
+select:focus {
+    border-color: var(--color-olive);
+    outline: none;
+}
+
+option {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    background: #fff;
+    color: #333;
 }
 
 /* <span class= "border border-slate-300 rounded-full w-2 h-2 peer-checked:hidden"> </span> */

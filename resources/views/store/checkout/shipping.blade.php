@@ -1,8 +1,10 @@
 @extends('store.checkout.layouts.checkout')
 
 @section('checkout-form')
+{{--    {{dd(auth()->user()->addresses()->first())}}--}}
 
-    <div class="grid grid-cols-17 gap-4 pb-section">
+
+<div class="grid grid-cols-17 gap-4 pb-section">
         <div class="col-span-1 flex justify-start items-start">
             <p class="size-8 rounded-full bg-olive text-white flex items-center justify-center">1</p>
         </div>
@@ -62,7 +64,61 @@
                 </div>
 
                 <div class="space-y-4 border border-light-border rounded-2xl">
-                    <h2 class="p-4 font-bold text-base bg-light-orange rounded-2xl">Shipping address</h2>
+                    <div class="p-4 bg-light-orange rounded-2xl grid grid-cols-12 items-center justify-between">
+                        <h2 class=" font-bold text-base col-span-8">Shipping address</h2>
+                        <div class="col-span-4">
+                            <div class="relative w-full">
+
+                                <button type="button"
+                                    class="w-full flex justify-between items-center cursor-pointer rounded-xl border border-light-border bg-white px-4 py-2 text-left shadow-sm focus:border-olive focus:ring focus:ring-olive"
+                                    id="custom-select-button"
+                                >
+                                    <span id="selected-option">{{ old('saved_address', $checkoutData['saved_address'] ?? 'Select address') }} </span>
+                                    <span><img src="{{Vite::image('/icons/select-arrows_o.svg')}}" alt=""></span>
+                                </button>
+
+                                <ul
+                                    class="absolute z-10 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg hidden"
+                                    id="custom-select-options"
+                                >
+
+                                    @foreach(auth()->user()->addresses as $address)
+{{--                                        {{old('saved_address', $checkoutData['saved_address'])}}--}}
+{{--                                        {{$address->label}}--}}
+                                        <li
+                                            data-shipping-city = "{{ $address->city->name}}"
+                                            data-shipping-region = "{{ $address->region_id }}"
+                                            data-shipping-address = "{{ $address->street_name }}"
+                                            data-shipping-building = "{{ $address->building }}"
+                                            data-shipping-postcode = "{{ $address->postal_code }}"
+                                            data-shipping-apartment = "{{ $address->apartment }}"
+                                            data-shipping-floor = "{{ $address->floor }}"
+                                            data-shipping-entrance = "{{ $address->entrance }}"
+                                            data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
+
+                                            class="saved-address relative flex gap-x-2 items-center m-1  rounded-2xl cursor-pointer">
+                                            <input
+                                                {{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'checked' : '' }}
+                                                id="address-{{$address->id}}" class="hidden peer" type="radio" name="saved_address" value="{{ $address->label }}">
+                                            <label class="cursor-pointer hover:bg-light-orange w-full px-4 py-2 rounded-2xl m-1" for="address-{{$address->id}}">
+                                                <span class="marker w-full flex  gap-x-2 items-center justify-start">
+
+                                                        <p class=" border border-light-border rounded-full size-7 flex  items-center justify-center">
+                                                            <img class="hidden" src="{{Vite::image('icons/checked_white.svg')}}" alt="">
+                                                        </p>
+                                                    {{$address->label}}
+
+                                                </span>
+                                            </label>
+
+
+                                        </li>
+
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="p-4 grid grid-cols-12 gap-4">
                         <div class="col-span-6 mt-3">
                             <label for="shipping_region" class="block text-sm font-medium text-charcoal">
@@ -91,7 +147,7 @@
                                 <option value="">Select localty</option>
                                 @foreach($regions as $region)
                                     <option value="{{ $region->id }}"
-                                        {{ old('shipping_region', $checkoutData['shipping_city'] ?? '') == $region->id ? 'selected' : '' }}>
+                                        {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $region->id ? 'selected' : '' }}>
                                         {{ $region->name }}
                                     </option>
                                 @endforeach
@@ -130,5 +186,69 @@
         </div>
     </div>
 
+<script>
+    const selectButton = document.getElementById('custom-select-button');
+    const optionsList = document.getElementById('custom-select-options');
+    const selectedOption = document.getElementById('selected-option');
 
+    // Тогл відкриття списку
+    selectButton.addEventListener('click', () => {
+        optionsList.classList.toggle('hidden');
+    });
+
+    // Клік по опції
+    optionsList.querySelectorAll('li.saved-address').forEach(option => {
+        option.addEventListener('click', () => {
+            selectedOption.textContent = option.textContent.trim();
+            optionsList.classList.add('hidden');
+            console.log(option.dataset.shippingPostcode)
+            // 3. Підставити дані в інпути
+            if (option.dataset.shippingPostcode) {
+                document.getElementById('shipping_postcode').value = option.dataset.shippingPostcode;
+            }
+            if (option.dataset.shippingBuilding) {
+                document.getElementById('shipping_building').value = option.dataset.shippingBuilding;
+            }
+            if (option.dataset.shippingAddress) {
+                document.getElementById('shipping_address').value = option.dataset.shippingAddress;
+            }
+            if (option.dataset.shippingCity) {
+                document.getElementById('shipping_city').value = option.dataset.shippingCity;
+            }
+            if (option.dataset.shippingRegion) {
+                document.getElementById('shipping_region').value = option.dataset.shippingRegion;
+            }
+            if (option.dataset.shippingEntrance) {
+                document.getElementById('entrance').value = option.dataset.shippingEntrance;
+            }
+
+            // 4. Активувати radio (якщо треба)
+            const radio = option.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!selectButton.contains(e.target) && !optionsList.contains(e.target)) {
+            optionsList.classList.add('hidden');
+        }
+    });
+
+
+
+</script>
+<style>
+    input[name="saved_address"]:checked + label {
+        background-color: var(--color-light-orange);
+    }
+
+    input[name="saved_address"]:checked + label img {
+        display: block;
+    }
+
+    input[name="saved_address"]:checked + label p {
+        background-color: var(--color-olive);
+    }
+
+</style>
 @endsection
