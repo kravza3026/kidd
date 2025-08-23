@@ -5,29 +5,31 @@
         href="{{ route('checkout.previous', ['step' => 'contact']) }}"
         class="mb-8 grid grid-cols-17 items-center gap-x-2 font-medium"
     >
-        <p class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-white">
-            <img src="{{ Vite::image('icons/checked_white.svg') }}" alt="" />
+        <p
+            class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-sm font-bold text-white"
+        >
+            <img height="12" width="12" src="{{ Vite::image('icons/checked_white.svg') }}" alt="checkmark icon" />
         </p>
         <div class="col-span-15 text-2xl font-bold">
             <p>
                 {{ __('checkout.steps.shipping') }}
             </p>
             <p class="text-base font-normal opacity-60">
-                {{ ucfirst($checkoutData['shipping_method']) }} shipping to
-                {{-- {{ $checkoutData['saved_address'] ?? $checkoutData['shipping_region'].' '.$checkoutData['shipping_city'].' '.$checkoutData['shipping_street_name'].' '.$checkoutData['shipping_building'].' '.$checkoutData['shipping_postal_code'].' '.$checkoutData['shipping_apartment'].' '.$checkoutData['shipping_entrance'].' '.$checkoutData['shipping_floor'].' '.$checkoutData['shipping_intercom'] }} --}}
-                <br />
-                <span class="ml-4 inline-block">
+                <b>{{ ucfirst($checkoutData['shipping_method']) }}</b>
+                shipping to
+                <span class="inline-block leading-8 font-medium">
+                    {{ $checkoutData['shipping_postal_code'] }}
                     {{ $regions->where('id', '=', $checkoutData['shipping_region'])->first()->name }},
-                    {{ \App\Models\City::where('id', '=', 294)->first()->name }},
-                    {{ $checkoutData['shipping_postal_code'] }},
-                    <br />
-                    {{-- {{ $checkoutData['shipping_city'] }} --}}
-                    {{ $checkoutData['shipping_street_name'] }} {{ $checkoutData['shipping_building'] }}
+                    {{ \App\Models\City::where('id', '=', $checkoutData['shipping_city'])->first()->name }},
+                    {{ $checkoutData['shipping_street_name'] }}
+                    {{ $checkoutData['shipping_building'] }}
                     {{ $checkoutData['shipping_apartment'] ? 'ap. '.$checkoutData['shipping_apartment'] : '' }}
 
-                    ({{ $checkoutData['shipping_entrance'] ? 'scara '.$checkoutData['shipping_entrance'] : '' }}
-                    {{ $checkoutData['shipping_floor'] ? ', etaj '.$checkoutData['shipping_floor'] : '' }}
-                    {{ $checkoutData['shipping_intercom'] ? ', interfon '.$checkoutData['shipping_intercom'] : '' }})
+                    @if ($checkoutData['shipping_apartment'])
+                        ({{ $checkoutData['shipping_entrance'] ? 'sc. '.$checkoutData['shipping_entrance'] : '' }}
+                        {{ $checkoutData['shipping_floor'] ? ', et. '.$checkoutData['shipping_floor'] : '' }}
+                        {{ $checkoutData['shipping_intercom'] ? ', int. '.$checkoutData['shipping_intercom'] : '' }})
+                    @endif
                 </span>
 
                 {{-- Regular shipping to mun. Chișinău, or. Chișinău, str. Alba Iulia 75, MD-2071 --}}
@@ -42,7 +44,11 @@
 
     <hr class="border-light-border mb-8" />
     <div class="mb-8 grid grid-cols-17 items-center">
-        <p class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-white">2</p>
+        <p
+            class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-sm font-bold text-white"
+        >
+            2
+        </p>
         <p class="col-span-16 text-2xl font-bold">
             {{ __('checkout.steps.contacts') }}
         </p>
@@ -106,10 +112,11 @@
             </div>
         </div>
     </form>
-    <hr class="border-light-border my-4" />
+
+    <hr class="border-light-border my-6" />
     <div class="grid grid-cols-17 items-center gap-x-2 font-medium">
         <p
-            class="border-charcoal/30 col-span-1 flex size-8 items-center justify-center rounded-full border-2 opacity-30"
+            class="border-charcoal/30 col-span-1 flex size-8 items-center justify-center rounded-full border-2 text-sm font-bold opacity-30"
         >
             3
         </p>
@@ -117,5 +124,5 @@
             {{ __('checkout.steps.payment') }}
         </p>
     </div>
-    <hr class="border-light-border my-4" />
+    <hr class="border-light-border my-6" />
 @endsection

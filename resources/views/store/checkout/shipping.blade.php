@@ -3,7 +3,7 @@
 @section('checkout-form')
     <div class="pb-section grid grid-cols-17 gap-4">
         <div class="col-span-1 flex items-start justify-start">
-            <p class="bg-olive flex size-8 items-center justify-center rounded-full text-white">1</p>
+            <p class="bg-olive flex size-8 items-center justify-center rounded-full text-sm font-bold text-white">1</p>
         </div>
         <div class="col-span-16">
             <div class="mb-8">
@@ -225,7 +225,9 @@
                                 id="shipping_region"
                                 class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
                             >
-                                <option value="">Select region</option>
+                                <option value="">
+                                    {{ __('checkout.shipping.form.shipping_region_placeholder') }}
+                                </option>
                                 @foreach ($regions as $region)
                                     <option
                                         value="{{ $region->id }}"
@@ -249,15 +251,19 @@
                                 id="shipping_city"
                                 class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
                             >
-                                <option value="">Select locality</option>
-                                @foreach ($regions as $region)
-                                    <option
-                                        value="{{ $region->id }}"
-                                        {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $region->id ? 'selected' : '' }}
-                                    >
-                                        {{ $region->name }}
-                                    </option>
-                                @endforeach
+                                <option value="">
+                                    {{ __('checkout.shipping.form.shipping_city_placeholder') }}
+                                </option>
+                                @if ($checkoutData['shipping_city'])
+                                    @foreach ($regions->where('id', '=', $checkoutData['shipping_region'])->first()?->cities as $city)
+                                        <option
+                                            value="{{ $city->id }}"
+                                            {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $city->id ? 'selected' : '' }}
+                                        >
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                             @error('shipping_city')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -348,25 +354,30 @@
                     </x-ui.button>
                 </div>
             </form>
-            <hr class="border-light-border my-4" />
-            <div class="flex items-center gap-x-2 font-medium">
-                <p class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 opacity-30">
-                    2
-                </p>
-                <p class="text-2xl">
-                    {{ __('checkout.steps.contacts') }}
-                </p>
-            </div>
-            <hr class="border-light-border my-4" />
-            <div class="flex items-center gap-x-2 font-medium">
-                <p class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 opacity-30">
-                    3
-                </p>
-                <p class="text-2xl">
-                    {{ __('checkout.steps.payment') }}
-                </p>
-            </div>
         </div>
+    </div>
+
+    <hr class="border-light-border my-6" />
+    <div class="flex items-center gap-x-4 font-medium">
+        <p
+            class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 text-sm font-bold opacity-30"
+        >
+            2
+        </p>
+        <p class="text-2xl">
+            {{ __('checkout.steps.contacts') }}
+        </p>
+    </div>
+    <hr class="border-light-border my-6" />
+    <div class="flex items-center gap-x-4 font-medium">
+        <p
+            class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 text-sm font-bold opacity-30"
+        >
+            3
+        </p>
+        <p class="text-2xl">
+            {{ __('checkout.steps.payment') }}
+        </p>
     </div>
 
     <script>
