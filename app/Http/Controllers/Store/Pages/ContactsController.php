@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Vite;
 
 class ContactsController extends Controller
 {
-
     /**
-    * Display page with contact form.
-    * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View|object
-    **/
+     * Display page with contact form.
+     *
+     * @return \Illuminate\View\View
+     **/
     public function index()
     {
         return view('store.pages.static.contacts');
@@ -22,7 +22,7 @@ class ContactsController extends Controller
 
     /**
      * Store contact form in database.
-     * @param ContactStoreRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ContactStoreRequest $request)
@@ -42,5 +42,4 @@ class ContactsController extends Controller
 
         return redirect()->route('contacts');
     }
-
 }

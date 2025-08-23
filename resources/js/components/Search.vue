@@ -4,6 +4,7 @@ import searchIcon from '@img/search.svg';
 import loop from '@img/icons/loop.svg';
 import back from '@img/icons/back.svg';
 import gender from '@img/icons/unisex.svg';
+
 export default {
     name: 'Search',
     data() {
@@ -129,51 +130,51 @@ export default {
 <template>
     <div>
         <div
+            ref="searchToggle"
             class="search hidden cursor-pointer w-full h-full lg:flex items-center gap-x-5"
             @click="open = true"
-            ref="searchToggle"
         >
-            <img :src="searchIcon" alt="search" width="24" height="24" />
+            <img :src="searchIcon" alt="search" height="24" width="24" />
             <span>{{ $t('menu.search') }}</span>
         </div>
 
-        <transition name="slide-fade" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
+        <transition name="slide-fade" @enter="onEnter" @leave="onLeave" @after-enter="onAfterEnter">
             <div
                 v-show="open || isMobile"
                 ref="searchWrapper"
                 class="search-input px-3 absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
             >
                 <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0 lg:top-[-10px]">
-                    <img class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border" :src=back alt="">
+                    <img :src=back alt="" class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border">
                     <input
                         ref="searchInput"
                         v-model="searchQuery"
-                        @input="handleType"
-                        name="term"
-                        type="text"
                         class="w-full focus:outline-hidden h-[50px] m-2 pl-12 lg:mx-0 lg:pl-5 pr-12 rounded-md bg-light-orange"
+                        name="term"
                         placeholder=""
+                        type="text"
+                        @input="handleType"
                         @keydown.esc="closeSearch"
                     />
                     <svg
                         class="absolute text-olive right-4 top-1/3 transform  pointer-events-none"
-                        width="24"
+                        fill="none"
                         height="24"
                         viewBox="0 0 24 24"
-                        fill="none"
+                        width="24"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
                             d="M16.007 16.007L22 22M18.4103 10.2051C18.4103 14.7367 14.7367 18.4103 10.2051 18.4103C5.67356 18.4103 2 14.7367 2 10.2051C2 5.67356 5.67356 2 10.2051 2C14.7367 2 18.4103 5.67356 18.4103 10.2051Z"
                             stroke="currentColor"
-                            stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
+                            stroke-width="2"
                         />
                     </svg>
 
-                    <div v-if="products.length" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
-                         class="w-full absolute left-0 h-fit lg:min-h-[267px] lg:max-h-[50vh] overflow-auto top-22 lg:top-[78px] mx-auto mb-4 bg-white rounded-md lg:shadow p-0">
+                    <div v-if="products.length" class="w-full absolute left-0 h-fit lg:min-h-[267px] lg:max-h-[50vh] overflow-auto top-22 lg:top-[78px] mx-auto mb-4 bg-white rounded-md lg:shadow p-0" @enter="onEnter" @leave="onLeave"
+                         @after-enter="onAfterEnter">
                         <ul  class="relative mt-2 lg:mt-0 w-full z-50">
                             <li v-for="item in products"
                                 :key="item.id"
@@ -185,7 +186,7 @@ export default {
                                     </div>
                                     <div class="w-full flex flex-col justify-evenly">
                                         <div class="flex justify-start items-center w-full gap-x-2">
-                                            <p v-html="highlightMatch(item.name[locale])" class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-lg"></p>
+                                            <p class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-lg" v-html="highlightMatch(item.name[locale])"></p>
                                             <div v-if="item.gender" :class="item.gender?.bg_color" class="p-1 group relative flex items-center justify-center rounded-full" >
                                                 <span class="flex items-center size-3" v-html="item.gender?.svg ?? ''" ></span>
                                                 <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100  transition-opacity duration-300 z-10">
@@ -218,14 +219,14 @@ export default {
                             </li>
                         </ul>
                     </div>
-                    <div v-else-if="hasSearchNoResults" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave"
-                         class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white rounded-md shadow p-4">
+                    <div v-else-if="hasSearchNoResults" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white rounded-md shadow p-4" @enter="onEnter" @leave="onLeave"
+                         @after-enter="onAfterEnter">
                         <div>
                             <p class="text-sm">No relevant results found</p>
                             <p class="text-sm opacity-60 font-normal">You can change your query or choose from suggested search options</p>
                             <div class="flex  flex-wrap gap-x-6 gap-y-2 mt-4">
-                                <a href="#" v-for="item in recommended" class="flex items-center gap-x-2">
-                                    <img class="opacity-60" :src="loop" alt="recommended">
+                                <a v-for="item in recommended" class="flex items-center gap-x-2" href="#">
+                                    <img :src="loop" alt="recommended" class="opacity-60">
                                     <p class="text-sm">{{item}}</p>
                                 </a>
                             </div>

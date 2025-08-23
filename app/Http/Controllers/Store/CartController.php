@@ -16,65 +16,65 @@ class CartController extends Controller
     public function index()
     {
 
-//        $cart = LaraCart::setInstance('default');
-//        $cart = $cart->cart;
-//        LaraCart::emptyCart();
-//        dd($cart);
-//                LaraCart::destroyCart();
+        //        $cart = LaraCart::setInstance('default');
+        //        $cart = $cart->cart;
+        //        LaraCart::emptyCart();
+        //        dd($cart);
+        //                LaraCart::destroyCart();
 
-//        $product = Product::findOrFail(123);
-//        $variants = $product->variants;
-//
-//                $item = LaraCart::add(
-//                    $variants->last(),
-//                    rand(1, 10),
-//                );
-//
-////         Adding an item to the cart
-//                $item = LaraCart::addLine(
-//                    itemID: $variants->last(),
-//                    qty: 1,
-//                    taxable: true,
-//                );
-//
-//                $item->addSubItem([
-//                    'description' => 'Express Delivery', // this line is not required!
-//                    'price' => 15000,
-//                    'taxable' => false,
-//                    'qty' => 1,
-//                ]);
+        //        $product = Product::findOrFail(123);
+        //        $variants = $product->variants;
+        //
+        //                $item = LaraCart::add(
+        //                    $variants->last(),
+        //                    rand(1, 10),
+        //                );
+        //
+        // //         Adding an item to the cart
+        //                $item = LaraCart::addLine(
+        //                    itemID: $variants->last(),
+        //                    qty: 1,
+        //                    taxable: true,
+        //                );
+        //
+        //                $item->addSubItem([
+        //                    'description' => 'Express Delivery', // this line is not required!
+        //                    'price' => 15000,
+        //                    'taxable' => false,
+        //                    'qty' => 1,
+        //                ]);
 
         $coupons[] = new Percentage('SUMMER10', '0.1', [
             'description' => '10% Discount',
             'taxable' => false,
         ]);
 
-//        $coupons[] = new Fixed('test_fixed', 10000,[
-//            'description' => '100 MDL reducere',
-//            'taxable' => false,
-//        ]);
+        //        $coupons[] = new Fixed('test_fixed', 10000,[
+        //            'description' => '100 MDL reducere',
+        //            'taxable' => false,
+        //        ]);
 
-//        $coupons[] = new FreeDeliveryCoupon('free_delivery', 10000, [
-//            'description' => 'Livrare gratuită',
-//            'taxable' => false,
-//        ]);
+        //        $coupons[] = new FreeDeliveryCoupon('free_delivery', 10000, [
+        //            'description' => 'Livrare gratuită',
+        //            'taxable' => false,
+        //        ]);
 
         foreach ($coupons as $coupon) {
             LaraCart::addCoupon($coupon);
         }
-//                LaraCart::removeCoupon('SUMMER10');
+        //                LaraCart::removeCoupon('SUMMER10');
         //        LaraCart::removeCoupon('free_delivery');
-//                LaraCart::removeCoupon('test_fixed');
+        //                LaraCart::removeCoupon('test_fixed');
 
-//        LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
-//        LaraCart::addFee('free_delivery', (-50 * 100), $taxable = false, $options = ['description' => 'Free delivery']);
+        //        LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
+        //        LaraCart::addFee('free_delivery', (-50 * 100), $taxable = false, $options = ['description' => 'Free delivery']);
 
-//        LaraCart::addFee('gift', 300 * 100, $taxable = false, $options = ['description' => 'Gift wrap']);
-//        LaraCart::addFee('express_delivery', 100 * 100, $taxable = false, $options = ['description' => 'Express delivery']);
+        //        LaraCart::addFee('gift', 300 * 100, $taxable = false, $options = ['description' => 'Gift wrap']);
+        //        LaraCart::addFee('express_delivery', 100 * 100, $taxable = false, $options = ['description' => 'Express delivery']);
         //        LaraCart::addFee('free_express_delivery', -150 * 100, $taxable = false, $options = ['description' => 'Free Express delivery promo']);
 
         //        LaraCart::removeFee('gift');
-//                LaraCart::removeFee('express_delivery');
+        //                LaraCart::removeFee('express_delivery');
         //        LaraCart::removeFee('free_express_delivery');
 
         //        $items = LaraCart::getItems();
@@ -86,17 +86,17 @@ class CartController extends Controller
         //            dump($item->price / 100);
         //        }
 
-//        dump($items);
-//        dump(LaraCart::getFees());
-//        dump(LaraCart::getCoupons());
-//
-//        dump('Net Total: '.LaraCart::netTotal($formatted = true, $withDiscount = true));
-//        dump('Items Total: '.LaraCart::itemTotals($formatted = true, $withDiscount = true));
-//
-//        dump('Fees: '.LaraCart::feeSubTotal($formatted = true, $withDiscount = true));
-//        dump('Discount: '.LaraCart::discountTotal($formatted = true, $withDiscount = true));
-//        dump('Sub Total: '.LaraCart::subTotal($formatted = true, $withDiscount = true));
-//        dump('Total: '.LaraCart::total($formatted = true, $withDiscount = true));
+        //        dump($items);
+        //        dump(LaraCart::getFees());
+        //        dump(LaraCart::getCoupons());
+        //
+        //        dump('Net Total: '.LaraCart::netTotal($formatted = true, $withDiscount = true));
+        //        dump('Items Total: '.LaraCart::itemTotals($formatted = true, $withDiscount = true));
+        //
+        //        dump('Fees: '.LaraCart::feeSubTotal($formatted = true, $withDiscount = true));
+        //        dump('Discount: '.LaraCart::discountTotal($formatted = true, $withDiscount = true));
+        //        dump('Sub Total: '.LaraCart::subTotal($formatted = true, $withDiscount = true));
+        //        dump('Total: '.LaraCart::total($formatted = true, $withDiscount = true));
 
         //        netTotal
         //        itemTotals
@@ -148,14 +148,13 @@ class CartController extends Controller
                     'id' => $cartItem->options['variant']->size->id,
                     'name' => $cartItem->options['variant']->size->name,
                 ],
-//                'obj' => $cartItem,
+                //                'obj' => $cartItem,
                 'product' => $cartItem->options['model'],
-//                'variants' => $cartItem->options['variant'],
-//                'variant' => $cartItem->options['variant'],
+                //                'variants' => $cartItem->options['variant'],
+                //                'variant' => $cartItem->options['variant'],
             ];
 
         }
-
 
         return $response;
     }
@@ -183,7 +182,7 @@ class CartController extends Controller
         return response([
             'alert' => [
                 'title' => $product->name,
-                'type' => "cart",
+                'type' => 'cart',
                 'message' => __('alerts.addedToCart'),
                 'button' => [
                     'label' => __('header.mobile-menu.cart'),
@@ -213,12 +212,12 @@ class CartController extends Controller
         return response([
             'alert' => [
                 'title' => __('alerts.cart.title'), // TODO - Translation
-                'type' => "success", // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'type' => 'success', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.updated'), // TODO - Translation
-//                'button' => [
-//                    'label' => __('menu.cart'),
-//                    'href' => route('cart'),
-//                ],
+                //                'button' => [
+                //                    'label' => __('menu.cart'),
+                //                    'href' => route('cart'),
+                //                ],
                 'options' => [
                     'timer' => 7000,
                 ],
@@ -233,13 +232,13 @@ class CartController extends Controller
 
         return response([
             'alert' => [
-                'title' => "Cart", // TODO - Translation
-                'type' => "info", // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'title' => 'Cart', // TODO - Translation
+                'type' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.removed'), // TODO - Translation
-//                'button' => [
-//                    'label' => __('menu.cart'),
-//                    'href' => route('cart'),
-//                ],
+                //                'button' => [
+                //                    'label' => __('menu.cart'),
+                //                    'href' => route('cart'),
+                //                ],
                 'options' => [
                     'timer' => 1000,
                 ],

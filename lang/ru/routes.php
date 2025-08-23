@@ -14,7 +14,7 @@ return [
             'careers' => 'карьера',
             'vacancy' => [
                 'vacancy' => 'карьера/{vacancy}',
-                'create' => 'карьера/{vacancy}/заявка'
+                'create' => 'карьера/{vacancy}/заявка',
             ],
         ],
         'terms' => 'условия-использования',
@@ -34,6 +34,6 @@ return [
 
     'footer' => [
         'size-chart' => 'таблица-размеров',
-    ]
+    ],
 
 ];

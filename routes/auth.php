@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Account\AddressesController;
+use App\Http\Controllers\Account\FavoritesController;
+use App\Http\Controllers\Account\OrdersController;
+use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -13,13 +17,6 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\VerifyPhoneController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Account\AddressesController;
-use App\Http\Controllers\Account\FamilyController;
-use App\Http\Controllers\Account\FavoritesController;
-use App\Http\Controllers\Account\OrdersController;
-use App\Http\Controllers\Account\ProfileController;
-
-
 Route::group([
     'middleware' => ['auth'],
     'prefix' => 'account',
@@ -28,7 +25,7 @@ Route::group([
     Route::singleton('profile', ProfileController::class);
 
     Route::get('favorites', FavoritesController::class)
-    ->name('favorites.index');
+        ->name('favorites.index');
 
     Route::resource('orders', OrdersController::class)
         ->only(['index', 'show']);

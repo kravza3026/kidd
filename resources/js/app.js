@@ -1,13 +1,12 @@
-import "./bootstrap";
+import './bootstrap';
 
 import { createApp } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy.js';
 
 import Alpine from 'alpinejs';
-
-import.meta.glob('../images/**/*');
-import { default as IMask } from "imask";
+import Precognition from 'laravel-precognition-alpine';
+import { default as IMask } from 'imask';
 
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
@@ -28,14 +27,16 @@ import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
 import Swal from 'sweetalert2';
+import i18n from './i18n';
+import { useAlert } from '@/useAlert';
 
+import.meta.glob('../images/**/*');
 
 window.Swal = Swal;
 window.Alpine = Alpine;
 window.IMask = IMask;
 
-import i18n from './i18n';
-import { useAlert } from "@/useAlert";
+Alpine.plugin(Precognition);
 
 const { showAlert } = useAlert();
 window.toast = showAlert;
@@ -43,12 +44,23 @@ window.toast = showAlert;
 // Масив компонентів
 const components = {
     Accordion,
-    Cart,Addresses,Family,
-    Search, mobileMenu: MobileMenu,
-    CartDropdown,UserDropdown,
-    Button,Tooltip,SubscribeForm,ScrollToTop,SizeGuide,
-    ProductCard,ProductSlider,ProductPageForm, ProductsCardsSlider,
-    HelpMain
+    Cart,
+    Addresses,
+    Family,
+    Search,
+    mobileMenu: MobileMenu,
+    CartDropdown,
+    UserDropdown,
+    Button,
+    Tooltip,
+    SubscribeForm,
+    ScrollToTop,
+    SizeGuide,
+    ProductCard,
+    ProductSlider,
+    ProductPageForm,
+    ProductsCardsSlider,
+    HelpMain,
 };
 
 // Шукаємо всі елементи з data-vue-компонентом
@@ -80,25 +92,27 @@ document.querySelectorAll('[data-vue-component]').forEach((el) => {
 document.addEventListener('alpine:init', () => {
     Alpine.store('dropdown', {
         open: false,
-        toggle() { this.open = !this.open },
-        close() { this.open = false }
+        toggle() {
+            this.open = !this.open;
+        },
+        close() {
+            this.open = false;
+        },
     });
-
 });
 
 Alpine.start();
 
-window.addEventListener("load", function () {
-    let phone_element = document.getElementById("phone");
+window.addEventListener('load', function () {
+    let phone_element = document.getElementById('phone');
     if (phone_element !== null) {
         IMask(phone_element, {
-            mask: "+{373} (00) 000 000",
+            mask: '+{373} (00) 000 000',
             lazy: true, // make placeholder always visible
-            placeholderChar: "_", // defaults to '_'
+            placeholderChar: '_', // defaults to '_'
         });
     }
 });
-
 
 // window.addEventListener("load", function () {
 //     let postal_code = document.getElementById("postal_code");
@@ -111,4 +125,3 @@ window.addEventListener("load", function () {
 //         });
 //     }
 // });
-

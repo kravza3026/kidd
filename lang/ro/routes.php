@@ -14,8 +14,8 @@ return [
             'careers' => 'cariere',
             'vacancy' => [
                 'vacancy' => 'cariere/{vacancy}',
-                'create' => 'cariere/{vacancy}/aplica'
-            ]
+                'create' => 'cariere/{vacancy}/aplica',
+            ],
         ],
         'terms' => 'termeni-si-conditii',
     ],
@@ -34,6 +34,6 @@ return [
 
     'footer' => [
         'size-chart' => 'tabel-marimi',
-    ]
+    ],
 
 ];

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Store\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vacancy;
-use Illuminate\Http\Request;
 
 class VacanciesController extends Controller
 {
@@ -29,5 +28,4 @@ class VacanciesController extends Controller
             'vacancy' => $vacancy,
         ]);
     }
-
 }

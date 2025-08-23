@@ -209,6 +209,19 @@ return [
         'new_password' => 'Parolă nouă',
         'message' => 'Mesaj',
         'consent' => 'Politica de confidențialitate',
+
+        'shipping_region' => 'Regiune',
+        'shipping_city' => 'Localitate',
+        'shipping_street_name' => 'Stradă',
+        'shipping_building' => 'Nr. clădire',
+        'shipping_postal_code' => 'Cod poștal',
+        'shipping_entrance' => 'Intrare',
+        'shipping_floor' => 'Etaj',
+        'shipping_apartment' => 'Apartament',
+        'shipping_intercom' => 'Interfon',
+        'shipping_comment' => 'Comentariu livrare',
+        'shipping_optional' => '(optional)',
+
     ],
 
     'phone' => 'Introduceți un număr de telefon valid.',

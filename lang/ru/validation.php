@@ -196,12 +196,30 @@ return [
     | of "email". This simply helps us make our message more expressive.
     |
     */
-
     'attributes' => [
         'first_name' => 'Имя',
         'last_name' => 'Фамилия',
         'phone' => 'Телефон',
         'email' => 'Электронная почта',
+        'password' => 'Пароль',
+        'password_confirmation' => 'Подтверждение пароля',
+        'current_password' => 'Текущий пароль',
+        'new_password' => 'Новый пароль',
+        'message' => 'Сообщение',
+        'consent' => 'Политика конфиденциальности',
+
+        'shipping_region' => 'Регион',
+        'shipping_city' => 'Город/Посёлок',
+        'shipping_street_name' => 'Улица',
+        'shipping_building' => 'Дом',
+        'shipping_postal_code' => 'Почтовый индекс',
+        'shipping_entrance' => 'Подъезд',
+        'shipping_floor' => 'Этаж',
+        'shipping_apartment' => 'Квартира',
+        'shipping_intercom' => 'Домофон',
+        'shipping_comment' => 'Комментарий к доставке',
+        'shipping_optional' => '(доп.)',
+
     ],
 
     'phone' => 'Пожалуйста, введите корректный номер телефона.',

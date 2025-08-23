@@ -14,8 +14,8 @@ return [
             'careers' => 'careers',
             'vacancy' => [
                 'vacancy' => 'careers/{vacancy}',
-                'create' => 'careers/{vacancy}/apply'
-            ]
+                'create' => 'careers/{vacancy}/apply',
+            ],
         ],
         'terms' => 'terms-and-conditions',
     ],
@@ -34,6 +34,6 @@ return [
 
     'footer' => [
         'size-chart' => 'size-chart',
-    ]
+    ],
 
 ];

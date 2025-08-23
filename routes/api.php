@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'middleware' => ['auth:sanctum', 'localize', HandlePrecognitiveRequests::class],
-    'prefix' => 'user'
+    'prefix' => 'user',
 ], function () {
 
     Route::get('/', fn (Request $r) => $r->user())->name('user');
@@ -29,13 +29,13 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['localize']
+    'middleware' => ['localize'],
 ], function () {
 
     Route::get('search', [GeneralController::class, 'search'])
         ->name('search');
 
-    Route::get('/favorites',[GeneralController::class, 'favorites'])
+    Route::get('/favorites', [GeneralController::class, 'favorites'])
         ->name('favorites');
 
     Route::get('regions', [GeneralController::class, 'regions'])
@@ -46,11 +46,11 @@ Route::group([
     Route::apiResource('cart', CartController::class);
     Route::get('cart', [CartController::class, 'show'])
         ->name('cart');
-//    Route::post('cart', [CartController::class, 'store'])
-//        ->name('cart.store');
-//    Route::put('cart/{itemHash}', [CartController::class, 'update'])
-//        ->name('cart.update');
-//    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
-//        ->name('cart.destroy');
+    //    Route::post('cart', [CartController::class, 'store'])
+    //        ->name('cart.store');
+    //    Route::put('cart/{itemHash}', [CartController::class, 'update'])
+    //        ->name('cart.update');
+    //    Route::delete('cart/{itemHash}', [CartController::class, 'destroy'])
+    //        ->name('cart.destroy');
 
 });

@@ -1,254 +1,469 @@
 @extends('store.checkout.layouts.checkout')
 
 @section('checkout-form')
-{{--    {{dd(auth()->user()->addresses()->first())}}--}}
-
-
-<div class="grid grid-cols-17 gap-4 pb-section">
-        <div class="col-span-1 flex justify-start items-start">
-            <p class="size-8 rounded-full bg-olive text-white flex items-center justify-center">1</p>
+    <div class="pb-section grid grid-cols-17 gap-4">
+        <div class="col-span-1 flex items-start justify-start">
+            <p class="bg-olive flex size-8 items-center justify-center rounded-full text-white">1</p>
         </div>
-        <div class="col-span-15">
+        <div class="col-span-16">
             <div class="mb-8">
-                <h1 class="text-3xl font-bold">Shipping details</h1>
+                <h1 class="text-3xl font-bold">
+                    {{ __('checkout.steps.shipping') }}
+                </h1>
             </div>
 
-            <form action="{{ route('checkout.process', ['step' => 'shipping']) }}" method="POST" class="space-y-6">
+            <form action="{{ route('checkout.process.shipping') }}" method="POST" class="space-y-6">
                 @csrf
-                <div class="grid grid-cols-3 gap-4 min-h-10">
-                    <div class="relative">
-                        <input type="radio" name="shipping_m" checked class="peer hidden absolute right-2 top-2 z-10" id="shipping_m">
 
-                        <label for="shipping_m" class="inset-0 bg-transparent z-10 absolute peer-checked:[&_.marker]:bg-olive">
-                            <div class="size-4  absolute right-2 top-2 z-20 rounded-full border-1 border-olive p-0.5">
-                                <p class="marker peer-checked:bg-olive rounded-full w-[10px] h-[10px]"></p>
+                <label for="shipping_city" class="text-charcoal mb-2 block text-sm font-medium">
+                    {{ __('checkout.shipping.form.shipping_method') }}
+                </label>
+                <div class="grid min-h-10 grid-cols-3 gap-4">
+                    <div class="relative">
+                        <input
+                            type="radio"
+                            name="shipping_method"
+                            value="regular"
+                            checked
+                            class="peer absolute top-2 right-2 z-10 hidden"
+                            id="shipping_method_regular"
+                        />
+
+                        <label
+                            for="shipping_method_regular"
+                            class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
+                        >
+                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
+                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
                             </div>
                         </label>
-                        <div class="p-3 relative rounded-2xl  border-2 border-light-border peer-checked:[&_.imgOutline]:hidden peer-checked:[&_.imgGradient]:block peer-checked:border-olive peer-checked:bg-light-orange bg-white duration-300">
-                            <img class="py-3 size-12 imgOutline" src="{{Vite::image('icons/truck_outline.svg')}}" alt="">
-                            <img class="py-3 size-12 imgGradient hidden" src="{{Vite::image('icons/gradients/g_car.svg')}}" alt="">
-                            <p class="font-bold flex items-center gap-x-2 mt-1">Regular <span class="bg-olive text-white px-2 py-0.5 rounded-4xl font-bold text-xs">+50 lei</span></p>
-                            <p class="text-sm opacity-40">3–14 business days</p>
+                        <div
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                        >
+                            <img
+                                class="imgOutline size-12 py-3"
+                                src="{{ Vite::image('icons/truck_outline.svg') }}"
+                                alt=""
+                            />
+                            <img
+                                class="imgGradient hidden size-12 py-3"
+                                src="{{ Vite::image('icons/gradients/g_car.svg') }}"
+                                alt=""
+                            />
+                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                                {{ __('checkout.shipping.form.shipping_methods.regular.title') }}
+                                <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
+                                    +50 lei
+                                </span>
+                            </p>
+                            <p class="text-sm opacity-40">
+                                {{ __('checkout.shipping.form.shipping_methods.regular.desc') }}
+                            </p>
                         </div>
                     </div>
                     <div class="relative">
-                        <input type="radio" name="shipping_m" class="peer hidden absolute right-2 top-2 z-10" id="shipping_m_2">
+                        <input
+                            type="radio"
+                            name="shipping_method"
+                            value="gift"
+                            class="peer absolute top-2 right-2 z-10 hidden"
+                            id="shipping_gift"
+                        />
 
-                        <label for="shipping_m_2" class="inset-0 bg-transparent z-10 absolute peer-checked:[&_.marker]:bg-olive">
-                            <div class="size-4  absolute right-2 top-2 z-20 rounded-full border-1 border-olive p-0.5">
-                                <p class="marker peer-checked:bg-olive rounded-full w-[10px] h-[10px]"></p>
+                        <label
+                            for="shipping_gift"
+                            class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
+                        >
+                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
+                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
                             </div>
                         </label>
-                        <div class="p-3 relative rounded-2xl  border-2 border-light-border peer-checked:[&_.imgOutline]:hidden peer-checked:[&_.imgGradient]:block peer-checked:border-olive peer-checked:bg-light-orange bg-white duration-300">
-                            <img class="py-3 size-12 imgOutline" src="{{Vite::image('icons/lightning.svg')}}" alt="">
-                            <img class="py-3 size-12 imgGradient hidden" src="{{Vite::image('icons/gradients/q_lightning.svg')}}" alt="">
-                            <p class="font-bold flex items-center gap-x-2 mt-1">Gift <span class="bg-olive text-white px-2 py-0.5 rounded-4xl font-bold text-xs">+100 lei</span></p>
-                            <p class="text-sm opacity-40">3–7 business days</p>
+                        <div
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                        >
+                            <img
+                                class="imgOutline size-12 py-3"
+                                src="{{ Vite::image('icons/lightning.svg') }}"
+                                alt=""
+                            />
+                            <img
+                                class="imgGradient hidden size-12 py-3"
+                                src="{{ Vite::image('icons/gradients/q_lightning.svg') }}"
+                                alt=""
+                            />
+                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                                {{ __('checkout.shipping.form.shipping_methods.gift.title') }}
+                                <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
+                                    +100 lei
+                                </span>
+                            </p>
+                            <p class="text-sm opacity-40">
+                                {{ __('checkout.shipping.form.shipping_methods.gift.desc') }}
+                            </p>
                         </div>
                     </div>
                     <div class="relative">
-                        <input type="radio" name="shipping_m" class="peer hidden absolute right-2 top-2 z-10" id="shipping_m_3">
+                        <input
+                            type="radio"
+                            name="shipping_method"
+                            value="express"
+                            class="peer absolute top-2 right-2 z-10 hidden"
+                            id="shipping_express"
+                        />
 
-                        <label for="shipping_m_3" class="inset-0 bg-transparent z-10 absolute peer-checked:[&_.marker]:bg-olive">
-                            <div class="size-4  absolute right-2 top-2 z-20 rounded-full border-1 border-olive p-0.5">
-                                <p class="marker peer-checked:bg-olive rounded-full w-[10px] h-[10px]"></p>
+                        <label
+                            for="shipping_express"
+                            class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
+                        >
+                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
+                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
                             </div>
                         </label>
-                        <div class="p-3 relative rounded-2xl  border-2 border-light-border peer-checked:[&_.imgOutline]:hidden peer-checked:[&_.imgGradient]:block peer-checked:border-olive peer-checked:bg-light-orange bg-white duration-300">
-                            <img class="py-3 size-12 imgOutline" src="{{Vite::image('icons/present.svg')}}" alt="">
-                            <img class="py-3 size-12 imgGradient hidden" src="{{Vite::image('icons/gradients/g_present.svg')}}" alt="">
-                            <p class="font-bold flex items-center gap-x-2 mt-1">Express <span class="bg-olive text-white px-2 py-0.5 rounded-4xl font-bold text-xs">+150 lei</span></p>
-                            <p class="text-sm opacity-40">1–3 business days</p>
+                        <div
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                        >
+                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/present.svg') }}" alt="" />
+                            <img
+                                class="imgGradient hidden size-12 py-3"
+                                src="{{ Vite::image('icons/gradients/g_present.svg') }}"
+                                alt=""
+                            />
+                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                                {{ __('checkout.shipping.form.shipping_methods.express.title') }}
+                                <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
+                                    +150 lei
+                                </span>
+                            </p>
+                            <p class="text-sm opacity-40">
+                                {{ __('checkout.shipping.form.shipping_methods.express.desc') }}
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-4 border border-light-border rounded-2xl">
-                    <div class="p-4 bg-light-orange rounded-2xl grid grid-cols-12 items-center justify-between">
-                        <h2 class=" font-bold text-base col-span-8">Shipping address</h2>
+                <div class="border-light-border space-y-4 rounded-2xl border">
+                    <div class="bg-light-orange grid grid-cols-12 items-center justify-between rounded-2xl p-4">
+                        <h2 class="col-span-8 text-base font-bold">
+                            {{ __('checkout.shipping.shipping_title') }}
+                        </h2>
                         <div class="col-span-4">
                             <div class="relative w-full">
+                                @auth
+                                    <button
+                                        type="button"
+                                        class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left shadow-sm focus:ring"
+                                        id="saved_addresses"
+                                    >
+                                        <span id="selected-option">
+                                            {{ old('saved_address', $checkoutData['saved_address'] ?? __('checkout.shipping.form.saved_addresses_placeholder')) }}
+                                        </span>
+                                        <span>
+                                            <img src="{{ Vite::image('/icons/select-arrows_o.svg') }}" alt="" />
+                                        </span>
+                                    </button>
 
-                                <button type="button"
-                                    class="w-full flex justify-between items-center cursor-pointer rounded-xl border border-light-border bg-white px-4 py-2 text-left shadow-sm focus:border-olive focus:ring focus:ring-olive"
-                                    id="custom-select-button"
-                                >
-                                    <span id="selected-option">{{ old('saved_address', $checkoutData['saved_address'] ?? 'Select address') }} </span>
-                                    <span><img src="{{Vite::image('/icons/select-arrows_o.svg')}}" alt=""></span>
-                                </button>
-
-                                <ul
-                                    class="absolute z-10 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg hidden"
-                                    id="custom-select-options"
-                                >
-
-                                    @foreach(auth()->user()->addresses as $address)
-{{--                                        {{old('saved_address', $checkoutData['saved_address'])}}--}}
-{{--                                        {{$address->label}}--}}
-                                        <li
-                                            data-shipping-city = "{{ $address->city->name}}"
-                                            data-shipping-region = "{{ $address->region_id }}"
-                                            data-shipping-address = "{{ $address->street_name }}"
-                                            data-shipping-building = "{{ $address->building }}"
-                                            data-shipping-postcode = "{{ $address->postal_code }}"
-                                            data-shipping-apartment = "{{ $address->apartment }}"
-                                            data-shipping-floor = "{{ $address->floor }}"
-                                            data-shipping-entrance = "{{ $address->entrance }}"
-                                            data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
-
-                                            class="saved-address relative flex gap-x-2 items-center m-1  rounded-2xl cursor-pointer">
-                                            <input
-                                                {{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'checked' : '' }}
-                                                id="address-{{$address->id}}" class="hidden peer" type="radio" name="saved_address" value="{{ $address->label }}">
-                                            <label class="cursor-pointer hover:bg-light-orange w-full px-4 py-2 rounded-2xl m-1" for="address-{{$address->id}}">
-                                                <span class="marker w-full flex  gap-x-2 items-center justify-start">
-
-                                                        <p class=" border border-light-border rounded-full size-7 flex  items-center justify-center">
-                                                            <img class="hidden" src="{{Vite::image('icons/checked_white.svg')}}" alt="">
+                                    <ul
+                                        class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white shadow-lg"
+                                        id="saved_addresses-options"
+                                    >
+                                        @foreach (auth()->user()->addresses as $address)
+                                            {{-- {{old('saved_address', $checkoutData['saved_address'])}} --}}
+                                            {{-- {{$address->label}} --}}
+                                            <li
+                                                data-shipping-region="{{ $address->region_id }}"
+                                                data-shipping-city="{{ $address->city_id }}"
+                                                data-shipping-street-name="{{ $address->street_name }}"
+                                                data-shipping-building="{{ $address->building }}"
+                                                data-shipping-postal-code="{{ $address->postal_code }}"
+                                                data-shipping-apartment="{{ $address->apartment }}"
+                                                data-shipping-floor="{{ $address->floor }}"
+                                                data-shipping-entrance="{{ $address->entrance }}"
+                                                data-shipping-intercom="{{ $address->intercom }}"
+                                                data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
+                                                class="saved-address relative m-1 flex cursor-pointer items-center gap-x-2 rounded-2xl"
+                                            >
+                                                <input
+                                                    {{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'checked' : '' }}
+                                                    id="address-{{ $address->id }}"
+                                                    class="peer hidden"
+                                                    type="radio"
+                                                    name="saved_address"
+                                                    value="{{ $address->label }}"
+                                                />
+                                                <label
+                                                    class="hover:bg-light-orange m-1 w-full cursor-pointer rounded-2xl px-4 py-2"
+                                                    for="address-{{ $address->id }}"
+                                                >
+                                                    <span class="marker flex w-full items-center justify-start gap-x-2">
+                                                        <p
+                                                            class="border-light-border flex size-7 items-center justify-center rounded-full border"
+                                                        >
+                                                            <img
+                                                                class="hidden"
+                                                                src="{{ Vite::image('icons/checked_white.svg') }}"
+                                                                alt=""
+                                                            />
                                                         </p>
-                                                    {{$address->label}}
-
-                                                </span>
-                                            </label>
-
-
-                                        </li>
-
-                                    @endforeach
-                                </ul>
+                                                        {{ $address->label }}
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endauth
                             </div>
                         </div>
                     </div>
-                    <div class="p-4 grid grid-cols-12 gap-4">
+                    <div class="grid grid-cols-12 gap-4 p-4">
                         <div class="col-span-6 mt-3">
-                            <label for="shipping_region" class="block text-sm font-medium text-charcoal">
-                                Region
+                            <label for="shipping_region" class="text-charcoal block text-sm font-medium">
+                                {{ __('checkout.shipping.form.shipping_region') }}
                             </label>
-                            <select required name="shipping_region" id="shipping_region"
-                                    class="mt-3 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive bg-white transition-colors">
+                            <select
+                                required
+                                name="shipping_region"
+                                id="shipping_region"
+                                class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
+                            >
                                 <option value="">Select region</option>
-                                @foreach($regions as $region)
-                                    <option value="{{ $region->id }}"
-                                        {{ old('shipping_region', $checkoutData['shipping_region'] ?? '') == $region->id ? 'selected' : '' }}>
+                                @foreach ($regions as $region)
+                                    <option
+                                        value="{{ $region->id }}"
+                                        {{ old('shipping_region', $checkoutData['shipping_region'] ?? '') == $region->id ? 'selected' : '' }}
+                                    >
                                         {{ $region->name }}
                                     </option>
                                 @endforeach
                             </select>
                             @error('shipping_region')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="col-span-6 mt-3">
-                            <label for="shipping_city" class="block text-sm font-medium text-charcoal">
-                                Localty
+                            <label for="shipping_city" class="text-charcoal block text-sm font-medium">
+                                {{ __('checkout.shipping.form.shipping_city') }}
                             </label>
-                            <select required name="shipping_city" id="shipping_city"
-                                    class="mt-3 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive bg-white transition-colors">
-                                <option value="">Select localty</option>
-                                @foreach($regions as $region)
-                                    <option value="{{ $region->id }}"
-                                        {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $region->id ? 'selected' : '' }}>
+                            <select
+                                required
+                                name="shipping_city"
+                                id="shipping_city"
+                                class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
+                            >
+                                <option value="">Select locality</option>
+                                @foreach ($regions as $region)
+                                    <option
+                                        value="{{ $region->id }}"
+                                        {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $region->id ? 'selected' : '' }}
+                                    >
                                         {{ $region->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('shipping_region')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @error('shipping_city')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <x-ui.input-label required :customClass="'col-span-6'" for="street" value="{{ old('shipping_address', $checkoutData['shipping_address'] ?? '') }}" :type="'text'" name="shipping_address" :label="__('Street')" required autocomplete="street"/>
-                        <x-ui.input-label required :customClass="'col-span-3'" :placeholder="'Building number'" for="building" value="{{ old('contact_last_name', $checkoutData['shipping_building'] ?? '') }}" :type="'text'" name="shipping_building" :label="__('Building')" required autocomplete="building"/>
-                        <x-ui.input-label required :customClass="'col-span-3'" :placeholder="'Postal code'" for="postal_code" value="{{ old('contact_last_name', $checkoutData['shipping_postcode'] ?? '') }}" :type="'text'" name="shipping_postcode" :label="__('Postal code')" required autocomplete="postal_code"/>
-                        <x-ui.input-label :customClass="'col-span-3'" optional :placeholder="'Entrance number'" for="entrance" value="" :type="'text'" name="entrance" :label="__('Entrance')"  autocomplete="entrance"/>
-                        <x-ui.input-label :customClass="'col-span-3'" optional :placeholder="'Floor number'" for="floor" value="" :type="'text'" name="floor" :label="__('Floor')"  autocomplete="floor"/>
-                        <x-ui.input-label :customClass="'col-span-3'" optional :placeholder="'Apartment number'" for="apartment" value="" :type="'text'" name="apartment" :label="__('Apartment')"  autocomplete="apartment"/>
-                        <x-ui.input-label :customClass="'col-span-3'" optional :placeholder="'Intercom code'" for="intercom" value="" :type="'text'" name="intercom" :label="__('Intercom')"  autocomplete="intercom"/>
+                        <x-ui.input-label
+                            :customClass="'col-span-6'"
+                            for="shipping_street_name"
+                            value="{{ old('shipping_street_name', $checkoutData['shipping_street_name'] ?? '') }}"
+                            name="shipping_street_name"
+                            :label="__('checkout.shipping.form.shipping_street_name')"
+                            required
+                            autocomplete="street"
+                        />
 
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            :placeholder="'Building number'"
+                            for="shipping_building"
+                            value="{{ old('shipping_building', $checkoutData['shipping_building'] ?? '') }}"
+                            name="shipping_building"
+                            :label="__('checkout.shipping.form.shipping_building')"
+                            required
+                            autocomplete="building"
+                        />
+
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            :placeholder="'Postal code'"
+                            id="postal_code"
+                            for="shipping_postal_code"
+                            value="{{ old('shipping_postal_code', $checkoutData['shipping_postal_code'] ?? '') }}"
+                            name="shipping_postal_code"
+                            :label="__('checkout.shipping.form.shipping_postal_code')"
+                            required
+                            autocomplete="postal_code"
+                        />
+
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            optional
+                            :placeholder="'Entrance number'"
+                            for="shipping_entrance"
+                            value="{{ old('shipping_entrance', $checkoutData['shipping_entrance'] ?? '') }}"
+                            name="shipping_entrance"
+                            :label="__('checkout.shipping.form.shipping_entrance')"
+                            autocomplete="shipping_entrance"
+                        />
+
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            optional
+                            :placeholder="'Floor number'"
+                            for="shipping_floor"
+                            value="{{ old('shipping_floor', $checkoutData['shipping_floor'] ?? '') }}"
+                            name="shipping_floor"
+                            :label="__('checkout.shipping.form.shipping_floor')"
+                            autocomplete="shipping_floor"
+                        />
+
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            optional
+                            :placeholder="'Apartment number'"
+                            for="shipping_apartment"
+                            value="{{ old('shipping_apartment', $checkoutData['shipping_apartment'] ?? '') }}"
+                            name="shipping_apartment"
+                            :label="__('checkout.shipping.form.shipping_apartment')"
+                            autocomplete="shipping_apartment"
+                        />
+
+                        <x-ui.input-label
+                            :customClass="'col-span-3'"
+                            optional
+                            :placeholder="'Intercom code'"
+                            for="shipping_intercom"
+                            value="{{ old('shipping_intercom', $checkoutData['shipping_intercom'] ?? '') }}"
+                            name="shipping_intercom"
+                            :label="__('checkout.shipping.form.shipping_intercom')"
+                            autocomplete="shipping_intercom"
+                        />
                     </div>
                 </div>
 
-
                 <div class="flex justify-start pt-2">
-                    <x-ui.button as="button" class="px-15 !py-3" right_icon="false"  type="submit">Continue</x-ui.button>
-
+                    <x-ui.button as="button" class="px-15 !py-3" right_icon="false" type="submit">
+                        {{ __('checkout.continue') }}
+                    </x-ui.button>
                 </div>
             </form>
-            <hr class="border-light-border my-4">
+            <hr class="border-light-border my-4" />
             <div class="flex items-center gap-x-2 font-medium">
-                <p class="size-8 opacity-30 border-2 border-charcoal/30 flex items-center justify-center rounded-full">2</p>
-                <p class="text-2xl">Contact information</p>
+                <p class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 opacity-30">
+                    2
+                </p>
+                <p class="text-2xl">
+                    {{ __('checkout.steps.contacts') }}
+                </p>
             </div>
-            <hr class="border-light-border my-4">
+            <hr class="border-light-border my-4" />
             <div class="flex items-center gap-x-2 font-medium">
-                <p class="size-8 opacity-30 border-2 border-charcoal/30 flex items-center justify-center rounded-full">3</p>
-                <p class="text-2xl">Payment details</p>
+                <p class="border-charcoal/30 flex size-8 items-center justify-center rounded-full border-2 opacity-30">
+                    3
+                </p>
+                <p class="text-2xl">
+                    {{ __('checkout.steps.payment') }}
+                </p>
             </div>
         </div>
     </div>
 
-<script>
-    const selectButton = document.getElementById('custom-select-button');
-    const optionsList = document.getElementById('custom-select-options');
-    const selectedOption = document.getElementById('selected-option');
+    <script>
+        const selectButton = document.getElementById('saved_addresses');
+        const optionsList = document.getElementById('saved_addresses-options');
+        const selectedOption = document.getElementById('selected-option');
 
-    // Тогл відкриття списку
-    selectButton.addEventListener('click', () => {
-        optionsList.classList.toggle('hidden');
-    });
-
-    // Клік по опції
-    optionsList.querySelectorAll('li.saved-address').forEach(option => {
-        option.addEventListener('click', () => {
-            selectedOption.textContent = option.textContent.trim();
-            optionsList.classList.add('hidden');
-            console.log(option.dataset.shippingPostcode)
-            // 3. Підставити дані в інпути
-            if (option.dataset.shippingPostcode) {
-                document.getElementById('shipping_postcode').value = option.dataset.shippingPostcode;
-            }
-            if (option.dataset.shippingBuilding) {
-                document.getElementById('shipping_building').value = option.dataset.shippingBuilding;
-            }
-            if (option.dataset.shippingAddress) {
-                document.getElementById('shipping_address').value = option.dataset.shippingAddress;
-            }
-            if (option.dataset.shippingCity) {
-                document.getElementById('shipping_city').value = option.dataset.shippingCity;
-            }
-            if (option.dataset.shippingRegion) {
-                document.getElementById('shipping_region').value = option.dataset.shippingRegion;
-            }
-            if (option.dataset.shippingEntrance) {
-                document.getElementById('entrance').value = option.dataset.shippingEntrance;
-            }
-
-            // 4. Активувати radio (якщо треба)
-            const radio = option.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
+        // Тогл відкриття списку
+        selectButton.addEventListener('click', () => {
+            optionsList.classList.toggle('hidden');
         });
-    });
 
-    document.addEventListener('click', (e) => {
-        if (!selectButton.contains(e.target) && !optionsList.contains(e.target)) {
-            optionsList.classList.add('hidden');
+        // Клік по опції
+        optionsList.querySelectorAll('li.saved-address').forEach((option) => {
+            option.addEventListener('click', () => {
+                selectedOption.textContent = option.textContent.trim();
+                optionsList.classList.add('hidden');
+                console.log(option.dataset.shippingPostcode);
+
+                // 3. Підставити дані в інпути
+                if (option.dataset.shippingIntercom) {
+                    document.getElementById('shipping_intercom').value = option.dataset.shippingIntercom;
+                } else {
+                    document.getElementById('shipping_intercom').value = '';
+                }
+
+                if (option.dataset.shippingFloor) {
+                    document.getElementById('shipping_floor').value = option.dataset.shippingFloor;
+                } else {
+                    document.getElementById('shipping_floor').value = '';
+                }
+
+                if (option.dataset.shippingEntrance) {
+                    document.getElementById('shipping_entrance').value = option.dataset.shippingEntrance;
+                } else {
+                    document.getElementById('shipping_entrance').value = '';
+                }
+
+                if (option.dataset.shippingApartment) {
+                    document.getElementById('shipping_apartment').value = option.dataset.shippingApartment;
+                } else {
+                    document.getElementById('shipping_apartment').value = '';
+                }
+
+                if (option.dataset.shippingPostalCode) {
+                    document.getElementById('postal_code').value = option.dataset.shippingPostalCode;
+                } else {
+                    document.getElementById('postal_code').value = '';
+                }
+
+                if (option.dataset.shippingBuilding) {
+                    document.getElementById('shipping_building').value = option.dataset.shippingBuilding;
+                } else {
+                    document.getElementById('shipping_building').value = '';
+                }
+
+                if (option.dataset.shippingStreetName) {
+                    document.getElementById('shipping_street_name').value = option.dataset.shippingStreetName;
+                } else {
+                    document.getElementById('shipping_street_name').value = '';
+                }
+
+                if (option.dataset.shippingCity) {
+                    document.getElementById('shipping_city').value = option.dataset.shippingCity;
+                } else {
+                    document.getElementById('shipping_city').value = '';
+                }
+
+                if (option.dataset.shippingRegion) {
+                    document.getElementById('shipping_region').value = option.dataset.shippingRegion;
+                } else {
+                    document.getElementById('shipping_region').value = '';
+                }
+
+                // 4. Активувати radio (якщо треба)
+                const radio = option.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!selectButton.contains(e.target) && !optionsList.contains(e.target)) {
+                optionsList.classList.add('hidden');
+            }
+        });
+    </script>
+    <style>
+        input[name='saved_address']:checked + label {
+            background-color: var(--color-light-orange);
         }
-    });
 
+        input[name='saved_address']:checked + label img {
+            display: block;
+        }
 
-
-</script>
-<style>
-    input[name="saved_address"]:checked + label {
-        background-color: var(--color-light-orange);
-    }
-
-    input[name="saved_address"]:checked + label img {
-        display: block;
-    }
-
-    input[name="saved_address"]:checked + label p {
-        background-color: var(--color-olive);
-    }
-
-</style>
+        input[name='saved_address']:checked + label p {
+            background-color: var(--color-olive);
+        }
+    </style>
 @endsection

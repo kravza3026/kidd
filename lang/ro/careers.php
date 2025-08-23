@@ -1,9 +1,8 @@
 <?php
 
-
 return [
 
-    'title' => "Suntem o echipă de <span class=\"gradient_r-b\">creatori</span> și <span class=\"gradient_r-b\">părinți</span> pasionați",
+    'title' => 'Suntem o echipă de <span class="gradient_r-b">creatori</span> și <span class="gradient_r-b">părinți</span> pasionați',
     'description' => 'La KIDD. misiunea noastră este să oferim îmbrăcăminte pentru bebeluși stilată și de înaltă calitate, care combină confortul cu funcționalitatea. Prețuim sustenabilitatea, folosind materiale ecologice și prioritizăm practicile etice de fabricație. Funcția noastră personalizată de filtrare vă ajută să găsiți mărimea perfectă în funcție de greutatea, înălțimea și vârsta copilului dumneavoastră. Suntem dedicați unui serviciu excepțional pentru clienți, asigurând satisfacția dumneavoastră și bunăstarea copilului dumneavoastră. Alăturați-vă nouă în celebrarea bucuriei parentale, un outfit pe rând.',
     'our_value_title' => 'Valorile noastre',
     'our_values' => [

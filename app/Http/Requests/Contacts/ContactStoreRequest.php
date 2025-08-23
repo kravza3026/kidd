@@ -23,9 +23,9 @@ class ContactStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'nullable', 'integer', 'exists:users,id',
-            'first_name' => 'required', 'string', 'min:3', 'max:50',
-            'last_name' => 'required', 'string', 'min:3', 'max:50',
+            'user_id' => 'nullable', 'exists:users,id',
+            'first_name' => 'required', 'string', 'min:5', 'max:50',
+            'last_name' => 'required', 'string', 'min:5', 'max:50',
             'email' => 'required', 'email', 'max:150',
             'phone' => ['required', (new Phone)->country(['MD'])->type('mobile')],
             'message' => 'required', 'string', 'min:100', 'max:500',

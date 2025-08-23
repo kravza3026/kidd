@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Vite;
 
 class VacanciesApplicationController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      */
@@ -33,7 +32,7 @@ class VacanciesApplicationController extends Controller
     {
         $applicationData = $request->validatedExcept(['cv', 'terms']);
 
-        if($request->hasFile('cv')) {
+        if ($request->hasFile('cv')) {
             $applicationData['cv_file_path'] = $request->file('cv')
                 ->store('vacancies/'.$request->vacancy_id.'/cv', 'local');
         }
@@ -52,5 +51,4 @@ class VacanciesApplicationController extends Controller
 
         return redirect()->route('vacancy.show', $vacancy);
     }
-
 }

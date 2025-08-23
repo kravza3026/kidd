@@ -58,6 +58,6 @@ class ProductsController extends Controller
             ->take(16)
             ->get();
 
-        return view('store.pages.product.index', compact('category', 'product','products'));
+        return view('store.pages.product.index', compact('category', 'product', 'products'));
     }
 }

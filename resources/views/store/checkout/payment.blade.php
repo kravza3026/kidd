@@ -3,10 +3,10 @@
 @section('checkout-form')
     <div class="mb-8">
         <h1 class="text-3xl font-bold">Payment Method</h1>
-        <p class="text-sm text-charcoal/60 mt-2">Choose your preferred payment method</p>
+        <p class="text-charcoal/60 mt-2 text-sm">Choose your preferred payment method</p>
     </div>
 
-    <form action="{{ route('checkout.process', ['step' => 'payment']) }}" method="POST" class="space-y-6">
+    <form action="{{ route('checkout.process.payment') }}" method="POST" class="space-y-6">
         @csrf
 
         <!-- Payment Methods -->
@@ -16,40 +16,60 @@
             <!-- Payment Method Cards -->
             <div class="grid gap-4">
                 <!-- Credit Card Option -->
-                <label class="relative flex items-center p-4 border border-gray-200 rounded-2xl cursor-pointer hover:border-olive transition-colors">
-                    <input type="radio" name="payment_method" value="card"
-                           class="peer absolute opacity-0"
-                        {{ old('payment_method', $checkoutData['payment_method'] ?? '') == 'card' ? 'checked' : '' }}>
+                <label
+                    class="hover:border-olive relative flex cursor-pointer items-center rounded-2xl border border-gray-200 p-4 transition-colors"
+                >
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="card"
+                        class="peer absolute opacity-0"
+                        @checked(old('payment_method', $checkoutData['payment_method'] ?? '') == 'card')
+                    />
                     <div class="flex items-center gap-4">
-                        <div class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center peer-checked:border-olive">
-                            <div class="w-3 h-3 rounded-full bg-olive opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                        <div
+                            class="peer-checked:border-olive flex h-6 w-6 items-center justify-center rounded-full border border-gray-300"
+                        >
+                            <div
+                                class="bg-olive h-3 w-3 rounded-full opacity-0 transition-opacity peer-checked:opacity-100"
+                            ></div>
                         </div>
                         <div>
                             <p class="font-bold">Credit Card</p>
-                            <p class="text-sm text-charcoal/60">Visa, Mastercard</p>
+                            <p class="text-charcoal/60 text-sm">Visa, Mastercard</p>
                         </div>
                     </div>
                 </label>
 
                 <!-- Cash on Delivery Option -->
-                <label class="relative flex items-center p-4 border border-gray-200 rounded-2xl cursor-pointer hover:border-olive transition-colors">
-                    <input type="radio" name="payment_method" value="cash"
-                           class="peer absolute opacity-0"
-                        {{ old('payment_method', $checkoutData['payment_method'] ?? '') == 'cash' ? 'checked' : '' }}>
+                <label
+                    class="hover:border-olive relative flex cursor-pointer items-center rounded-2xl border border-gray-200 p-4 transition-colors"
+                >
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="cash"
+                        class="peer absolute opacity-0"
+                        @checked(old('payment_method', $checkoutData['payment_method'] ?? '') == 'cash')
+                    />
                     <div class="flex items-center gap-4">
-                        <div class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center peer-checked:border-olive">
-                            <div class="w-3 h-3 rounded-full bg-olive opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                        <div
+                            class="peer-checked:border-olive flex h-6 w-6 items-center justify-center rounded-full border border-gray-300"
+                        >
+                            <div
+                                class="bg-olive h-3 w-3 rounded-full opacity-0 transition-opacity peer-checked:opacity-100"
+                            ></div>
                         </div>
                         <div>
                             <p class="font-bold">Cash on Delivery</p>
-                            <p class="text-sm text-charcoal/60">Pay when you receive</p>
+                            <p class="text-charcoal/60 text-sm">Pay when you receive</p>
                         </div>
                     </div>
                 </label>
             </div>
 
             @error('payment_method')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
 
@@ -59,39 +79,45 @@
 
             <div class="space-y-4">
                 <div>
-                    <label for="card_number" class="block text-sm font-medium text-charcoal">
-                        Card Number
-                    </label>
-                    <input type="text" name="card_number" id="card_number"
-                           class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400"
-                           placeholder="0000 0000 0000 0000">
+                    <label for="card_number" class="text-charcoal block text-sm font-medium">Card Number</label>
+                    <input
+                        type="text"
+                        name="card_number"
+                        id="card_number"
+                        class="focus:border-olive focus:ring-olive mt-2 w-full rounded-xl border border-gray-200 p-3 placeholder-gray-400"
+                        placeholder="0000 0000 0000 0000"
+                    />
                     @error('card_number')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label for="card_expiry" class="block text-sm font-medium text-charcoal">
-                            Expiry Date
-                        </label>
-                        <input type="text" name="card_expiry" id="card_expiry"
-                               class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400"
-                               placeholder="MM/YY">
+                        <label for="card_expiry" class="text-charcoal block text-sm font-medium">Expiry Date</label>
+                        <input
+                            type="text"
+                            name="card_expiry"
+                            id="card_expiry"
+                            class="focus:border-olive focus:ring-olive mt-2 w-full rounded-xl border border-gray-200 p-3 placeholder-gray-400"
+                            placeholder="MM/YY"
+                        />
                         @error('card_expiry')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="card_cvv" class="block text-sm font-medium text-charcoal">
-                            CVV
-                        </label>
-                        <input type="text" name="card_cvv" id="card_cvv"
-                               class="mt-2 w-full p-3 border border-gray-200 rounded-xl focus:border-olive focus:ring-olive placeholder-gray-400"
-                               placeholder="000">
+                        <label for="card_cvv" class="text-charcoal block text-sm font-medium">CVV</label>
+                        <input
+                            type="text"
+                            name="card_cvv"
+                            id="card_cvv"
+                            class="focus:border-olive focus:ring-olive mt-2 w-full rounded-xl border border-gray-200 p-3 placeholder-gray-400"
+                            placeholder="000"
+                        />
                         @error('card_cvv')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -99,16 +125,20 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <div class="flex justify-between items-center pt-8">
-            <a href="{{ route('checkout.previous', ['step' => 'payment']) }}"
-               class="flex items-center gap-2 text-sm text-charcoal/60 hover:text-charcoal transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        <div class="flex items-center justify-between pt-8">
+            <a
+                href="{{ route('checkout.previous', ['step' => 'payment']) }}"
+                class="text-charcoal/60 hover:text-charcoal flex items-center gap-2 text-sm transition-colors"
+            >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
                 Back to Contact
             </a>
-            <button type="submit"
-                    class="bg-olive text-white px-6 py-3 rounded-xl hover:bg-olive-dark focus:outline-none focus:ring-2 focus:ring-olive focus:ring-offset-2 transition-colors">
+            <button
+                type="submit"
+                class="bg-olive hover:bg-olive-dark focus:ring-olive rounded-xl px-6 py-3 text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
+            >
                 Continue to Review
             </button>
         </div>
@@ -117,7 +147,7 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const cardDetails = document.getElementById('card-details');
             const paymentInputs = document.querySelectorAll('input[name="payment_method"]');
 
@@ -126,7 +156,7 @@
                 cardDetails.style.display = selectedMethod === 'card' ? 'block' : 'none';
             }
 
-            paymentInputs.forEach(input => {
+            paymentInputs.forEach((input) => {
                 input.addEventListener('change', toggleCardDetails);
             });
 
