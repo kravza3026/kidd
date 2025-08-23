@@ -20,10 +20,9 @@ class Country extends Model
     {
         return $this->hasMany(Region::class);
     }
+
     public function cities(): HasManyThrough
     {
         return $this->hasManyThrough(City::class, Region::class);
     }
-
-
 }

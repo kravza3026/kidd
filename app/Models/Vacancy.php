@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasTranslatableSlug;
-use Spatie\Translatable\HasTranslations;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
+use Spatie\Translatable\HasTranslations;
 
 class Vacancy extends Model
 {
-    use HasTranslations, HasTranslatableSlug, HasTags, HasFactory, SoftDeletes;
+    use HasFactory, HasTags, HasTranslatableSlug, HasTranslations, SoftDeletes;
 
     protected array $translatable = [
         'title',
@@ -49,8 +49,6 @@ class Vacancy extends Model
 
     /**
      * Company vacancy belongs to.
-     *
-     * @return BelongsTo
      */
     public function company(): BelongsTo
     {
@@ -59,7 +57,6 @@ class Vacancy extends Model
 
     /**
      * Relation for applicants for this vacancy.
-     * @return HasMany
      */
     public function applications(): HasMany
     {
@@ -68,8 +65,6 @@ class Vacancy extends Model
 
     /**
      * Location for which Vacancy is for.
-     *
-     * @return BelongsTo
      */
     public function location(): BelongsTo
     {
@@ -90,15 +85,12 @@ class Vacancy extends Model
         ]);
     }
 
-
-
     /**
      * Resolve the route binding query for the model.
      *
      * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
      * @param  mixed  $value
      * @param  string|null  $field
-     * @return \Illuminate\Database\Eloquent\Builder|Builder|Model|Relation
      */
     public function resolveRouteBindingQuery($query, $value, $field = null): Model|Relation|\Illuminate\Database\Eloquent\Builder|Builder
     {
@@ -118,7 +110,7 @@ class Vacancy extends Model
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::createWithLocales(array_keys(config('app.locales')))
             ->generateSlugsFrom('title')
@@ -127,12 +119,9 @@ class Vacancy extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
-
 }

@@ -19,12 +19,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, HasLocalePreference
+class User extends Authenticatable implements HasLocalePreference, MustVerifyEmail, MustVerifyPhone
 {
-    use SoftDeletes, PhoneConfirmation, HasApiTokens, HasFactory, HasRoles, HasPermissions, Notifiable;
+    use HasApiTokens, HasFactory, HasPermissions, HasRoles, Notifiable, PhoneConfirmation, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
      * @var array<int, string>
      */
     protected $fillable = [
-        'company_id', //TODO change this to the company_id of the user
+        'company_id', // TODO change this to the company_id of the user
         'first_name',
         'last_name',
         'phone',
@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
      *
      * @var array
      */
-//    protected $with = ['addresses'];
+    //    protected $with = ['addresses'];
     protected $withCount = [
         'favorites',
         'orders',
@@ -73,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
      * @var array<int, string>
      */
     protected $appends = [
-        'name'
+        'name',
     ];
 
     /**
@@ -102,8 +102,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
 
     /**
      * The attributes that should be mutated to dates.
-     *
-     * @var array
      */
     protected array $dates = [
         'phone_verified_at',
@@ -131,8 +129,8 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => ($attributes['first_name'].' '.$attributes['last_name']),
-        )->shouldCache(); //withObjectCaching();
+            get: fn (mixed $value, array $attributes) => ($attributes['first_name'].' '.$attributes['last_name']),
+        )->shouldCache(); // withObjectCaching();
     }
 
     public function company(): belongsTo
@@ -144,7 +142,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     {
         return $this->hasMany(Family::class);
     }
-
 
     /**
      * Get all the user's favorite products.
@@ -185,5 +182,4 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone, 
     {
         return $this->addresses()->type(AddressType::Billing);
     }
-
 }

@@ -10,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Brand extends Model
 {
-    use SoftDeletes, HasTranslations, HasTranslatableSlug;
+    use HasTranslatableSlug, HasTranslations, SoftDeletes;
 
     public array $translatable = [
         'name',
@@ -50,5 +50,4 @@ class Brand extends Model
     {
         return 'slug';
     }
-
 }

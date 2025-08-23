@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -10,7 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
-    use HasTranslations, HasTranslatableSlug;
+    use HasTranslatableSlug, HasTranslations;
 
     public array $translatable = [
         'name',
@@ -39,11 +38,10 @@ class Page extends Model
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-
 }

@@ -1,10 +1,7 @@
 <x-app-layout>
     <div class="mx-auto max-w-5xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
         <div class="bg-white shadow sm:rounded-xl">
-            @include('store.account.nav')
-            <div class="p-6 md:px-10">
-                @include('store.account.orders.order-list')
-            </div>
+            <div class="p-6 md:px-10">// Track Order</div>
         </div>
     </div>
 </x-app-layout>

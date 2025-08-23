@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use Illuminate\Http\Request;
-use Spatie\LaravelPdf\Facades\Pdf;
 
 class AddressesController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +19,7 @@ class AddressesController extends Controller
 
         $countries = Country::all();
 
-        if($request->wantsJson()){
+        if ($request->wantsJson()) {
             return $user->addresses->toJson();
         }
 
@@ -29,5 +27,4 @@ class AddressesController extends Controller
             compact('user', 'countries')
         );
     }
-
 }

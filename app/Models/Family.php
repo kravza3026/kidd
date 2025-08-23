@@ -55,12 +55,12 @@ class Family extends Model
         return $this->attributes['weight'] / 1000; // Convert grams to kilograms
     }
 
-    public function getAgeDiffAttribute(): Carbon | string
+    public function getAgeDiffAttribute(): Carbon|string
     {
         return $this->birth_date
             ? $this->birth_date->diffForHumans([
                 'parts' => 2,
-                'short'=> true,
+                'short' => true,
                 'options' => CarbonInterface::SEQUENTIAL_PARTS_ONLY | CarbonInterface::TWO_DAY_WORDS,
                 'syntax' => CarbonInterface::DIFF_ABSOLUTE,
             ])
@@ -76,5 +76,4 @@ class Family extends Model
     {
         return $this->belongsTo(Gender::class);
     }
-
 }

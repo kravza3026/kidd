@@ -9,7 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Color extends Model
 {
-    use HasTranslations, HasTranslatableSlug;
+    use HasTranslatableSlug, HasTranslations;
 
     public array $translatable = [
         'name',
@@ -24,7 +24,7 @@ class Color extends Model
     ];
 
     protected $withCount = [
-        'products'
+        'products',
     ];
 
     public function products()
@@ -32,10 +32,10 @@ class Color extends Model
         return $this->hasManyThrough(Product::class, ProductVariant::class, 'color_id', 'id', 'id', 'product_id');
     }
 
-//    public function products()
-//    {
-//        return $this->belongsToMany(Product::class);
-//    }
+    //    public function products()
+    //    {
+    //        return $this->belongsToMany(Product::class);
+    //    }
 
     /**
      * Get the route key for the model.
@@ -47,7 +47,7 @@ class Color extends Model
 
     public function getLocalizedRouteKey($locale): string
     {
-        return $this->getSlugOptions()->slugField . '->' . $locale;
+        return $this->getSlugOptions()->slugField.'->'.$locale;
     }
 
     /**

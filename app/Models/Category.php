@@ -14,7 +14,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use SoftDeletes, HasFactory, HasTranslations, HasTranslatableSlug, Searchable;
+    use HasFactory, HasTranslatableSlug, HasTranslations, Searchable, SoftDeletes;
 
     public array $translatable = [
         'name',
@@ -30,7 +30,6 @@ class Category extends Model
     protected $casts = [
         'is_visible' => 'boolean',
     ];
-
 
     protected $fillable = [
         'parent_id',
@@ -118,5 +117,4 @@ class Category extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-
 }

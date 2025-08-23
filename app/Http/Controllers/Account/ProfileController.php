@@ -58,10 +58,10 @@ class ProfileController extends Controller
             'title' => 'Account', // TODO - Translate.
             'type' => 'success',
             'message' => 'Profile updated successfully.', // TODO - Translate.
-//            'button' => [
-//                'href' => '/',
-//                'label' => 'Account'
-//            ]
+            //            'button' => [
+            //                'href' => '/',
+            //                'label' => 'Account'
+            //            ]
         ]);
 
         return Redirect::route('profile.edit');

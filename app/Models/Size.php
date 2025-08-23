@@ -10,11 +10,13 @@ use Spatie\Translatable\HasTranslations;
 
 class Size extends Model
 {
-    use HasTranslations, HasTranslatableSlug;
+    use HasTranslatableSlug, HasTranslations;
 
     // TODO - Move to Enum
     const int TYPE_CLOTH = 1;
+
     const int TYPE_SHOES = 2;
+
     const int TYPE_ACCESSORY = 3;
 
     public array $translatable = [
@@ -30,7 +32,7 @@ class Size extends Model
     ];
 
     protected $withCount = [
-        'products'
+        'products',
     ];
 
     public function products(): Size|HasManyThrough
@@ -38,7 +40,6 @@ class Size extends Model
         return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id')
             ->groupBy('products.id');
     }
-
 
     /**
      * Get the route key for the model.
@@ -50,7 +51,7 @@ class Size extends Model
 
     public function getLocalizedRouteKey($locale): string
     {
-        return $this->getSlugOptions()->slugField . '->' . $locale;
+        return $this->getSlugOptions()->slugField.'->'.$locale;
     }
 
     /**
@@ -62,5 +63,4 @@ class Size extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-
 }

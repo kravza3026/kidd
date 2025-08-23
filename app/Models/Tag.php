@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
-use Spatie\Translatable\HasTranslations;
 
 class Tag extends \Spatie\Tags\Tag
 {
@@ -17,7 +15,6 @@ class Tag extends \Spatie\Tags\Tag
     {
         return Tag::class;
     }
-
 
     public function tags(): MorphToMany
     {
@@ -29,7 +26,7 @@ class Tag extends \Spatie\Tags\Tag
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::createWithLocales(array_keys(config('app.locales')))
             ->generateSlugsFrom('name')
@@ -38,8 +35,6 @@ class Tag extends \Spatie\Tags\Tag
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {

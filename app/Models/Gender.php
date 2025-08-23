@@ -11,7 +11,9 @@ class Gender extends Model
     use HasTranslations;
 
     public const int UNISEX = 1;
+
     public const int BOY = 2;
+
     public const int GIRL = 3;
 
     public array $translatable = [
@@ -35,10 +37,9 @@ class Gender extends Model
             get: function ($value) {
                 return $value ?? 'bg-[#eee]';
             });
-//            set: fn ($value) => [
-//                'first_name' => $value,
-//            ],
+        //            set: fn ($value) => [
+        //                'first_name' => $value,
+        //            ],
 
     }
-
 }

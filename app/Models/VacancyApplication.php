@@ -8,7 +8,6 @@ use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 
 class VacancyApplication extends Model
 {
-
     protected $guarded = [];
 
     protected $casts = [
@@ -19,5 +18,4 @@ class VacancyApplication extends Model
     {
         return $this->belongsTo(Vacancy::class);
     }
-
 }

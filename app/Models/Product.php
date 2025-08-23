@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -23,12 +23,10 @@ use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia, LocalizedUrlRoutable
 {
-    use InteractsWithMedia, Searchable, SoftDeletes, HasFactory, HasTranslations, HasTranslatableSlug;
+    use HasFactory, HasTranslatableSlug, HasTranslations, InteractsWithMedia, Searchable, SoftDeletes;
 
     /**
      * The attributes that are translatable.
-     *
-     * @var array
      */
     public array $translatable = [
         'name',
@@ -96,7 +94,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         'variants',
         'variants.color',
         'variants.size',
-//        'variants.images',
+        //        'variants.images',
     ];
 
     /**
@@ -110,7 +108,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the category that owns the product.
-     * @return BelongsTo
      */
     public function category(): BelongsTo
     {
@@ -119,7 +116,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the variants associated with the product.
-     * @return HasMany
      */
     public function variants(): HasMany
     {
@@ -128,7 +124,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the brand that the product is.
-     * @return BelongsTo
      */
     public function brand(): BelongsTo
     {
@@ -137,7 +132,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the product gender relation.
-     * @return BelongsTo
      */
     public function gender(): BelongsTo
     {
@@ -146,7 +140,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the season that the product is.
-     * @return BelongsTo
      */
     public function season(): BelongsTo
     {
@@ -155,7 +148,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the fabric that the product is made of.
-     * @return BelongsTo
      */
     public function fabric(): BelongsTo
     {
@@ -164,8 +156,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
     /**
      * Get the URL for the product.
-     *
-     * @return string
      */
     public function getUrlAttribute(): string
     {
@@ -176,10 +166,10 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
         return LaravelLocalization::localizeURL($url);
 
-//        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
-//            'category' => $this->category->slug,
-//            'product' => $this->slug,
-//        ]);
+        //        return LaravelLocalization::getURLFromRouteNameTranslated(app()->getLocale() ?? 'ro', 'routes.catalog.{category}/{product}', [
+        //            'category' => $this->category->slug,
+        //            'product' => $this->slug,
+        //        ]);
     }
 
     /**
@@ -188,7 +178,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
      * @param  mixed  $value
      * @param  string|null  $field
-     * @return \Illuminate\Database\Eloquent\Builder|Builder|Model|Relation
      */
     public function resolveRouteBindingQuery($query, $value, $field = null): Model|Relation|\Illuminate\Database\Eloquent\Builder|Builder
     {
@@ -217,7 +206,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      * Get the localized route key for the model.
      *
      * @param  string  $locale
-     * @return string
      */
     public function getLocalizedRouteKey($locale): string
     {
@@ -233,7 +221,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-
 
     /**
      * Determine if the model should be searchable.
@@ -259,7 +246,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         return [
             'id' => (int) $this->id,
             'name' => (array) $this->name,
-//            'description' => (array) $this->description,
+            //            'description' => (array) $this->description,
         ];
     }
 
@@ -288,7 +275,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     /**
      * Register the media conversions for the model.
      */
-    public function registerMediaConversions(Media|null $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('preview')
             ->performOnCollections('thumbnail')
@@ -300,5 +287,4 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
             ->quality(90)
             ->withResponsiveImages();
     }
-
 }

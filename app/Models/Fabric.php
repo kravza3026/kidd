@@ -16,7 +16,7 @@ class Fabric extends Model
     protected $guarded = [];
 
     protected $withCount = [
-        'products'
+        'products',
     ];
 
     public function products()

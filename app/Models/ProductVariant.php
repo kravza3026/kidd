@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- *
- */
 class ProductVariant extends Model
 {
     use HasFactory;
@@ -51,7 +48,7 @@ class ProductVariant extends Model
 
     protected $with = [
         'color',
-        'size'
+        'size',
     ];
 
     public function product(): BelongsTo
@@ -72,6 +69,4 @@ class ProductVariant extends Model
             ->orderBy('sort_order', 'asc')
             ->orderBy('id', 'asc');
     }
-
-
 }

@@ -27,8 +27,12 @@ Route::group([
     Route::get('favorites', FavoritesController::class)
         ->name('favorites.index');
 
-    Route::resource('orders', OrdersController::class)
-        ->only(['index', 'show']);
+    Route::get('orders', [OrdersController::class, 'index'])
+        ->name('orders.index');
+    Route::get('orders/{order}/track', [OrdersController::class, 'track'])
+        ->name('orders.track');
+    Route::get('orders/{order}/invoice', [OrdersController::class, 'invoice'])
+        ->name('orders.invoice');
 
     Route::get('addresses', [AddressesController::class, 'index'])
         ->name('addresses.index');

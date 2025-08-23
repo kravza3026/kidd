@@ -9,9 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Location extends Model
 {
-
     use HasTranslations, SoftDeletes;
-
 
     /**
      * Location type Warehouse
@@ -23,7 +21,6 @@ class Location extends Model
      */
     const int TYPE_STORE = 2;
 
-
     protected array $translatable = [
         'name',
         'open_hours',
@@ -34,17 +31,15 @@ class Location extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $casts = [
         'geo_position' => 'array',
     ];
 
-
     public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'addressable');
     }
-
 }

@@ -251,19 +251,17 @@
                                 id="shipping_city"
                                 class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
                             >
-                                <option value="">
+                                <option value="0">
                                     {{ __('checkout.shipping.form.shipping_city_placeholder') }}
                                 </option>
-                                @if ($checkoutData['shipping_city'])
-                                    @foreach ($regions->where('id', '=', $checkoutData['shipping_region'])->first()?->cities as $city)
-                                        <option
-                                            value="{{ $city->id }}"
-                                            {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $city->id ? 'selected' : '' }}
-                                        >
-                                            {{ $city->name }}
-                                        </option>
-                                    @endforeach
-                                @endif
+                                @foreach ($regions->where('id', '=', $checkoutData['shipping_region'] ?? '9')->first()?->cities as $city)
+                                    <option
+                                        value="{{ $city->id }}"
+                                        {{ old('shipping_city', $checkoutData['shipping_city'] ?? '') == $city->id ? 'selected' : '' }}
+                                    >
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
                             </select>
                             @error('shipping_city')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

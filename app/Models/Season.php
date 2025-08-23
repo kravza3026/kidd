@@ -23,5 +23,4 @@ class Season extends Model
     {
         return $this->hasMany(Product::class);
     }
-
 }

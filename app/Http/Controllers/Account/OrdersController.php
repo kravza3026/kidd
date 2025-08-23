@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -19,4 +18,16 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function track(Order $order)
+    {
+        return view('store.account.orders.track', [
+            'order' => $order,
+        ]);
+    }
+
+    public function invoice(Order $order)
+    {
+
+        return 'Order invoice';
+    }
 }

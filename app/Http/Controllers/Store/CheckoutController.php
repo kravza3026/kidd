@@ -35,16 +35,6 @@ class CheckoutController extends Controller
         return $this->processValidatedStep($request->validated(), 'shipping');
     }
 
-    public function processContact(ContactStoreRequest $request): RedirectResponse
-    {
-        return $this->processValidatedStep($request->validated(), 'contact');
-    }
-
-    public function processPayment(PaymentStoreRequest $request): RedirectResponse
-    {
-        return $this->processValidatedStep($request->validated(), 'payment');
-    }
-
     private function processValidatedStep(array $validatedData, string $currentStep): RedirectResponse
     {
         $this->sessionService->storeStepData($validatedData);
@@ -55,6 +45,16 @@ class CheckoutController extends Controller
         }
 
         return redirect()->route('checkout.index');
+    }
+
+    public function processContact(ContactStoreRequest $request): RedirectResponse
+    {
+        return $this->processValidatedStep($request->validated(), 'contact');
+    }
+
+    public function processPayment(PaymentStoreRequest $request): RedirectResponse
+    {
+        return $this->processValidatedStep($request->validated(), 'payment');
     }
 
     public function previous(string $step): RedirectResponse
@@ -92,6 +92,7 @@ class CheckoutController extends Controller
 
         $this->sessionService->clearCheckoutSession();
 
+        // TODO - Translate
         Session::flash('toast', [
             'title' => __('Order Placed'),
             'type' => 'success',

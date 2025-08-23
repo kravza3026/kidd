@@ -9,10 +9,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Customer */
 class CustomerResource extends JsonResource
 {
-    /**
-     * @param  Request  $request
-     * @return array
-     */
     public function toArray(Request $request): array
     {
         return [

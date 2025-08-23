@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ContactInquire extends Model
 {
-
     protected $fillable = [
         'user_id',
         'first_name',
@@ -18,12 +17,10 @@ class ContactInquire extends Model
     ];
 
     /**
-    * User who made the contact inquiry if it was authenticated.
-     * @return BelongsTo
-    **/
+     * User who made the contact inquiry if it was authenticated.
+     **/
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
 }

@@ -5,26 +5,50 @@
         ['title' => 'Третій', 'content' => 'Контент третього акордеону.'],
     ];
 @endphp
+
 <section>
-    <div class="hidden lg:grid grid-cols-12 my-2 font-bold px-6 py-2">
-        <p class="uppercase opacity-40 text-[10px] col-span-3">Order ID</p>
-        <p class="uppercase opacity-40 text-[10px] col-span-2">Status</p>
-        <p class="uppercase opacity-40 text-[10px] col-span-1">items</p>
-        <p class="uppercase opacity-40 text-[10px] col-span-2">Date placed</p>
-        <p class="uppercase opacity-40 text-[10px] col-span-2">Delivery date</p>
-        <p class="uppercase opacity-40 text-[10px] col-span-2">Price</p>
-    </div>
-    @foreach ($orders as $order)
-        <div class="accordion">
-            @include('store.account.orders.order-list-item', [
-                'order' => $order,
-                'index' => $loop->iteration // починається з 1
-            ])
+    @if ($user->orders()->count())
+        <div class="my-2 hidden grid-cols-12 px-6 py-2 font-bold lg:grid">
+            <p class="col-span-3 text-[10px] uppercase opacity-40">Order ID</p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">Status</p>
+            <p class="col-span-1 text-[10px] uppercase opacity-40">items</p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">Date placed</p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">Delivery date</p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">Price</p>
         </div>
-    @endforeach
+    @endif
 
-
-
-
+    @forelse ($user->orders as $order)
+        @include('store.account.orders.order-list-item', [
+            'order' => $order,
+        ])
+    @empty
+        <div class="my-12 flex flex-col items-center justify-center py-12">
+            <div class="-mb-6 flex items-center justify-center">
+                <img src="{{ Vite::image('common/empty_orders.jpg') }}" alt="" />
+            </div>
+            <h3 class="flex items-center justify-center text-lg font-extrabold text-gray-900">
+                {{ __('You have no orders') }}
+            </h3>
+            <p class="mt-1 mb-6 flex items-center justify-center text-sm text-gray-500">
+                {{ __('Let\'s find something cute') }}
+            </p>
+            <a
+                href="{{ route('products.index') }}"
+                class="focus:bg-green-550 active:bg-green-550 inline-flex w-full cursor-pointer items-center justify-center rounded-xl border border-transparent bg-green-500 py-2.5 text-sm font-semibold text-white transition duration-150 ease-in-out hover:bg-green-600 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-none sm:w-auto sm:px-6 sm:py-2"
+            >
+                Explore outfits
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.5"
+                    stroke="currentColor"
+                    class="ml-2 size-4"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                </svg>
+            </a>
+        </div>
+    @endforelse
 </section>
-

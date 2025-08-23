@@ -9,7 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
-    use HasTranslations, HasTranslatableSlug;
+    use HasTranslatableSlug, HasTranslations;
 
     public $translatable = [
         'title',
@@ -26,7 +26,7 @@ class Post extends Model
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::createWithLocales(array_keys(config('app.locales')))
             ->generateSlugsFrom('name')

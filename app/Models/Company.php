@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-    use SoftDeletes, HasFactory;
-
+    use HasFactory, SoftDeletes;
 
     /**
      * Get all of the company's addresses.
@@ -19,5 +18,4 @@ class Company extends Model
     {
         return $this->morphMany(Address::class, 'addressable');
     }
-
 }
