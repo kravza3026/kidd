@@ -66,22 +66,25 @@ export default {
             delete_tooltip: 'Șterge adresa',
         },
 
+        region: 'Regiune',
+        region_select: 'Alege Regiune',
+        city: 'Localitate',
+        city_select: 'Alege Localitate',
         street: 'Strada',
         street_short: 'str.',
         building: 'Nr.',
         building_short: 'bl.',
         apartment: 'Apartament',
         apartment_short: 'ap.',
+
+        postal_code: 'Cod Poștal',
+
         entrance: 'Scara',
         entrance_short: 'sc.',
         floor: 'Etaj',
         floor_short: 'et.',
         intercom: 'Interfon',
         intercom_short: 'int.',
-        region: 'Regiune',
-        city: 'Localitate',
-        city_select: 'Alege Localitate',
-        postal_code: 'Cod Poștal',
 
         alerts: {
             default_title: 'Adresa implicită',

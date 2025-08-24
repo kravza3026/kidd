@@ -67,6 +67,7 @@ export default {
         },
 
         region: 'Регион',
+        region_select: 'Выберите регион',
         city: 'Город',
         city_select: 'Выберите город',
         street: 'Улица',

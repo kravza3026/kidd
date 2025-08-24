@@ -67,6 +67,7 @@ export default {
         },
 
         region: 'Region',
+        region_select: 'Choose Region',
         city: 'City',
         city_select: 'Choose City',
         street: 'Street',

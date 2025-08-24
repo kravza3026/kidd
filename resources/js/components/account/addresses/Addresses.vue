@@ -1,5 +1,5 @@
 <script>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import SubscribeForm from '@/components/ui/subscribeForm.vue';
 import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
@@ -14,8 +14,8 @@ import iconClose from '@img/icons/close.svg';
 import iconCheck from '@img/icons/checked_white.svg';
 import selectIcon from '@img/icons/select-arrows.svg';
 import BaseInput from '@/components/ui/BaseInput.vue';
-import {useForm} from 'laravel-precognition-vue';
-import {useAlert} from '@/useAlert.js';
+import { useForm } from 'laravel-precognition-vue';
+import { useAlert } from '@/useAlert.js';
 
 const addressTemplate = {
     address_type: null,
@@ -560,7 +560,7 @@ export default {
                                 {{
                                     address.form.region?.name[locale] ||
                                     address.form.region?.name['ro'] ||
-                                    'Select region'
+                                    $t('address.region_select')
                                 }}
                             </p>
                             <img
@@ -622,7 +622,9 @@ export default {
                         >
                             <input v-model="address.form.city_id" name="city_id" type="hidden" />
                             <p class="flex items-center text-sm opacity-60">
-                                {{ address.city?.name[locale] || this.defaults.city.name[locale] || '' }}
+                                {{
+                                    address.city?.name[locale] || address.city?.name['ro'] || $t('address.city_select')
+                                }}
                             </p>
                             <img
                                 :class="{
@@ -659,7 +661,7 @@ export default {
                                     address.editor.dropdownCityOpen = false;
                                 "
                             >
-                                {{ city.name[locale] ?? city.name['ro'] }}
+                                {{ city.name[locale] || $t('address.city_select') }}
                             </li>
                         </ul>
                     </div>
