@@ -31,7 +31,7 @@ class ProductVariantFactory extends Factory
 
             'quantity' => rand(10, 100), // Quantity
 
-            'price_vendor' => $vendor_price = new Money(rand(1000, 100000), new Currency('MDL')), //Buy price (in cents)
+            'price_vendor' => $vendor_price = new Money(rand(1000, 100000), new Currency('MDL')), // Buy price (in cents)
             'price_wholesale' => $wholesale_price = new Money((int) ($vendor_price->getAmount() * 1.3), new Currency('MDL')), // Wholesale Sales price = vendor + 30%
             'price_online' => $online_price = new Money((int) ($wholesale_price->getAmount() * 1.4), new Currency('MDL')), // Online price = wholesale + 40%
             'price_store' => new Money((int) ($wholesale_price->getAmount() * 1.5), new Currency('MDL')), // Store price = wholesale + 50%
@@ -49,7 +49,6 @@ class ProductVariantFactory extends Factory
                 'shipping_width' => rand(100, 1000),
                 'shipping_length' => rand(100, 1000),
             ]),
-
 
         ];
     }

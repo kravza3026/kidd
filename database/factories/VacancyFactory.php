@@ -7,17 +7,14 @@ use Illuminate\Support\Carbon;
 
 class VacancyFactory extends Factory
 {
-
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
             'company_id' => 1,
-            'location_id' => rand(1,2),
+            'location_id' => rand(1, 2),
 
             'title' => [
                 'ro' => fake('ro_RO')->jobTitle(),

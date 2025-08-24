@@ -63,7 +63,7 @@
                         <x-ui.input-label
                             :placeholder="__('checkout.contact.form.first_name_placeholder')"
                             for="first_name"
-                            value="{{ old('contact_first_name', $checkoutData['contact_first_name'] ?? auth()->check() ? auth()->user()->first_name : '') }}"
+                            value="{{ old('contact_first_name', $checkoutData['contact_first_name'] ?? auth()->check() ? auth()->user()?->first_name : '') }}"
                             name="contact_first_name"
                             :label="__('checkout.contact.form.first_name')"
                             autocomplete="first_name"
@@ -74,7 +74,7 @@
                         <x-ui.input-label
                             :placeholder="__('checkout.contact.form.last_name_placeholder')"
                             for="last_name"
-                            value="{{ old('contact_last_name', $checkoutData['contact_last_name'] ?? auth()->check() ? auth()->user()->last_name : '') }}"
+                            value="{{ old('contact_last_name', $checkoutData['contact_last_name'] ?? auth()->check() ? auth()->user()?->last_name : '') }}"
                             name="contact_last_name"
                             :label="__('checkout.contact.form.last_name')"
                             autocomplete="family-name"
@@ -86,7 +86,7 @@
                             type="email"
                             name="contact_email"
                             for="contact_email"
-                            value="{{ old('contact_email', $checkoutData['contact_email'] ?? auth()->check() ? auth()->user()->email : '') }}"
+                            value="{{ old('contact_email', $checkoutData['contact_email'] ?? auth()->check() ? auth()->user()?->email : '') }}"
                             :label="__('checkout.contact.form.email')"
                             :placeholder="__('checkout.contact.form.email_placeholder')"
                         ></x-ui.input-label>
@@ -97,7 +97,7 @@
                             :placeholder="__('checkout.contact.form.phone_placeholder')"
                             id="phone"
                             for="contact_phone"
-                            value="{{ old('contact_phone', $checkoutData['contact_phone'] ?? auth()->check() ? auth()->user()->phone : '') }}"
+                            value="{{ old('contact_phone', $checkoutData['contact_phone'] ?? auth()->check() ? auth()->user()?->phone : '') }}"
                             name="contact_phone"
                             :label="__('checkout.contact.form.phone')"
                             autocomplete="phone"

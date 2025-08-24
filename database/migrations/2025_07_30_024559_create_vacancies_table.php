@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
 
-            //[Rel] Company
+            // [Rel] Company
             $table->foreignIdFor(Company::class)->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
 
-            //[Rel] Vacancy Location (HQ if Remote) default is Headquarter
+            // [Rel] Vacancy Location (HQ if Remote) default is Headquarter
             $table->foreignIdFor(Location::class)->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

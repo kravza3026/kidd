@@ -235,10 +235,6 @@ class CartController extends Controller
                 'title' => 'Cart', // TODO - Translation
                 'type' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.removed'), // TODO - Translation
-                //                'button' => [
-                //                    'label' => __('menu.cart'),
-                //                    'href' => route('cart'),
-                //                ],
                 'options' => [
                     'timer' => 1000,
                 ],

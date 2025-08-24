@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Checkout;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Propaganistas\LaravelPhone\Rules\Phone;
 
@@ -35,6 +36,14 @@ class ContactStoreRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'contact_phone.unique' => 'This phone number is already taken.',
+            'contact_phone.required' => 'Phone number is required.',
+        ];
+    }
+
     /**
      * Get custom attributes for validator errors.
      *
@@ -48,5 +57,16 @@ class ContactStoreRequest extends FormRequest
             'contact_email' => __('validation.attributes.email'),
             'contact_phone' => __('validation.attributes.phone'),
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // Normalize phone number by removing spaces, parentheses, dashes, and dots
+        if ($this->has('contact_phone')) {
+            $this->merge([
+                'contact_phone' => Str::replace([' ', '(', ')', '-', '.'], '', $this->input('contact_phone')),
+            ]);
+        }
+
     }
 }

@@ -12,6 +12,7 @@ return [
     'cm' => 'cm',
     'kg' => 'kg',
     'new' => 'Nou',
+    'price' => ':price lei',
 
     'add-to-cart' => 'Adaugă în coș',
 

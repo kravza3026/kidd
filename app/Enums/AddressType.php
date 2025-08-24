@@ -7,10 +7,11 @@ namespace App\Enums;
  *
  * @var int
  */
-enum AddressType: int {
-        case Private = 1;
-        case Commercial = 2;
-        case Shipping = 3;
+enum AddressType: int
+{
+    case Private = 1;
+    case Commercial = 2;
+    case Shipping = 3;
     case Billing = 4;
 
     public static function getAddressTypesListWithLabels(): array
@@ -22,5 +23,4 @@ enum AddressType: int {
             self::Billing->value => 'Billing',
         ];
     }
-
 }

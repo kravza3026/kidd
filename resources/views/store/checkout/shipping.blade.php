@@ -15,7 +15,7 @@
             <form action="{{ route('checkout.process.shipping') }}" method="POST" class="space-y-6">
                 @csrf
 
-                <label for="shipping_city" class="text-charcoal mb-2 block text-sm font-medium">
+                <label for="shipping_method" class="text-charcoal mb-2 block text-sm font-medium">
                     {{ __('checkout.shipping.form.shipping_method') }}
                 </label>
                 <div class="grid min-h-10 grid-cols-3 gap-4">
@@ -23,7 +23,7 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="regular"
+                            value="{{ App\Enums\ShippingMethod::Regular }}"
                             checked
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_method_regular"
@@ -65,7 +65,7 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="gift"
+                            value="{{ App\Enums\ShippingMethod::Gift }}"
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_gift"
                         />
@@ -106,7 +106,7 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="express"
+                            value="{{ App\Enums\ShippingMethod::Express }}"
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_express"
                         />
@@ -166,9 +166,7 @@
                                         class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white shadow-lg"
                                         id="saved_addresses-options"
                                     >
-                                        @foreach (auth()->user()->addresses as $address)
-                                            {{-- {{old('saved_address', $checkoutData['saved_address'])}} --}}
-                                            {{-- {{$address->label}} --}}
+                                        @foreach (auth()->user()->shippingAddresses as $address)
                                             <li
                                                 data-shipping-region="{{ $address->region_id }}"
                                                 data-shipping-city="{{ $address->city_id }}"
@@ -273,13 +271,14 @@
                             value="{{ old('shipping_street_name', $checkoutData['shipping_street_name'] ?? '') }}"
                             name="shipping_street_name"
                             :label="__('checkout.shipping.form.shipping_street_name')"
+                            :placeholder="__('checkout.shipping.form.shipping_street_name_placeholder')"
                             required
                             autocomplete="street"
                         />
 
                         <x-ui.input-label
                             :customClass="'col-span-3'"
-                            :placeholder="'Building number'"
+                            :placeholder="__('checkout.shipping.form.shipping_building_placeholder')"
                             for="shipping_building"
                             value="{{ old('shipping_building', $checkoutData['shipping_building'] ?? '') }}"
                             name="shipping_building"
@@ -290,7 +289,7 @@
 
                         <x-ui.input-label
                             :customClass="'col-span-3'"
-                            :placeholder="'Postal code'"
+                            :placeholder="__('checkout.shipping.form.shipping_postal_code_placeholder')"
                             id="postal_code"
                             for="shipping_postal_code"
                             value="{{ old('shipping_postal_code', $checkoutData['shipping_postal_code'] ?? '') }}"
@@ -303,7 +302,7 @@
                         <x-ui.input-label
                             :customClass="'col-span-3'"
                             optional
-                            :placeholder="'Entrance number'"
+                            :placeholder="__('checkout.shipping.form.shipping_entrance_placeholder')"
                             for="shipping_entrance"
                             value="{{ old('shipping_entrance', $checkoutData['shipping_entrance'] ?? '') }}"
                             name="shipping_entrance"
@@ -314,7 +313,7 @@
                         <x-ui.input-label
                             :customClass="'col-span-3'"
                             optional
-                            :placeholder="'Floor number'"
+                            :placeholder="__('checkout.shipping.form.shipping_floor_placeholder')"
                             for="shipping_floor"
                             value="{{ old('shipping_floor', $checkoutData['shipping_floor'] ?? '') }}"
                             name="shipping_floor"
@@ -325,7 +324,7 @@
                         <x-ui.input-label
                             :customClass="'col-span-3'"
                             optional
-                            :placeholder="'Apartment number'"
+                            :placeholder="__('checkout.shipping.form.shipping_apartment_placeholder')"
                             for="shipping_apartment"
                             value="{{ old('shipping_apartment', $checkoutData['shipping_apartment'] ?? '') }}"
                             name="shipping_apartment"
@@ -336,7 +335,7 @@
                         <x-ui.input-label
                             :customClass="'col-span-3'"
                             optional
-                            :placeholder="'Intercom code'"
+                            :placeholder="__('checkout.shipping.form.shipping_intercom_placeholder')"
                             for="shipping_intercom"
                             value="{{ old('shipping_intercom', $checkoutData['shipping_intercom'] ?? '') }}"
                             name="shipping_intercom"
@@ -345,6 +344,11 @@
                         />
                     </div>
                 </div>
+
+                @error(['shipping_method', 'saved_address', 'shipping_street_name', 'shipping_building', 'shipping_postal_code', 'shipping_region', 'shipping_city', 'shipping_entrance', 'shipping_floor',
+                    'shipping_apartment', 'shipping_intercom'])
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <div class="flex justify-start pt-2">
                     <x-ui.button as="button" class="px-15 !py-3" right_icon="false" type="submit">
