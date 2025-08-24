@@ -27,7 +27,11 @@ class OrdersController extends Controller
 
     public function invoice(Order $order)
     {
-
         return 'Order invoice';
+    }
+
+    public function download(Order $order)
+    {
+        return 'Invoice download';
     }
 }

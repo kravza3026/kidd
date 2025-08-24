@@ -6,9 +6,12 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Gender;
+use App\Models\ProductVariant;
 use App\Models\Season;
 use App\Models\Size;
+use App\Observers\ProductVariantObserver;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
@@ -37,11 +40,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \App\Models\ProductVariant::observe(\App\Observers\ProductVariantObserver::class);
 
-        Vite::prefetch(7);
-        Vite::useWaterfallPrefetching(7);
-//        Vite::useAggressivePrefetching();
+        Model::preventLazyLoading(! $this->app->isProduction());
+
+        ProductVariant::observe(ProductVariantObserver::class);
+
+        //        Vite::prefetch(7);
+        //        Vite::useWaterfallPrefetching(7);
+        Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
         Vite::macro('css', fn (string $asset) => $this->asset("resources/css/{$asset}"));
@@ -63,14 +69,13 @@ class AppServiceProvider extends ServiceProvider
 
             return $moneyFormatter->format($money);
 
-
-//            $money = new Money(round(1234.56789, -2, PHP_ROUND_HALF_EVEN), new Currency('MDL'));
-//            $currencies = new ISOCurrencies();
-//
-//            $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY_CODE);
-//            $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
-//
-//            echo $moneyFormatter->format($money); // outputs $1.00
+            //            $money = new Money(round(1234.56789, -2, PHP_ROUND_HALF_EVEN), new Currency('MDL'));
+            //            $currencies = new ISOCurrencies();
+            //
+            //            $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY_CODE);
+            //            $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+            //
+            //            echo $moneyFormatter->format($money); // outputs $1.00
 
         });
 

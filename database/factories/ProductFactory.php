@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -18,12 +17,11 @@ class ProductFactory extends Factory
         return [
             'is_visible' => true,
 
-            'category_id' => rand(2, 6), //Category::factory(),
+            'category_id' => rand(2, 6), // Category::factory(),
             'brand_id' => 1,
             'gender_id' => rand(1, 3),
             'season_id' => rand(1, 5),
             'fabric_id' => rand(1, 5),
-
 
             'name' => [
                 'ro' => fake()->randomElement([
@@ -61,21 +59,21 @@ class ProductFactory extends Factory
                     'Suspender Pants',
                     'Warm Winter Hat',
                     'Soft First Steps Socks',
-                ])
+                ]),
             ],
             'description' => [
                 'ro' => fake()->randomElement([
                     'Confecționat din bumbac organic 100%, acest articol este perfect pentru pielea sensibilă a bebelușului. Închidere cu capse pentru schimbare ușoară a scutecului. Disponibil în mărimi de la 0-24 luni.',
-                    'Design ergonomic special creat pentru copiii mici, cu zone elastice pentru mișcare liberă și confort maxim. Disponibil în culori vesele și prietenoase.'
+                    'Design ergonomic special creat pentru copiii mici, cu zone elastice pentru mișcare liberă și confort maxim. Disponibil în culori vesele și prietenoase.',
                 ]),
                 'ru' => fake()->randomElement([
                     'Изготовлено из 100% органического хлопка, идеально подходит для чувствительной кожи малыша. Застежки-кнопки для легкой смены подгузника. Доступно в размерах от 0-24 месяцев.',
-                    'Эргономичный дизайн, специально созданный для малышей, с эластичными зонами для свободного движения и максимального комфорта. Доступно в веселых и дружелюбных цветах.'
+                    'Эргономичный дизайн, специально созданный для малышей, с эластичными зонами для свободного движения и максимального комфорта. Доступно в веселых и дружелюбных цветах.',
                 ]),
                 'en' => fake()->randomElement([
                     'Complete baby set including bodysuit, pants, and matching bib. All pieces are OEKO-TEX Standard 100 certified materials.',
                     'Ergonomic design specially created for toddlers, with elastic zones for free movement and maximum comfort. Available in cheerful and friendly colors.',
-                ])
+                ]),
             ],
 
             'main_image' => 'products/product_'.rand(1, 9).'.png',

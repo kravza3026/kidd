@@ -22,7 +22,7 @@ class ShippingStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shipping_method' => ['required', 'in:regular,gift,express'],
+            'shipping_method' => ['required', 'in:1,2,3'],
             'shipping_region' => ['required', 'exists:regions,id'],
             'shipping_city' => ['required', 'exists:cities,id'],
             'shipping_street_name' => ['required', 'string'],
@@ -44,15 +44,15 @@ class ShippingStoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'shipping_region' => __('validation.attributes.region'),
-            'shipping_city' => __('validation.attributes.city'),
-            'shipping_street_name' => __('validation.attributes.street_name'),
-            'shipping_building' => __('validation.attributes.building'),
-            'shipping_postal_code' => __('validation.attributes.postal_code'),
-            'shipping_apartment' => __('validation.attributes.apartment'),
-            'shipping_entrance' => __('validation.attributes.entrance'),
-            'shipping_floor' => __('validation.attributes.floor'),
-            'shipping_intercom' => __('validation.attributes.intercom'),
+            'shipping_region' => __('validation.attributes.shipping_region'),
+            'shipping_city' => __('validation.attributes.shipping_city'),
+            'shipping_street_name' => __('validation.attributes.shipping_street_name'),
+            'shipping_building' => __('validation.attributes.shipping_building'),
+            'shipping_postal_code' => __('validation.attributes.shipping_postal_code'),
+            'shipping_apartment' => __('validation.attributes.shipping_apartment'),
+            'shipping_entrance' => __('validation.attributes.shipping_entrance'),
+            'shipping_floor' => __('validation.attributes.shipping_floor'),
+            'shipping_intercom' => __('validation.attributes.shipping_intercom'),
         ];
     }
 }

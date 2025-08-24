@@ -156,15 +156,8 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
      */
     public function orders(): HasManyThrough
     {
-        return $this->hasManyThrough(Order::class, Customer::class, 'user_id', 'customer_id', 'id', 'id');
-    }
-
-    /**
-     * Get all the user's addresses.
-     */
-    public function addresses(): MorphMany
-    {
-        return $this->morphMany(Address::class, 'addressable');
+        return $this->hasManyThrough(Order::class, Customer::class, 'user_id', 'customer_id', 'id', 'id')
+            ->latest('placed_at');
     }
 
     /**
@@ -173,6 +166,14 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
     public function shippingAddresses(): MorphMany
     {
         return $this->addresses()->type(AddressType::Shipping);
+    }
+
+    /**
+     * Get all the user's addresses.
+     */
+    public function addresses(): MorphMany
+    {
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     /**

@@ -13,17 +13,17 @@ class OrderFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
-            'tracking_id' => $this->faker->randomNumber(),
-            'payment_id' => $this->faker->randomNumber(),
-            'order_number' => $this->faker->randomNumber(),
-            'total_amount' => $this->faker->randomNumber(),
-            'status' => $this->faker->word(),
+            'tracking_id' => $this->faker->randomNumber(1),
+            'payment_id' => $this->faker->randomNumber(1),
+            'order_number' => $this->faker->randomNumber(4),
+            'total_amount' => $this->faker->randomNumber(5),
+            'status' => 1, // Enum // 1 = Pending, 2 = Processing, 3 = Delivered, 4 = Canceled, 5 = Returned.
+            'shipping_method' => 1, // Enum // 1 = Standard, 2 = Gift, 3 = Express
+            'payment_method' => 1, // Enum // 1 = Cash on Delivery, 2 = Credit Card, 3 = Online Payment, 4 = Payment Terminal.
             'shipping_address' => $this->faker->address(),
             'billing_address' => $this->faker->address(),
             'cart_snapshot' => $this->faker->words(),

@@ -3,18 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 class CustomerFactory extends Factory
 {
-
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

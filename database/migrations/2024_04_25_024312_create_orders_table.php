@@ -1,11 +1,15 @@
 <?php
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentMethod;
+use App\Enums\ShippingMethod;
+use App\Models\Customer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Customer;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -18,24 +22,25 @@ return new class extends Migration {
             $table->foreignId('payment_id');
             $table->unsignedBigInteger('order_number')->unique();
             $table->unsignedInteger('total_amount');
-            $table->string('status')->default('pending');
-            $table->json('shipping_address');
+            $table->unsignedTinyInteger('status')->default(OrderStatus::Pending);
+            $table->unsignedTinyInteger('shipping_method')->default(ShippingMethod::Regular);
+            $table->unsignedTinyInteger('payment_method')->default(PaymentMethod::CashOrCard);
+            $table->json('shipping_address')->nullable();
             $table->json('billing_address')->nullable();
             $table->json('cart_snapshot')->nullable();
             $table->text('notes')->nullable();
             $table->timestamp('placed_at')->useCurrent();
-            $table->timestamp('processed_at')->nullable()->default(null);
-            $table->timestamp('delivered_at')->nullable()->default(null);
+            $table->timestamp('processed_at')->nullable();
+            $table->timestamp('delivered_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index([
-                    'customer_id',
-                    'tracking_id',
-                    'payment_id',
-                    'order_number',
-                    'status',
-                ]);
+                'customer_id',
+                'tracking_id',
+                'payment_id',
+                'order_number',
+                'status',
+            ]);
         });
     }
 

@@ -54,6 +54,7 @@ class UserFactory extends Factory
             'phone_verified_at' => null,
         ]);
     }
+
     /**
      * Indicate that the model's email address should be unverified.
      */

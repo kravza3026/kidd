@@ -78,7 +78,6 @@ Route::group([
         Route::get(LaravelLocalization::transRoute('routes.menu.contacts'), [ContactsController::class, 'index'])
             ->name('contacts');
         Route::post(LaravelLocalization::transRoute('routes.menu.contacts'), [ContactsController::class, 'store'])
-//            ->middleware(HandlePrecognitiveRequests::class)
             ->name('contacts.store');
 
         Route::get(LaravelLocalization::transRoute('routes.footer.size-chart'), [PagesController::class, 'size_chart'])

@@ -43,6 +43,7 @@ class Address extends Model
 
     protected $with = [
         'region',
+        'city',
     ];
 
     protected $hidden = [
@@ -58,7 +59,7 @@ class Address extends Model
     protected $casts = [
         'address_type' => AddressType::class,
         'is_default' => 'boolean',
-        'editor' => 'json:unicode',
+        'editor' => 'json',
     ];
 
     /**
@@ -67,6 +68,11 @@ class Address extends Model
     public function scopeType(Builder $query, AddressType $type): void
     {
         $query->where('address_type', $type);
+    }
+
+    public function scopePublic(Builder $query): void
+    {
+        $query->whereIn('address_type', [AddressType::Shipping, AddressType::Billing]);
     }
 
     /**

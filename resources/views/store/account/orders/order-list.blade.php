@@ -1,20 +1,24 @@
-@php
-    $orders = [
-        ['title' => 'Перший', 'content' => 'Контент першого акордеону.'],
-        ['title' => 'Другий', 'content' => 'Контент другого акордеону.'],
-        ['title' => 'Третій', 'content' => 'Контент третього акордеону.'],
-    ];
-@endphp
-
 <section>
     @if ($user->orders()->count())
         <div class="my-2 hidden grid-cols-12 px-6 py-2 font-bold lg:grid">
-            <p class="col-span-3 text-[10px] uppercase opacity-40">Order ID</p>
-            <p class="col-span-2 text-[10px] uppercase opacity-40">Status</p>
-            <p class="col-span-1 text-[10px] uppercase opacity-40">items</p>
-            <p class="col-span-2 text-[10px] uppercase opacity-40">Date placed</p>
-            <p class="col-span-2 text-[10px] uppercase opacity-40">Delivery date</p>
-            <p class="col-span-2 text-[10px] uppercase opacity-40">Price</p>
+            <p class="col-span-3 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.order_number') }}
+            </p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.status') }}
+            </p>
+            <p class="col-span-1 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.quantity') }}
+            </p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.placed_at') }}
+            </p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.delivered_at') }}
+            </p>
+            <p class="col-span-2 text-[10px] uppercase opacity-40">
+                {{ __('order.table_heading.price') }}
+            </p>
         </div>
     @endif
 
@@ -25,19 +29,19 @@
     @empty
         <div class="my-12 flex flex-col items-center justify-center py-12">
             <div class="-mb-6 flex items-center justify-center">
-                <img src="{{ Vite::image('common/empty_orders.jpg') }}" alt="" />
+                <img src="{{ Vite::image('common/empty_orders.jpg') }}" alt="order placeholder" />
             </div>
             <h3 class="flex items-center justify-center text-lg font-extrabold text-gray-900">
-                {{ __('You have no orders') }}
+                {{ __('order.empty.title') }}
             </h3>
             <p class="mt-1 mb-6 flex items-center justify-center text-sm text-gray-500">
-                {{ __('Let\'s find something cute') }}
+                {{ __('order.empty.description') }}
             </p>
             <a
                 href="{{ route('products.index') }}"
                 class="focus:bg-green-550 active:bg-green-550 inline-flex w-full cursor-pointer items-center justify-center rounded-xl border border-transparent bg-green-500 py-2.5 text-sm font-semibold text-white transition duration-150 ease-in-out hover:bg-green-600 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-none sm:w-auto sm:px-6 sm:py-2"
             >
-                Explore outfits
+                {{ __('order.empty.explore_button') }}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

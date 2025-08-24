@@ -20,12 +20,16 @@ return new class extends Migration
 
             $table->morphs('addressable');
 
-            $table->unsignedInteger('address_type')
-                ->default(AddressType::Shipping); // TODO implement address types, e.g. private, commercial, shipping, billingб etc.
+            // TODO - use everywhere address types, e.g. private, commercial, shipping, billingб etc.
+            $table->unsignedTinyInteger('address_type')->default(AddressType::Shipping);
 
             $table->boolean('is_default')->default(false);
 
             $table->string('label', 100);
+
+            $table->foreignIdFor(Country::class)->default(1);
+            $table->foreignIdFor(Region::class);
+            $table->foreignIdFor(City::class);
 
             $table->string('contact_first_name')->nullable();
             $table->string('contact_last_name')->nullable();
@@ -42,9 +46,6 @@ return new class extends Migration
             $table->string('floor')->nullable();
             $table->string('apartment')->nullable();
             $table->string('intercom')->nullable();
-            $table->foreignIdFor(City::class);
-            $table->foreignIdFor(Region::class);
-            $table->foreignIdFor(Country::class)->default(1);
             $table->string('postal_code')->nullable();
             $table->string('notes')->nullable();
 

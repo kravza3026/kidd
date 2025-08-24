@@ -1,12 +1,12 @@
 import './bootstrap';
 
-import { createApp } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
-import { Ziggy } from './ziggy.js';
+import {createApp} from 'vue';
+import {ZiggyVue} from 'ziggy-js';
+import {Ziggy} from './ziggy.js';
 
 import Alpine from 'alpinejs';
 import Precognition from 'laravel-precognition-alpine';
-import { default as IMask } from 'imask';
+import {default as IMask} from 'imask';
 
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
@@ -28,7 +28,7 @@ import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
 import Swal from 'sweetalert2';
 import i18n from './i18n';
-import { useAlert } from '@/useAlert';
+import {useAlert} from '@/useAlert';
 
 import.meta.glob('../images/**/*');
 
@@ -114,14 +114,14 @@ window.addEventListener('load', function () {
     }
 });
 
-// window.addEventListener("load", function () {
-//     let postal_code = document.getElementById("postal_code");
-//     if (postal_code !== null) {
-//         IMask(postal_code, {
-//             mask: "MD-0000",
-//             regex: "^(?:MD)*(\\d{4})$",
-//             lazy: false, // make placeholder always visible
-//             placeholderChar: "_", // defaults to '_'
-//         });
-//     }
-// });
+window.addEventListener('load', function () {
+    let postal_code = document.getElementById('postal_code');
+    if (postal_code !== null) {
+        IMask(postal_code, {
+            mask: 'MD-0000',
+            regex: '^(?:MD)*(\\d{4})$',
+            lazy: false, // make placeholder always visible
+            placeholderChar: '_', // defaults to '_'
+        });
+    }
+});

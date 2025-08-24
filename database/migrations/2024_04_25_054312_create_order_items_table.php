@@ -6,7 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -22,9 +23,9 @@ return new class extends Migration {
             $table->unsignedInteger('price')->default(0); // Final price in cents on the order/invoice
 
             $table->index([
-                    'order_id',
-                    'product_variant_id',
-                ]);
+                'order_id',
+                'product_variant_id',
+            ]);
         });
     }
 

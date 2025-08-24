@@ -27,6 +27,7 @@ class OrderItem extends Model
 
     protected $with = [
         'variant',
+        'variant.product',
     ];
 
     public function order(): BelongsTo
