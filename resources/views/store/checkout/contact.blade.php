@@ -3,7 +3,7 @@
 @section('checkout-form')
     <a
         href="{{ route('checkout.previous', ['step' => 'contact']) }}"
-        class="mb-8 grid grid-cols-17 items-center gap-x-2 font-medium"
+        class="mb-8 grid grid-cols-17 items-start gap-x-2 font-medium"
     >
         <p
             class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-sm font-bold text-white"
