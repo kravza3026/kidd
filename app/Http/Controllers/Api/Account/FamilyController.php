@@ -7,7 +7,6 @@ use App\Http\Requests\Family\MemberStoreRequest;
 use App\Http\Requests\Family\MemberUpdateRequest;
 use App\Models\Family;
 use App\Models\Gender;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,9 +20,9 @@ class FamilyController extends Controller
         Gate::authorize('viewAny', Family::class);
 
         $family = auth()->user()->family;
-        $genders = Cache::rememberForever('family_genders_' . app()->getLocale(),function () {
-            return Gender::where('code', '=','b')
-                ->orWhere('code', '=','g')
+        $genders = Cache::rememberForever('family_genders_'.app()->getLocale(), function () {
+            return Gender::where('code', '=', 'b')
+                ->orWhere('code', '=', 'g')
                 ->get();
         });
 
@@ -42,7 +41,7 @@ class FamilyController extends Controller
         $request->user()->family()
             ->create($request->validated());
 
-        return response()->json(status:201);
+        return response()->json(status: 201);
 
     }
 
@@ -51,7 +50,7 @@ class FamilyController extends Controller
      */
     public function update(MemberUpdateRequest $request, Family $family)
     {
-        if(auth()->user()->cannot('update', $family)) {
+        if (auth()->user()->cannot('update', $family)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -65,7 +64,7 @@ class FamilyController extends Controller
      */
     public function destroy(Family $family)
     {
-        if(auth()->user()->cannot('delete', $family)) {
+        if (auth()->user()->cannot('delete', $family)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Account;
 
+use App\Enums\AddressType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Address\AddressStoreRequest;
 use App\Http\Requests\Address\AddressUpdateRequest;
@@ -13,7 +14,6 @@ class AddressController extends Controller
     /**
      * Handle the incoming request.
      */
-
     public function index(Request $request)
     {
 
@@ -22,7 +22,11 @@ class AddressController extends Controller
         $user->load('addresses.city');
 
         $response = [
-            'addresses' => $user->addresses,
+            'addresses' => $user->addresses()
+                ->whereIn('address_type', [AddressType::Shipping, AddressType::Billing])
+                ->orderBy('is_default', 'desc')
+                ->orderBy('created_at', 'asc')
+                ->get(),
         ];
 
         return response($response, 200);
@@ -38,6 +42,28 @@ class AddressController extends Controller
         return response()->json(compact('address'), 201);
     }
 
+    public function destroy(Address $address)
+    {
+
+        // TODO - Check if the user owns the address
+
+        $address->delete();
+
+        return response()->json(status: 204);
+
+    }
+
+    public function default(Request $request, Address $address)
+    {
+        // TODO - Check if the user owns the address
+
+        $request->user()->addresses()->type($address->address_type)->update(['is_default' => false]);
+        $address->update(['is_default' => true]);
+
+        return response()->json(204);
+
+    }
+
     public function update(AddressUpdateRequest $request, Address $address)
     {
         // TODO - Check if the user owns the address
@@ -47,29 +73,4 @@ class AddressController extends Controller
         return response()->json(compact('address'), 200);
 
     }
-
-    public function destroy(Address $address)
-    {
-
-        // TODO - Check if the user owns the address
-
-        $address->
-        $address->delete();
-
-        return response()->json( status: 204);
-
-    }
-
-
-    public function default(Request $request, Address $address)
-    {
-        // TODO - Check if the user owns the address
-
-        $request->user()->addresses()->type($address->address_type)->update(['is_default' => false]);
-        $address->update(['is_default' => true]);
-
-        return response()->json( 204);
-
-    }
-
 }
