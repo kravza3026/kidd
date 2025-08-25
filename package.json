@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "preview": "vite preview"
     },
     "devDependencies": {
         "@laravel/echo-vue": "^2.1.6",
@@ -32,6 +33,7 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/typography": "^0.5.16",
         "@tailwindplus/elements": "^1.0.0",
+        "@vueform/vueform": "^1.13.0",
         "alpinejs": "^3.14.9",
         "js-cookie": "^3.0.5",
         "laravel-precognition-alpine": "^0.7.2",

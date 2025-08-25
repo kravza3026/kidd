@@ -491,7 +491,7 @@
             </div>
         </div>
     </form>
-    @include('store.checkout.modal')
+
 @endsection
 
 @push('scripts')

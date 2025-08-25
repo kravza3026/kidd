@@ -75,9 +75,9 @@
                             for="shipping_gift"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
-                            </div>
+                            <span class="border-olive block absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
+                                <span class="marker block peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></span>
+                            </span>
                         </label>
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
