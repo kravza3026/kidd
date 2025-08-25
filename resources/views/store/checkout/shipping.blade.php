@@ -454,10 +454,7 @@
 
             radios.forEach((radio) => {
                 radio.addEventListener('change', function () {
-                    // Ховаємо всі блоки
                     blocks.forEach((b) => b.classList.add('hidden'));
-
-                    // Відображаємо потрібний
                     const selected = document.getElementById(`shipping_${this.value}_description`);
                     if (selected) {
                         selected.classList.remove('hidden');

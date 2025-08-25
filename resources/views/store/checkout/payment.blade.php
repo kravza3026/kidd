@@ -483,14 +483,15 @@
                     <h2 class="text-lg font-bold">Terminal</h2>
                 </div>
 
-                <div class="flex items-center justify-start pt-8">
-                    <x-ui.button as="button" class="mt-0 px-15 !py-3" right_icon="true" type="submit">
+                <div id="loginBtn" class="flex items-center justify-start pt-8">
+                    <x-ui.button   as="button" class="mt-0 px-15 !py-3" right_icon="true" type="button">
                         Place the order
                     </x-ui.button>
                 </div>
             </div>
         </div>
     </form>
+    @include('store.checkout.modal')
 @endsection
 
 @push('scripts')
@@ -509,6 +510,29 @@
             });
 
             toggleCardDetails();
+
+            document.getElementById('loginBtn').addEventListener('click', function (e) {
+                Swal.fire({
+                    html: @json(view('store.checkout.modal')->render()),
+                    showConfirmButton: false,
+                    width:'64em',
+                    showCloseButton:false,
+                    customClass: {
+                        popup: 'my-swal-rounded'
+                    },
+                    didOpen: () => {
+                        const closeButtons = document.querySelectorAll('.closeSignIn');
+                        closeButtons.forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                Swal.close();
+                            });
+                        });
+                    }
+                });
+            })
         });
+
     </script>
 @endpush
+
+
