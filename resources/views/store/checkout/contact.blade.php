@@ -33,8 +33,6 @@
                         {{ $checkoutData['shipping_intercom'] ? ', int. '.$checkoutData['shipping_intercom'] : '' }})
                     @endif
                 </span>
-
-                {{-- Regular shipping to mun. Chișinău, or. Chișinău, str. Alba Iulia 75, MD-2071 --}}
             </p>
         </div>
         <div class="col-span-1 flex h-full items-end justify-end">

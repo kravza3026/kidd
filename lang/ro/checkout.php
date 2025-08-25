@@ -6,7 +6,7 @@ return [
     'steps' => [
         'shipping' => 'Detalii livrare',
         'contacts' => 'Date de contact',
-        'payment' => 'Metoda de plată',
+        'payment' => 'Detalii plată',
         'review' => 'Revizuire comandă',
     ],
 
@@ -128,7 +128,7 @@ return [
             'billing_intercom' => 'Interfon',
             'billing_intercom_placeholder' => 'Nr. interfon',
 
-            'same_as_shipping' => 'Identic cu adresa livrării',
+            'same_as_shipping' => 'La fel ca adresa livrării',
             'saved_addresses_placeholder' => 'Alegeți adresă salvată',
         ],
     ],

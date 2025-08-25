@@ -1,5 +1,5 @@
 @extends('store.checkout.layouts.checkout')
-
+@use('App\Enums\ShippingMethod')
 @section('checkout-form')
     <div class="pb-section grid grid-cols-17 gap-4">
         <div class="col-span-1 flex items-start justify-start">
@@ -23,8 +23,8 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="{{ App\Enums\ShippingMethod::Regular }}"
-                            checked
+                            value="{{ ShippingMethod::Regular }}"
+                            @checked(! isset($checkoutData['shipping_method']) || $checkoutData['shipping_method'] == ShippingMethod::Regular->value)
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_method_regular"
                         />
@@ -65,7 +65,8 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="{{ App\Enums\ShippingMethod::Gift }}"
+                            value="{{ ShippingMethod::Gift }}"
+                            @checked($checkoutData['shipping_method'] == ShippingMethod::Gift->value)
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_gift"
                         />
@@ -106,11 +107,11 @@
                         <input
                             type="radio"
                             name="shipping_method"
-                            value="{{ App\Enums\ShippingMethod::Express }}"
+                            value="{{ ShippingMethod::Express }}"
+                            @checked($checkoutData['shipping_method'] == ShippingMethod::Express->value)
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_express"
                         />
-
                         <label
                             for="shipping_express"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
@@ -140,29 +141,61 @@
                         </div>
                     </div>
                 </div>
-                <div id="shipping_gift_description" class="shipping-block hidden bg-light-orange rounded-2xl p-4 grid grid-cols-12 gap-6 items-center">
+                <div
+                    id="shipping_2_description"
+                    class="shipping-block bg-light-orange grid hidden grid-cols-12 items-center gap-6 rounded-2xl p-4"
+                >
                     <div class="col-span-2">
-                        <img src="{{Vite::image('common/box_size.png')}}" alt="box size">
+                        <img src="{{ Vite::image('common/box_size.png') }}" alt="box size" />
                     </div>
                     <div class="col-span-10">
-                        <p class="font-bold text-lg">Make every gift feel special and personal with gift wrapping</p>
-                            <p class="leading-7 text-sm">
-                                We offer beautifully designed wrapping paper, ribbon and a personalised tag to add an extra special span
-                                    <span class=" font-bold w-fit inline-flex items-center gap-x-1 "><span class="opacity-60">35cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">L</span></span>
-                                    <span class="opacity-35">× </span><span class=" font-bold w-fit inline-flex items-center gap-x-1"><span class="opacity-60">25cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">W</span></span>
-                                    <span class="opacity-35">× </span><span class=" font-bold w-fit inline-flex items-center gap-x-1"><span class="opacity-60">10cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">H</span></span>
-                                to ensure safe and secure delivery.
-                            </p>
+                        <p class="text-lg font-bold">Make every gift feel special and personal with gift wrapping</p>
+                        <p class="text-sm leading-7">
+                            We offer beautifully designed wrapping paper, ribbon and a personalised tag to add an extra
+                            special span
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">35cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    L
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">25cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    W
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">10cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    H
+                                </span>
+                            </span>
+                            to ensure safe and secure delivery.
+                        </p>
                     </div>
                 </div>
-                <div id="shipping_express_description" class="shipping-block hidden bg-light-orange rounded-2xl p-4 grid grid-cols-12 gap-6 items-center">
+                <div
+                    id="shipping_3_description"
+                    class="shipping-block bg-light-orange grid hidden grid-cols-12 items-center gap-6 rounded-2xl p-4"
+                >
                     <div class="col-span-2">
-                        <img src="{{Vite::image('common/delivery_expr.png')}}" alt="box size">
+                        <img src="{{ Vite::image('common/delivery_expr.png') }}" alt="box size" />
                     </div>
                     <div class="col-span-10">
-                        <p class="font-bold text-lg">Fast and convenient shipping services to exceed your needs</p>
-                        <p class="leading-7 text-sm">
-                            Morning orders can be delivered by the evening of the same day. For orders placed in the afternoon, delivery will be scheduled for the next business day. Please note that these are approximate time frames and vary based on order volume and location.
+                        <p class="text-lg font-bold">Fast and convenient shipping services to exceed your needs</p>
+                        <p class="text-sm leading-7">
+                            Morning orders can be delivered by the evening of the same day. For orders placed in the
+                            afternoon, delivery will be scheduled for the next business day. Please note that these are
+                            approximate time frames and vary based on order volume and location.
                         </p>
                     </div>
                 </div>
@@ -179,14 +212,14 @@
                                         class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left shadow-sm focus:ring"
                                         id="saved_addresses"
                                     >
-                                       <span class="flex items-center gap-x-2">
-                                           <span class="opacity-40">
-                                               <img src="{{Vite::image('icons/marker_outline.svg')}}" alt="">
-                                           </span>
-                                           <span id="selected-option">
-                                            {{ old('saved_address', $checkoutData['saved_address'] ?? __('checkout.shipping.form.saved_addresses_placeholder')) }}
+                                        <span class="flex items-center gap-x-2">
+                                            <span class="opacity-40">
+                                                <img src="{{ Vite::image('icons/marker_outline.svg') }}" alt="" />
+                                            </span>
+                                            <span id="selected-option">
+                                                {{ old('saved_address', $checkoutData['saved_address'] ?? __('checkout.shipping.form.saved_addresses_placeholder')) }}
+                                            </span>
                                         </span>
-                                       </span>
                                         <span>
                                             <img src="{{ Vite::image('/icons/select-arrows_o.svg') }}" alt="" />
                                         </span>
@@ -411,18 +444,18 @@
             {{ __('checkout.steps.payment') }}
         </p>
     </div>
+@endsection
 
+@push('scripts')
     <script>
-
-
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const radios = document.querySelectorAll('input[name="shipping_method"]');
             const blocks = document.querySelectorAll('.shipping-block');
 
-            radios.forEach(radio => {
-                radio.addEventListener('change', function() {
+            radios.forEach((radio) => {
+                radio.addEventListener('change', function () {
                     // Ховаємо всі блоки
-                    blocks.forEach(b => b.classList.add('hidden'));
+                    blocks.forEach((b) => b.classList.add('hidden'));
 
                     // Відображаємо потрібний
                     const selected = document.getElementById(`shipping_${this.value}_description`);
@@ -438,7 +471,5 @@
                 document.getElementById(`shipping_${checked.value}_description`)?.classList.remove('hidden');
             }
         });
-
     </script>
-
-@endsection
+@endpush
