@@ -98,7 +98,7 @@
 
 }
 :focus{
-    outline: 1px solid transparent;
+    outline: 0px solid transparent;
 }
 
 .light_border{

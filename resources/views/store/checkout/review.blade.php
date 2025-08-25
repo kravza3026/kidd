@@ -60,7 +60,7 @@
             </div>
             <div class="space-y-1 text-sm">
                 <p>{{ __('checkout.review.payment_method') }}: {{ ucfirst($checkoutData['payment_method']) }}</p>
-                @if ($checkoutData['payment_method'] === 'card')
+            @if ($checkoutData['payment_method'] === 'card')
                     <p>{{ __('checkout.review.card_ending') }} {{ substr($checkoutData['card_number'], -4) }}</p>
                 @endif
             </div>

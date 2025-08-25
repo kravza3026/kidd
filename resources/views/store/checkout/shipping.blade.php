@@ -140,7 +140,32 @@
                         </div>
                     </div>
                 </div>
-
+                <div id="shipping_gift_description" class="shipping-block hidden bg-light-orange rounded-2xl p-4 grid grid-cols-12 gap-6 items-center">
+                    <div class="col-span-2">
+                        <img src="{{Vite::image('common/box_size.png')}}" alt="box size">
+                    </div>
+                    <div class="col-span-10">
+                        <p class="font-bold text-lg">Make every gift feel special and personal with gift wrapping</p>
+                            <p class="leading-7 text-sm">
+                                We offer beautifully designed wrapping paper, ribbon and a personalised tag to add an extra special span
+                                    <span class=" font-bold w-fit inline-flex items-center gap-x-1 "><span class="opacity-60">35cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">L</span></span>
+                                    <span class="opacity-35">× </span><span class=" font-bold w-fit inline-flex items-center gap-x-1"><span class="opacity-60">25cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">W</span></span>
+                                    <span class="opacity-35">× </span><span class=" font-bold w-fit inline-flex items-center gap-x-1"><span class="opacity-60">10cm</span> <span class="bg-olive inline-flex text-center items-center justify-center  text-[10px] text-white rounded-full size-6">H</span></span>
+                                to ensure safe and secure delivery.
+                            </p>
+                    </div>
+                </div>
+                <div id="shipping_express_description" class="shipping-block hidden bg-light-orange rounded-2xl p-4 grid grid-cols-12 gap-6 items-center">
+                    <div class="col-span-2">
+                        <img src="{{Vite::image('common/delivery_expr.png')}}" alt="box size">
+                    </div>
+                    <div class="col-span-10">
+                        <p class="font-bold text-lg">Fast and convenient shipping services to exceed your needs</p>
+                        <p class="leading-7 text-sm">
+                            Morning orders can be delivered by the evening of the same day. For orders placed in the afternoon, delivery will be scheduled for the next business day. Please note that these are approximate time frames and vary based on order volume and location.
+                        </p>
+                    </div>
+                </div>
                 <div class="border-light-border space-y-4 rounded-2xl border">
                     <div class="bg-light-orange grid grid-cols-12 items-center justify-between rounded-2xl p-4">
                         <h2 class="col-span-8 text-base font-bold">
@@ -154,9 +179,14 @@
                                         class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left shadow-sm focus:ring"
                                         id="saved_addresses"
                                     >
-                                        <span id="selected-option">
+                                       <span class="flex items-center gap-x-2">
+                                           <span class="opacity-40">
+                                               <img src="{{Vite::image('icons/marker_outline.svg')}}" alt="">
+                                           </span>
+                                           <span id="selected-option">
                                             {{ old('saved_address', $checkoutData['saved_address'] ?? __('checkout.shipping.form.saved_addresses_placeholder')) }}
                                         </span>
+                                       </span>
                                         <span>
                                             <img src="{{ Vite::image('/icons/select-arrows_o.svg') }}" alt="" />
                                         </span>
@@ -199,7 +229,7 @@
                                                             <img
                                                                 class="hidden"
                                                                 src="{{ Vite::image('icons/checked_white.svg') }}"
-                                                                alt=""
+                                                                alt="checkbox"
                                                             />
                                                         </p>
                                                         {{ $address->label }}
@@ -383,100 +413,32 @@
     </div>
 
     <script>
-        const selectButton = document.getElementById('saved_addresses');
-        const optionsList = document.getElementById('saved_addresses-options');
-        const selectedOption = document.getElementById('selected-option');
 
-        // Тогл відкриття списку
-        selectButton.addEventListener('click', () => {
-            optionsList.classList.toggle('hidden');
-        });
 
-        // Клік по опції
-        optionsList.querySelectorAll('li.saved-address').forEach((option) => {
-            option.addEventListener('click', () => {
-                selectedOption.textContent = option.textContent.trim();
-                optionsList.classList.add('hidden');
-                console.log(option.dataset.shippingPostcode);
+        document.addEventListener("DOMContentLoaded", function() {
+            const radios = document.querySelectorAll('input[name="shipping_method"]');
+            const blocks = document.querySelectorAll('.shipping-block');
 
-                // 3. Підставити дані в інпути
-                if (option.dataset.shippingIntercom) {
-                    document.getElementById('shipping_intercom').value = option.dataset.shippingIntercom;
-                } else {
-                    document.getElementById('shipping_intercom').value = '';
-                }
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    // Ховаємо всі блоки
+                    blocks.forEach(b => b.classList.add('hidden'));
 
-                if (option.dataset.shippingFloor) {
-                    document.getElementById('shipping_floor').value = option.dataset.shippingFloor;
-                } else {
-                    document.getElementById('shipping_floor').value = '';
-                }
-
-                if (option.dataset.shippingEntrance) {
-                    document.getElementById('shipping_entrance').value = option.dataset.shippingEntrance;
-                } else {
-                    document.getElementById('shipping_entrance').value = '';
-                }
-
-                if (option.dataset.shippingApartment) {
-                    document.getElementById('shipping_apartment').value = option.dataset.shippingApartment;
-                } else {
-                    document.getElementById('shipping_apartment').value = '';
-                }
-
-                if (option.dataset.shippingPostalCode) {
-                    document.getElementById('postal_code').value = option.dataset.shippingPostalCode;
-                } else {
-                    document.getElementById('postal_code').value = '';
-                }
-
-                if (option.dataset.shippingBuilding) {
-                    document.getElementById('shipping_building').value = option.dataset.shippingBuilding;
-                } else {
-                    document.getElementById('shipping_building').value = '';
-                }
-
-                if (option.dataset.shippingStreetName) {
-                    document.getElementById('shipping_street_name').value = option.dataset.shippingStreetName;
-                } else {
-                    document.getElementById('shipping_street_name').value = '';
-                }
-
-                if (option.dataset.shippingCity) {
-                    document.getElementById('shipping_city').value = option.dataset.shippingCity;
-                } else {
-                    document.getElementById('shipping_city').value = '';
-                }
-
-                if (option.dataset.shippingRegion) {
-                    document.getElementById('shipping_region').value = option.dataset.shippingRegion;
-                } else {
-                    document.getElementById('shipping_region').value = '';
-                }
-
-                // 4. Активувати radio (якщо треба)
-                const radio = option.querySelector('input[type="radio"]');
-                if (radio) radio.checked = true;
+                    // Відображаємо потрібний
+                    const selected = document.getElementById(`shipping_${this.value}_description`);
+                    if (selected) {
+                        selected.classList.remove('hidden');
+                    }
+                });
             });
-        });
 
-        document.addEventListener('click', (e) => {
-            if (!selectButton.contains(e.target) && !optionsList.contains(e.target)) {
-                optionsList.classList.add('hidden');
+            // Якщо є вибране по замовчуванню → показати відразу
+            const checked = document.querySelector('input[name="shipping_method"]:checked');
+            if (checked) {
+                document.getElementById(`shipping_${checked.value}_description`)?.classList.remove('hidden');
             }
         });
+
     </script>
-    <style>
-        input[name='saved_address']:checked + label {
-            background-color: var(--color-light-orange);
-        }
 
-        input[name='saved_address']:checked + label img {
-            display: block;
-        }
-
-        input[name='saved_address']:checked + label p {
-            background-color: var(--color-olive);
-        }
-    </style>
 @endsection
