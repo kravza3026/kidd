@@ -37,7 +37,7 @@ class RegisterRequest extends FormRequest
                 'required',
                 'email',
                 'max:200',
-                Rule::unique(User::class, 'email')
+                Rule::unique(User::class, 'email'),
             ],
             'password' => ['required', 'confirmed', 'min:6'],
         ];
@@ -60,7 +60,6 @@ class RegisterRequest extends FormRequest
         ]);
     }
 
-
     public function messages(): array
     {
         return [
@@ -68,5 +67,4 @@ class RegisterRequest extends FormRequest
             'phone.required' => __('validation.custom.phone.required'),
         ];
     }
-
 }

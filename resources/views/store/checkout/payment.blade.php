@@ -22,9 +22,9 @@
                     <input
                         type="radio"
                         name="payment_method"
-                        value="card"
+                        value="3"
                         class="peer absolute opacity-0"
-                        @checked(old('payment_method', $checkoutData['payment_method'] ?? '') == 'card')
+                        @checked(old('payment_method', $checkoutData['payment_method'] ?? '') == 3)
                     />
                     <div class="flex items-center gap-4">
                         <div
@@ -48,9 +48,9 @@
                     <input
                         type="radio"
                         name="payment_method"
-                        value="cash"
+                        value="1"
                         class="peer absolute opacity-0"
-                        @checked(old('payment_method', $checkoutData['payment_method'] ?? '') == 'cash')
+                        @checked(old('payment_method', $checkoutData['payment_method'] ?? null) == 1)
                     />
                     <div class="flex items-center gap-4">
                         <div
@@ -153,7 +153,7 @@
 
             function toggleCardDetails() {
                 const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
-                cardDetails.style.display = selectedMethod === 'card' ? 'block' : 'none';
+                cardDetails.style.display = selectedMethod === '3' ? 'block' : 'none';
             }
 
             paymentInputs.forEach((input) => {

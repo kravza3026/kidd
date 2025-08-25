@@ -10,18 +10,16 @@ class PhoneVerificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
-//        if (! hash_equals((string) $this->user()->getKey(), (string) $this->route('id'))) {
-//            return false;
-//        }
+        //        if (! hash_equals((string) $this->user()->getKey(), (string) $this->route('id'))) {
+        //            return false;
+        //        }
 
-//        if (! hash_equals(sha1($this->user()->getPhoneForVerification()), (string) $this->route('code'))) {
-//            return false;
-//        }
+        //        if (! hash_equals(sha1($this->user()->getPhoneForVerification()), (string) $this->route('code'))) {
+        //            return false;
+        //        }
 
         return true;
     }
@@ -55,7 +53,6 @@ class PhoneVerificationRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
      * @return \Illuminate\Validation\Validator
      */
     public function withValidator(Validator $validator)

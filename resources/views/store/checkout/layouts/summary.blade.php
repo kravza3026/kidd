@@ -57,6 +57,15 @@
             </div>
         @endforeach
 
+        <div class="flex justify-between text-sm">
+            <span class="text-charcoal/60">{{ __('checkout.summary.subtotal') }}</span>
+            <span class="font-bold">{{ $sub_total }} lei</span>
+        </div>
+        <div class="flex justify-between text-sm">
+            <span class="text-charcoal/60">{{ __('checkout.summary.shipping') }}</span>
+            <span class="font-bold">{{ $fee_sub_total }} lei</span>
+        </div>
+
         @foreach ($coupons as $coupon)
             <div class="flex justify-between text-sm">
                 <span class="text-charcoal/60 font-medium">
@@ -64,25 +73,17 @@
                     <i class="font-bold">{{ $coupon->code }}</i>
                     ]
                 </span>
-                <span class="font-bold">-{{ round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN) }} MDL</span>
+                <span class="font-bold">-{{ round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN) }} lei</span>
             </div>
         @endforeach
 
-        <div class="flex justify-between text-sm">
-            <span class="text-charcoal/60">{{ __('checkout.products') }}</span>
-            <span class="font-bold">{{ $sub_total }}</span>
-        </div>
-        <div class="flex justify-between text-sm">
-            <span class="text-charcoal/60">{{ __('checkout.shipment_cost') }}</span>
-            <span class="font-bold">{{ $fee_sub_total }}</span>
-        </div>
-        <div class="flex justify-between text-sm">
-            <span class="text-charcoal/60">{{ __('checkout.discount') }}</span>
-            <span class="font-bold">{{ $total_discount }}</span>
-        </div>
+        {{-- <div class="flex justify-between text-sm"> --}}
+        {{-- <span class="text-charcoal/60">{{ __('checkout.summary.discount') }}</span> --}}
+        {{-- <span class="font-bold">{{ $total_discount }} lei</span> --}}
+        {{-- </div> --}}
         <hr class="border-light-border my-2" />
         <div class="flex justify-between pt-3 text-base font-bold">
-            <span>{{ __('checkout.grand_total') }}</span>
+            <span>{{ __('checkout.summary.total') }}</span>
             <span>{{ $total }} lei</span>
         </div>
     </div>

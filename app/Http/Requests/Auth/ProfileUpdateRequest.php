@@ -23,10 +23,10 @@ class ProfileUpdateRequest extends FormRequest
             $this->errorBag = 'profile';
 
             return [
-                'first_name' => ['required', 'string', 'max:70'],
-                'last_name' => ['required', 'string', 'max:70'],
+                'first_name' => ['required', 'string', 'min:3', 'max:40'],
+                'last_name' => ['required', 'string', 'min:1', 'max:40'],
                 'phone' => ['required', Rule::unique(User::class, 'phone')->ignore($this->user()->id), (new Phone)->country(['MD', 'RO'])->type('mobile')],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:70', Rule::unique(User::class)->ignore($this->user()->id)],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:80', Rule::unique(User::class)->ignore($this->user()->id)],
                 'password' => ['exclude_if:password,null', 'min:6', 'confirmed'],
             ];
 
@@ -49,16 +49,16 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'section' => [
                 'required', 'string', Rule::in([
-                        'profile', 'marketing'
-                    ])
-            ]
+                    'profile', 'marketing',
+                ]),
+            ],
         ];
 
     }
 
     protected function prepareForValidation(): void
     {
-        if($this->has('section') && $this->get('section') === 'marketing') {
+        if ($this->has('section') && $this->get('section') === 'marketing') {
             $this->merge([
                 'newsletter' => (bool) $this->input('newsletter', false),
                 'new_order_to_email' => (bool) $this->input('new_order_to_email', false),
@@ -71,18 +71,9 @@ class ProfileUpdateRequest extends FormRequest
         // Normalize phone number by removing spaces, parentheses, dashes, and dots
         if ($this->has('phone')) {
             $this->merge([
-                'phone' => Str::replace([' ','(', ')', '-', '.'], '', $this->input('phone')),
+                'phone' => Str::replace([' ', '(', ')', '-', '.'], '', $this->input('phone')),
             ]);
         }
 
     }
-
-    public function messages(): array
-    {
-        return [
-            'phone.unique' => 'This phone number is already taken.',
-            'phone.required' => 'Phone number is required.',
-        ];
-    }
-
 }

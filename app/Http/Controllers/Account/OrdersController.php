@@ -25,9 +25,18 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function return(Order $order)
+    {
+        return view('store.account.orders.return', [
+            'order' => $order,
+        ]);
+    }
+
     public function invoice(Order $order)
     {
-        return 'Order invoice';
+        return view('store.account.orders.invoice', [
+            'order' => $order,
+        ]);
     }
 
     public function download(Order $order)

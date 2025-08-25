@@ -1,12 +1,12 @@
 <div class="border-light-border accordion-item my-2 rounded-2xl border">
-    <input type="checkbox" @checked($loop->last) id="order_{{ $order->id }}" class="peer hidden" />
+    <input type="checkbox" @checked($loop->first) id="order_{{ $order->id }}" class="peer hidden" />
     <label
         for="order_{{ $order->id }}"
         class="bg-light-orange relative hidden cursor-pointer items-center rounded-2xl p-6 duration-300 lg:grid lg:grid-cols-12 peer-checked:[&_.accordion-arrow]:rotate-180"
     >
         <div class="col-span-3 text-base text-inherit">
             {!! __('order.table_row.order_number') !!}
-            <span class="font-bold">#ORD-{{ $order->order_number }}</span>
+            <span class="font-bold">{{ $order->order_number }}</span>
         </div>
         <span class="col-span-2 text-xs">
             <span class="bg-olive rounded-full px-2 py-1 font-bold text-white capitalize">
@@ -16,13 +16,13 @@
         </span>
         <span class="col-span-1 text-base">{{ $order->items->sum('quantity') }}</span>
         <span class="col-span-2 text-base">
-            {{ $order->placed_at->format('d M Y') }}
+            {{ $order->placed_at->isoFormat('DD MMM YYYY') }}
         </span>
         <span class="col-span-2 text-base">
-            {{ $order->delivery_date ? $order->delivery_date->format('d M Y') : '—' }}
+            {{ $order->delivered_at ? $order->delivered_at->isoFormat('DD MMM YYYY') : '—' }}
         </span>
         <span class="text-olive col-span-2 text-base font-bold">
-            {{ __('order.table_row.price', ['price' => $order->total_amount / 100]) }}
+            {{ __('order.table_row.price', ['price' => (int) round($order->total_amount / 100, 2, PHP_ROUND_HALF_UP)]) }}
         </span>
 
         <span
@@ -92,39 +92,39 @@
             <div class="mt-6 flex flex-wrap items-center justify-start gap-9">
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_region') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->region->name }}</span>
+                    <span class="font-bold">{{ $order->shipping->region->name }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_city') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->city->name }}</span>
+                    <span class="font-bold">{{ $order->shipping->city->name }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_street_name') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->street_name }}</span>
+                    <span class="font-bold">{{ $order->shipping->street_name }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_building') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->building }}</span>
-                </p>
-                <p class="grid min-w-1/6 text-base">
-                    <span class="opacity-40">{{ __('order.delivery.delivery_building') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->entrance }}</span>
-                </p>
-                <p class="grid min-w-1/6 text-base">
-                    <span class="opacity-40">{{ __('order.delivery.delivery_floor') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->floor }}</span>
+                    <span class="font-bold">{{ $order->shipping->building }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_apartment') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->apartment }}</span>
+                    <span class="font-bold">{{ $order->shipping->apartment }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
-                    <span class="opacity-40">{{ __('order.delivery.delivery_postal_code') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->postal_code }}</span>
+                    <span class="opacity-40">{{ __('order.delivery.delivery_entrance') }}</span>
+                    <span class="font-bold">{{ $order->shipping->entrance }}</span>
+                </p>
+                <p class="grid min-w-1/6 text-base">
+                    <span class="opacity-40">{{ __('order.delivery.delivery_floor') }}</span>
+                    <span class="font-bold">{{ $order->shipping->floor }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_intercom') }}</span>
-                    <span class="font-bold">{{ $order->shippingAddresses->first()->intercom }}</span>
+                    <span class="font-bold">{{ $order->shipping->intercom }}</span>
+                </p>
+                <p class="grid min-w-1/6 text-base">
+                    <span class="opacity-40">{{ __('order.delivery.delivery_postal_code') }}</span>
+                    <span class="font-bold">{{ $order->shipping->postal_code }}</span>
                 </p>
             </div>
             <div class="mt-6 flex flex-wrap items-center justify-start gap-9">
@@ -132,7 +132,7 @@
                     <span class="opacity-40">{{ __('order.delivery.delivery_method') }}</span>
                     <span class="font-bold">
                         {{-- TODO - Translate --}}
-                        {{ __('order.delivery.delivery_methods.regular.title') }}
+                        {{ $order->shipping_method->label() }}
                     </span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
@@ -190,7 +190,7 @@
             <h2 class="text-lg font-bold">{{ __('order.titles.products') }}</h2>
             <div class="grid grid-cols-1 gap-4 py-2 lg:grid-cols-4">
                 @foreach ($order->items as $product)
-                    @include('store.account.orders.order-list-product', compact('product'))
+                    @include('store.account.orders._order-product-item', compact('product'))
                 @endforeach
             </div>
         </div>
@@ -210,39 +210,45 @@
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.first_name') }}</span>
                     <span class="font-bold">
-                        {{ $order->shippingAddresses->first()->contact_first_name }}
+                        {{ $order->customer->first_name }}
                     </span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.last_name') }}</span>
                     <span class="font-bold">
-                        {{ $order->shippingAddresses->first()->contact_last_name }}
+                        {{ $order->customer->last_name }}
                     </span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.payment_method') }}</span>
-                    <span class="font-bold">VISA ××× 4695</span>
+                    <span class="font-bold">
+                        {{ $order->payment_method->labelWithDesc() }}
+                        {{-- VISA ××× 4695 --}}
+                    </span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.coupon_code') }}</span>
                     <span class="font-bold">
-                        {{-- TODO - Implement discount codes --}}
-                        SUMMER2023
-                        <span>-25%</span>
+                        {{-- TODO - Display discount code/s --}}
+                        @forelse ($order->cart_snapshot['coupons'] as $coupon)
+                            {{ $coupon['code'] }}
+                            <span class="text-dark">(-{{ $coupon['value'] * 100 }}%)</span>
+                        @empty
+                            --
+                        @endforelse
                     </span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.billing_postal_code') }}</span>
-                    <span class="font-bold">{{ $order->billingAddresses->first()->postal_code }}</span>
+                    <span class="font-bold">{{ $order->billing->postal_code }}</span>
                 </p>
                 <p class="grid min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.payment.billing_address') }}</span>
                     <span class="font-bold">
-                        {{ $order->shippingAddresses->first()->region->name }},
-                        {{ $order->shippingAddresses->first()->city->name }},
-                        {{ $order->shippingAddresses->first()->street_name }}
-                        {{ $order->shippingAddresses->first()->building }}
-                        {{ $order->shippingAddresses->first()->apartment ? ',ap. '.$order->shippingAddresses->first()->apartment : '' }}
+                        {{ $order->billing->region->name }}, {{ $order->billing->city->name }},
+                        {{ $order->billing->street_name }}
+                        {{ $order->billing->building }}
+                        {{ $order->billing->apartment ? ',ap.'.$order->billing->apartment : '' }}
                     </span>
                 </p>
             </div>
@@ -252,7 +258,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-base opacity-40">{{ __('order.totals.subtotal') }}</p>
                 <p class="text-base font-bold">
-                    {{ __('general.price', ['price' => 53000 / 100]) }}
+                    {{ __('general.price', ['price' => $order->items->sum('price_total') / 100]) }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
@@ -268,7 +274,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-base font-bold">{{ __('order.totals.total') }}</p>
                 <p class="text-olive text-base font-bold">
-                    {{ __('general.price', ['price' => $order->total_amount / 100]) }}
+                    {{ __('general.price', ['price' => $order->items->sum('price_total') / 100]) }}
                 </p>
             </div>
         </div>
@@ -280,7 +286,7 @@
                 <p class="py-4 text-base opacity-60">
                     {{ __('order.return.description') }}
                 </p>
-                <x-ui.button as="a" href="#" left_icon="false" right_icon="false">
+                <x-ui.button as="a" href="{{ route('orders.return', $order) }}" left_icon="false" right_icon="false">
                     <img src="{{ Vite::image('icons/return.svg') }}" alt="return icon" />
                     {{ __('order.return.return_button') }}
                 </x-ui.button>

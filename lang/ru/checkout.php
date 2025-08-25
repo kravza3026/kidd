@@ -10,6 +10,13 @@ return [
         'review' => 'Просмотр заказа',
     ],
 
+    'summary' => [
+        'subtotal' => 'Цена товары',
+        'discount' => 'Скидка',
+        'shipping' => 'Доставка',
+        'total' => 'Итого',
+    ],
+
     'shipping' => [
         'shipping_title' => 'Адрес доставки',
 
@@ -75,6 +82,7 @@ return [
     ],
 
     'continue' => 'Продолжить',
+    'shipping_to' => 'с доставкой в',
 
     'payment' => [
         'form' => [

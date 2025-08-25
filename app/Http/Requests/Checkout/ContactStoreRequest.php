@@ -25,37 +25,14 @@ class ContactStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'contact_first_name' => ['required', 'string', 'min:2', 'max:50'],
-            'contact_last_name' => ['required', 'string', 'min:2', 'max:50'],
+            'contact_first_name' => ['required', 'string', 'min:3', 'max:50'],
+            'contact_last_name' => ['required', 'string', 'min:1', 'max:50'],
             'contact_email' => [
                 'required', 'max:200', Rule::email()
 //                    ->validateMxRecord()
                     ->rfcCompliant(strict: true),
             ],
             'contact_phone' => ['required', (new Phone)->international()->country(['MD'])->type('mobile')],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'contact_phone.unique' => 'This phone number is already taken.',
-            'contact_phone.required' => 'Phone number is required.',
-        ];
-    }
-
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function attributes(): array
-    {
-        return [
-            'contact_first_name' => __('validation.attributes.first_name'),
-            'contact_last_name' => __('validation.attributes.last_name'),
-            'contact_email' => __('validation.attributes.email'),
-            'contact_phone' => __('validation.attributes.phone'),
         ];
     }
 

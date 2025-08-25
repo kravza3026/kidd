@@ -10,6 +10,13 @@ return [
         'review' => 'Revizuire comandă',
     ],
 
+    'summary' => [
+        'subtotal' => 'Produse',
+        'discount' => 'Reducere',
+        'shipping' => 'Livrare',
+        'total' => 'Total',
+    ],
+
     'shipping' => [
         'shipping_title' => 'Adresă livrare',
 
@@ -75,6 +82,7 @@ return [
     ],
 
     'continue' => 'Continuă',
+    'shipping_to' => 'cu livrare la',
 
     'payment' => [
         'form' => [

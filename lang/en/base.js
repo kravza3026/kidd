@@ -1,4 +1,10 @@
 export default {
+    alerts: {
+        favorites: {
+            addedToFavorites: 'Added to Favorites',
+            removedFromFavorites: 'Removed from Favorites',
+        },
+    },
     menu: {
         catalog: 'Explore',
         search: 'Search',

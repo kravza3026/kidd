@@ -221,7 +221,6 @@ return [
         'shipping_intercom' => 'Interfon',
         'shipping_comment' => 'Comentariu livrare',
         'shipping_optional' => '(optional)',
-
     ],
 
     'phone' => 'Introduceți un număr de telefon valid.',

@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 /**
- * AddressType cast definition.
+ * ShippingMethod cast definition.
  *
  * @var int
  */
@@ -16,5 +16,14 @@ enum ShippingMethod: int
     public static function forSelect(): array
     {
         return array_column(self::cases(), 'name', 'id');
+    }
+
+    public function label(): string
+    {
+        return match ($this) {
+            ShippingMethod::Regular => __('checkout.shipping.form.shipping_methods.regular.title'),
+            ShippingMethod::Gift => __('checkout.shipping.form.shipping_methods.gift.title'),
+            ShippingMethod::Express => __('checkout.shipping.form.shipping_methods.express.title'),
+        };
     }
 }

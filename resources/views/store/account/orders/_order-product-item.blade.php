@@ -23,7 +23,10 @@
             </p>
         </div>
         <div class="mt-4 flex items-center justify-between">
-            <p class="text-olive text-base font-bold">{{ $product->variant->price_final / 100 }} lei</p>
+            <p class="text-olive text-base font-bold">
+                {{ (int) ($product->variant->price_final / 100) }} lei
+                <span class="text-dark text-sm font-bold">-{{ $product->variant->discount_display }}%</span>
+            </p>
             <p class="flex items-center">
                 ×
                 <span>{{ $product->quantity }}</span>

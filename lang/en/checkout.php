@@ -10,6 +10,13 @@ return [
         'review' => 'Order review',
     ],
 
+    'summary' => [
+        'subtotal' => 'Products',
+        'discount' => 'Discount',
+        'shipping' => 'Delivery',
+        'total' => 'Total',
+    ],
+
     'shipping' => [
         'shipping_title' => 'Delivery address',
 
@@ -75,6 +82,7 @@ return [
     ],
 
     'continue' => 'Continue',
+    'shipping_to' => 'shipping to',
 
     'payment' => [
         'form' => [

@@ -1,4 +1,10 @@
 export default {
+    alerts: {
+        favorites: {
+            addedToFavorites: 'Adăugat la Favorite',
+            removedFromFavorites: 'Eliminat din Favorite',
+        },
+    },
     menu: {
         catalog: 'Catalog',
         search: 'Căutare',

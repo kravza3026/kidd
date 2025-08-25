@@ -20,7 +20,8 @@ return new class extends Migration
             $table->json('variant_snapshot');
 
             $table->unsignedInteger('quantity')->default(1); // Quantity of the product variant in the order
-            $table->unsignedInteger('price')->default(0); // Final price in cents on the order/invoice
+            $table->unsignedInteger('unit_price')->default(0); // Product price in cents on the order/invoice
+            $table->unsignedInteger('total_price')->default(0); // Final price (qty*price) in cents on the order/invoice
 
             $table->index([
                 'order_id',

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Gender;
 use App\Models\ProductVariant;
+use App\Models\Region;
 use App\Models\Season;
 use App\Models\Size;
 use App\Observers\ProductVariantObserver;
@@ -40,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
+        //        Model::automaticallyEagerLoadRelationships();
         Model::preventLazyLoading(! $this->app->isProduction());
 
         ProductVariant::observe(ProductVariantObserver::class);
@@ -81,6 +82,11 @@ class AppServiceProvider extends ServiceProvider
 
         if (! app()->runningInConsole()) {
             // Share cached data with views, globally
+
+            $regions = Cache::rememberForever('regions', function () {
+                return Region::all();
+            });
+
             $brands = Cache::rememberForever('brands', function () {
                 return Brand::all();
             });
@@ -104,6 +110,7 @@ class AppServiceProvider extends ServiceProvider
                 return Category::with('subcategories')->whereNull('parent_id')->first();
             });
 
+            View::share('regions', $regions);
             View::share('brands', $brands);
             View::share('genders', $genders);
             View::share('seasons', $seasons);

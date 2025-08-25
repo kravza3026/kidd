@@ -3,28 +3,22 @@
 namespace App\Casts;
 
 use App\Exceptions\CurrencyMissmatchException;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
-use Money\Money;
 use Money\Currency;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use NumberFormatter;
-use Money\Currencies\ISOCurrencies;
-use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
 
 class MoneyCast implements CastsAttributes
 {
     /**
      * Name of the Currency source attribute.
-     *
-     * @var string
      */
     protected string $sourceCurrencyCode;
 
     /**
      * Create a new cast class instance.
      *
-     * @param  string  $sourceCurrencyCode
      * @return void
      */
     public function __construct(string $sourceCurrencyCode)
@@ -35,10 +29,6 @@ class MoneyCast implements CastsAttributes
     /**
      * Transform the attribute from the underlying model values.
      *
-     * @param  Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
      * @return Money|string
      *
      * @throws InvalidArgumentException
@@ -52,67 +42,65 @@ class MoneyCast implements CastsAttributes
 
         $currencyCode = $this->sourceCurrencyCode ?? 'MDL';
 
-        if (!is_string($currencyCode) || (!$currencyCode)) {
+        if (! is_string($currencyCode) || (! $currencyCode)) {
             throw new InvalidArgumentException('The stored '.Currency::class.' value should be not-empty-sting');
         }
 
-//        return new Money($value, new Currency($currencyCode))->getAmount();
+        //        return new Money($value, new Currency($currencyCode))->getAmount();
         $money = new Money($value, new Currency($currencyCode));
-        return $money->getAmount();
-//        $money = new Money($value, new Currency($currencyCode));
-//        $currencies = new ISOCurrencies();
-//
-//        $numberFormatter = new NumberFormatter('ro_RO', NumberFormatter::CURRENCY);
-//        $numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
-//
-//        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
-//
-//        return $moneyFormatter->format($money); // outputs $1.00
+
+        return (int) $money->getAmount();
+
+        //        $money = new Money($value, new Currency($currencyCode));
+        //        $currencies = new ISOCurrencies();
+        //
+        //        $numberFormatter = new NumberFormatter('ro_RO', NumberFormatter::CURRENCY);
+        //        $numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
+        //
+        //        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+        //
+        //        return $moneyFormatter->format($money); // outputs 1.00 MDL
 
     }
 
     /**
      * Transform the attribute to its underlying model values.
      *
-     * @param  Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
      * @return array<string,string>
+     *
      * @throws CurrencyMissmatchException
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): array
     {
-        if (!$value instanceof Money) {
+        if (! $value instanceof Money) {
             throw new InvalidArgumentException('The given value is not an '.Money::class.' instance');
         }
 
         $currencyCode = $this->sourceCurrencyAttributeName ?? 'MDL';
 
-        if (!is_string($currencyCode) || (!$currencyCode)) {
+        if (! is_string($currencyCode) || (! $currencyCode)) {
             throw new InvalidArgumentException('The stored '.Currency::class.' value should be not-empty-sting');
         }
 
         $currency = new Currency($currencyCode);
 
-        if (!$currency->equals($value->getCurrency())) {
+        if (! $currency->equals($value->getCurrency())) {
             throw CurrencyMissmatchException::createFromCurrencies($currency, $value->getCurrency());
         }
 
         return [$key => $value->getAmount()];
     }
-
 }
 
-//$data = Http::get(sprintf('https://www.bnm.md/'.app()->getLocale().'/official_exchange_rates?get_xml=1&date=%s', '27.02.2024'));
-//$data = $data->body();
-//$xml = new SimpleXMLElement($data);
-//$rates = array();
-//foreach ($xml->Valute as $xmlRate) {
+// $data = Http::get(sprintf('https://www.bnm.md/'.app()->getLocale().'/official_exchange_rates?get_xml=1&date=%s', '27.02.2024'));
+// $data = $data->body();
+// $xml = new SimpleXMLElement($data);
+// $rates = array();
+// foreach ($xml->Valute as $xmlRate) {
 //    $rates[(string) $xmlRate->CharCode] = $xmlRate;
-//}
+// }
 
-//dd($rates);
+// dd($rates);
 
 //        $exchange = new ReversedCurrenciesExchange(new FixedExchange([
 //            'EUR' => [

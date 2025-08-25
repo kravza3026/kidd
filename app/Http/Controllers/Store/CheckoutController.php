@@ -135,13 +135,11 @@ class CheckoutController extends Controller
                 'customer_id' => $customer->id,
                 'tracking_id' => 1, // TODO - implement tracking id...
                 'payment_id' => 1, // TODO - implement payment id...
-                'order_number' => (Order::latest()->first()->id ?? 1) + 1, // TODO - implement order number...
+                //                'order_number' => (Order::latest('id')->first()->id) + 10, // TODO - implement order number...
                 'total_amount' => LaraCart::total($formatted = false, $withDiscount = true), // Will be updated after items are added
                 'status' => OrderStatus::Pending->value,
                 'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
-                'payment_method' => PaymentMethod::from((int) $checkout['payment_method'] + 1),
-                'shipping_address' => $shippingAddress,
-                'billing_address' => $shippingAddress,
+                'payment_method' => PaymentMethod::from((int) $checkout['payment_method']),
                 'cart_snapshot' => collect($cart)->toArray(),
                 'notes' => '',
             ]);
@@ -153,13 +151,14 @@ class CheckoutController extends Controller
                         'product_variant_id' => $item->options['variant']->id,
                         'variant_snapshot' => $item->options['variant']->toArray(),
                         'quantity' => $item->qty,
-                        'price' => $item->price * $item->qty,
+                        'unit_price' => $item->price,
+                        'total_price' => (int) ($item->price * $item->qty),
                     ];
                 })->toArray()
             );
 
             $order->update([
-                'total_amount' => $order->items->sum('price'),
+                'total_amount' => LaraCart::total($formatted = false, true),
             ]);
 
             $address['shipping'] = $order->addresses()->create([

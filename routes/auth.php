@@ -29,6 +29,8 @@ Route::group([
 
     Route::get('orders', [OrdersController::class, 'index'])
         ->name('orders.index');
+    Route::get('orders/{order}/return', [OrdersController::class, 'return'])
+        ->name('orders.return');
     Route::get('orders/{order}/track', [OrdersController::class, 'track'])
         ->name('orders.track');
     Route::get('orders/{order}/invoice/download', [OrdersController::class, 'download'])

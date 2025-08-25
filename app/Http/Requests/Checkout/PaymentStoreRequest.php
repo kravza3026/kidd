@@ -22,10 +22,10 @@ class PaymentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['required', 'in:card,cash'],
-            'card_number' => ['required_if:payment_method,card', 'string', 'digits:16'],
-            'card_expiry' => ['required_if:payment_method,card', 'string', 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'],
-            'card_cvv' => ['required_if:payment_method,card', 'string', 'digits:3'],
+            'payment_method' => ['required', 'in:1,3'],
+            'card_number' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:16'],
+            'card_expiry' => ['nullable', 'required_if:payment_method,3', 'string', 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'],
+            'card_cvv' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:3'],
         ];
     }
 

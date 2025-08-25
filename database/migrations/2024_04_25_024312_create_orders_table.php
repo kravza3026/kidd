@@ -20,13 +20,11 @@ return new class extends Migration
             $table->foreignIdFor(Customer::class)->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->foreignId('tracking_id');
             $table->foreignId('payment_id');
-            $table->unsignedBigInteger('order_number')->unique();
+            $table->unsignedBigInteger('order_number', true)->unique();
             $table->unsignedInteger('total_amount');
             $table->unsignedTinyInteger('status')->default(OrderStatus::Pending);
             $table->unsignedTinyInteger('shipping_method')->default(ShippingMethod::Regular);
             $table->unsignedTinyInteger('payment_method')->default(PaymentMethod::CashOrCard);
-            $table->json('shipping_address')->nullable();
-            $table->json('billing_address')->nullable();
             $table->json('cart_snapshot')->nullable();
             $table->text('notes')->nullable();
             $table->timestamp('placed_at')->useCurrent();

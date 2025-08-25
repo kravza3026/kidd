@@ -1,3 +1,5 @@
+@use('App\Enums\ShippingMethod')
+
 @extends('store.checkout.layouts.checkout')
 
 @section('checkout-form')
@@ -15,9 +17,9 @@
                 {{ __('checkout.steps.shipping') }}
             </p>
             <p class="text-base font-normal opacity-60">
-                <b>{{ ucfirst($checkoutData['shipping_method']) }}</b>
-                shipping to
-                <span class="inline-block leading-8 font-medium">
+                <b>{{ ShippingMethod::tryFrom($checkoutData['shipping_method'])->label() }}</b>
+                {{ __('checkout.shipping_to') }}
+                <span class="inline leading-8 font-medium">
                     {{ $checkoutData['shipping_postal_code'] }}
                     {{ $regions->where('id', '=', $checkoutData['shipping_region'])->first()->name }},
                     {{ \App\Models\City::where('id', '=', $checkoutData['shipping_city'])->first()->name }},
