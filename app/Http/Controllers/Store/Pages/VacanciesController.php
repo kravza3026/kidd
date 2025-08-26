@@ -12,7 +12,7 @@ class VacanciesController extends Controller
      */
     public function index()
     {
-        $vacancies = Vacancy::all();
+        $vacancies = Vacancy::with('tags')->get();
 
         return view('store.pages.careers.index', [
             'vacancies' => $vacancies,
