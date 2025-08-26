@@ -85,6 +85,7 @@ return [
     'shipping_to' => 'с доставкой в',
 
     'payment' => [
+        'billing_title' => 'Адрес счёт-фактуры',
         'form' => [
             'payment_method' => 'Способ оплаты',
             'payment_methods' => [

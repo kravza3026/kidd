@@ -85,6 +85,7 @@ return [
     'shipping_to' => 'shipping to',
 
     'payment' => [
+        'billing_title' => 'Billing address',
         'form' => [
             'payment_method' => 'Payment method',
             'payment_methods' => [

@@ -35,24 +35,4 @@ class ShippingStoreRequest extends FormRequest
             'saved_address' => ['nullable', 'string'],
         ];
     }
-
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function attributes(): array
-    {
-        return [
-            'shipping_region' => __('validation.attributes.shipping_region'),
-            'shipping_city' => __('validation.attributes.shipping_city'),
-            'shipping_street_name' => __('validation.attributes.shipping_street_name'),
-            'shipping_building' => __('validation.attributes.shipping_building'),
-            'shipping_postal_code' => __('validation.attributes.shipping_postal_code'),
-            'shipping_apartment' => __('validation.attributes.shipping_apartment'),
-            'shipping_entrance' => __('validation.attributes.shipping_entrance'),
-            'shipping_floor' => __('validation.attributes.shipping_floor'),
-            'shipping_intercom' => __('validation.attributes.shipping_intercom'),
-        ];
-    }
 }

@@ -66,7 +66,7 @@
                             type="radio"
                             name="shipping_method"
                             value="{{ ShippingMethod::Gift }}"
-                            @checked($checkoutData['shipping_method'] == ShippingMethod::Gift->value)
+                            @checked(isset($checkoutData['shipping_method']) && $checkoutData['shipping_method'] == ShippingMethod::Gift->value)
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_gift"
                         />
@@ -75,8 +75,10 @@
                             for="shipping_gift"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span class="border-olive block absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <span class="marker block peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></span>
+                            <span
+                                class="border-olive absolute top-2 right-2 z-20 block size-4 rounded-full border-1 p-0.5"
+                            >
+                                <span class="marker peer-checked:bg-olive block h-[10px] w-[10px] rounded-full"></span>
                             </span>
                         </label>
                         <div
@@ -108,7 +110,7 @@
                             type="radio"
                             name="shipping_method"
                             value="{{ ShippingMethod::Express }}"
-                            @checked($checkoutData['shipping_method'] == ShippingMethod::Express->value)
+                            @checked(isset($checkoutData['shipping_method']) && $checkoutData['shipping_method'] == ShippingMethod::Express->value)
                             class="peer absolute top-2 right-2 z-10 hidden"
                             id="shipping_express"
                         />
@@ -209,7 +211,7 @@
                                 @auth
                                     <button
                                         type="button"
-                                        class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left shadow-sm focus:ring"
+                                        class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left text-sm shadow-sm focus:ring"
                                         id="saved_addresses"
                                     >
                                         <span class="flex items-center gap-x-2">

@@ -23,9 +23,19 @@ class PaymentStoreRequest extends FormRequest
     {
         return [
             'payment_method' => ['required', 'in:1,2,3,4'],
-            'card_number' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:16'],
-            'card_expiry' => ['nullable', 'required_if:payment_method,3', 'string', 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'],
-            'card_cvv' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:3'],
+            'billing_region' => ['required', 'exists:regions,id'],
+            'billing_city' => ['required', 'exists:cities,id'],
+            'billing_street_name' => ['required', 'string'],
+            'billing_building' => ['required', 'string'],
+            'billing_postal_code' => ['required', 'string', 'regex:/^(MD\-)\d{4}$/'],
+            'billing_apartment' => ['nullable', 'string'],
+            'billing_entrance' => ['nullable', 'string'],
+            'billing_floor' => ['nullable', 'numeric'],
+            'billing_intercom' => ['nullable', 'string'],
+            'saved_address' => ['nullable', 'string'],
+            //            'card_number' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:16'],
+            //            'card_expiry' => ['nullable', 'required_if:payment_method,3', 'string', 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'],
+            //            'card_cvv' => ['nullable', 'required_if:payment_method,3', 'string', 'digits:3'],
         ];
     }
 
@@ -38,7 +48,6 @@ class PaymentStoreRequest extends FormRequest
     {
         // TODO - add translations
         return [
-            'payment_method' => 'payment method',
             'card_number' => 'card number',
             'card_expiry' => 'card expiry date',
             'card_cvv' => 'CVV code',

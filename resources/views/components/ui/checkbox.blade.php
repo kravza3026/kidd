@@ -2,22 +2,26 @@
     'modelValue' => false,
     'id' => null,
     'name' => null,
-    'required' => false
+    'required' => false,
 ])
 
 <div>
-    <label class="flex items-center cursor-pointer relative">
+    <label class="relative flex cursor-pointer items-center">
         <input
             @required($required)
             type="checkbox"
             id="{{ $id ?? Str::kebab($name) }}"
             name="{{ $name }}"
             @checked(old($name, $modelValue))
-            {{ $attributes->merge([
-                'class' => 'peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-1 border-light-border focus:outline-olive checked:bg-olive checked:border-light-grey'
-            ]) }}
+            {{
+                $attributes->merge([
+                    'class' => 'peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-1 border-light-border focus:outline-olive checked:bg-olive checked:border-light-grey',
+                ])
+            }}
         />
-        <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <span
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white opacity-0 peer-checked:opacity-100"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-3.5 w-3.5"

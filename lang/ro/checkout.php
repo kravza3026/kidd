@@ -85,6 +85,7 @@ return [
     'shipping_to' => 'cu livrare la',
 
     'payment' => [
+        'billing_title' => 'Adresă de facturare',
         'form' => [
             'payment_method' => 'Metoda plății',
             'payment_methods' => [

@@ -39,11 +39,20 @@
                     shippingFloor: 'shipping_floor',
                     shippingEntrance: 'shipping_entrance',
                     shippingApartment: 'shipping_apartment',
-                    shippingPostalCode: 'postal_code',
+                    shippingPostalCode: 'shipping_postal_code',
                     shippingBuilding: 'shipping_building',
                     shippingStreetName: 'shipping_street_name',
                     shippingCity: 'shipping_city',
                     shippingRegion: 'shipping_region',
+                    billingIntercom: 'billing_intercom',
+                    billingFloor: 'billing_floor',
+                    billingEntrance: 'billing_entrance',
+                    billingApartment: 'billing_apartment',
+                    billingPostalCode: 'billing_postal_code',
+                    billingBuilding: 'billing_building',
+                    billingStreetName: 'billing_street_name',
+                    billingCity: 'billing_city',
+                    billingRegion: 'billing_region',
                 };
 
                 Object.entries(fieldsMap).forEach(([dataKey, inputId]) => {
@@ -58,7 +67,6 @@
                 if (radio) radio.checked = true;
             });
         });
-
 
         document.addEventListener('click', (e) => {
             if (!selectButton.contains(e.target) && !optionsList.contains(e.target)) {

@@ -65,8 +65,6 @@
                     <span class="border-light-border h-4 border-r"></span>
                     {{ $checkoutData['contact_email'] }}
                 </span>
-
-                {{-- Regular shipping to mun. Chișinău, or. Chișinău, str. Alba Iulia 75, MD-2071 --}}
             </p>
         </div>
         <div class="col-span-1 flex h-full items-end justify-end">
@@ -86,12 +84,7 @@
             {{ __('checkout.steps.payment') }}
         </p>
     </div>
-    <form
-        x-data="{ method: 'card' }"
-        action="{{ route('checkout.process.payment') }}"
-        method="POST"
-        class="space-y-6"
-    >
+    <form x-data="{ method: 1 }" action="{{ route('checkout.process.payment') }}" method="POST" class="space-y-6">
         @csrf
         <div class="grid grid-cols-17 items-center space-y-6 gap-x-2">
             <div class="col-span-16 col-start-2">
@@ -195,7 +188,6 @@
                             id="payment_method_online"
                             x-model="method"
                         />
-
                         <label
                             for="payment_method_online"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
@@ -231,7 +223,6 @@
                             id="payment_method_terminal"
                             x-model="method"
                         />
-
                         <label
                             for="payment_method_terminal"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
@@ -266,13 +257,28 @@
             <div class="col-span-16 col-start-2">
                 <div
                     x-data="{
-                        checked: false,
-                        postalCode:
+                        same_as_shipping: false,
+                        shippingPostalCode:
                             '{{ old('shipping_postal_code', $checkoutData['shipping_postal_code'] ?? '') }}',
                         shippingBuilding:
                             '{{ old('shipping_building', $checkoutData['shipping_building'] ?? '') }}',
-                        shippingStreet:
+                        shippingStreetName:
                             '{{ old('shipping_street_name', $checkoutData['shipping_street_name'] ?? '') }}',
+                        shippingCity:
+                            '{{ old('shipping_city', $checkoutData['shipping_city'] ?? '') }}',
+                        shippingRegion:
+                            '{{ old('shipping_region', $checkoutData['shipping_region'] ?? '') }}',
+
+                        billingPostalCode:
+                            '{{ old('billing_postal_code', $checkoutData['billing_postal_code'] ?? '') }}',
+                        billingBuilding:
+                            '{{ old('billing_building', $checkoutData['billing_building'] ?? '') }}',
+                        billingStreetName:
+                            '{{ old('billing_street_name', $checkoutData['billing_street_name'] ?? '') }}',
+                        billingCity:
+                            '{{ old('billing_city', $checkoutData['billing_city'] ?? '') }}',
+                        billingRegion:
+                            '{{ old('billing_region', $checkoutData['billing_region'] ?? '') }}',
                     }"
                     id="card-details"
                     class="space-y-4"
@@ -280,18 +286,26 @@
                 >
                     <div class="border-light-border space-y-4 rounded-2xl border">
                         <div class="bg-light-orange grid grid-cols-12 items-center justify-between rounded-2xl p-4">
-                            <h2 class="col-span-4 text-base font-bold">Billing address</h2>
+                            <h2 class="col-span-4 text-base font-bold">
+                                {{ __('checkout.payment.billing_title') }}
+                            </h2>
                             <div class="col-span-8">
                                 <div class="relative flex w-full items-center justify-end gap-x-2">
                                     <div class="flex items-center gap-x-2">
-                                        <x-ui.checkbox x-model="checked" class="bg-white"></x-ui.checkbox>
-                                        <p class="text-sm">Same as shipping</p>
+                                        <x-ui.checkbox
+                                            id="billing_sas"
+                                            x-model="same_as_shipping"
+                                            class="bg-white"
+                                        ></x-ui.checkbox>
+                                        <label for="billing_sas" class="text-sm">
+                                            {{ __('checkout.payment.form.same_as_shipping') }}
+                                        </label>
                                     </div>
-                                    <div class="relative w-1/2">
-                                        @auth
+                                    @auth
+                                        <div class="relative w-1/2">
                                             <button
                                                 type="button"
-                                                class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left shadow-sm focus:ring"
+                                                class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left text-sm shadow-sm focus:ring"
                                                 id="saved_addresses"
                                             >
                                                 <span class="flex items-center gap-x-2">
@@ -303,9 +317,9 @@
                                                     </span>
                                                     <span
                                                         x-text="
-                                                            checked
-                                                                ? shippingStreet
-                                                                : ' {{ __('checkout.shipping.form.saved_addresses_placeholder') }}'
+                                                            same_as_shipping
+                                                                ? shippingStreetName
+                                                                : ' {{ __('checkout.payment.form.saved_addresses_placeholder') }}'
                                                         "
                                                         id="selected-option"
                                                     ></span>
@@ -317,24 +331,23 @@
                                                     />
                                                 </span>
                                             </button>
-
                                             <ul
-                                                class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white shadow-lg"
+                                                class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
                                                 id="saved_addresses-options"
                                             >
                                                 @foreach (auth()->user()->billingAddresses as $address)
                                                     {{-- {{old('saved_address', $checkoutData['saved_address'])}} --}}
                                                     {{-- {{$address->label}} --}}
                                                     <li
-                                                        data-shipping-region="{{ $address->region_id }}"
-                                                        data-shipping-city="{{ $address->city_id }}"
-                                                        data-shipping-street-name="{{ $address->street_name }}"
-                                                        data-shipping-building="{{ $address->building }}"
-                                                        data-shipping-postal-code="{{ $address->postal_code }}"
-                                                        data-shipping-apartment="{{ $address->apartment }}"
-                                                        data-shipping-floor="{{ $address->floor }}"
-                                                        data-shipping-entrance="{{ $address->entrance }}"
-                                                        data-shipping-intercom="{{ $address->intercom }}"
+                                                        data-billing-region="{{ $address->region_id }}"
+                                                        data-billing-city="{{ $address->city_id }}"
+                                                        data-billing-street-name="{{ $address->street_name }}"
+                                                        data-billing-building="{{ $address->building }}"
+                                                        data-billing-postal-code="{{ $address->postal_code }}"
+                                                        data-billing-apartment="{{ $address->apartment }}"
+                                                        data-billing-floor="{{ $address->floor }}"
+                                                        data-billing-entrance="{{ $address->entrance }}"
+                                                        data-billing-intercom="{{ $address->intercom }}"
                                                         data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
                                                         class="saved-address relative m-1 flex cursor-pointer items-center gap-x-2 rounded-2xl"
                                                     >
@@ -372,129 +385,124 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-                                        @endauth
-                                    </div>
+                                        </div>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-12 gap-4 p-4">
                             <div class="col-span-6 mt-3">
-                                <label for="shipping_region" class="text-charcoal block text-sm font-medium">
-                                    {{ __('checkout.shipping.form.shipping_region') }}
+                                <label for="billing_region" class="text-charcoal block text-sm font-medium">
+                                    {{ __('checkout.payment.form.billing_region') }}
                                 </label>
                                 <select
                                     required
-                                    name="shipping_region"
-                                    id="shipping_region"
+                                    name="billing_region"
+                                    id="billing_region"
                                     class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
                                 >
                                     <option value="">
-                                        {{ __('checkout.shipping.form.shipping_region_placeholder') }}
+                                        {{ __('checkout.payment.form.billing_region_placeholder') }}
                                     </option>
                                     @foreach ($regions as $region)
                                         <option
                                             value="{{ $region->id }}"
-                                            x-bind:selected="
-                                                checked &&
-                                                    '{{ old('shipping_region', $checkoutData['shipping_region'] ?? '') }}' ==
-                                                        '{{ $region->id }}'
-                                            "
+                                            x-bind:selected="(same_as_shipping ? shippingRegion : billingRegion) == {{ $region->id }}"
                                         >
                                             {{ $region->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('shipping_region')
+                                @error('billing_region')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="col-span-6 mt-3">
-                                <label for="shipping_city" class="text-charcoal block text-sm font-medium">
-                                    {{ __('checkout.shipping.form.shipping_city') }}
+                                <label for="billing_city" class="text-charcoal block text-sm font-medium">
+                                    {{ __('checkout.payment.form.billing_city') }}
                                 </label>
                                 <select
                                     required
-                                    name="shipping_city"
-                                    id="shipping_city"
+                                    name="billing_city"
+                                    id="billing_city"
                                     class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
                                 >
                                     <option value="0">
-                                        {{ __('checkout.shipping.form.shipping_city_placeholder') }}
+                                        {{ __('checkout.payment.form.billing_city_placeholder') }}
                                     </option>
-                                    @foreach ($regions->where('id', '=', $checkoutData['shipping_region'] ?? '9')->first()?->cities as $city)
+                                    @foreach ($regions->where('id', '=', $checkoutData['billing_region'] ?? '9')->first()?->cities as $city)
                                         <option
                                             value="{{ $city->id }}"
-                                            x-bind:selected="
-                                                checked &&
-                                                    '{{ old('shipping_city', $checkoutData['shipping_city'] ?? '') }}' ==
-                                                        '{{ $city->id }}'
-                                            "
+                                            x-bind:selected="(same_as_shipping ? shippingCity : billingCity) == {{ $city->id }}"
                                         >
                                             {{ $city->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('shipping_city')
+                                @error('billing_city')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                             <x-ui.input-label
                                 :customClass="'col-span-6'"
-                                for="shipping_street_name"
-                                name="shipping_street_name"
-                                :label="__('checkout.shipping.form.shipping_street_name')"
+                                for="billing_street_name"
+                                name="billing_street_name"
+                                :label="__('checkout.payment.form.billing_street_name')"
                                 required
                                 autocomplete="street"
-                                x-bind:value="checked ? shippingStreet : ''"
+                                x-bind:value="same_as_shipping ? shippingStreetName : billingStreetName"
                             />
-
                             <x-ui.input-label
                                 :customClass="'col-span-3'"
                                 :placeholder="'Building number'"
-                                for="shipping_building"
-                                name="shipping_building"
-                                :label="__('checkout.shipping.form.shipping_building')"
+                                for="billing_building"
+                                name="billing_building"
+                                :label="__('checkout.payment.form.billing_building')"
                                 required
                                 autocomplete="building"
-                                x-bind:value="checked ? shippingBuilding : ''"
+                                x-bind:value="same_as_shipping ? shippingBuilding : billingBuilding"
                             />
 
                             <x-ui.input-label
                                 :customClass="'col-span-3'"
                                 :placeholder="'Postal code'"
                                 id="postal_code"
-                                for="shipping_postal_code"
-                                name="shipping_postal_code"
-                                :label="__('checkout.shipping.form.shipping_postal_code')"
+                                for="billing_postal_code"
+                                name="billing_postal_code"
+                                :label="__('checkout.payment.form.billing_postal_code')"
                                 required
                                 autocomplete="postal_code"
-                                x-bind:value="checked ? postalCode : ''"
+                                x-bind:value="same_as_shipping ? shippingPostalCode : billingPostalCode"
                             />
                         </div>
                     </div>
                 </div>
-                <div id="transfer-details" class="space-y-4" x-show="method === 2">
+                <div id="transfer-details" class="space-y-4" x-show="method == 2">
                     <h2 class="text-lg font-bold">Transfer</h2>
                 </div>
-                <div id="online-details" class="space-y-4" x-show="method === 3">
+                <div id="online-details" class="space-y-4" x-show="method == 3">
                     <h2 class="text-lg font-bold">Online</h2>
                 </div>
-                <div id="terminal-details" class="space-y-4" x-show="method === 4">
+                <div id="terminal-details" class="space-y-4" x-show="method == 4">
                     <h2 class="text-lg font-bold">Terminal</h2>
                 </div>
-
-                <div id="loginBtn" class="flex items-center justify-start pt-8">
-                    <x-ui.button   as="button" class="mt-0 px-15 !py-3" right_icon="true" type="button">
+                <div class="flex items-center justify-start pt-8">
+                    <x-ui.button
+                        as="button"
+                        class="mt-0 px-15 !py-3"
+                        right_icon="true"
+                        id="{{ auth()->check() ? 'placeOrder' : 'loginButton2' }}"
+                        type="{{ auth()->check() ? 'submit' : 'submit' }}"
+                    >
                         Place the order
                     </x-ui.button>
                 </div>
             </div>
         </div>
     </form>
-
 @endsection
 
-@push('scripts')
+@push('head')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const cardDetails = document.getElementById('card-details');
@@ -502,7 +510,7 @@
 
             function toggleCardDetails() {
                 const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
-                cardDetails.style.display = selectedMethod === '3' ? 'block' : 'none';
+                cardDetails.style.display = selectedMethod === '1' ? 'block' : 'none';
             }
 
             paymentInputs.forEach((input) => {
@@ -511,28 +519,25 @@
 
             toggleCardDetails();
 
-            document.getElementById('loginBtn').addEventListener('click', function (e) {
+            document.getElementById('loginButton').addEventListener('click', function (e) {
                 Swal.fire({
                     html: @json(view('store.checkout.modal')->render()),
                     showConfirmButton: false,
-                    width:'64em',
-                    showCloseButton:false,
+                    width: '64em',
+                    showCloseButton: false,
                     customClass: {
-                        popup: 'my-swal-rounded'
+                        popup: 'my-swal-rounded',
                     },
                     didOpen: () => {
                         const closeButtons = document.querySelectorAll('.closeSignIn');
-                        closeButtons.forEach(btn => {
+                        closeButtons.forEach((btn) => {
                             btn.addEventListener('click', () => {
                                 Swal.close();
                             });
                         });
-                    }
+                    },
                 });
-            })
+            });
         });
-
     </script>
 @endpush
-
-

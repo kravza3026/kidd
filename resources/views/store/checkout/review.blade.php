@@ -59,8 +59,19 @@
                 </a>
             </div>
             <div class="space-y-1 text-sm">
-                <p>{{ __('checkout.review.payment_method') }}: {{ ucfirst($checkoutData['payment_method']) }}</p>
-            @if ($checkoutData['payment_method'] === 'card')
+                <p>
+                    {{ __('checkout.review.payment_method') }}:
+                    {{ \App\Enums\PaymentMethod::tryFrom($checkoutData['payment_method'])->name }}
+                </p>
+                <p>
+                    Region: {{ $checkoutData['billing_region'] }} City: {{ $checkoutData['billing_city'] }} Str.
+                    {{ $checkoutData['billing_street_name'] }} {{ $checkoutData['billing_building'] }} Postal Code:
+                    {{ $checkoutData['billing_postal_code'] }} Apt: {{ $checkoutData['billing_apartment'] ?? '' }}
+                    Entrance: {{ $checkoutData['billing_entrance'] ?? '' }} Floor:
+                    {{ $checkoutData['billing_floor'] ?? '' }} Intercom:
+                    {{ $checkoutData['billing_intercom'] ?? '' }}
+                </p>
+                @if ($checkoutData['payment_method'] === 'card')
                     <p>{{ __('checkout.review.card_ending') }} {{ substr($checkoutData['card_number'], -4) }}</p>
                 @endif
             </div>

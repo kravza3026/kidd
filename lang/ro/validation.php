@@ -221,6 +221,18 @@ return [
         'shipping_intercom' => 'Interfon',
         'shipping_comment' => 'Comentariu livrare',
         'shipping_optional' => '(optional)',
+
+        'billing_region' => 'Regiune',
+        'billing_city' => 'Localitate',
+        'billing_street_name' => 'Stradă',
+        'billing_building' => 'Nr. clădire',
+        'billing_postal_code' => 'Cod poștal',
+        'billing_entrance' => 'Intrare',
+        'billing_floor' => 'Etaj',
+        'billing_apartment' => 'Apartament',
+        'billing_intercom' => 'Interfon',
+        'billing_comment' => 'Comentariu livrare',
+        'billing_optional' => '(optional)',
     ],
 
     'phone' => 'Introduceți un număr de telefon valid.',
