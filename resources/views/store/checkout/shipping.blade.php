@@ -42,7 +42,7 @@
                         >
                             <img
                                 class="imgOutline size-12 py-3"
-                                src="{{ Vite::image('icons/truck_outline.svg') }}"
+                                src="{{ Vite::image('icons/olive/truck_outline.svg') }}"
                                 alt=""
                             />
                             <img
@@ -86,7 +86,7 @@
                         >
                             <img
                                 class="imgOutline size-12 py-3"
-                                src="{{ Vite::image('icons/lightning.svg') }}"
+                                src="{{ Vite::image('icons/olive/lightning.svg') }}"
                                 alt=""
                             />
                             <img
@@ -125,7 +125,7 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/present.svg') }}" alt="" />
+                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/present.svg') }}" alt="" />
                             <img
                                 class="imgGradient hidden size-12 py-3"
                                 src="{{ Vite::image('icons/gradients/g_present.svg') }}"
