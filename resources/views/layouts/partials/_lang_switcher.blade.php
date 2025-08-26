@@ -47,7 +47,7 @@
                             <span class="font-bold">{{ $locale['native'] }}</span>
                         </div>
                         @if (LaravelLocalization::getCurrentLocale() === $code)
-                            <img src="{{ Vite::image('icons/checked_ol.svg') }}" alt="checked">
+                            <img src="{{ Vite::image('icons/olive/checked_ol.svg') }}" alt="checked">
                         @endif
                     </a>
                 @endforeach

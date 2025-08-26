@@ -84,7 +84,7 @@
             {{ __('checkout.steps.payment') }}
         </p>
     </div>
-    <form x-data="{ method: 1 }" action="{{ route('checkout.process.payment') }}" method="POST" class="space-y-6">
+    <form x-data="{ method: 1 }" action="{{ route('checkout.process.payment') }}" method="POST" class="space-y-6" id="checkoutForm">
         @csrf
         <div class="grid grid-cols-17 items-center space-y-6 gap-x-2">
             <div class="col-span-16 col-start-2">
@@ -120,12 +120,12 @@
                         >
                             <img
                                 class="imgOutline size-12 py-3"
-                                src="{{ Vite::image('icons/truck_outline.svg') }}"
+                                src="{{ Vite::image('icons/olive/cash.svg') }}"
                                 alt=""
                             />
                             <img
                                 class="imgGradient hidden size-12 py-3"
-                                src="{{ Vite::image('icons/gradients/g_car.svg') }}"
+                                src="{{ Vite::image('icons/gradients/g_cash.svg') }}"
                                 alt=""
                             />
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
@@ -162,12 +162,12 @@
                         >
                             <img
                                 class="imgOutline size-12 py-3"
-                                src="{{ Vite::image('icons/lightning.svg') }}"
+                                src="{{ Vite::image('icons/olive/bank.svg') }}"
                                 alt=""
                             />
                             <img
                                 class="imgGradient hidden size-12 py-3"
-                                src="{{ Vite::image('icons/gradients/q_lightning.svg') }}"
+                                src="{{ Vite::image('icons/gradients/g_bank.svg') }}"
                                 alt=""
                             />
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
@@ -199,10 +199,10 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/present.svg') }}" alt="" />
+                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/card.svg') }}" alt="" />
                             <img
                                 class="imgGradient hidden size-12 py-3"
-                                src="{{ Vite::image('icons/gradients/g_present.svg') }}"
+                                src="{{ Vite::image('icons/gradients/g_card.svg') }}"
                                 alt=""
                             />
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
@@ -234,10 +234,10 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/present.svg') }}" alt="" />
+                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/terminal.svg') }}" alt="" />
                             <img
                                 class="imgGradient hidden size-12 py-3"
-                                src="{{ Vite::image('icons/gradients/g_present.svg') }}"
+                                src="{{ Vite::image('icons/gradients/g_terminal.svg') }}"
                                 alt=""
                             />
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
@@ -492,7 +492,7 @@
                         class="mt-0 px-15 !py-3"
                         right_icon="true"
                         id="{{ auth()->check() ? 'placeOrder' : 'loginButton2' }}"
-                        type="{{ auth()->check() ? 'submit' : 'submit' }}"
+                        type="{{ auth()->check() ? 'submit' : 'button' }}"
                     >
                         Place the order
                     </x-ui.button>
@@ -519,7 +519,7 @@
 
             toggleCardDetails();
 
-            document.getElementById('loginButton').addEventListener('click', function (e) {
+            document.getElementById('loginButton2').addEventListener('click', function (e) {
                 Swal.fire({
                     html: @json(view('store.checkout.modal')->render()),
                     showConfirmButton: false,

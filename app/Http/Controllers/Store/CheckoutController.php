@@ -63,6 +63,7 @@ class CheckoutController extends Controller
 
     public function processPayment(PaymentStoreRequest $request): RedirectResponse
     {
+
         return $this->processValidatedStep($request->validated(), 'payment');
     }
 

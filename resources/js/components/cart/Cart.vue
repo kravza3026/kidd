@@ -10,7 +10,7 @@ import iconDelete from '@img/icons/close.svg'
 import { useI18n } from 'vue-i18n'
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
 import SubscribeForm from "@/components/ui/subscribeForm.vue";
-import selectIcon from "@img/icons/select-arrows.svg"
+import selectIcon from "@img/icons/select-arrows_o.svg"
 import Button from "@/components/ui/Button.vue";
 export default {
     name: 'Cart',

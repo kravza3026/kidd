@@ -2,7 +2,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import iconAddFavorite from '@img/icons/fav_icon_active.svg'
+import iconAddFavorite from '@img/icons/olive/fav_icon_active.svg'
 import iconFavorited from '@img/icons/inFavorite.svg'
 import cartWhite from '@img/icons/cart_white.svg'
 import SizeGuide from "@/components/ui/sizeGuide.vue";

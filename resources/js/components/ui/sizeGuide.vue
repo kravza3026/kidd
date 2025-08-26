@@ -101,7 +101,7 @@
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import closeIcon from '@img/icons/close_dark.svg'
-import sizeIcon from '@img/icons/size.svg';
+import sizeIcon from '@img/icons/olive/size.svg';
 import { useI18n } from 'vue-i18n';
 import Button from "@/components/ui/Button.vue";
 

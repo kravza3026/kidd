@@ -121,12 +121,12 @@
 <script>
 import Search from './Search.vue';
 import menuIcon from '@img/icons/menu.svg';
-import menuOpenIcon from '@img/icons/menuOpen.svg';
+import menuOpenIcon from '@img/icons/olive/menuOpen.svg';
 import searchIcon from '@img/icons/search.svg';
-import searchOpenIcon from '@img/icons/searchOpen.svg';
+import searchOpenIcon from '@img/icons/olive/searchOpen.svg';
 import cartIcon from '@img/icons/cart.svg';
 import faqIcon from '@img/icons/faq.svg';
-import faqOpenIcon from '@img/icons/faq_active.svg';
+import faqOpenIcon from '@img/icons/olive/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
 import CartDropdown from "@/components/cart/CartDropdown.vue";
 import UserDropdown from "@/components/account/UserDropdown.vue";

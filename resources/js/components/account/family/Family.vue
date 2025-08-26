@@ -16,7 +16,7 @@ import iconSettings from "@img/icons/Settings_base.svg"
 import iconClose from "@img/icons/close.svg"
 import iconCheck from "@img/icons/checked_white.svg"
 import iconDate from "@img/icons/date.png"
-import selectIcon from "@img/icons/select-arrows.svg"
+import selectIcon from "@img/icons/select-arrows_o.svg"
 export default {
     name: 'Family',
     components: {BaseInput, Button, SubscribeForm, BaseCheckbox},
