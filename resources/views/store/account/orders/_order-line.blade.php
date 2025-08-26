@@ -85,7 +85,7 @@
                     href="{{ route('orders.track', $order) }}"
                     class="border-light-border flex items-center gap-2 rounded-full border px-3 py-2"
                 >
-                    <img src="{{ Vite::image('icons/truck_active.svg') }}" alt="" />
+                    <img src="{{ Vite::image('icons/olive/truck_active.svg') }}" alt="{{ __('order.delivery.track_button') }}" />
                     <span class="text-olive text-sm">{{ __('order.delivery.track_button') }}</span>
                 </a>
             </div>
@@ -153,7 +153,7 @@
                         href="{{ route('profile.edit') }}"
                         class="border-light-border flex items-center gap-2 rounded-full border px-3 py-2"
                     >
-                        <img src="{{ Vite::image('icons/user_active.svg') }}" alt="user icon" />
+                        <img src="{{ Vite::image('icons/olive/user_active.svg') }}" alt="{{ __('order.contact.edit_button') }}" />
                         <span class="text-olive text-sm">{{ __('order.contact.edit_button') }}</span>
                     </a>
                 </div>
@@ -201,7 +201,7 @@
                     href="{{ route('orders.invoice', $order) }}"
                     class="border-light-border flex items-center gap-2 rounded-full border px-3 py-2"
                 >
-                    <img src="{{ Vite::image('icons/print.svg') }}" alt="" />
+                    <img src="{{ Vite::image('icons/olive/print.svg') }}" alt="{{ __('order.payment.print_button') }}" />
                     <span class="text-olive text-sm">{{ __('order.payment.print_button') }}</span>
                     <img class="rotate-180" src="{{ Vite::image('icons/top_arrow.svg') }}" alt="arrow down" />
                 </a>
@@ -294,3 +294,4 @@
         </div>
     </div>
 </div>
+

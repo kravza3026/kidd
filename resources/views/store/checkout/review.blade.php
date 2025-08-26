@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <form action="{{ route('checkout.complete') }}" method="POST">
+        <form action="{{ route('checkout.complete') }}" method="POST" id="checkoutForm">
             @csrf
             <div class="flex items-center justify-between pt-8">
                 <a
@@ -90,7 +90,8 @@
                     Back to Payment
                 </a>
                 <button
-                    type="submit"
+                    id="{{ auth()->check() ? 'placeOrder' : 'loginButton2' }}"
+                    type="{{ auth()->check() ? 'submit' : 'button' }}"
                     class="bg-olive hover:bg-olive-dark focus:ring-olive rounded-xl px-6 py-3 text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
                 >
                     {{ __('checkout.place_order') }}
@@ -99,3 +100,28 @@
         </form>
     </div>
 @endsection
+@push('head')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('loginButton2').addEventListener('click', function (e) {
+            Swal.fire({
+                html: @json(view('store.checkout.modal')->render()),
+                showConfirmButton: false,
+                width: '64em',
+                showCloseButton: false,
+                customClass: {
+                    popup: 'my-swal-rounded',
+                },
+                didOpen: () => {
+                    const closeButtons = document.querySelectorAll('.closeSignIn');
+                    closeButtons.forEach((btn) => {
+                        btn.addEventListener('click', () => {
+                            Swal.close();
+                        });
+                    });
+                },
+            });
+        });
+    })
+</script>
+@endpush

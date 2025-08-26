@@ -44,7 +44,7 @@ class VacanciesApplicationController extends Controller
             'title' => __('general.modal.title-vacancy'),
             'message' => __('general.modal.message-vacancy'),
             'image' => [
-                'url' => Vite::image('icons/file.png'),
+                'url' => Vite::image('icons/olive/file.png'),
                 'alt' => __('general.modal.img_alt-vacancy'),
             ],
         ]);
