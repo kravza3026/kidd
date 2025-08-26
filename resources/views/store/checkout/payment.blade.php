@@ -84,7 +84,13 @@
             {{ __('checkout.steps.payment') }}
         </p>
     </div>
-    <form x-data="{ method: 1 }" action="{{ route('checkout.process.payment') }}" method="POST" class="space-y-6" id="checkoutForm">
+    <form
+        x-data="{ method: 1 }"
+        action="{{ route('checkout.process.payment') }}"
+        method="POST"
+        class="space-y-6"
+        id="checkoutForm"
+    >
         @csrf
         <div class="grid grid-cols-17 items-center space-y-6 gap-x-2">
             <div class="col-span-16 col-start-2">
@@ -128,10 +134,10 @@
                                 src="{{ Vite::image('icons/gradients/g_cash.svg') }}"
                                 alt=""
                             />
-                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                            <p class="mt-1 flex items-center gap-x-2 text-sm font-bold">
                                 {{ __('checkout.payment.form.payment_methods.cash_card_at_delivery') }}
                             </p>
-                            <p class="text-sm opacity-40">
+                            <p class="text-xs opacity-40">
                                 {{ __('checkout.payment.form.payment_methods.cash_card_at_delivery_desc') }}
                             </p>
                         </div>
@@ -170,10 +176,10 @@
                                 src="{{ Vite::image('icons/gradients/g_bank.svg') }}"
                                 alt=""
                             />
-                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                            <p class="mt-1 flex items-center gap-x-2 text-sm font-bold">
                                 {{ __('checkout.payment.form.payment_methods.bank_transfer') }}
                             </p>
-                            <p class="text-sm opacity-40">
+                            <p class="text-xs opacity-40">
                                 {{ __('checkout.payment.form.payment_methods.bank_transfer_desc') }}
                             </p>
                         </div>
@@ -199,16 +205,20 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/card.svg') }}" alt="" />
+                            <img
+                                class="imgOutline size-12 py-3"
+                                src="{{ Vite::image('icons/olive/card.svg') }}"
+                                alt=""
+                            />
                             <img
                                 class="imgGradient hidden size-12 py-3"
                                 src="{{ Vite::image('icons/gradients/g_card.svg') }}"
                                 alt=""
                             />
-                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                            <p class="mt-1 flex items-center gap-x-2 text-sm font-bold">
                                 {{ __('checkout.payment.form.payment_methods.card_online') }}
                             </p>
-                            <p class="text-sm opacity-40">
+                            <p class="text-xs opacity-40">
                                 {{ __('checkout.payment.form.payment_methods.card_online_desc') }}
                             </p>
                         </div>
@@ -234,16 +244,20 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/terminal.svg') }}" alt="" />
+                            <img
+                                class="imgOutline size-12 py-3"
+                                src="{{ Vite::image('icons/olive/terminal.svg') }}"
+                                alt=""
+                            />
                             <img
                                 class="imgGradient hidden size-12 py-3"
                                 src="{{ Vite::image('icons/gradients/g_terminal.svg') }}"
                                 alt=""
                             />
-                            <p class="mt-1 flex items-center gap-x-2 font-bold">
+                            <p class="mt-1 flex items-center gap-x-2 text-sm font-bold">
                                 {{ __('checkout.payment.form.payment_methods.terminal') }}
                             </p>
-                            <p class="text-sm opacity-40">
+                            <p class="text-xs opacity-40">
                                 {{ __('checkout.payment.form.payment_methods.terminal_desc') }}
                             </p>
                         </div>
@@ -305,7 +319,7 @@
                                         <div class="relative w-1/2">
                                             <button
                                                 type="button"
-                                                class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left text-sm shadow-sm focus:ring"
+                                                class="border-light-border focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
                                                 id="saved_addresses"
                                             >
                                                 <span class="flex items-center gap-x-2">
@@ -464,9 +478,9 @@
                             />
 
                             <x-ui.input-label
-                                :customClass="'col-span-3'"
+                                :customClass="'postal-code-handler col-span-3'"
                                 :placeholder="'Postal code'"
-                                id="postal_code"
+                                id="billing_postal_code"
                                 for="billing_postal_code"
                                 name="billing_postal_code"
                                 :label="__('checkout.payment.form.billing_postal_code')"

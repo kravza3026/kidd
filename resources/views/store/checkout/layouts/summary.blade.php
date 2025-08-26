@@ -53,17 +53,17 @@
                 <span class="text-charcoal/60 font-bold">
                     {{ $fee->options['description'] }}
                 </span>
-                <span class="font-bold">{{ $fee->amount / 100 }} MDL</span>
+                <span class="font-bold">{{ __('general.price', ['price' => $fee->amount / 100]) }}</span>
             </div>
         @endforeach
 
         <div class="flex justify-between text-sm">
             <span class="text-charcoal/60">{{ __('checkout.summary.subtotal') }}</span>
-            <span class="font-bold">{{ $sub_total }} lei</span>
+            <span class="font-bold">{{ __('general.price', ['price' => $sub_total]) }}</span>
         </div>
         <div class="flex justify-between text-sm">
             <span class="text-charcoal/60">{{ __('checkout.summary.shipping') }}</span>
-            <span class="font-bold">{{ $fee_sub_total }} lei</span>
+            <span class="font-bold">{{ __('general.price', ['price' => $fee_sub_total]) }}</span>
         </div>
 
         @foreach ($coupons as $coupon)
@@ -73,18 +73,21 @@
                     <i class="font-bold">{{ $coupon->code }}</i>
                     ]
                 </span>
-                <span class="font-bold">-{{ round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN) }} lei</span>
+                <span class="font-bold">
+                    -
+                    {{ __('general.price', ['price' => round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN)]) }}
+                </span>
             </div>
         @endforeach
 
         {{-- <div class="flex justify-between text-sm"> --}}
         {{-- <span class="text-charcoal/60">{{ __('checkout.summary.discount') }}</span> --}}
-        {{-- <span class="font-bold">{{ $total_discount }} lei</span> --}}
+        {{-- <span class="font-bold">{{ $total_discount }} {{ __('general.mdl') }}</span> --}}
         {{-- </div> --}}
         <hr class="border-light-border my-2" />
         <div class="flex justify-between pt-3 text-base font-bold">
             <span>{{ __('checkout.summary.total') }}</span>
-            <span>{{ $total }} lei</span>
+            <span>{{ __('general.price', ['price' => $total]) }}</span>
         </div>
     </div>
 </div>

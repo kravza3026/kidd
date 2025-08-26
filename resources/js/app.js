@@ -104,24 +104,26 @@ document.addEventListener('alpine:init', () => {
 Alpine.start();
 
 window.addEventListener('load', function () {
-    let phone_element = document.getElementById('phone');
-    if (phone_element !== null) {
-        IMask(phone_element, {
-            mask: '+{373} (00) 000 000',
-            lazy: true, // make placeholder always visible
-            placeholderChar: '_', // defaults to '_'
-        });
-    }
-});
+    document.querySelectorAll('#phone, #contact_phone').forEach((phone_input) => {
+        if (phone_input !== null) {
+            IMask(phone_input, {
+                mask: '+{373} (00) 00 00 00',
+                lazy: true, // make placeholder always visible
+                placeholderChar: '_', // defaults to '_'
+            });
+        }
+    });
 
-window.addEventListener('load', function () {
-    let postal_code = document.getElementById('postal_code');
-    if (postal_code !== null) {
-        IMask(postal_code, {
-            mask: 'MD-0000',
-            regex: '^(?:MD)*(\\d{4})$',
-            lazy: false, // make placeholder always visible
-            placeholderChar: '_', // defaults to '_'
+    document
+        .querySelectorAll('#billing_postal_code, #shipping_postal_code, #postal_code')
+        .forEach((postal_code_input) => {
+            if (postal_code_input !== null) {
+                IMask(postal_code_input, {
+                    mask: 'MD-0000',
+                    regex: '^(?:MD)*(\\d{4})$',
+                    lazy: false, // make placeholder always visible
+                    placeholderChar: '_', // defaults to '_'
+                });
+            }
         });
-    }
 });

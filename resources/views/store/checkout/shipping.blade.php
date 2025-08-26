@@ -53,7 +53,7 @@
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
                                 {{ __('checkout.shipping.form.shipping_methods.regular.title') }}
                                 <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +50 lei
+                                    +50 {{ __('general.mdl') }}
                                 </span>
                             </p>
                             <p class="text-sm opacity-40">
@@ -97,7 +97,7 @@
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
                                 {{ __('checkout.shipping.form.shipping_methods.gift.title') }}
                                 <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +100 lei
+                                    +100 {{ __('general.mdl') }}
                                 </span>
                             </p>
                             <p class="text-sm opacity-40">
@@ -125,7 +125,11 @@
                         <div
                             class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                            <img class="imgOutline size-12 py-3" src="{{ Vite::image('icons/olive/present.svg') }}" alt="" />
+                            <img
+                                class="imgOutline size-12 py-3"
+                                src="{{ Vite::image('icons/olive/present.svg') }}"
+                                alt=""
+                            />
                             <img
                                 class="imgGradient hidden size-12 py-3"
                                 src="{{ Vite::image('icons/gradients/g_present.svg') }}"
@@ -134,7 +138,7 @@
                             <p class="mt-1 flex items-center gap-x-2 font-bold">
                                 {{ __('checkout.shipping.form.shipping_methods.express.title') }}
                                 <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +150 lei
+                                    +150 {{ __('general.mdl') }}
                                 </span>
                             </p>
                             <p class="text-sm opacity-40">
@@ -211,7 +215,7 @@
                                 @auth
                                     <button
                                         type="button"
-                                        class="border-light-border focus:border-olive focus:ring-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-2 text-left text-sm shadow-sm focus:ring"
+                                        class="border-light-border focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
                                         id="saved_addresses"
                                     >
                                         <span class="flex items-center gap-x-2">
@@ -353,9 +357,9 @@
                         />
 
                         <x-ui.input-label
-                            :customClass="'col-span-3'"
+                            :customClass="'postal-code-handler col-span-3'"
                             :placeholder="__('checkout.shipping.form.shipping_postal_code_placeholder')"
-                            id="postal_code"
+                            id="shipping_postal_code"
                             for="shipping_postal_code"
                             value="{{ old('shipping_postal_code', $checkoutData['shipping_postal_code'] ?? '') }}"
                             name="shipping_postal_code"

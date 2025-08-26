@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Customer::class)->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->foreignId('tracking_id');
             $table->foreignId('payment_id');
-            $table->unsignedBigInteger('order_number', true)->unique();
+            $table->bigIncrements('order_number');
             $table->unsignedInteger('total_amount');
             $table->unsignedTinyInteger('status')->default(OrderStatus::Pending);
             $table->unsignedTinyInteger('shipping_method')->default(ShippingMethod::Regular);
@@ -39,6 +39,7 @@ return new class extends Migration
                 'order_number',
                 'status',
             ]);
+            $table->primary(['id']);
         });
     }
 

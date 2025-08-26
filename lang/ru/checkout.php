@@ -64,7 +64,7 @@ return [
             'shipping_intercom' => 'Домофон',
             'shipping_intercom_placeholder' => '№ домофона',
 
-            'saved_addresses_placeholder' => 'Выберите сохраненный адрес',
+            'saved_addresses_placeholder' => 'Выбрать сохранённый',
         ],
     ],
 
@@ -129,8 +129,8 @@ return [
             'billing_intercom' => 'Домофон',
             'billing_intercom_placeholder' => '№ домофона',
 
-            'same_as_shipping' => 'Идентично адресу доставки',
-            'saved_addresses_placeholder' => 'Выберите сохраненный адрес',
+            'same_as_shipping' => 'Как адрес доставки',
+            'saved_addresses_placeholder' => 'Выбрать сохранённый',
 
         ],
     ],

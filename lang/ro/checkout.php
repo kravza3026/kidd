@@ -129,7 +129,7 @@ return [
             'billing_intercom' => 'Interfon',
             'billing_intercom_placeholder' => 'Nr. interfon',
 
-            'same_as_shipping' => 'La fel ca adresa livrării',
+            'same_as_shipping' => 'Ca adresa livrării',
             'saved_addresses_placeholder' => 'Alegeți adresă salvată',
         ],
     ],

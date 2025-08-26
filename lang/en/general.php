@@ -16,6 +16,7 @@ return [
     'cm' => 'cm',
     'kg' => 'kg',
     'new' => 'New',
+    'mdl' => 'mdl',
     'price' => ':price mdl',
 
     'add-to-cart' => 'Add to cart',
