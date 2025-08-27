@@ -69,7 +69,7 @@
                                     <div id="upload-button" class="absolute inset-0 grid place-items-center justify-center items-center">
                                         <input type="file" id="cv" name="cv" value="{{ old('cv') }}" class="hidden" />
                                         <label for="cv" class="cursor-pointer rounded-lg absolute inset-0 flex flex-col items-center justify-center">
-                                            <img src="{{ Vite::image('icons/file.png') }}" class="size-10 mx-auto mb-4" alt="">
+                                            <img src="{{ Vite::image('icons/olive/file.png') }}" class="size-10 mx-auto mb-4" alt="">
                                             <span>Select a file to upload</span>
                                             <span class="text-[12px] opacity-40 block">Only *.PDF and *.DOCX accepted</span>
                                         </label>
