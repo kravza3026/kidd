@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class Family extends Model
 {
@@ -43,6 +44,7 @@ class Family extends Model
     ];
 
     protected $appends = [
+        'compatible_sizes_ids',
         'age_diff',
     ];
 
@@ -50,9 +52,19 @@ class Family extends Model
         'gender',
     ];
 
-    public function getWeightAttribute()
+    protected static function booted(): void
     {
-        return $this->attributes['weight'] / 1000; // Convert grams to kilograms
+        static::created(fn ($member) => Cache::forget($member->compatibilityCacheKey()));
+        static::updated(fn ($member) => Cache::forget($member->compatibilityCacheKey()));
+        static::deleted(fn ($member) => Cache::forget($member->compatibilityCacheKey()));
+    }
+
+    /**
+     * Get the cache key for the family member.
+     */
+    protected function compatibilityCacheKey(): string
+    {
+        return "family_member:{$this->id}:compatible_sizes";
     }
 
     public function getAgeDiffAttribute(): Carbon|string
@@ -75,5 +87,17 @@ class Family extends Model
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
+    }
+
+    public function getCompatibleSizesIdsAttribute()
+    {
+        return Cache::flexible($this->compatibilityCacheKey(), [10, 60], function () {
+            return $this->compatibleSizes()->pluck('id')->toArray();
+        }, alwaysDefer: true);
+    }
+
+    public function compatibleSizes()
+    {
+        return Size::forMember($this);
     }
 }

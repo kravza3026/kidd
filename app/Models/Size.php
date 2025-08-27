@@ -63,4 +63,20 @@ class Size extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function scopeForMember($query, $member)
+    {
+        $ageMonths = (int) round($member->birth_date->diffInMonths(), 0, PHP_ROUND_HALF_UP);
+
+        return $query
+            ->where(function ($query) use ($ageMonths) {
+                $query->whereValueBetween($ageMonths, ['min_age', 'max_age']);
+            })
+            ->where(function ($query) use ($member) {
+                $query->whereValueBetween($member->height, ['min_height', 'max_height']);
+            })
+            ->where(function ($query) use ($member) {
+                $query->whereValueBetween($member->attributes['weight'], ['min_weight', 'max_weight']);
+            });
+    }
 }

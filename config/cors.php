@@ -17,15 +17,15 @@ return [
 
     'paths' => [
         'v1/*',
-        'sanctum/csrf-cookie'
+        'sanctum/csrf-cookie',
     ],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-//        'https://kidd.md',
-//        'https://api.kidd.md',
-//        'https://cp.kidd.md',
+        //        'https://kidd.md',
+        //        'https://api.kidd.md',
+        //        'https://cp.kidd.md',
 
         'http://kidd.test', // TODO Remove on production
         'https://kidd.test',
@@ -34,8 +34,8 @@ return [
     ],
 
     'allowed_origins_patterns' => [
-//        '^https?://.*\.kidd\.md',
-//        '^https?://.*\.kidd\.test$',
+        //        '^https?://.*\.kidd\.md',
+        //        '^https?://.*\.kidd\.test$',
     ],
 
     'allowed_headers' => ['*'],

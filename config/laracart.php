@@ -124,7 +124,7 @@ return [
             'name' => 'name',
             'description' => 'description',
             'variant' => 'variant',
-//            'variants' => 'variants',
+            //            'variants' => 'variants',
             'color' => 'variant.color',
             'size' => 'variant.size',
             'price' => 'variant.price_final',

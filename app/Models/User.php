@@ -60,7 +60,6 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
      *
      * @var array
      */
-    //    protected $with = ['addresses'];
     protected $withCount = [
         'favorites',
         'orders',

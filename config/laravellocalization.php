@@ -2,9 +2,9 @@
 
 return [
     'supportedLocales' => [
-        'ro'    => ['name' => 'Romanian', 'script' => 'Latn', 'native' => 'Română', 'regional' => 'ro_RO',  'flag' => 'icons/flags/fl_ro.svg'],
-        'ru'    => ['name' => 'Russian', 'script' => 'Cyrl', 'native' => 'Русский', 'regional' => 'ru_RU',  'flag' => 'icons/flags/fl_ru.svg'],
-        'en'    => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB',  'flag' => 'icons/flags/fl_en.svg'],
+        'ro' => ['name' => 'Romanian', 'script' => 'Latn', 'native' => 'Română', 'regional' => 'ro_RO',  'flag' => 'icons/flags/fl_ro.svg'],
+        'ru' => ['name' => 'Russian', 'script' => 'Cyrl', 'native' => 'Русский', 'regional' => 'ru_RU',  'flag' => 'icons/flags/fl_ru.svg'],
+        'en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB',  'flag' => 'icons/flags/fl_en.svg'],
     ],
 
     'useAcceptLanguageHeader' => true,

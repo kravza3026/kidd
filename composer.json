@@ -25,6 +25,7 @@
         "ext-intl": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
         "laradumps/laradumps": "^4.5",
         "laravel/boost": "^1.0",
