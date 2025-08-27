@@ -1,9 +1,9 @@
 <?php
 
 return [
-
     'title' => 'Suntem o echipă de <span class="gradient_r-b">creatori</span> și <span class="gradient_r-b">părinți</span> pasionați',
     'description' => 'La KIDD. misiunea noastră este să oferim îmbrăcăminte pentru bebeluși stilată și de înaltă calitate, care combină confortul cu funcționalitatea. Prețuim sustenabilitatea, folosind materiale ecologice și prioritizăm practicile etice de fabricație. Funcția noastră personalizată de filtrare vă ajută să găsiți mărimea perfectă în funcție de greutatea, înălțimea și vârsta copilului dumneavoastră. Suntem dedicați unui serviciu excepțional pentru clienți, asigurând satisfacția dumneavoastră și bunăstarea copilului dumneavoastră. Alăturați-vă nouă în celebrarea bucuriei parentale, un outfit pe rând.',
+    'materials' => 'Haine ce se simt bine pe piele',
     'our_value_title' => 'Valorile noastre',
     'our_values' => [
         'quality' => 'Îmbrăcăminte de înaltă calitate',
@@ -17,4 +17,33 @@ return [
     'vacancies_latest_update' => 'Ultima actualizare :last_update',
     'vacancies_details_button' => 'Detalii',
 
+    'vacancy_job_title' => 'Aplicație post vacant',
+    'vacancy_job_extra' => 'Info suplimentar',
+    'vacancy_apply_button' => 'Aplică acum',
+    'vacancy_job_requirements' => 'Cerințe',
+    'vacancy_job_summary' => 'Rezumat',
+    'vacancy_job_responsibilities' => 'Responsabilități',
+
+    'form' => [
+        'vacancy_select_label' => 'Titlu post',
+        'first_name' => 'Nume',
+        'first_name_placeholder' => 'Introduceți numele',
+        'last_name' => 'Prenume',
+        'last_name_placeholder' => 'Introduceți prenumele',
+        'phone' => 'Telefon',
+        'phone_placeholder' => '+373 (__) ___ ___',
+        'email' => 'E-mail',
+        'email_placeholder' => 'Introduceți e-mailul',
+
+        'resume' => [
+            'label' => 'CV', // resume
+            'file_label' => 'Alegeți fișierul pentru încărcare',
+            'file_label_desc' => 'Sunt acceptate doar extensiile *.PDF și *.DOC(X)',
+            'url_placeholder' => 'sau încarcă prin URL.',
+            'uploading' => 'Încărcare fișier...',
+            'cancel_button' => 'Anulează',
+        ],
+
+        'submit' => 'Aplică acum',
+    ],
 ];

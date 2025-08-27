@@ -16,4 +16,33 @@ return [
     'vacancies_latest_update' => 'Последнее обновление :last_update',
     'vacancies_details_button' => 'Подробнее',
 
+    'vacancy_job_title' => 'Заявка на вакансию',
+    'vacancy_job_extra' => 'Дополнительно',
+    'vacancy_job_requirements' => 'Навыки',
+    'vacancy_job_summary' => 'Содержание',
+    'vacancy_job_responsibilities' => 'Обязанности',
+    'vacancy_apply_button' => 'Подать заявку',
+
+    'form' => [
+        'vacancy_select_label' => 'Должность',
+        'first_name' => 'Имя',
+        'first_name_placeholder' => 'Введите ваше имя',
+        'last_name' => 'Фамилия',
+        'last_name_placeholder' => 'Введите вашу фамилию',
+        'phone' => 'Телефон',
+        'phone_placeholder' => '+373 (__) ___ ___',
+        'email' => 'Электронная почта',
+        'email_placeholder' => 'Введите вашу электронную почту',
+
+        'resume' => [
+            'label' => 'Резюме', // resume
+            'file_label' => 'Выберите файл для загрузки',
+            'file_label_desc' => 'Только файлы *.PDF и *.DOC(X).',
+            'url_placeholder' => 'или загрузите через ссылку (URL).',
+            'uploading' => 'Загрузка файла...',
+            'cancel_button' => 'Отменить',
+        ],
+
+        'submit' => 'Подать заявку',
+    ],
 ];

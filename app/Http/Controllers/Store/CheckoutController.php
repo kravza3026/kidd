@@ -181,6 +181,9 @@ class CheckoutController extends Controller
             'title' => __('Order Placed'),
             'type' => 'success',
             'message' => __('Your order has been successfully placed.'),
+            'options' => [
+                'timer' => 3000,
+            ],
         ]);
 
         return auth()->check()

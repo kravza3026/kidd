@@ -16,4 +16,33 @@ return [
     'vacancies_latest_update' => 'Last updated :last_update',
     'vacancies_details_button' => 'Details',
 
+    'vacancy_job_title' => 'Apply to job',
+    'vacancy_job_extra' => 'Extra',
+    'vacancy_job_requirements' => 'Requirements',
+    'vacancy_job_summary' => 'Job Summary',
+    'vacancy_job_responsibilities' => 'Responsibilities',
+    'vacancy_apply_button' => 'Apply now',
+
+    'form' => [
+        'vacancy_select_label' => 'Job title',
+        'first_name' => 'First name',
+        'first_name_placeholder' => 'Enter your first name',
+        'last_name' => 'Last name',
+        'last_name_placeholder' => 'Enter your last name',
+        'phone' => 'Phone',
+        'phone_placeholder' => '+373 (__) ___ ___',
+        'email' => 'E-mail',
+        'email_placeholder' => 'Enter your e-mail',
+
+        'resume' => [
+            'label' => 'Resume', // resume
+            'file_label' => 'Choose file to upload',
+            'file_label_desc' => 'Only *.PDF and *.DOC(X) files are accepted',
+            'url_placeholder' => 'or upload by URL.',
+            'uploading' => 'Uploading file...',
+            'cancel_button' => 'Cancel',
+        ],
+
+        'submit' => 'Apply now',
+    ],
 ];
