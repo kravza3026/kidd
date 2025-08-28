@@ -1,5 +1,8 @@
 @extends('store.checkout.layouts.checkout')
-
+@php
+    $progressWidth = '100%';
+    $step = 'Payment'
+@endphp
 @section('checkout-form')
     <div class="mb-8">
         <h1 class="text-[32px] font-bold">Review</h1>
@@ -25,7 +28,7 @@
 
                 </a>
             </div>
-            <div class="grid grid-cols-4 gap-y-6 text-sm">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-6 text-sm">
                 <div>
                     <p class="opacity-60">Region:</p>
                     <p class="font-bold text-base">{{ $checkoutData['shipping_region'] ?? '--' }}</p>
@@ -77,7 +80,7 @@
                     </svg>
                 </a>
             </div>
-            <div class="grid grid-cols-4 gap-y-6 text-sm">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-6 text-sm">
                 <div>
                     <p class="opacity-60">First Name:</p>
                     <p class="font-bold text-base">{{ $checkoutData['contact_first_name'] ?? '--' }}</p>
@@ -118,7 +121,7 @@
                    <span class="font-bold">Payment Method:</span>
                     {{ \App\Enums\PaymentMethod::tryFrom($checkoutData['payment_method'])->name }}
                 </p>
-                <div class="grid grid-cols-4 gap-y-6 text-sm">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-6 text-sm">
                     <div>
                         <p class="opacity-60">Region:</p>
                         <p class="font-bold text-base">{{ $checkoutData['billing_region'] ?? '--' }}</p>

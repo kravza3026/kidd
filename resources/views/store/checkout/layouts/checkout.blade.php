@@ -1,8 +1,13 @@
 <x-app-layout>
-    <div class="py-section container mx-auto">
-        <div class="mb-16">
-            <h1 class="text-5xl font-bold">
+    <div class="py-section relative container mx-auto">
+        <div class="fixed lg:hidden top-[72px] left-0 h-1 w-full bg-white z-10">
+            <div class="progress bg-olive h-full duration-500" style="width: {{ $progressWidth ?? '0%' }}"></div>
+        </div>
+        <div class="mb-5 lg:mb-16 opacity-80 lg:opacity-100">
+            <h1 class="text-3xl lg:text-5xl font-bold flex items-center gap-x-3">
                 {{ __('checkout.page_title') }}
+                <span class="lg:hidden opacity-10 text-[8px]">&#11044; </span>
+                <span>{{$step}}</span>
             </h1>
         </div>
 
@@ -12,7 +17,7 @@
                 @yield('checkout-form')
             </div>
 
-            <div class="order-1 lg:order-2">
+            <div class="hidden lg:block order-1 lg:order-2">
                 @include('store.checkout.layouts.summary')
             </div>
         </div>

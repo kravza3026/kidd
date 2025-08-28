@@ -1,11 +1,14 @@
 @use('App\Enums\ShippingMethod')
 
 @extends('store.checkout.layouts.checkout')
-
+@php
+    $progressWidth = '50%';
+    $step = 'Contacts'
+@endphp
 @section('checkout-form')
     <a
         href="{{ route('checkout.previous', ['step' => 'contact']) }}"
-        class="mb-8 grid grid-cols-17 items-start gap-x-2 font-medium"
+        class="mb-8 hidden lg:grid grid-cols-17 items-start gap-x-2 font-medium"
     >
         <p
             class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-sm font-bold text-white"
@@ -42,8 +45,8 @@
         </div>
     </a>
 
-    <hr class="border-light-border mb-8" />
-    <div class="mb-8 grid grid-cols-17 items-center">
+    <hr class="hidden lg:block border-light-border mb-8" />
+    <div class="mb-8 hidden lg:grid grid-cols-17 items-center">
         <p
             class="bg-olive col-span-1 flex size-8 items-center justify-center rounded-full text-sm font-bold text-white"
         >
@@ -56,9 +59,9 @@
     <form action="{{ route('checkout.process.contact') }}" method="POST" class="grid grid-cols-17">
         @csrf
 
-        <div class="col-span-16 col-start-2">
+        <div class="col-span-17 lg:col-span-16 lg:col-start-2">
             <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="col-span-1">
                         <x-ui.input-label
                             :placeholder="__('checkout.contact.form.first_name_placeholder')"
@@ -113,16 +116,18 @@
         </div>
     </form>
 
-    <hr class="border-light-border my-6" />
-    <div class="grid grid-cols-17 items-center gap-x-2 font-medium">
-        <p
-            class="border-charcoal/30 col-span-1 flex size-8 items-center justify-center rounded-full border-2 text-sm font-bold opacity-30"
-        >
-            3
-        </p>
-        <p class="col-span-16 text-2xl">
-            {{ __('checkout.steps.payment') }}
-        </p>
+    <div class="hidden lg:block">
+        <hr class="border-light-border my-6" />
+        <div class="grid grid-cols-17 items-center gap-x-2 font-medium">
+            <p
+                class="border-charcoal/30 col-span-1 flex size-8 items-center justify-center rounded-full border-2 text-sm font-bold opacity-30"
+            >
+                3
+            </p>
+            <p class="col-span-16 text-2xl">
+                {{ __('checkout.steps.payment') }}
+            </p>
+        </div>
+        <hr class="border-light-border my-6" />
     </div>
-    <hr class="border-light-border my-6" />
 @endsection

@@ -1,12 +1,17 @@
 @extends('store.checkout.layouts.checkout')
+@php
+    $progressWidth = '25%';
+    $step = 'Shipping'
+@endphp
 @use('App\Enums\ShippingMethod')
 @section('checkout-form')
+
     <div class="pb-section grid grid-cols-17 gap-4">
         <div class="col-span-1 hidden lg:flex items-start justify-start">
             <p class="bg-olive flex size-8 items-center justify-center rounded-full text-sm font-bold text-white">1</p>
         </div>
-        <div class="col-span-16">
-            <div class="mb-8">
+        <div class="col-span-17 lg:col-span-16">
+            <div class="hidden lg:block mb-8">
                 <h1 class="text-3xl font-bold">
                     {{ __('checkout.steps.shipping') }}
                 </h1>
@@ -15,7 +20,7 @@
             <form action="{{ route('checkout.process.shipping') }}" method="POST" class="space-y-6">
                 @csrf
 
-                <label for="shipping_method" class="text-charcoal mb-2 block text-sm font-medium">
+                <label for="shipping_method" class="text-charcoal mb-2 block text-xl font-bold lg:font-medium">
                     {{ __('checkout.shipping.form.shipping_method') }}
                 </label>
                 <div class="grid min-h-10 grid-cols-1 lg:grid-cols-3 gap-4">
@@ -126,9 +131,9 @@
                             for="shipping_express"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
-                            </div>
+                            <span class="block border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
+                                <span class="marker block peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></span>
+                            </span>
                         </label>
                         <div
                             class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
