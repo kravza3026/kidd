@@ -1,10 +1,10 @@
 @extends('store.checkout.layouts.checkout')
 @php
     $progressWidth = '100%';
-    $step = 'Payment'
+    $step = 'Review'
 @endphp
 @section('checkout-form')
-    <div class="mb-8">
+    <div class="mb-8 hidden lg:block">
         <h1 class="text-[32px] font-bold">Review</h1>
         <p class="text-charcoal/60 mt-2 text-sm">{{ __('checkout.review.subtitle') }}</p>
     </div>
