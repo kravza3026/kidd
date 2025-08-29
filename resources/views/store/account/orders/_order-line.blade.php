@@ -276,6 +276,7 @@
                 <p class="text-olive text-base font-bold">
                     {{ __('general.price', ['price' => $order->items->sum('price_total') / 100]) }}
                 </p>
+
             </div>
         </div>
         <div class="px-6">

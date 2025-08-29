@@ -84,10 +84,8 @@
                             for="shipping_gift"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span
-                                class="border-olive absolute top-2 right-2 z-20 block size-4 rounded-full border-1 p-0.5"
-                            >
-                                <span class="marker peer-checked:bg-olive block h-[10px] w-[10px] rounded-full"></span>
+                             <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
                             </span>
                         </label>
                         <div
@@ -131,8 +129,8 @@
                             for="shipping_express"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span class="block border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <span class="marker block peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></span>
+                            <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
                             </span>
                         </label>
                         <div

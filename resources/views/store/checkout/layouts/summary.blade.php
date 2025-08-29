@@ -80,10 +80,6 @@
             </div>
         @endforeach
 
-        {{-- <div class="flex justify-between text-sm"> --}}
-        {{-- <span class="text-charcoal/60">{{ __('checkout.summary.discount') }}</span> --}}
-        {{-- <span class="font-bold">{{ $total_discount }} {{ __('general.mdl') }}</span> --}}
-        {{-- </div> --}}
         <hr class="border-light-border my-2" />
         <div class="flex justify-between pt-3 text-base font-bold">
             <span>{{ __('checkout.summary.total') }}</span>
@@ -105,6 +101,7 @@
                         1035 lei
                     </span>
                 </p>
+{{--     TODO add progress in %           --}}
                 <span class="w-[calc(45%-5rem)] !max-w-[60%]"></span>
                 <p class="relative flex items-center rounded-2xl border-2 border-white px-2 py-0.5 font-bold">
                     +465 lei

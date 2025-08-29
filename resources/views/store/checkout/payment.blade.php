@@ -120,10 +120,8 @@
                             for="payment_method_card"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span
-                                class="border-olive absolute top-2 right-2 z-20 block size-4 rounded-full border-1 p-0.5"
-                            >
-                                <span class="marker peer-checked:bg-olive block h-[10px] w-[10px] rounded-full"></span>
+                             <span class="border-olive flex justify-center items-center absolute top-2/7 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
                             </span>
                         </label>
                         <div
@@ -166,10 +164,8 @@
                             for="payment_method_transfer"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span
-                                class="border-olive absolute top-2 right-2 z-20 block size-4 rounded-full border-1 p-0.5"
-                            >
-                                <span class="marker peer-checked:bg-olive block h-[10px] w-[10px] rounded-full"></span>
+                            <span class="border-olive flex justify-center items-center absolute top-2/7 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
                             </span>
                         </label>
                         <div
@@ -211,9 +207,9 @@
                             for="payment_method_online"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
-                            </div>
+                            <span class="border-olive flex justify-center items-center absolute top-2/7 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            </span>
                         </label>
                         <div
                             class="border-light-border flex gap-x-3 lg:grid peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
@@ -254,9 +250,9 @@
                             for="payment_method_terminal"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <div class="border-olive absolute top-2 right-2 z-20 size-4 rounded-full border-1 p-0.5">
-                                <p class="marker peer-checked:bg-olive h-[10px] w-[10px] rounded-full"></p>
-                            </div>
+                            <span class="border-olive flex justify-center items-center absolute top-2/7 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            </span>
                         </label>
                         <div
                             class="border-light-border flex gap-x-3 lg:grid peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"

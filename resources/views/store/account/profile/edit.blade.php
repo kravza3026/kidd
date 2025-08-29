@@ -2,7 +2,9 @@
     <div class="max-w-5xl mx-auto bg-white sm:bg-transparent sm:pt-16 sm:pb-20 space-y-4">
         <div class="bg-white sm:shadow sm:rounded-xl">
             @include('store.account.nav')
+
             <div class="px-4 sm:p-10">
+
                 @include('store.account.profile.partials.profile')
             </div>
         </div>

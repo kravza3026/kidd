@@ -16,8 +16,8 @@
             <div class="order-2 lg:order-1">
                 @yield('checkout-form')
             </div>
-
-            <div class="hidden lg:block order-1 lg:order-2">
+{{--             TODO add in last step--}}
+            <div class=" {{$step !== 'Review' ? 'hidden' : ''}} lg:block order-1 lg:order-2">
                 @include('store.checkout.layouts.summary')
             </div>
         </div>
