@@ -63,6 +63,7 @@
                                 {{-- // TODO - change link from terms to policy url. --}}
                             </label>
                         </div>
+                        <x-input-error :messages="$errors->get('consent')" class="mt-2" />
 
                         <x-ui.button as="button" type="submit" class="my-0">
                             {{ __('contacts.form.submit') }}

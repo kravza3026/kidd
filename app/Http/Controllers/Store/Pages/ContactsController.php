@@ -35,7 +35,7 @@ class ContactsController extends Controller
             'title' => __('general.modal.title-contacts'),
             'message' => __('general.modal.message-contacts'),
             'image' => [
-                'url' => Vite::image('icons/chat.svg'),
+                'url' => Vite::image('icons/olive/chat.svg'),
                 'alt' => __('general.modal.img_alt-contact'),
             ],
         ]);

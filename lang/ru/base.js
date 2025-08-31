@@ -116,9 +116,9 @@ export default {
         edit: 'Редактировать',
         delete: 'Удалить',
 
-        placeholder_name: 'Имя',
-        placeholder_gender: 'Пол',
-        placeholder_birthday: 'дд.мм.гггг',
+        name_placeholder: 'Имя',
+        gender_placeholder: 'Пол',
+        birthday_placeholder: 'дд.мм.гггг',
         height_label: 'см',
         height_placeholder: 'Высота',
         weight_label: 'кг',

@@ -203,16 +203,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     }
 
     /**
-     * Get the localized route key for the model.
-     *
-     * @param  string  $locale
-     */
-    public function getLocalizedRouteKey($locale): string
-    {
-        return $this->getSlugOptions()->slugField.'->'.$locale;
-    }
-
-    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
@@ -220,6 +210,16 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         return SlugOptions::createWithLocales(array_keys(config('app.locales')))
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    /**
+     * Get the localized route key for the model.
+     *
+     * @param  string  $locale
+     */
+    public function getLocalizedRouteKey($locale): string
+    {
+        return $this->getSlugOptions()->slugField.'->'.$locale;
     }
 
     /**
@@ -279,12 +279,16 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     {
         $this->addMediaConversion('preview')
             ->performOnCollections('thumbnail')
+            ->withResponsiveImages()
+            ->format('webp')
+            ->quality(90)
             ->fit(Fit::Contain, 330, 360);
 
         $this->addMediaConversion('gallery')
             ->performOnCollections('gallery')
             ->fit(Fit::Contain, 630, 640)
             ->quality(90)
+            ->format('webp')
             ->withResponsiveImages();
     }
 }

@@ -67,6 +67,11 @@ class Family extends Model
         return "family_member:{$this->id}:compatible_sizes";
     }
 
+    public function getWeightAttribute(): int
+    {
+        return $this->attributes['weight'] / 1000; // Convert grams to kilograms
+    }
+
     public function getAgeDiffAttribute(): Carbon|string
     {
         return $this->birth_date

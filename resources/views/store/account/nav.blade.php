@@ -143,7 +143,7 @@
                 >
                     {{ auth()->user()->addresses()->whereIn('address_type', [3, 4])->count() }}
                 </span>
-            </div>asdsad
+            </div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
