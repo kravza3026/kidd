@@ -152,22 +152,6 @@
                     </div>
                 </div>
 
-                {{-- Delivered --}}
-                <div class="grid grid-cols-12 gap-x-2 px-4">
-                    <div class="col-span-2  flex relative justify-center">
-                        <div class="size-10 {{ $order->status->name === 'Delivered' ? 'bg-olive' : 'bg-light-border' }} rounded-full flex justify-center items-center relative z-10">
-                            <img
-                                src="{{ Vite::image($order->status->name === 'Delivered' ? '/icons/white/rubine.svg' : '/icons/rubine_outline.svg') }}"
-                                alt="delivered"
-                                class="{{ $order->status->name === 'Delivered' ? '' : 'opacity-40' }}"
-                            >
-                        </div>
-                    </div>
-                    <div class="col-span-10">
-                        <p class="font-bold text-base">Package delivered to client</p>
-                        <p class="opacity-40 text-sm">17 Apr 2023 at 12:58</p>
-                    </div>
-                </div>
 
             </div>
 
