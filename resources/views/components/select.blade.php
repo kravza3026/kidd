@@ -18,18 +18,18 @@
 <div class="flex flex-col gap-3 mt-3 {{ $customClass }}">
     <!-- Select -->
     @if ($label)
-        <label for="{{ $id ?? Str::kebab($name) }}" class="text-sm font-bold">
+        <label for="{{ $id ?? Str::kebab($name) }}" class="text-sm font-medium">
             {{ $label }}
         </label>
     @endif
         <select @disabled($disabled) name="{{$name}}" id="{{$id}}"
                 {{ $attributes->merge(['class' => "p-3 pe-8 flex w-full text-charcoal ${disabled_class} text-sm
-                border border-light-border focus:outline-hidden rounded-xl"]) }}>
+                border border-light-border focus:outline-hidden rounded-xl "]) }}>
             @if($placeholder)
                 <option value="0">{{ $placeholder }}</option>
             @endif
             @foreach($options as $key => $option)
-                <option value="{{ $key }}" @selected($key == $selected)>{{$option}}</option>
+                <option class="bg-white text-charcoal hover:bg-olive hover:text-white focus:bg-olive focus:text-white" value="{{ $key }}" @selected($key == $selected)>{{$option}}</option>
             @endforeach
         </select>
     <!-- End Select -->

@@ -203,7 +203,10 @@
         @apply block;
     }
 }
-
+.radial-bg{
+    background: var(--color-light-orange);
+    background: radial-gradient(circle,rgba(248, 247, 242, 1) 0%, rgba(168, 186, 102, 0.15) 100%);
+}
 ul.markers {
     list-style-image: url('../images/icons/olive/list_marker.png');
 

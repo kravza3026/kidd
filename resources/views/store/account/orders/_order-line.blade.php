@@ -76,7 +76,7 @@
     <div
         class="h-0 origin-top scale-y-0 opacity-0 transition-transform duration-300 peer-checked:h-auto peer-checked:scale-y-100 peer-checked:opacity-100"
     >
-        <div class="p-6">
+        <div class="p-3 lg:p-6">
             <div class="flex items-center justify-between font-bold">
                 <p class="text-lg">
                     {{ __('order.titles.delivery') }}
@@ -89,57 +89,57 @@
                     <span class="text-olive text-sm">{{ __('order.delivery.track_button') }}</span>
                 </a>
             </div>
-            <div class="mt-6 flex flex-wrap items-center justify-start gap-9">
-                <p class="grid min-w-1/6 text-base">
+            <div class="mt-6 flex flex-wrap items-center justify-start gap-3 lg:gap-9">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_region') }}</span>
                     <span class="font-bold">{{ $order->shipping->region->name }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_city') }}</span>
                     <span class="font-bold">{{ $order->shipping->city->name }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_street_name') }}</span>
                     <span class="font-bold">{{ $order->shipping->street_name }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_building') }}</span>
                     <span class="font-bold">{{ $order->shipping->building }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_apartment') }}</span>
                     <span class="font-bold">{{ $order->shipping->apartment }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_entrance') }}</span>
                     <span class="font-bold">{{ $order->shipping->entrance }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_floor') }}</span>
                     <span class="font-bold">{{ $order->shipping->floor }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_intercom') }}</span>
                     <span class="font-bold">{{ $order->shipping->intercom }}</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_postal_code') }}</span>
                     <span class="font-bold">{{ $order->shipping->postal_code }}</span>
                 </p>
             </div>
-            <div class="mt-6 flex flex-wrap items-center justify-start gap-9">
-                <p class="grid min-w-1/6 text-base">
+            <div class="mt-3 lg:mt-6 flex flex-wrap items-center justify-start gap-3 lg:gap-9">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_method') }}</span>
                     <span class="font-bold">
                         {{-- TODO - Translate --}}
                         {{ $order->shipping_method->label() }}
                     </span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_tracking') }}</span>
                     <span class="font-bold">UE239931833HK</span>
                 </p>
-                <p class="grid min-w-1/6 text-base">
+                <p class="flex justify-between lg:grid min-w-full lg:min-w-1/6 text-base">
                     <span class="opacity-40">{{ __('order.delivery.delivery_vendor') }}</span>
                     <span class="font-bold">Nova Poshta Moldova</span>
                 </p>
@@ -190,11 +190,12 @@
             <h2 class="text-lg font-bold">{{ __('order.titles.products') }}</h2>
             <div class="grid grid-cols-1 gap-4 py-2 lg:grid-cols-4">
                 @foreach ($order->items as $product)
-                    @include('store.account.orders._order-product-item', compact('product'))
+                    @include('store.account.orders.components._order-product-item', compact('product'))
                 @endforeach
             </div>
         </div>
-        <div class="lg:border-light-border p-0 lg:border-t lg:p-6">
+
+        <div class="lg:border-light-border p-1 lg:border-t lg:p-6">
             <div class="flex items-center justify-between font-bold">
                 <h2 class="text-lg">{{ __('order.titles.payment') }}</h2>
                 <a

@@ -317,12 +317,12 @@
                 >
                     <div class="lg:border border-light-border space-y-4 rounded-2xl ">
                         <div class="lg:bg-light-orange flex-wrap grid grid-cols-12 items-center justify-between rounded-t-2xl lg:p-4">
-                            <h2 class="col-span-5 lg:col-span-4 text-xl lg:text-base leading-[-2%] font-bold mt-3">
+                            <h2 class="col-span-5 lg:col-span-4 text-xl lg:text-base leading-[-2%] font-bold ">
                                 {{ __('checkout.payment.billing_title') }}
                             </h2>
 
 
-                            <div class="flex justify-end col-span-7 col-start-6 lg:col-start-5 lg:col-span-4 items-center gap-x-2 mt-3">
+                            <div class="flex justify-end col-span-7 col-start-6 lg:col-start-5 lg:col-span-4 items-center gap-x-2 mr-2">
                                 <x-ui.checkbox
                                     id="billing_sas"
                                     x-model="same_as_shipping"
