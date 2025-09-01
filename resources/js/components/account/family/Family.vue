@@ -1,12 +1,12 @@
 <script>
-import {ref} from 'vue';
-import {useI18n} from 'vue-i18n';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import Button from '@/components/ui/Button.vue';
 import SubscribeForm from '@/components/ui/subscribeForm.vue';
 import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import clickOutside from '@/clickOutside.js';
-import {useAlert} from '@/useAlert.js'; // icons
+import { useAlert } from '@/useAlert.js'; // icons
 import iconMarker from '@img/icons/marker_outline.png';
 import iconUnknow from '@img/common/baby_unknown.svg';
 import iconTrash from '@img/common/trash.svg';

@@ -1,140 +1,183 @@
 <x-app-layout>
     @push('head')
-{{--        <link rel="stylesheet" href="{{ asset('css/locations.css') }}">--}}
+        {{-- <link rel="stylesheet" href="{{ asset('css/locations.css') }}"> --}}
     @endpush
 
     <section class="container py-10">
-        <div class="opacity-80 text-black text-5xl font-bold leading-10">
+        <div class="text-5xl leading-10 font-bold text-black opacity-80">
             {{ __('header.topline.locations') }}
         </div>
     </section>
-<div class="block w-full h-full min-h-[90vh] -mb-7 sm:mb-0" id="map"></div>
+    <div class="-mb-7 block h-full min-h-[90vh] w-full sm:mb-0" id="map"></div>
 
-@push('scripts')
-<script>
-    (g=>{let h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new
-    Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-        key: "{{ config('services.google_maps.key') }}",
-        v: "weekly",
-        language: "{{ app()->getLocale() }}",
-        region: "MD", // Set the region to Moldova
-        libraries: "marker", // Load the places library if needed
-        // v: "weekly", // or "beta", "alpha", etc.
-    });
-
-    // Initialize Google Maps
-    let map;
-
-    async function initMap() {
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-        // Create a new map instance
-        map = new Map(document.getElementById("map"), {
-            center: { lat: 47.015095, lng: 28.854760 }, // Center the map on Chișinău
-            mapId: "b4965ddab758c5fcdf626e9d",
-            zoom: 13,
-            disableDefaultUI: true,
-        });
-
-        // Add a custom control to the map
-        const controlDiv = document.createElement("div");
-        controlDiv.classList.add("custom-control");
-
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
-
-        const select = document.createElement('select');
-        select.classList.add('bg-white', 'text-sm', 'font-light', 'mt-8', 'ml-12', 'px-3', 'py-2', 'focus:outline-hidden', 'rounded-sm', 'border-none');
-
-        const defaultOption = document.createElement('option');
-        defaultOption.value = 0;
-        defaultOption.selected = true;
-        defaultOption.textContent = 'All locations';
-        select.appendChild(defaultOption);
-
-            locations.forEach((marker, index) => {
-                const option = document.createElement('option');
-                option.value = marker.address;
-                option.textContent = marker.address;
-
-                select.appendChild(option);
+    @push('scripts')
+        <script>
+            ((g) => {
+                let h,
+                    a,
+                    k,
+                    p = 'The Google Maps JavaScript API',
+                    c = 'google',
+                    l = 'importLibrary',
+                    q = '__ib__',
+                    m = document,
+                    b = window;
+                b = b[c] || (b[c] = {});
+                var d = b.maps || (b.maps = {}),
+                    r = new Set(),
+                    e = new URLSearchParams(),
+                    u = () =>
+                        h ||
+                        (h = new Promise(async (f, n) => {
+                            await (a = m.createElement('script'));
+                            e.set('libraries', [...r] + '');
+                            for (k in g)
+                                e.set(
+                                    k.replace(/[A-Z]/g, (t) => '_' + t[0].toLowerCase()),
+                                    g[k],
+                                );
+                            e.set('callback', c + '.maps.' + q);
+                            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+                            d[q] = f;
+                            a.onerror = () => (h = n(Error(p + ' could not load.')));
+                            a.nonce = m.querySelector('script[nonce]')?.nonce || '';
+                            m.head.append(a);
+                        }));
+                d[l]
+                    ? console.warn(p + ' only loads once. Ignoring:', g)
+                    : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
+            })({
+                key: '{{ config('services.google_maps.key') }}',
+                v: 'weekly',
+                language: '{{ app()->getLocale() }}',
+                region: 'MD', // Set the region to Moldova
+                libraries: 'marker', // Load the places library if needed
+                // v: "weekly", // or "beta", "alpha", etc.
             });
 
-        controlDiv.appendChild(select);
+            // Initialize Google Maps
+            let map;
 
-        select.addEventListener('change', () => {
-            const selectedAddress = select.value;
+            async function initMap() {
+                const { Map } = await google.maps.importLibrary('maps');
+                const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-            if (selectedAddress === '0') {
-                // Показати всі маркери, якщо вибрано "All locations"
-                markerViews.forEach(({ view }) => {
-                    view.content.style.display = '';
+                // Create a new map instance
+                map = new Map(document.getElementById('map'), {
+                    center: { lat: 47.015095, lng: 28.85476 }, // Center the map on Chișinău
+                    mapId: 'b4965ddab758c5fcdf626e9d',
+                    zoom: 13,
+                    disableDefaultUI: true,
                 });
 
-                map.setCenter({ lat: 47.015095, lng: 28.854760 }); // Центр Chișinău
-                map.setZoom(13);
-                return;
-            }
+                // Add a custom control to the map
+                const controlDiv = document.createElement('div');
+                controlDiv.classList.add('custom-control');
 
-            // Показати лише обраний маркер, сховати інші
-            markerViews.forEach(({ view, type }) => {
-                if (type === selectedAddress) {
-                    view.content.style.display = '';
-                } else {
-                    view.content.style.display = 'none';
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
+
+                const select = document.createElement('select');
+                select.classList.add(
+                    'bg-white',
+                    'text-sm',
+                    'font-light',
+                    'mt-8',
+                    'ml-12',
+                    'px-3',
+                    'py-2',
+                    'focus:outline-hidden',
+                    'rounded-sm',
+                    'border-none',
+                );
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = 0;
+                defaultOption.selected = true;
+                defaultOption.textContent = 'All locations';
+                select.appendChild(defaultOption);
+
+                locations.forEach((marker, index) => {
+                    const option = document.createElement('option');
+                    option.value = marker.address;
+                    option.textContent = marker.address;
+
+                    select.appendChild(option);
+                });
+
+                controlDiv.appendChild(select);
+
+                select.addEventListener('change', () => {
+                    const selectedAddress = select.value;
+
+                    if (selectedAddress === '0') {
+                        // Показати всі маркери, якщо вибрано "All locations"
+                        markerViews.forEach(({ view }) => {
+                            view.content.style.display = '';
+                        });
+
+                        map.setCenter({ lat: 47.015095, lng: 28.85476 }); // Центр Chișinău
+                        map.setZoom(13);
+                        return;
+                    }
+
+                    // Показати лише обраний маркер, сховати інші
+                    markerViews.forEach(({ view, type }) => {
+                        if (type === selectedAddress) {
+                            view.content.style.display = '';
+                        } else {
+                            view.content.style.display = 'none';
+                        }
+                    });
+
+                    // Знайти обрану локацію
+                    const selectedLocation = locations.find((loc) => loc.address === selectedAddress);
+
+                    if (selectedLocation) {
+                        map.panTo(selectedLocation.position);
+                        map.setZoom(14);
+                    }
+                });
+
+                const markerViews = [];
+
+                for (const store_location of locations) {
+                    const markerView = new google.maps.marker.AdvancedMarkerElement({
+                        map,
+                        content: buildContent(store_location),
+                        position: store_location.position,
+                    });
+
+                    markerView.addListener('click touch', () => {
+                        toggleHighlight(markerView, store_location);
+                    });
+
+                    markerViews.push({
+                        view: markerView,
+                        type: store_location.address,
+                    });
+
+                    // Якщо потрібен доступ до content для фільтрації
+                    store_location.content = markerView.content;
                 }
-            });
-
-            // Знайти обрану локацію
-            const selectedLocation = locations.find(loc => loc.address === selectedAddress);
-
-            if (selectedLocation) {
-                map.panTo(selectedLocation.position);
-                map.setZoom(14);
             }
-        });
 
-        const markerViews = [];
+            // Function to toggle highlight on marker click
+            // This function adds or removes a highlight class and adjusts the z-index
+            function toggleHighlight(markerView, store_location) {
+                if (markerView.content.classList.contains('highlight')) {
+                    markerView.content.classList.remove('highlight');
+                    markerView.zIndex = null;
+                } else {
+                    markerView.content.classList.add('highlight');
+                    markerView.zIndex = 1;
+                }
+            }
 
-        for (const store_location of locations) {
-            const markerView = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                content: buildContent(store_location),
-                position: store_location.position,
-            });
-
-            markerView.addListener("click", () => {
-                toggleHighlight(markerView, store_location);
-            });
-
-            markerViews.push({
-                view: markerView,
-                type: store_location.address
-            });
-
-            // Якщо потрібен доступ до content для фільтрації
-            store_location.content = markerView.content;
-        }
-
-    }
-
-    // Function to toggle highlight on marker click
-    // This function adds or removes a highlight class and adjusts the z-index
-    function toggleHighlight(markerView, store_location) {
-        if (markerView.content.classList.contains("highlight")) {
-            markerView.content.classList.remove("highlight");
-            markerView.zIndex = null;
-        } else {
-            markerView.content.classList.add("highlight");
-            markerView.zIndex = 1;
-        }
-    }
-
-    // Function to build the content for each marker
-    function buildContent(property) {
-        const content = document.createElement("div");
-        content.classList.add("marker-content");
-        content.innerHTML = `
+            // Function to build the content for each marker
+            function buildContent(property) {
+                const content = document.createElement('div');
+                content.classList.add('marker-content');
+                content.innerHTML = `
                   <div class="custom-marker group relative " >
         <div class="text-red-500 duration-700 group-hover:text-charcoal">
                  <svg width="112" height="117" viewBox="0 0 112 117"  xmlns="http://www.w3.org/2000/svg">
@@ -188,70 +231,71 @@
             </div>
         </div>
         `;
-        return content;
-    }
-
-    // TODO Store Locations implementation
-    // City from database will have relation with HasMany relation with locations
-
-    // Define the locations with their details
-    const locations = [
-            {
-                content:{
-                    style:{
-                        display:''
-                    },
-                },
-                name: 'Store #3',
-                address: 'mun. Chișinău, str. Albisoara 3/1',
-                description: {
-                    hours:'Working hours — 09:00-20:00',
-                    dayOff:'Sunday — day-off'
-                },
-                type: 'store',
-                position: {
-                    lat: 47.0144034,
-                    lng: 28.8561766,
-                }
-            }, {
-                content:{
-                    style:{
-                        display:''
-                    },
-                },
-                name: 'Warehouse #1',
-                address: 'mun. Chișinău, str. Muncești 5',
-                description: {
-                    hours:'Working hours — 09:00-20:00',
-                    dayOff:'Sunday — day-off'
-                },
-                type: 'warehouse',
-                position: {
-                    lat: 47.0226291,
-                    lng: 28.8670329,
-                }
-            }, {
-                content:{
-                    style:{
-                        display:''
-                    },
-                },
-                name: 'Store #7',
-                address: 'or. Ungheni, bd. Decebal 12',
-                description: {
-                    hours:'Working hours — 09:00-20:00',
-                    dayOff:'Sunday — day-off'
-                },
-                type: 'store',
-                position: {
-                    lat: 46.9918719,
-                    lng: 28.8580194,
-                }
+                return content;
             }
-        ];
 
-    initMap();
+            // TODO Store Locations implementation
+            // City from database will have relation with HasMany relation with locations
 
-</script>
-@endpush
+            // Define the locations with their details
+            const locations = [
+                {
+                    content: {
+                        style: {
+                            display: '',
+                        },
+                    },
+                    name: 'Store #3',
+                    address: 'mun. Chișinău, str. Albisoara 3/1',
+                    description: {
+                        hours: 'Working hours — 09:00-20:00',
+                        dayOff: 'Sunday — day-off',
+                    },
+                    type: 'store',
+                    position: {
+                        lat: 47.0144034,
+                        lng: 28.8561766,
+                    },
+                },
+                {
+                    content: {
+                        style: {
+                            display: '',
+                        },
+                    },
+                    name: 'Warehouse #1',
+                    address: 'mun. Chișinău, str. Muncești 5',
+                    description: {
+                        hours: 'Working hours — 09:00-20:00',
+                        dayOff: 'Sunday — day-off',
+                    },
+                    type: 'warehouse',
+                    position: {
+                        lat: 47.0226291,
+                        lng: 28.8670329,
+                    },
+                },
+                {
+                    content: {
+                        style: {
+                            display: '',
+                        },
+                    },
+                    name: 'Store #7',
+                    address: 'or. Ungheni, bd. Decebal 12',
+                    description: {
+                        hours: 'Working hours — 09:00-20:00',
+                        dayOff: 'Sunday — day-off',
+                    },
+                    type: 'store',
+                    position: {
+                        lat: 46.9918719,
+                        lng: 28.8580194,
+                    },
+                },
+            ];
+
+            initMap();
+        </script>
+    @endpush
 </x-app-layout>

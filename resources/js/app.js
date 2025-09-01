@@ -1,12 +1,12 @@
 import './bootstrap';
 
-import {createApp} from 'vue';
-import {ZiggyVue} from 'ziggy-js';
-import {Ziggy} from './ziggy.js';
+import { createApp } from 'vue';
+import { ZiggyVue } from 'ziggy-js';
+import { Ziggy } from './ziggy.js';
 
 import Alpine from 'alpinejs';
 import Precognition from 'laravel-precognition-alpine';
-import {default as IMask} from 'imask';
+import { default as IMask } from 'imask';
 
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
@@ -28,7 +28,7 @@ import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
 import Swal from 'sweetalert2';
 import i18n from './i18n';
-import {useAlert} from '@/useAlert';
+import { useAlert } from '@/useAlert';
 
 import.meta.glob('../images/**/*');
 
@@ -107,7 +107,7 @@ window.addEventListener('load', function () {
     document.querySelectorAll('#phone, #contact_phone').forEach((phone_input) => {
         if (phone_input !== null) {
             IMask(phone_input, {
-                mask: '+{373} (00) 00 00 00',
+                mask: '+{373} (00) 000 000',
                 lazy: true, // make placeholder always visible
                 placeholderChar: '_', // defaults to '_'
             });

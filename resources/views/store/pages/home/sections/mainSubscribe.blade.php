@@ -1,19 +1,29 @@
 <section class="pt-section">
-    <div class="grid grid-cols-1 md:flex items-center relative justify-start bg-olive  h-fit min-h-[380px] xl:min-h-[560px]">
-
-        <div class="container order-2 md:order-1 pb-7 md:pb-0 relative h-full grid items-center content-center"
-             data-vue-component="SubscribeForm"
-             data-vue-props='{
-                "title": "Subscribe to newsletter and get 25% off your first order",
-                "secondaryTitle": "Receive the latest updates and take advantage of great offers",
+    <div
+        class="bg-olive relative grid h-fit min-h-[380px] grid-cols-1 items-center justify-start md:flex xl:min-h-[560px]"
+    >
+        <div
+            class="relative order-2 container grid h-full content-center items-center pb-7 md:order-1 md:pb-0"
+            data-vue-component="SubscribeForm"
+            data-vue-props='{
+                "title": "Это не должен быть Vue Component",
+                "secondaryTitle": "{{ __('main.subscribe.subtitle') }}",
                 "contentWidth": "w-full md:w-5/12",
                 "formClass": "mt-10"
             }'
         ></div>
-        <div class="w-full md:absolute right-0 md:w-6/12 min-h-[380px] xl:min-h-[560px] order-1 md:order-2"
-             style="background-image: url({{ Vite::image('subscribe_bg.jpg') }}); background-size: cover; background-position: center; background-repeat: no-repeat;"
-        >
-
-        </div>
+        {{-- {{ __('main.subscribe.title') }} --}}
+        {{-- {{ __('main.subscribe.subtitle') }} --}}
+        {{-- {{ __('main.subscribe.email_placeholder') }} --}}
+        {{-- {{ __('main.subscribe.subscribe_btn') }} --}}
+        <div
+            class="right-0 order-1 min-h-[380px] w-full md:absolute md:order-2 md:w-6/12 xl:min-h-[560px]"
+            style="
+                background-image: url({{ Vite::image('subscribe_bg.jpg') }});
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            "
+        ></div>
     </div>
 </section>

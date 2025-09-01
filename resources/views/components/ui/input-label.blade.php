@@ -7,7 +7,7 @@
     'id' => null,
     'placeholder' => '',
     'value' => '',
-    'customClass' => '',
+    'customClass' => 'text-base',
     'labelClass' => 'font-medium',
 ])
 

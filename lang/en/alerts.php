@@ -37,9 +37,9 @@ return [
     'actions' => [
         'added' => 'Added successfully',
         'saved' => 'Saved successfully',
-        'deleted' => 'Deleted successfully',
         'created' => 'Created successfully',
         'updated' => 'Updated successfully',
         'removed' => 'Removed successfully',
+        'deleted' => 'Deleted successfully',
     ],
 ];

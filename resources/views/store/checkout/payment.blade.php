@@ -358,7 +358,7 @@
                                         </span>
                                         <span>
                                             <img
-                                                src="{{ Vite::image('/icons/select-arrows_o.svg') }}"
+                                                src="{{ Vite::image('icons/select-arrows_o.svg') }}"
                                                 alt=""
                                             />
                                         </span>

@@ -67,7 +67,7 @@ class Family extends Model
         return "family_member:{$this->id}:compatible_sizes";
     }
 
-    public function getWeightAttribute(): int
+    public function getWeightAttribute(): float|int
     {
         return $this->attributes['weight'] / 1000; // Convert grams to kilograms
     }
