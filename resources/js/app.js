@@ -7,7 +7,6 @@ import { Ziggy } from './ziggy.js';
 import Alpine from 'alpinejs';
 import Precognition from 'laravel-precognition-alpine';
 import { default as IMask } from 'imask';
-
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
 import CartDropdown from './components/cart/CartDropdown.vue';
@@ -20,7 +19,6 @@ import Cart from './components/cart/Cart.vue';
 import ProductPageForm from './components/product/ProductPageForm.vue';
 import ProductSlider from './components/ui/productSlider.vue';
 import ProductsCardsSlider from './components/product/ProductsCardsSlider.vue';
-import SubscribeForm from './components/ui/subscribeForm.vue';
 import Accordion from './components/ui/accordion.vue';
 import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
@@ -53,7 +51,6 @@ const components = {
     UserDropdown,
     Button,
     Tooltip,
-    SubscribeForm,
     ScrollToTop,
     SizeGuide,
     ProductCard,

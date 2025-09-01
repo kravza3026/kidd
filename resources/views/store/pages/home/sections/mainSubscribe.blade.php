@@ -2,16 +2,14 @@
     <div
         class="bg-olive relative grid h-fit min-h-[380px] grid-cols-1 items-center justify-start md:flex xl:min-h-[560px]"
     >
-        <div
-            class="relative order-2 container grid h-full content-center items-center pb-7 md:order-1 md:pb-0"
-            data-vue-component="SubscribeForm"
-            data-vue-props='{
-                "title": "Это не должен быть Vue Component",
-                "secondaryTitle": "{{ __('main.subscribe.subtitle') }}",
-                "contentWidth": "w-full md:w-5/12",
-                "formClass": "mt-10"
-            }'
-        ></div>
+        <x-subscribe-form
+            title="Stay updated"
+            secondaryTitle="{{ __('main.subscribe.subtitle') }}"
+            baseClass="relative order-2 container grid h-full content-center items-center pb-7 md:order-1 md:pb-0"
+            contentWidth="w-full md:w-5/12 "
+            titlClass="text-3xl"
+            formClass="mt-6"
+        />
         {{-- {{ __('main.subscribe.title') }} --}}
         {{-- {{ __('main.subscribe.subtitle') }} --}}
         {{-- {{ __('main.subscribe.email_placeholder') }} --}}

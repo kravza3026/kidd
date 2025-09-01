@@ -1,7 +1,6 @@
 <script>
 import { ref } from 'vue';
 import Button from '@/components/ui/Button.vue';
-import SubscribeForm from '@/components/ui/subscribeForm.vue';
 import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 import clickOutside from '@/clickOutside.js';
 import iconMarker from '@img/icons/marker_outline.png';
@@ -33,7 +32,7 @@ const addressTemplate = {
 };
 export default {
     name: 'Addresses',
-    components: { BaseInput, Button, SubscribeForm, BaseCheckbox },
+    components: { BaseInput, Button, BaseCheckbox },
 
     directives: {
         clickOutside,

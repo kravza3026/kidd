@@ -9,12 +9,11 @@ import iconCheck from '@img/icons/checked_white.svg'
 import iconDelete from '@img/icons/close.svg'
 import { useI18n } from 'vue-i18n'
 import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
-import SubscribeForm from "@/components/ui/subscribeForm.vue";
 import selectIcon from "@img/icons/select-arrows_o.svg"
 import Button from "@/components/ui/Button.vue";
 export default {
     name: 'Cart',
-    components: {Button, SubscribeForm, BaseCheckbox},
+    components: {Button, BaseCheckbox},
 
     directives: {
         clickOutside,
@@ -539,14 +538,7 @@ export default {
    </div>
 
 
-    <SubscribeForm
-        title = "Subscribe to newsletter and get 25% off your first order"
-        secondaryTitle = "Receive the latest updates and take advantage of great offers"
-        contentWidth = "w-full lg:flex justify-between gap-x-5 items-end bg-light-orange py-6 px-5 my-16 rounded-2xl"
-        titleClass = "text-[24px] text-black"
-        formClass = "w-full mt-5 lg:mt-0 lg:w-5/12"
-        subtitleClass = "text-sm"
-    ></SubscribeForm>
+
 </template>
 
 <!--<style scoped>-->

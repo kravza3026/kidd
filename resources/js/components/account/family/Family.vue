@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Button from '@/components/ui/Button.vue';
-import SubscribeForm from '@/components/ui/subscribeForm.vue';
 import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import clickOutside from '@/clickOutside.js';
@@ -18,7 +17,7 @@ import selectIcon from '@img/icons/select-arrows_o.svg';
 
 export default {
     name: 'Family',
-    components: { BaseInput, Button, SubscribeForm, BaseCheckbox },
+    components: { BaseInput, Button, BaseCheckbox },
 
     directives: {
         clickOutside,
