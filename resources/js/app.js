@@ -126,4 +126,48 @@ window.addEventListener('load', function () {
                 });
             }
         });
+    // TODO add translate in toast
+    document.getElementById('copyBtn').addEventListener('click', function() {
+        const text = document.getElementById('copy').innerText;
+
+        // Основний спосіб (Clipboard API)
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                toast({
+                    type: 'info',
+                    message:text,
+                    title:'Code is copied to clipboard'
+                })
+            }).catch(err => {
+                toast({
+                    type: 'info',
+                    message:text,
+                    title:'Could not copy to clipboard'
+                })
+            });
+        } else {
+            let textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";  // не скролить сторінку
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                toast({
+                    type: 'info',
+                    message:text,
+                    title:'Code is copied to clipboard'
+                })
+            } catch (err) {
+                toast({
+                    type: 'info',
+                    message:text,
+                    title:'Could not copy to clipboard'
+                })
+            }
+            document.body.removeChild(textarea);
+        }
+    });
 });
+
