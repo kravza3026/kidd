@@ -836,16 +836,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php-lite",
-            "version": "9.0.12",
+            "version": "9.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php-lite.git",
-                "reference": "8bc6bb69bb4a43a71acf5631de8a9504387d3007"
+                "reference": "0d5fcd837598ee6ec8104a0bc642ebff54fb70e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php-lite/zipball/8bc6bb69bb4a43a71acf5631de8a9504387d3007",
-                "reference": "8bc6bb69bb4a43a71acf5631de8a9504387d3007",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php-lite/zipball/0d5fcd837598ee6ec8104a0bc642ebff54fb70e5",
+                "reference": "0d5fcd837598ee6ec8104a0bc642ebff54fb70e5",
                 "shasum": ""
             },
             "require": {
@@ -910,7 +910,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php-lite/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php-lite"
             },
-            "time": "2025-08-15T09:14:59+00:00"
+            "time": "2025-09-01T08:24:26+00:00"
         },
         {
             "name": "graham-campbell/result-type",

@@ -49,10 +49,6 @@ class CheckoutController extends Controller
         $this->sessionService->storeStepData($validatedData);
         $nextStep = $this->sessionService->moveToNextStep($currentStep);
 
-        if (isset($this->sessionService->getCheckoutData()['shipping_method'])) {
-            LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
-        }
-
         if ($nextStep === 'review') {
             return redirect()->route('checkout.review');
         }

@@ -6,10 +6,7 @@ import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import clickOutside from '@/clickOutside.js';
 import { useAlert } from '@/useAlert.js'; // icons
-import iconMarker from '@img/icons/marker_outline.png';
 import iconUnknow from '@img/common/baby_unknown.svg';
-import iconTrash from '@img/common/trash.svg';
-import iconSettings from '@img/icons/Settings_base.svg';
 import iconClose from '@img/icons/close.svg';
 import iconCheck from '@img/icons/checked_white.svg';
 import iconDate from '@img/icons/date.png';
@@ -27,10 +24,7 @@ export default {
             family: [],
             genders: [],
             locale: document.documentElement.lang || 'ro',
-            iconMarker,
-            iconTrash,
             selectIcon,
-            iconSettings,
             iconClose,
             iconUnknow,
             iconCheck,
@@ -224,8 +218,9 @@ export default {
                             ></p>
                             <img v-else :src="iconUnknow" alt="" />
                         </div>
-                        <div class="items-center lg:flex">
+                        <div class="items-center lg:flex lg:items-center">
                             <BaseInput
+                                v-show="child.editor.isEditing"
                                 :id="'label-' + child.id"
                                 v-model="child.name"
                                 :class="{
@@ -238,9 +233,11 @@ export default {
                                 aria-label="label"
                                 autocomplate="given-name"
                                 class="text-charcoal/60 rounded-2xl text-base font-bold shadow-sm duration-500 focus:outline-hidden"
-                                customClass="min-w-40 max-w-fit lg:my-1 lg:min-h-7.5 !placeholder-text-sm !max-w-fit"
+                                customClass="lg:my-1 lg:min-h-7.5 !placeholder-text-sm"
                                 name="label"
                             />
+
+                            <p v-show="!child.editor.isEditing" class="mr-2" v-text="child.name"></p>
 
                             <div v-if="!child.isNew" class="flex-no-wrap flex gap-x-1">
                                 <p
@@ -271,7 +268,7 @@ export default {
                             'text-olive': !child.editor.isEditing,
                             'bg-olive text-white': child.editor.isEditing,
                         }"
-                        class="settings border-light-border group relative cursor-pointer rounded-full border p-2 shadow-sm duration-500"
+                        class="settings border-light-border hover:bg-olive group relative cursor-pointer rounded-full border p-2 shadow-sm duration-500 hover:text-white"
                         @click="toggleEdit(child.id)"
                         @keydown.enter="toggleEdit(child.id)"
                     >
@@ -283,32 +280,47 @@ export default {
                                 class="absolute -bottom-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
                             ></div>
                         </div>
-                        <svg class="size-4" fill="none" viewBox="0 0 25 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                            class="size-4.5"
+                            fill="none"
+                            height="24"
+                            stroke="currentColor"
+                            stroke-width="2.2"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                             <path
-                                d="M11.7238 1.0313C12.7664 -0.343766 14.8336 -0.343766 15.8762 1.0313L16.2293 1.49696C16.7982 2.24724 17.7277 2.63222 18.6605 2.50397L19.2394 2.42437C20.949 2.18931 22.4107 3.65102 22.1756 5.3606L22.096 5.93954C21.9678 6.87235 22.3528 7.80178 23.103 8.37068L23.5687 8.72377C24.9438 9.76642 24.9438 11.8336 23.5687 12.8762L23.103 13.2293C22.3528 13.7982 21.9678 14.7277 22.096 15.6605L22.1756 16.2394C22.4107 17.949 20.949 19.4107 19.2394 19.1756L18.6605 19.096C17.7277 18.9678 16.7982 19.3528 16.2293 20.103L15.8762 20.5687C14.8336 21.9438 12.7664 21.9438 11.7238 20.5687L11.3707 20.103C10.8018 19.3528 9.87235 18.9678 8.93954 19.096L8.3606 19.1756C6.65102 19.4107 5.18931 17.949 5.42437 16.2394L5.50397 15.6605C5.63222 14.7277 5.24724 13.7982 4.49696 13.2293L4.0313 12.8762C2.65623 11.8336 2.65623 9.76642 4.0313 8.72377L4.49696 8.37068C5.24724 7.80178 5.63222 6.87235 5.50397 5.93954L5.42437 5.3606C5.18931 3.65102 6.65102 2.18931 8.3606 2.42437L8.93954 2.50397C9.87235 2.63222 10.8018 2.24724 11.3707 1.49696L11.7238 1.0313Z"
-                                fill="currentColor"
-                                fill-opacity="0.15"
-                            />
-                            <path
-                                d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            />
-                            <path
-                                d="M9.92377 2.23125C10.9664 0.856185 13.0336 0.856185 14.0762 2.23125L14.4293 2.69691C14.9982 3.44719 15.9277 3.83218 16.8605 3.70392L17.4394 3.62432C19.149 3.38926 20.6107 4.85097 20.3756 6.56055L20.296 7.13949C20.1678 8.0723 20.5528 9.00173 21.303 9.57064L21.7687 9.92372C23.1438 10.9664 23.1438 13.0335 21.7687 14.0762L21.303 14.4293C20.5528 14.9982 20.1678 15.9276 20.296 16.8604L20.3756 17.4394C20.6107 19.1489 19.149 20.6106 17.4394 20.3756L16.8605 20.296C15.9277 20.1677 14.9982 20.5527 14.4293 21.303L14.0762 21.7687C13.0336 23.1437 10.9664 23.1437 9.92377 21.7687L9.57068 21.303C9.00178 20.5527 8.07234 20.1677 7.13954 20.296L6.5606 20.3756C4.85102 20.6106 3.38931 19.1489 3.62437 17.4394L3.70397 16.8604C3.83222 15.9276 3.44724 14.9982 2.69695 14.4293L2.23129 14.0762C0.856231 13.0335 0.856231 10.9664 2.23129 9.92372L2.69695 9.57064C3.44724 9.00173 3.83222 8.0723 3.70397 7.13949L3.62437 6.56055C3.38931 4.85097 4.85102 3.38926 6.5606 3.62432L7.13954 3.70392C8.07234 3.83218 9.00178 3.44719 9.57068 2.69691L9.92377 2.23125Z"
-                                stroke="currentColor"
-                                stroke-width="2"
+                                d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"
                             />
                         </svg>
                     </button>
                     <div
                         v-click-outside="() => (child.editor.confirmingDelete = false)"
-                        class="group border-light-border relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border p-2 shadow-sm"
+                        class="group border-light-border text-olive hover:bg-olive relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border p-2 shadow-sm hover:text-white"
                         tabindex="0"
                         @click="child.editor.confirmingDelete = !child.editor.confirmingDelete"
                         @keydown.enter="child.editor.confirmingDelete = !child.editor.confirmingDelete"
                     >
-                        <img :src="iconTrash" alt="" class="size-4" />
+                        <svg
+                            class="size-4.5"
+                            fill="none"
+                            height="24"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.2"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M10 11v6" />
+                            <path d="M14 11v6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                            <path d="M3 6h18" />
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
                         <div
                             class="absolute -top-10 left-2/3 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-3 py-1 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                         >

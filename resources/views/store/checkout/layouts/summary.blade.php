@@ -13,22 +13,29 @@
                         class="h-full w-full object-cover"
                     />
                 </div>
-                <div class="flex flex-1 flex-col">
-                    <p class="font-bold text-pretty">{{ $item->model->name }}</p>
-                    <div class="text-charcoal/60 flex items-center gap-2 text-sm">
-                        <p
-                            class="border-light-border size-4 rounded-full border shadow-xs"
-                            style="background-color: {{ $item->variant->color->hex }}"
-                        ></p>
-                        <span class="truncate">{{ $item->variant->color->name }}</span>
+                <div class="flex flex-1 flex-col gap-y-1">
+                    <p class="font-medium text-pretty">{{ $item->model->name }}</p>
+                    <div class="text-charcoal/60 flex items-center gap-x-2 text-sm">
+                        <div class="flex items-center gap-x-1">
+                            <span
+                                class="border-light-border size-4 rounded-full border shadow-xs"
+                                style="background-color: {{ $item->variant->color->hex }}"
+                            ></span>
+                            <span class="truncate">{{ $item->variant->color->name }}</span>
+                        </div>
                         <span>|</span>
                         <span>{{ $item->variant->size->name }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <p class="text-sm font-bold">×{{ $item->qty }}</p>
-                        <span class="text-olive font-bold text-nowrap">
-                            {{ __('general.price', ['price' => round(Money::MDL($item->price)->getAmount() / 100, 0, PHP_ROUND_HALF_EVEN)]) }}
-                        </span>
+                        <p class="flex items-center text-sm font-bold">×{{ $item->qty }}</p>
+                        <div class="flex items-center gap-x-1.5">
+                            <span class="text-dark/60 font-light text-nowrap line-through">
+                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_online)->getAmount() / 100, 2)]) }}
+                            </span>
+                            <span class="text-olive font-bold text-nowrap">
+                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_final)->getAmount() / 100, 2)]) }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,30 +66,31 @@
             {{ __('checkout.summary.sections.summary.title') }}
         </p>
 
-        <div class="flex justify-between text-sm">
+        <div class="flex justify-between text-sm font-medium">
             <span class="text-charcoal/60">{{ __('checkout.summary.sections.summary.subtotal') }}</span>
             <span class="font-bold">
-                {{ __('general.price', ['price' => round(Money::MDL((int) $sub_total)->getAmount(), 0, PHP_ROUND_HALF_EVEN)]) }}
+                {{ __('general.price', ['price' => number_format($sub_total, 2)]) }}
             </span>
         </div>
 
         @foreach ($fees as $fee)
             <div class="flex justify-between text-sm">
-                <span class="text-charcoal/60 font-bold">
-                    {{ $fee->options['description'] }}
+                <span class="text-charcoal/60 font-medium">
+                    {{-- {{ $fee->options['description'] }} --}}
+                    {{ __('checkout.summary.sections.summary.shipping') }}
                 </span>
                 <span class="font-bold">
-                    {{ __('general.price', ['price' => $fee->amount / 100]) }}
+                    {{ __('general.price', ['price' => number_format($fee->amount / 100, 2)]) }}
                 </span>
             </div>
         @endforeach
 
-        <div class="flex justify-between text-sm">
-            <span class="text-charcoal/60">{{ __('checkout.summary.sections.summary.shipping') }}</span>
-            <span class="font-bold">
-                {{ __('general.price', ['price' => round(Money::MDL(intval($fee->amount))->getAmount() / 100, 0, PHP_ROUND_HALF_EVEN)]) }}
-            </span>
-        </div>
+        {{-- <div class="flex justify-between text-sm"> --}}
+        {{-- <span class="text-charcoal/60">{{ __('checkout.summary.sections.summary.shipping') }}</span> --}}
+        {{-- <span class="font-bold"> --}}
+        {{-- {{ __('general.price', ['price' => round(Money::MDL(intval($fee->amount))->getAmount() / 100, 0, PHP_ROUND_HALF_EVEN)]) }} --}}
+        {{-- </span> --}}
+        {{-- </div> --}}
 
         @foreach ($coupons as $coupon)
             <div class="flex justify-between text-sm">
@@ -92,8 +100,7 @@
                     ]
                 </span>
                 <span class="font-bold">
-                    -
-                    {{ __('general.price', ['price' => round(($coupon->discounted) / 100, 0, PHP_ROUND_HALF_EVEN)]) }}
+                    -{{ __('general.price', ['price' => number_format(($coupon->discounted) / 100, 2)]) }}
                 </span>
             </div>
         @endforeach
@@ -102,7 +109,7 @@
         <div class="flex justify-between pt-3 text-base font-bold">
             <span>{{ __('checkout.summary.sections.summary.total') }}</span>
             <span>
-                {{ __('general.price', ['price' => Money::MDL((int) round($total, 0, PHP_ROUND_HALF_UP))->getAmount()]) }}
+                {{ __('general.price', ['price' => number_format($total, 2)]) }}
             </span>
         </div>
     </div>
