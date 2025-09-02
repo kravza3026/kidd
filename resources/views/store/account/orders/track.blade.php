@@ -151,7 +151,6 @@
             @include('store.account.orders.components._warranty')
             @include('store.account.orders.components._questions')
 
-
         </div>
     </div>
 

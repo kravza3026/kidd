@@ -24,6 +24,7 @@
                     {{ __('checkout.shipping.form.shipping_method') }}
                 </label>
                 <div class="grid min-h-10 grid-cols-1 lg:grid-cols-3 gap-4">
+
                     <div class="relative">
                         <input
                             type="radio"
@@ -301,6 +302,8 @@
                     </div>
                     <div class="grid grid-cols-12 gap-4 p-4">
                         <div class="col-span-12 lg:col-span-6 mt-0 lg:mt-3">
+
+
                             <label for="shipping_region" class="text-charcoal block text-sm font-medium">
                                 {{ __('checkout.shipping.form.shipping_region') }}
                             </label>

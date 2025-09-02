@@ -2,18 +2,18 @@
     <div class="mx-auto max-w-5xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
 
         <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-12 lg:col-span-7 space-y-4 bg-white shadow rounded-2xl py-4">
+            <div class="col-span-12 lg:col-span-7 space-y-4 bg-white lg:shadow lg:rounded-2xl py-4">
                 @include('store.account.orders.components._tracking-head')
 
-                <div class="px-4">
+                <form class="px-4">
                     <p class="text-sm font-medium">Select products</p>
                     <div class="grid grid-cols-12 gap-x-4 mt-4">
                         @foreach ($order->items as $product)
-                           <div class="col-span-12 lg:col-span-4 relative">
-                               <div class="absolute top-4 right-4">
+                           <div class="flex items-start col-span-12 lg:col-span-4 relative">
+                               <div class="lg:absolute relative top-4 mx-2 lg:mx-0 lg:right-4">
                                    <label
                                        for="return_{{$product->id}}"
-                                       class="size-7 inline-flex items-center justify-center bg-white border border-light-border rounded-full cursor-pointer"
+                                       class="size-5 lg:size-7 inline-flex items-center justify-center bg-white border border-light-border lg:rounded-full cursor-pointer"
                                    >
                                        <input id="return_{{$product->id}}" value="{{$product->id}}" type="checkbox" class="hidden peer">
                                        <img
@@ -28,20 +28,24 @@
                         @endforeach
                     </div>
 
-                    <div class="mt-4">
-                        <x-select
-                            :label="'Select the reason of return'"
-                            name="vacancy_id"
-                            :id="'vacancy_id'"
-                            :placeholder="false"
-                            {{--        TODO add options array                    --}}
-                            :options="[
-                            '100' => 'Select the reason',
-                            '101' => 'First select',
-                            '102' => 'Second select'
-                        ]"
-                            :selected="'100'"
-                        ></x-select>
+                    <div class="py-6 mt-4">
+                        @php
+                            $options = [
+                                0 => __('Select a option'),
+                                1 => 'Chisinau',
+                                2 => 'Balti',
+                                3 => 'Tiraspol',
+                            ];
+                        @endphp
+
+                        <x-custom-select
+                            name="reason_of_return"
+                            id="reason_of_return"
+                            label="{{ __('Select the reason of return') }}"
+                            :options="$options"
+                            :selected="0"
+                            placeholder="{{ __('Select a option') }}"
+                        />
                     </div>
                     <div class="mt-4">
                         @include('store.account.orders.components._file-return')
@@ -56,9 +60,13 @@
                         />
                         <x-input-error :messages="$errors->get('message')" class="mt-2" />
                     </div>
-                </div>
+                    <x-ui.button as="submit" left_icon="false" right_icon="false"
+                                 class=" font-bold text-sm">
+                        Send message
+                    </x-ui.button>
+                </form>
             </div>
-            <div class="col-span-12 lg:col-span-5 space-y-4">
+            <div class="px-5 lg:px-0 col-span-12 lg:col-span-5 space-y-4">
                 @include('store.account.orders.components._questions')
                 @include('store.account.orders.components._response')
             </div>

@@ -1,13 +1,13 @@
-<div class="border-light-border flex items-center p-1 lg:block lg:rounded-2xl lg:border lg:p-0">
-    <div class="bg-card-bg h-fit max-w-1/4 rounded-2xl lg:max-w-full lg:rounded-t-2xl lg:rounded-b-none">
+<div class=" w-full border-light-border flex items-center p-1 md:block md:rounded-2xl md:border md:p-0">
+    <div class="bg-card-bg h-fit max-w-1/4 rounded-2xl md:max-w-full md:rounded-t-2xl md:rounded-b-none">
         <img
-            class="lg:max-w-full lg:p-8"
+            class="md:max-w-full md:p-8 h-24 md:h-48 w-auto"
             src="{{ Vite::image($product->variant->product->main_image) }}"
             alt="product name"
         />
     </div>
 
-    <div class="p-4">
+    <div class="px-4">
         <p class="truncate text-sm font-medium text-nowrap">
             {{ $product->variant->product->name }}
         </p>
