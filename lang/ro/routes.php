@@ -34,6 +34,8 @@ return [
 
     'footer' => [
         'size-chart' => 'tabel-marimi',
+        'cookies' => 'politica-cookies',
+        'privacy' => 'politica-confidentialitate',
     ],
 
 ];

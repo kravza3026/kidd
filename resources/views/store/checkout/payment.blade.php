@@ -130,12 +130,14 @@
                             <div>
                                 <img
                                     class="imgOutline size-6 lg:size-12 lg:py-3"
-                                    src="{{ Vite::image('icons/olive/cash.svg') }}"
+                                    width="15"
+                                    height="15"
+                                    src="{{ Vite::image('icons/gradients/g_cash.svg') }}"
                                     alt=""
                                 />
                                 <img
                                     class="imgGradient hidden size-6 lg:size-12 lg:py-3"
-                                    src="{{ Vite::image('icons/gradients/g_cash.svg') }}"
+                                    src="{{ Vite::image('icons/olive/cash.svg') }}"
                                     alt=""
                                 />
                             </div>
@@ -174,12 +176,12 @@
                            <div>
                                <img
                                    class="imgOutline size-6 lg:size-12 lg:py-3"
-                                   src="{{ Vite::image('icons/olive/bank.svg') }}"
+                                   src="{{ Vite::image('icons/gradients/g_bank.svg') }}"
                                    alt=""
                                />
                                <img
                                    class="imgGradient hidden size-6 lg:size-12 lg:py-3"
-                                   src="{{ Vite::image('icons/gradients/g_bank.svg') }}"
+                                   src="{{ Vite::image('icons/olive/bank.svg') }}"
                                    alt=""
                                />
                            </div>
@@ -217,12 +219,12 @@
                             <div>
                                 <img
                                     class="imgOutline size-6 lg:size-12 lg:py-3"
-                                    src="{{ Vite::image('icons/olive/card.svg') }}"
+                                    src="{{ Vite::image('icons/gradients/g_card.svg') }}"
                                     alt=""
                                 />
                                 <img
                                     class="imgGradient hidden size-6 lg:size-12 lg:py-3"
-                                    src="{{ Vite::image('icons/gradients/g_card.svg') }}"
+                                    src="{{ Vite::image('icons/olive/card.svg') }}"
                                     alt=""
                                 />
                             </div>
@@ -260,12 +262,12 @@
                            <div>
                                <img
                                    class="imgOutline size-6 lg:size-12 lg:py-3"
-                                   src="{{ Vite::image('icons/olive/terminal.svg') }}"
+                                   src="{{ Vite::image('icons/gradients/g_terminal.svg') }}"
                                    alt=""
                                />
                                <img
                                    class="imgGradient hidden size-6 lg:size-12 lg:py-3"
-                                   src="{{ Vite::image('icons/gradients/g_terminal.svg') }}"
+                                   src="{{ Vite::image('icons/olive/terminal.svg') }}"
                                    alt=""
                                />
                            </div>
@@ -333,7 +335,9 @@
                                 </label>
                             </div>
                             @auth
-                                <span class="col-span-12 lg:hidden my-3">Saved address</span>
+                                <span class="col-span-12 lg:hidden my-3">
+                                    {{ __('checkout.payment.form.saved_addresses') }}
+                                </span>
                                 <div class="relative col-span-12 lg:col-span-4">
                                     <button
                                         type="button"
@@ -519,12 +523,12 @@
                 <div class="flex items-center justify-start pt-8">
                     <x-ui.button
                         as="button"
-                        class="mt-0 px-15 !py-3"
+                        class="w-full sm:w-auto mt-0 px-15 !py-3"
                         right_icon="true"
                         id="{{ auth()->check() ? 'placeOrder' : 'loginButton2' }}"
                         type="{{ auth()->check() ? 'submit' : 'button' }}"
                     >
-                        Place the order
+                        {{ __('checkout.continue') }}
                     </x-ui.button>
                 </div>
             </div>

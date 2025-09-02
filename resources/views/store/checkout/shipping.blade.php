@@ -48,12 +48,12 @@
                             <div>
                                 <img
                                     class="imgOutline size-12 py-3"
-                                    src="{{ Vite::image('icons/olive/truck_outline.svg') }}"
+                                    src="{{ Vite::image('icons/gradients/g_car.svg') }}"
                                     alt=""
                                 />
                                 <img
                                     class="imgGradient hidden size-12 py-3"
-                                    src="{{ Vite::image('icons/gradients/g_car.svg') }}"
+                                    src="{{ Vite::image('icons/olive/truck_outline.svg') }}"
                                     alt=""
                                 />
                             </div>
@@ -94,12 +94,12 @@
                             <div>
                                 <img
                                     class="imgOutline size-12 py-3"
-                                    src="{{ Vite::image('icons/olive/lightning.svg') }}"
+                                    src="{{ Vite::image('icons/gradients/g_present.svg') }}"
                                     alt=""
                                 />
                                 <img
                                     class="imgGradient hidden size-12 py-3"
-                                    src="{{ Vite::image('icons/gradients/q_lightning.svg') }}"
+                                    src="{{ Vite::image('icons/olive/present.svg') }}"
                                     alt=""
                                 />
                             </div>
@@ -136,18 +136,18 @@
                         <div
                             class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
-                           <div>
-                               <img
-                                   class="imgOutline size-12 py-3"
-                                   src="{{ Vite::image('icons/olive/present.svg') }}"
-                                   alt=""
-                               />
-                               <img
-                                   class="imgGradient hidden size-12 py-3"
-                                   src="{{ Vite::image('icons/gradients/g_present.svg') }}"
-                                   alt=""
-                               />
-                           </div>
+                            <div>
+                                <img
+                                    class="imgOutline size-12 py-3"
+                                    src="{{ Vite::image('icons/gradients/g_lightning.svg') }}"
+                                    alt=""
+                                />
+                                <img
+                                    class="imgGradient hidden size-12 py-3"
+                                    src="{{ Vite::image('icons/olive/lightning.svg') }}"
+                                    alt=""
+                                />
+                            </div>
                             <div>
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.express.title') }}
@@ -228,7 +228,9 @@
                         <div class="col-span-1 lg:col-span-4">
                             <div class="relative w-full">
                                 @auth
-                                    <span class="lg:hidden">Saved address</span>
+                                    <span class="lg:hidden">
+                                        {{ __('checkout.shipping.form.saved_addresses') }}
+                                    </span>
                                     <button
                                         type="button"
                                         class="border-light-border mt-3 lg:mt-0  focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
@@ -436,7 +438,7 @@
                 @enderror
 
                 <div class="flex justify-start pt-2">
-                    <x-ui.button as="button" class="px-15 !py-3" right_icon="false" type="submit">
+                    <x-ui.button as="button" class="w-full sm:w-auto px-15 !py-3" right_icon="false" type="submit">
                         {{ __('checkout.continue') }}
                     </x-ui.button>
                 </div>

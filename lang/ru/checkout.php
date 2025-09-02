@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Оформление заказа',
+    'page_title' => 'Заказ',
 
     'steps' => [
         'shipping' => 'Детали доставки',
@@ -64,6 +64,7 @@ return [
             'shipping_intercom' => 'Домофон',
             'shipping_intercom_placeholder' => '№ домофона',
 
+            'saved_addresses' => 'Сохранённые адреса',
             'saved_addresses_placeholder' => 'Выбрать сохранённый',
         ],
     ],
@@ -85,7 +86,7 @@ return [
     'shipping_to' => 'с доставкой в',
 
     'payment' => [
-        'billing_title' => 'Адрес счёт-фактуры',
+        'billing_title' => 'Адрес счёта',
         'form' => [
             'payment_method' => 'Способ оплаты',
             'payment_methods' => [
@@ -130,7 +131,8 @@ return [
             'billing_intercom_placeholder' => '№ домофона',
 
             'same_as_shipping' => 'Как адрес доставки',
-            'saved_addresses_placeholder' => 'Выбрать сохранённый',
+            'saved_addresses' => 'Сохранённые адреса',
+            'saved_addresses_placeholder' => 'Выбрать сохранённый адрес',
 
         ],
     ],

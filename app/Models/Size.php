@@ -32,13 +32,12 @@ class Size extends Model
     ];
 
     protected $withCount = [
-        'products',
+        //        'products',
     ];
 
     public function products(): Size|HasManyThrough
     {
-        return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id')
-            ->groupBy('products.id');
+        return $this->hasManyThrough(Product::class, ProductVariant::class, 'size_id', 'id', 'id', 'product_id');
     }
 
     /**

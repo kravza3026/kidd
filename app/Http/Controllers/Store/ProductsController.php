@@ -41,9 +41,6 @@ class ProductsController extends Controller
             ->paginate(perPage: $request->per_page ?? 16)
             ->withQueryString();
 
-        //        dd(Category::search('suit')->get());
-        //        dd(Product::search('Eum et.')->get()->pluck('name', 'id')->toArray());
-
         return view('store.catalog.products.index', compact('category', 'products'));
     }
 

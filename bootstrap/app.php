@@ -6,8 +6,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-//        web: __DIR__.'/../routes/web.php',
-//        api: __DIR__.'/../routes/api.php',
+        //        web: __DIR__.'/../routes/web.php',
+        //        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
@@ -30,7 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/api.php'));
 
             Route::domain(config('app.admin_url'))
-                ->middleware('web')
+                ->middleware(['web', 'auth:web'])
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
 
@@ -42,10 +42,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
-//        $middleware->throttleApi('api', true);
+        //        $middleware->throttleApi('api', true);
 
         $middleware->validateCsrfTokens(except: [
-//            'api.kidd.test/v1/*',
+            //            'api.kidd.test/v1/*',
         ]);
         $middleware->encryptCookies(except: [
             'favorites',
@@ -63,11 +63,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             // Other Middleware aliases
-            'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-            'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-            'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
-            'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
-            'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+            'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+            'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+            'localeCookieRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+            'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         ]);
 
     })

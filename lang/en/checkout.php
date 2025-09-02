@@ -64,6 +64,7 @@ return [
             'shipping_intercom' => 'Intercom',
             'shipping_intercom_placeholder' => 'Intercom',
 
+            'saved_addresses' => 'Saved addresses',
             'saved_addresses_placeholder' => 'Select saved address',
         ],
     ],
@@ -130,6 +131,7 @@ return [
             'billing_intercom_placeholder' => 'Intercom',
 
             'same_as_shipping' => 'Same as shipping address',
+            'saved_addresses' => 'Saved addresses',
             'saved_addresses_placeholder' => 'Select saved address',
         ],
     ],

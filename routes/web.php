@@ -71,6 +71,10 @@ Route::group([
 
         Route::get(LaravelLocalization::transRoute('routes.topline.terms'), [PagesController::class, 'terms'])
             ->name('terms');
+        Route::get(LaravelLocalization::transRoute('routes.footer.cookies'), [PagesController::class, 'cookies'])
+            ->name('terms.cookies');
+        Route::get(LaravelLocalization::transRoute('routes.footer.privacy'), [PagesController::class, 'privacy'])
+            ->name('terms.privacy');
         Route::get(LaravelLocalization::transRoute('routes.menu.about'), [PagesController::class, 'about'])
             ->name('about');
         Route::get(LaravelLocalization::transRoute('routes.menu.help'), [PagesController::class, 'help'])

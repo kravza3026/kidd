@@ -2,10 +2,10 @@
     <input type="checkbox" checked name="description" class="peer hidden" id="description" />
     <label
         for="description"
-        class="flex cursor-pointer items-center justify-between py-2 peer-checked:[&_.accordion-arrow]:rotate-180"
+        class="flex cursor-pointer items-center justify-between py-2 peer-checked:[&_.accordion-arrow]:rotate-360"
     >
         <span class="text-base font-medium">{{ __('product-show.desc.title') }}</span>
-        <span class="accordion-arrow opacity-40 transition-all duration-300">
+        <span class="accordion-arrow rotate-180 opacity-40 transition-all duration-300">
             <img src="{{ Vite::image('icons/top_arrow.svg') }}" alt="arrow icon folding and unfolding" />
         </span>
     </label>
@@ -48,10 +48,10 @@
     <input type="checkbox" name="instructions" class="peer hidden" id="instructions" />
     <label
         for="instructions"
-        class="flex cursor-pointer items-center justify-between py-2 peer-checked:[&_.accordion-arrow]:rotate-180"
+        class="flex cursor-pointer items-center justify-between py-2 peer-checked:[&_.accordion-arrow]:rotate-360"
     >
         <span class="text-base font-medium">Material care instructions</span>
-        <span class="accordion-arrow opacity-40 transition-all duration-300">
+        <span class="accordion-arrow rotate-180 opacity-40 transition-all duration-300">
             <img src="{{ Vite::image('icons/top_arrow.svg') }}" alt="" />
         </span>
     </label>

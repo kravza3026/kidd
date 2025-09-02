@@ -11,12 +11,10 @@ class FabricsDropdown extends Component
 {
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return View
      */
     public function render(): View
     {
-        
+
         $fabrics = Cache::rememberForever('fabrics', function () {
             return Fabric::all();
         });

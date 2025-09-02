@@ -2,7 +2,7 @@
 
 return [
     'all_colors' => 'Все цвета',
-    'all_fabric_types' => 'Все материалы',
+    'all_fabric_types' => 'Все',
     'all_family_members' => 'Вся семья',
     'all_genders' => 'Все',
     'all_seasons' => 'Все сезоны',
@@ -11,7 +11,7 @@ return [
     'clear' => 'Очистить',
     'color' => 'Цвет',
     'discount' => 'Reducere',
-    'fabric_type' => 'Материал',
+    'fabric_type' => 'Ткань',
     'family_member' => 'Моя семья',
     'filter_by' => 'Фильтр',
     'gender' => 'Пол',

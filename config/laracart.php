@@ -141,6 +141,11 @@ return [
 
     'free_delivery_after' => 1000, // free delivery after total MDL amount (Without discounts)
     'delivery_price' => 50, // delivery price in MDL
+    'delivery_prices' => [
+        'regular' => 50,
+        'gift' => 100,
+        'expres' => 150,
+    ],
 
     /*
     |--------------------------------------------------------------------------

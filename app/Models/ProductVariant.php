@@ -51,6 +51,10 @@ class ProductVariant extends Model
         'size',
     ];
 
+    protected $touches = [
+        'product',
+    ];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

@@ -10,7 +10,6 @@ use Illuminate\View\Component;
 
 class SeasonsDropdown extends Component
 {
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -28,5 +27,4 @@ class SeasonsDropdown extends Component
         );
 
     }
-
 }

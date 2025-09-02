@@ -74,7 +74,7 @@ class CartController extends Controller
         //        LaraCart::addFee('free_express_delivery', -150 * 100, $taxable = false, $options = ['description' => 'Free Express delivery promo']);
 
         //        LaraCart::removeFee('gift');
-        //                LaraCart::removeFee('express_delivery');
+        //        LaraCart::removeFee('express_delivery');
         //        LaraCart::removeFee('free_express_delivery');
 
         //        $items = LaraCart::getItems();

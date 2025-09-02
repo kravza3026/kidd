@@ -10,7 +10,6 @@ use Illuminate\View\Component;
 
 class GendersDropdown extends Component
 {
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -28,5 +27,4 @@ class GendersDropdown extends Component
         );
 
     }
-    
 }

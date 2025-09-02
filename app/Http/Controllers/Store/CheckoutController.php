@@ -49,6 +49,10 @@ class CheckoutController extends Controller
         $this->sessionService->storeStepData($validatedData);
         $nextStep = $this->sessionService->moveToNextStep($currentStep);
 
+        if (isset($this->sessionService->getCheckoutData()['shipping_method'])) {
+            LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
+        }
+
         if ($nextStep === 'review') {
             return redirect()->route('checkout.review');
         }
@@ -136,7 +140,6 @@ class CheckoutController extends Controller
                 'customer_id' => $customer->id,
                 'tracking_id' => 1, // TODO - implement tracking id...
                 'payment_id' => 1, // TODO - implement payment id...
-                //                'order_number' => (Order::latest('id')->first()->id) + 10, // TODO - implement order number...
                 'total_amount' => LaraCart::total($formatted = false, $withDiscount = true), // Will be updated after items are added
                 'status' => OrderStatus::Pending->value,
                 'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
@@ -153,7 +156,7 @@ class CheckoutController extends Controller
                         'variant_snapshot' => $item->options['variant']->toArray(),
                         'quantity' => $item->qty,
                         'unit_price' => $item->price,
-                        'total_price' => (int) ($item->price * $item->qty),
+                        'total_price' => ($item->price * $item->qty),
                     ];
                 })->toArray()
             );

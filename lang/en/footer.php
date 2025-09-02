@@ -38,7 +38,7 @@ return [
 
     'bottom_line' => [
         'copyright' => 'All rights reserved.',
-        'privacy' => 'Privacy Terms',
+        'privacy' => 'Privacy Policy',
         'cookies' => 'Cookie Policy',
     ],
 ];

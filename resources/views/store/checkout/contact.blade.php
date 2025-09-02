@@ -109,7 +109,7 @@
                 </div>
             </div>
             <div class="flex items-center justify-start pt-8">
-                <x-ui.button as="button" class="mt-0 px-15 !py-3" right_icon="false" type="submit">
+                <x-ui.button as="button" class="w-full sm:w-auto mt-0 px-15 !py-3" right_icon="false" type="submit">
                     {{ __('checkout.continue') }}
                 </x-ui.button>
             </div>

@@ -34,6 +34,8 @@ return [
 
     'footer' => [
         'size-chart' => 'size-chart',
+        'cookies' => 'cookies-policy',
+        'privacy' => 'privacy-policy',
     ],
 
 ];

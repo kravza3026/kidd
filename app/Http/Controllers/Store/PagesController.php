@@ -48,6 +48,22 @@ class PagesController extends Controller
     }
 
     /**
+     * Display the cookies policy page.
+     */
+    public function cookies()
+    {
+        return view('store.pages.static.terms-cookies');
+    }
+
+    /**
+     * Display the privacy policy page.
+     */
+    public function privacy()
+    {
+        return view('store.pages.static.terms-privacy');
+    }
+
+    /**
      * Display the about page.
      */
     public function about()

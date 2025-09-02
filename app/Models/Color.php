@@ -24,7 +24,7 @@ class Color extends Model
     ];
 
     protected $withCount = [
-        'products',
+        //        'products',
     ];
 
     public function products()

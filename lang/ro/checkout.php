@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Finalizare Comandă',
+    'page_title' => 'Comandă',
 
     'steps' => [
         'shipping' => 'Detalii livrare',
@@ -11,10 +11,32 @@ return [
     ],
 
     'summary' => [
-        'subtotal' => 'Produse',
-        'discount' => 'Reducere',
-        'shipping' => 'Livrare',
-        'total' => 'Total',
+        'sections' => [
+            'products' => [
+                'title' => 'Produse',
+            ],
+            'discount' => [
+                'title' => 'Cod reducere',
+                'not_registered' => [
+                    'text' => 'Utilizator nou? <a class="text-olive font-bold" href=":href">Înregistrează-te</a> și primește <span class="font-medium text-olive">:amount%</span> reducere',
+                ],
+                'code_placeholder' => 'Cod reducere',
+                'apply_btn' => 'Aplică',
+            ],
+            'summary' => [
+                'products' => 'Produse',
+                'title' => 'Totaluri',
+                'subtotal' => 'Produse',
+                'discount' => 'Reducere',
+                'shipping' => 'Livrare',
+                'total' => 'Total',
+            ],
+            'delivery_discount' => [
+                'title' => 'Livrare gratuită',
+                'desc' => 'Adaugă bunuri cu valoare de peste :amount lei și beneficiază de livrare gratuită',
+                'price' => ':amount lei',
+            ],
+        ],
     ],
 
     'shipping' => [
@@ -64,7 +86,8 @@ return [
             'shipping_intercom' => 'Interfon',
             'shipping_intercom_placeholder' => 'Nr. interfon',
 
-            'saved_addresses_placeholder' => 'Alegeți adresă salvată',
+            'saved_addresses' => 'Adrese salvate',
+            'saved_addresses_placeholder' => 'Alegeți adresa salvată',
         ],
     ],
 
@@ -85,7 +108,7 @@ return [
     'shipping_to' => 'cu livrare la',
 
     'payment' => [
-        'billing_title' => 'Adresă de facturare',
+        'billing_title' => 'Adresă facturare',
         'form' => [
             'payment_method' => 'Metoda plății',
             'payment_methods' => [
@@ -130,7 +153,8 @@ return [
             'billing_intercom_placeholder' => 'Nr. interfon',
 
             'same_as_shipping' => 'Ca adresa livrării',
-            'saved_addresses_placeholder' => 'Alegeți adresă salvată',
+            'saved_addresses' => 'Adrese salvate',
+            'saved_addresses_placeholder' => 'Alegeți adresa salvată',
         ],
     ],
 
