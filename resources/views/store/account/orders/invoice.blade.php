@@ -1,7 +1,138 @@
-<x-app-layout>
-    <div class="mx-auto max-w-5xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
-        <div class="bg-white shadow sm:rounded-xl">
-            <div class="p-6 md:px-10">// Order Invoice</div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <meta
+        name="description"
+        content="Discover adorable outfits for your little joy! From cozy onesies to trendy outfits, we have everything you need to keep your baby stylish, comfortable and oh-so-cute."
+    />
+
+    <title>{{ config('app.name') }} - Moldova</title>
+
+    @stack('meta')
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('common/favicon_32x32.ico') }}" />
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('common/favicon_16x16.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ Vite::image('common/favicon.ico') }}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap" rel="stylesheet" />
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('head')
+</head>
+<body>
+
+<main   class="max-w-3xl mx-auto py-4"
+
+>
+   <header class="flex justify-between">
+       <img src="{{Vite::image('/icons/logo_outline.png')}}" alt="logo">
+       <div class="flex gap-x-18 text-[12px] font-medium">
+           <div class="grid">
+               <a href="www.kidd.md">www.kidd.md</a>
+               <a href="mailto:hello@kidd.md">hello@kidd.md</a>
+           </div>
+           <div class="grid">
+               <a href="tel:+373 (22) 000 321">+373 (79) 000 321</a>
+               <a href="tel:+373 (79) 000 321">+373 (79) 000 321</a>
+           </div>
+       </div>
+   </header>
+    <hr class="my-4 border-light-border">
+    <section class="my-6">
+        <div class="grid justify-between grid-cols-17 gap-x-13">
+            <div class="space-y-10 col-span-4">
+                <div class="space-y-2">
+                    <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Billing date</p>
+                    <p class="font-medium">03/10/2023</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Billing date</p>
+                    <p class="font-medium">03/10/2023</p>
+                </div>
+            </div>
+            <div class="space-y-2 col-span-6">
+                <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Seller</p>
+                <p class="font-medium">KIDD. Digital SRL</p>
+                <p class="text-sm"><span>Address</span>: bd. Decebal 6/1, cab. 333, mun. Chișinău, MD-2022</p>
+                <p class="text-sm"><span>IDNO:</span> 101560000363</p>
+                <p class="text-sm"><span>Bank:</span> Moldova Agroindbank</p>
+                <p class="text-sm"><span>SWIFT:</span> KEDSLT2VXXX</p>
+
+            </div>
+            <div class="space-y-2 col-span-6">
+                <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Buyer</p>
+                <p class="font-medium">Dionisie Ghețu</p>
+                <p class="text-sm"><span>Address</span>: Address: Alba Iulia 75, ap. 623, mun. Chișinău, MD-2071</p>
+                <p class="text-sm"><span>Phone:</span> +373 (60) 394 474</p>
+                <p class="text-sm"><span>E-mail:</span> ghetsudionysiy@gmail.com</p>
+
+
+            </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+    <hr class="my-4 border-light-border">
+    <section class="mt-8">
+        <p class="text-4xl">Invoice <span class="opacity-35">№ 173–963</span></p>
+        <div class="mt-4">
+            <div class="grid grid-cols-17 gap-x-6">
+                <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest">#</p>
+                <p class="col-span-8 opacity-35 uppercase font-bold text-[10px] tracking-widest">Product title</p>
+                <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest">QTY</p>
+                <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest"></p>
+                <p class="col-span-3 opacity-35 uppercase font-bold text-[10px] tracking-widest">Price</p>
+                <p class="col-span-3 opacity-35 uppercase font-bold text-[10px] tracking-widest">Amount</p>
+            </div>
+            <hr class="my-4 border-light-border">
+            <div class="grid grid-cols-17 gap-x-6 my-4">
+                <p class="col-span-1 opacity-35  text-base tracking-widest">01.</p>
+                <p class="col-span-8 text-base tracking-widest">Summer Cotton Jumpsuit Beige 0–3M</p>
+                <p class="col-span-1 text-base tracking-widest">1</p>
+                <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
+                <p class="col-span-3 text-base tracking-widest">240 lei</p>
+                <p class="col-span-3 text-base tracking-widest font-medium">240 lei</p>
+            </div>
+            <div class="grid grid-cols-17 gap-x-6 my-4">
+                <p class="col-span-1 opacity-35  text-base tracking-widest">02.</p>
+                <p class="col-span-8 text-base tracking-widest">Thin Pants Black 6–9M</p>
+                <p class="col-span-1 text-base tracking-widest">2</p>
+                <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
+                <p class="col-span-3 text-base tracking-widest">165 lei </p>
+                <p class="col-span-3 text-base tracking-widest font-medium">330 lei</p>
+            </div>
+            <div class="grid grid-cols-17 gap-x-6 my-4">
+                <p class="col-span-1 opacity-35  text-base tracking-widest">03.</p>
+                <p class="col-span-8 text-base tracking-widest">Flutter Sleeve Dress Turquoise 0–3M</p>
+                <p class="col-span-1 text-base tracking-widest">2</p>
+                <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
+                <p class="col-span-3 text-base tracking-widest">240 lei</p>
+                <p class="col-span-3 text-base tracking-widest font-medium">480 lei</p>
+            </div>
+            <hr class="my-4 border-light-border">
+
+            <div class="grid grid-cols-17 items-center gap-4 my-4">
+                <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Subtotal</p>
+                <p class="col-span-3 text-base font-medium tracking-widest">1400 lei</p>
+
+                <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Shipment</p>
+                <p class="col-span-3 text-base font-medium tracking-widest">50 lei</p>
+                 <hr class="my-4 col-start-12 col-span-6 border-light-border">
+                <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Shipment</p>
+                <p class="col-span-3 text-xl font-bold tracking-widest">1450 lei</p>
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
