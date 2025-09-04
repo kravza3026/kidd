@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <meta
-        name="description"
-        content="Discover adorable outfits for your little joy! From cozy onesies to trendy outfits, we have everything you need to keep your baby stylish, comfortable and oh-so-cute."
-    />
-
     <title>{{ config('app.name') }} - Moldova</title>
-
-    @stack('meta')
-
-    <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('common/favicon_32x32.ico') }}" />
-    <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('common/favicon_16x16.ico') }}" />
-    <link rel="icon" type="image/x-icon" href="{{ Vite::image('common/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +14,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @stack('head')
 </head>
 <body>
 
@@ -144,7 +131,7 @@
             <p class="text-[12px] col-span-4"><span class="font-bold">IDNO:</span> 101560000363</p>
             <p class="col-span-6 text-[12px] text-end"><span class="font-bold">Address: </span>bd. Decebal 6/1, apt 333, Chișinău, MD-2022</p>
         </div>
-        <span class="block w-full h-4 gradient_r-b !rounded-none my-2"></span>
+        <span class="block w-full h-4 gradient_r-b !rounded-none mt-2"></span>
     </footer>
 </main>
 
