@@ -21,7 +21,7 @@ const props = defineProps({
 })
 
 const { t, locale } = useI18n()
-console.log(props.product)
+
 // --- Selection states
 const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
 const selectedSizeId = ref(null)
@@ -70,6 +70,7 @@ watch(selectedColorId, (newColorId) => {
     selectedSizeId.value = sizes.length ? sizes[0] : null
 }, { immediate: true })
 
+
 // --- Currently selected variant
 const selectedVariant = computed(() => {
     return props.product.variants.find(v =>
@@ -81,8 +82,42 @@ const selectedVariant = computed(() => {
 // --- Selected variant ID (to send to server during purchase)
 const selectedVariantId = computed(() => selectedVariant.value?.id || null)
 
+// update url
+// TODO add slug color and size
+watch([selectedColorId, selectedSizeId], ([newColor, newSize]) => {
+    if (newColor && newSize) {
+        const url = new URL(window.location.href)
+        url.searchParams.set("color", newColor)
+        url.searchParams.set("size", newSize)
+        window.history.replaceState({}, "", url)
+    }
+})
+onMounted(() => {
+    const url = new URL(window.location.href)
+    const colorFromUrl = url.searchParams.get("color")
+    const sizeFromUrl = url.searchParams.get("size")
+
+    if (colorFromUrl && sizeFromUrl) {
+        const variant = props.product.variants.find(v =>
+            String(v.color.id) === colorFromUrl &&
+            String(v.size.id) === sizeFromUrl
+        )
+        if (variant) {
+            selectedColorId.value = variant.color.id
+            selectedSizeId.value = variant.size.id
+            return
+        }
+    }
+
+    // fallback: перший варіант
+    const first = props.product.variants[0]
+    if (first) {
+        selectedColorId.value = first.color.id
+        selectedSizeId.value = first.size.id
+    }
+})
 const addToCart = async (event) => {
-    console.log(selectedVariantId.value)
+
     if (!selectedVariantId.value) return
     console.log(locale.value)
     await window.axios.post('cart', {

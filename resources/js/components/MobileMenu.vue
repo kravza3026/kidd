@@ -50,14 +50,25 @@
 
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
-                            href="#"
+                            :href="`/${locale}/cart`"
                             @click.prevent="toggleCart"
+
                         >
                           <div
 
                               class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                            <div class="mx-auto w-fit pb-1">
-                            <CartDropdown></CartDropdown>
+                               <div class="group relative">
+                                   <img :src="cartIcon" width="24" height="24" alt="cart" class="opacity-65 md:opacity-100">
+                                   <div v-if="cartItems.length > 0" class="absolute flex items-center justify-center -top-2 -right-2 bg-olive rounded-full p-1 w-[16px] h-[16px]">
+                                       <span class="text-[10px] text-white">{{cartItems.length}}</span>
+                                   </div>
+
+                                   <div class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                       {{ $t('cart.tooltip') }}
+                                       <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
+                                   </div>
+                               </div>
                            </div>
                             <span
                                 :class="{ 'text-olive': cartOpen }"
@@ -70,7 +81,7 @@
                     <div class="flex-1 group">
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 "
-                            :href="`/${locale}/ajutor`"
+                            :href="`/${locale}/help`"
                         >
                           <span  class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
                             <img
@@ -130,6 +141,9 @@ import faqOpenIcon from '@img/icons/olive/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
 import CartDropdown from "@/components/cart/CartDropdown.vue";
 import UserDropdown from "@/components/account/UserDropdown.vue";
+import { emitter } from '@/eventBus.js'
+import {onMounted, ref} from "vue";
+import {useI18n} from "vue-i18n";
 
 const currentPath = '/' + (window.location.pathname.split('/')[2] || '')
 export default {
@@ -164,6 +178,33 @@ export default {
 
         };
     },
+    setup() {
+        const { locale, t, n } = useI18n();
+        const cartItems = ref([]);
+        const getCartItems = async () => {
+            await window.axios.get('cart')
+                .then((response) => {
+                    cartItems.value = response.data.items;
+
+                }).catch((error) => {
+                    console.error('Server error:', error);
+                    cartItems.value = [];
+
+                });
+        };
+        emitter.on('cart-updated', getCartItems);
+
+        onMounted(() => {
+            getCartItems();
+            emitter.on('cart-updated', getCartItems);
+        });
+        return{
+            cartItems
+        }
+
+
+    },
+
     computed: {
         locale() {
             return document.documentElement.lang || 'ro';
@@ -172,6 +213,8 @@ export default {
             return window.location.pathname.includes('/help');
         }
     },
+
+
     methods: {
         toggleExplore() {
             // Закриваємо інші
@@ -224,6 +267,7 @@ export default {
             this.searchOpen = false;
             document.body.classList.remove('overflow-hidden');
         },
+
     }
 
 };
