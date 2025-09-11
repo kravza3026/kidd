@@ -10,7 +10,7 @@
                     <div class="grid grid-cols-12 gap-x-4 mt-4">
                         @foreach ($order->items as $product)
                            <div class="flex items-start col-span-12 lg:col-span-4 relative">
-                               <div class="lg:absolute relative top-4 mx-2 lg:mx-0 lg:right-4">
+                               <div class="lg:absolute relative top-4 mx-1 md:mx-2 lg:mx-0 lg:right-4">
                                    <label
                                        for="return_{{$product->id}}"
                                        class="size-5 lg:size-7 inline-flex items-center justify-center bg-white border border-light-border lg:rounded-full cursor-pointer"

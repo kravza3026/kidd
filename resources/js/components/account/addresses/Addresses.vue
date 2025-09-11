@@ -688,21 +688,33 @@ export default {
                         </ul>
                     </div>
 
-                    <BaseInput
-                        id="street"
-                        v-model="address.form.street_name"
-                        :class="{
-                            'cursor-not-allowed': !address.editor.isEditing,
-                            '!shadow-red-500': address.editor.isEditing && address.form.invalid('street'),
-                        }"
-                        :disabled="!address.editor.isEditing"
-                        :placeholder="$t('address.street_short')"
-                        aria-label="street"
-                        class="text-charcoal/60 col-span-12 rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden lg:col-span-4"
-                        customClass="p-0 h-7.5 placeholder-text-sm"
-                        name="street"
-                        @change="address.form.validate('street')"
-                    />
+                    <div class="relative col-span-12 lg:col-span-4">
+                        <BaseInput
+                            :id="'street_' + address.id"
+                            v-model="address.form.street_name"
+                            :class="{
+                              'cursor-not-allowed': !address.editor.isEditing,
+                              '!shadow-red-500': address.editor.isEditing && address.form.invalid('street'),
+                            }"
+                            :disabled="!address.editor.isEditing"
+                            aria-label="street"
+                            class="text-charcoal/60 rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
+                            customClass="p-0 h-7.5 peer w-full bg-transparent text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                            name="street"
+                            @change="address.form.validate('street')"
+                        />
+                        <label
+                            :class="{
+                              'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                address.form.street_name,
+                            }"
+                            :for="'street_' + address.id"
+                            class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                        >
+                            {{ $t('address.street_short') }}
+                        </label>
+                    </div>
+
                     <div class="relative col-span-4 lg:col-span-2">
                         <BaseInput
                             :id="'building_' + address.id"
@@ -721,58 +733,46 @@ export default {
                         />
                         <label
                             :class="{
-                                'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-slate-400':
+                                'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
                                     address.form.building,
                             }"
                             :for="'building_' + address.id"
-                            class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-slate-400 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                            class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
                         >
                             {{ $t('address.building_short') }}
                         </label>
                     </div>
 
-                    <!--                    <div class="col-span-4 lg:col-span-2 relative">-->
-                    <!--                        <label class="absolute inset-0 flex items-center pl-1.5 opacity-60 w-fit" for="building">-->
-                    <!--                            {{ $t('address.building_short') }}-->
-                    <!--                        </label>-->
-                    <!--                        <BaseInput-->
-                    <!--                            :disabled="!address.editor.isEditing"-->
-                    <!--                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"-->
-                    <!--                            name="building"-->
-                    <!--                            id="building"-->
-                    <!--                            placeholder="&#45;&#45;"-->
-                    <!--                            v-model="address.form.building"-->
-                    <!--                            aria-label="building"-->
-                    <!--                            @change="address.form.validate('building')"-->
-                    <!--                            class="shadow-sm text-charcoal/60 text-sm rounded-2xl focus:outline-hidden max-w-full duration-500"-->
-                    <!--                            :class="{-->
-                    <!--                          'cursor-not-allowed': !address.editor.isEditing,-->
-                    <!--                          '!shadow-red-500': address.editor.isEditing && address.form.invalid('building')-->
-                    <!--                        }"-->
-                    <!--                        />-->
-                    <!--                    </div>-->
+
 
                     <div class="relative col-span-4 lg:col-span-2">
-                        <label class="absolute inset-0 flex w-fit items-center pl-1.5 opacity-60" for="apartment">
-                            {{ $t('address.apartment_short') }}
-                        </label>
                         <BaseInput
-                            id="apartment"
+                            :id="'apartment_' + address.id"
                             v-model="address.form.apartment"
                             :class="{
-                                'cursor-not-allowed': !address.editor.isEditing,
-                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment'),
+                              'cursor-not-allowed': !address.editor.isEditing,
+                              '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment'),
                             }"
                             :disabled="!address.editor.isEditing"
                             aria-label="apartment"
                             class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
+                            customClass="p-0 min-h-7.5 peer w-full bg-transparent text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                             maxlength="3"
                             name="apartment"
                             placeholder="--"
                             @change="address.form.validate('apartment')"
                         />
+                        <label
+                            :class="{
+                              'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50': address.form.apartment,
+                            }"
+                            :for="'apartment_' + address.id"
+                            class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                        >
+                            {{ $t('address.apartment_short') }}
+                        </label>
                     </div>
+
                     <BaseInput
                         :id="'postal_code_' + address.id"
                         :key="'postal-' + address.id"
@@ -800,69 +800,97 @@ export default {
                     class="my-4 grid w-full grid-cols-12 gap-x-4 lg:grid-cols-18 lg:justify-end"
                 >
                     <div class="relative col-span-4 lg:col-span-2 lg:col-start-13">
-                        <label class="absolute inset-0 flex w-fit items-center pl-1.5 opacity-60" for="floor">
-                            {{ $t('address.floor_short') }}
-                        </label>
-                        <BaseInput
-                            id="floor"
-                            v-model="address.form.floor"
-                            :class="{
-                                'cursor-not-allowed': !address.editor.isEditing,
-                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor'),
-                            }"
-                            :disabled="!address.editor.isEditing"
-                            aria-label="floor"
-                            class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
-                            maxlength="3"
-                            name="floor"
-                            placeholder="--"
-                            @change="address.form.validate('floor')"
-                        />
+                        <div class="relative col-span-4 lg:col-span-2">
+                            <BaseInput
+                                :id="'floor_' + address.id"
+                                v-model="address.form.floor"
+                                :class="{
+                                  'cursor-not-allowed': !address.editor.isEditing,
+                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor'),
+                                }"
+                                :disabled="!address.editor.isEditing"
+                                aria-label="floor"
+                                class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
+                                customClass="p-0 min-h-7.5 peer w-full bg-transparent text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                maxlength="3"
+                                name="floor"
+                                @change="address.form.validate('floor')"
+                            />
+                            <label
+                                :class="{
+                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                    address.form.floor,
+                                }"
+                                :for="'floor_' + address.id"
+                                class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                            >
+                                {{ $t('address.floor_short') }}
+                            </label>
+                        </div>
+
                     </div>
 
                     <div class="relative col-span-4 lg:col-span-2">
-                        <label class="absolute inset-0 flex w-fit items-center pl-1.5 opacity-60" for="entrance">
-                            {{ $t('address.entrance_short') }}
-                        </label>
-                        <BaseInput
-                            id="entrance"
-                            v-model="address.form.entrance"
-                            :class="{
-                                'cursor-not-allowed': !address.editor.isEditing,
-                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance'),
-                            }"
-                            :disabled="!address.editor.isEditing"
-                            aria-label="entrance"
-                            class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-11"
-                            maxlength="3"
-                            name="entrance"
-                            placeholder="--"
-                            @change="address.form.validate('entrance')"
-                        />
+
+                        <div class="relative col-span-4 lg:col-span-2">
+                            <BaseInput
+                                :id="'entrance_' + address.id"
+                                v-model="address.form.entrance"
+                                :class="{
+                                  'cursor-not-allowed': !address.editor.isEditing,
+                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance'),
+                                }"
+                                :disabled="!address.editor.isEditing"
+                                aria-label="entrance"
+                                class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
+                                customClass="p-0 min-h-7.5 peer w-full bg-transparent text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                maxlength="3"
+                                name="entrance"
+                                @change="address.form.validate('entrance')"
+                            />
+                            <label
+                                :class="{
+                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                    address.form.entrance,
+                                }"
+                                :for="'entrance_' + address.id"
+                                class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                            >
+                                {{ $t('address.entrance_short') }}
+                            </label>
+                        </div>
+
                     </div>
 
                     <div class="relative col-span-4 lg:col-span-2">
-                        <label class="absolute inset-0 flex w-fit items-center pl-1.5 opacity-60" for="intercom">
-                            {{ $t('address.intercom_short') }}
-                        </label>
-                        <BaseInput
-                            id="intercom"
-                            v-model="address.form.intercom"
-                            :class="{
-                                'cursor-not-allowed': !address.editor.isEditing,
-                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom'),
-                            }"
-                            :disabled="!address.editor.isEditing"
-                            aria-label="intercom"
-                            class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
-                            customClass="p-0 min-h-7.5 placeholder-text-sm pl-8"
-                            maxlength="3"
-                            name="intercom"
-                            placeholder="--"
-                            @change="address.form.validate('intercom')"
-                        />
+                        <div class="relative col-span-4 lg:col-span-2">
+                            <BaseInput
+                                :id="'intercom_' + address.id"
+                                v-model="address.form.intercom"
+                                :class="{
+                                  'cursor-not-allowed': !address.editor.isEditing,
+                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom'),
+                                }"
+                                :disabled="!address.editor.isEditing"
+                                aria-label="intercom"
+                                class="text-charcoal/60 max-w-full rounded-2xl text-sm shadow-sm duration-500 focus:outline-hidden"
+                                customClass="p-0 min-h-7.5 peer w-full bg-transparent text-sm border border-slate-200 rounded-md px-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                maxlength="3"
+                                name="intercom"
+                                @change="address.form.validate('intercom')"
+                            />
+                            <label
+                                :class="{
+                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                    address.form.intercom,
+                                }"
+                                :for="'intercom_' + address.id"
+                                class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
+                            >
+                                {{ $t('address.intercom_short') }}
+                            </label>
+                        </div>
+
                     </div>
                 </div>
                 <p v-if="address.form.invalid('label')" class="w-full text-[12px] text-nowrap text-red-500">
