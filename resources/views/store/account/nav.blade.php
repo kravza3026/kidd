@@ -1,4 +1,4 @@
-<div class="mt-6 w-full px-4 sm:mt-0 sm:px-10">
+<div class="mt-6 w-full px-4 sm:mt-0 sm:px-10 hidden lg:block">
     <h2 class="text-2xl leading-4 font-bold tracking-[-2%] text-[#020202]/80 sm:hidden">
         {{ __('account.account_title') }}
     </h2>

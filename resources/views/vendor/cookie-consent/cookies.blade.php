@@ -60,7 +60,7 @@
                     @endforeach
                 </div>
                 <div class="cookies__save">
-                    <button type="submit" class="cookiesBtn__link">@lang('cookieConsent::cookies.save')</button>
+                    <button type="submit" class="cookiesBtn__link !bg-olive !border-olive">@lang('cookieConsent::cookies.save')</button>
                 </div>
             </form>
         </div>
