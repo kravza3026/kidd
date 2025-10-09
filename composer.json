@@ -18,6 +18,7 @@
         "moneyphp/money": "^4.7",
         "propaganistas/laravel-phone": "^6.0",
         "spatie/laravel-medialibrary": "^11.13",
+        "spatie/laravel-pdf": "^1.7",
         "spatie/laravel-permission": "^6.20",
         "spatie/laravel-sluggable": "^3.7",
         "spatie/laravel-tags": "^4.10",
@@ -28,6 +29,8 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
+        "laradumps/laradumps": "^4.5",
+        "laradumps/laradumps-core": "^3.2",
         "laravel/boost": "^1.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",

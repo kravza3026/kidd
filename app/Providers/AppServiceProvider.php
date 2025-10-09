@@ -26,6 +26,7 @@ use Money\Currencies\ISOCurrencies;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use NumberFormatter;
+use Spatie\LaravelPdf\PdfFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -122,6 +123,19 @@ class AppServiceProvider extends ServiceProvider
             View::share('clothes', $clothes);
 
         }
+
+        app()->bind(PdfFactory::class, function ($service, $app) {
+            return (new PdfFactory)->withBrowsershot(
+                function ($browserShot) {
+                    $browserShot->setOption(
+                        'args', [
+                            '--disable-web-security',
+                            '--allow-file-access-from-files',
+                        ],
+                    );
+                }
+            );
+        });
 
     }
 }
