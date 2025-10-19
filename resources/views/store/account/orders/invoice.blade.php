@@ -1,3 +1,4 @@
+@use('App\Enums\AddressType as AddressType')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -11,10 +12,14 @@
             html {
                 -webkit-print-color-adjust: exact;
             }
+            @page {
+                size: A4;
+                page-break-after: always;
+            }
         </style>
     </head>
     <body class="font-onest text-charcoal relative min-h-screen bg-white">
-        <main class="mx-auto my-6 min-h-screen w-full">
+        <main class="mx-auto my-6 w-full">
             <section class="my-6">
                 <div class="grid grid-cols-17 justify-between gap-x-13">
                     <div class="col-span-4 space-y-10">
@@ -35,22 +40,25 @@
                         <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
                             {{ __('invoice.heading.seller.title') }}
                         </p>
-                        <p class="font-medium">KIDD. Digital SRL</p>
+                        <p class="font-medium">
+                            {{ $company->name }}
+                        </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.address') }}</span>
-                            bd. Decebal 6/1, {{ __('invoice.heading.seller.address_apt') }} 333, mun. Chișinău, MD-2022
+                            {{ $company->address_line_1 }}
+                            {{ $company->address_line_2 }}, {{ $company->city }}, {{ $company->country }}
                         </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.idno') }}</span>
-                            101560000363
+                            {{ $company->idno }}
                         </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.bank') }}</span>
-                            Moldova Agroindbank
+                            {{ $company->bank_name }}
                         </p>
                         <p class="text-sm">
-                            <span>{{ __('invoice.heading.seller.swift') }}</span>
-                            KEDSLT2VXXX
+                            <span>{{ __('invoice.heading.seller.iban_mdl') }}</span>
+                            {{ $company->bank_iban }}
                         </p>
                     </div>
                     <div class="col-span-6 space-y-2">
@@ -106,44 +114,47 @@
                         </p>
                     </div>
                     <hr class="border-light-border my-4" />
-                    @for ($i = 1; $i < 77; $i++)
-                        @if ($i == 12 || ($i > 12 && ($i - 11) % 17 === 0))
-                            @pageBreak
-                            <br />
-                        @endif
+                    {{-- @for ($i = 1; $i < 21; $i++) --}}
+                    {{-- @if ($i == 12 || ($i > 12 && ($i - 11) % 17 === 0)) --}}
+                    {{--  --}}
+                    {{-- @pageBreak --}}
+                    {{--  --}}
+                    {{-- <br /> --}}
+                    {{-- @endif --}}
 
-                        @foreach ($order->items as $item)
-                            <div class="my-2 grid grid-cols-17 gap-x-4 pt-2 pb-2">
-                                <p class="col-span-1 text-sm tracking-widest opacity-35">
-                                    {{ sprintf('%02d', $i) }}.
-                                    {{-- {{ sprintf('%02d', $loop->iteration) }}. --}}
-                                </p>
-                                <div class="col-span-8 text-sm tracking-normal">
-                                    {{ $item->variant_snapshot['product']['name'][app()->getLocale()] }}
-                                    <br />
-                                    <p class="text-[12px] opacity-55">
-                                        {{ $item->variant_snapshot['color']['name'][app()->getLocale()] }} /
-                                        {{ $item->variant_snapshot['size']['name'][app()->getLocale()] }} /
-                                        <span class="text-[11px] font-bold">
-                                            {{ $item->variant_snapshot['sku'] }}
-                                        </span>
-                                    </p>
-                                </div>
-                                <p class="col-span-1 text-sm tracking-widest">
-                                    {{ $item->quantity }}
-                                </p>
-                                <p class="col-span-1 text-sm tracking-widest">
-                                    <span class="font-normal opacity-35">×</span>
-                                </p>
-                                <p class="col-span-3 text-sm tracking-widest">
-                                    {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] / 100]) }}
-                                </p>
-                                <p class="col-span-3 text-sm font-medium tracking-widest">
-                                    {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] * $item->quantity / 100]) }}
+                    @foreach ($order->items as $item)
+                        <div class="my-2 grid grid-cols-17 gap-x-4 pt-2 pb-2">
+                            <p class="col-span-1 text-sm tracking-widest opacity-35">
+                                {{-- {{ sprintf('%02d', $i) }}. --}}
+                                {{ sprintf('%02d', $loop->iteration) }}.
+                            </p>
+                            <div class="col-span-8 text-sm tracking-normal">
+                                {{ $item->variant_snapshot['product']['name'][app()->getLocale()] }}
+                                <br />
+                                <p class="text-[12px] opacity-55">
+                                    {{ $item->variant_snapshot['color']['name'][app()->getLocale()] }} /
+                                    {{ $item->variant_snapshot['size']['name'][app()->getLocale()] }} /
+                                    <span class="text-[11px] font-bold">
+                                        {{ $item->variant_snapshot['sku'] }}
+                                    </span>
                                 </p>
                             </div>
-                        @endforeach
-                    @endfor
+                            <p class="col-span-1 text-sm tracking-widest">
+                                {{ $item->quantity }}
+                            </p>
+                            <p class="col-span-1 text-sm tracking-widest">
+                                <span class="font-normal opacity-35">×</span>
+                            </p>
+                            <p class="col-span-3 text-sm tracking-widest">
+                                {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] / 100]) }}
+                            </p>
+                            <p class="col-span-3 text-sm font-medium tracking-widest">
+                                {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] * $item->quantity / 100]) }}
+                            </p>
+                        </div>
+                    @endforeach
+
+                    {{-- @endfor --}}
 
                     <hr class="border-light-border my-4" />
 

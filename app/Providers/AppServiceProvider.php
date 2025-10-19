@@ -133,6 +133,10 @@ class AppServiceProvider extends ServiceProvider
                             '--allow-file-access-from-files',
                         ],
                     );
+                    $browserShot->setOption('printBackground', true);
+                    $browserShot->hideBrowserHeaderAndFooter();
+                    $browserShot->noSandbox();
+                    $browserShot->waitUntilNetworkIdle();
                 }
             );
         });

@@ -491,7 +491,6 @@
                 });
             });
 
-            // Якщо є вибране по замовчуванню → показати відразу
             const checked = document.querySelector('input[name="shipping_method"]:checked');
             if (checked) {
                 document.getElementById(`shipping_${checked.value}_description`)?.classList.remove('hidden');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Order;
 use Illuminate\Contracts\View\View;
 use Spatie\LaravelPdf\Enums\Format;
@@ -37,23 +38,11 @@ class OrdersController extends Controller
 
     public function invoice(Order $order)
     {
-        //        $pdf = Pdf::loadView('store.account.orders.invoice', compact('order'));
-        //
-        //        return $pdf->stream('invoice.pdf');
+        $company = Company::first();
 
-        //        return Browsershot::html(\view('store.account.orders.invoice', compact('order'))->render())
-        //            ->headerHtml(view('store.account.orders._invoice-header', compact('order'))->render())
-        //            ->footerHtml(view('store.account.orders._invoice-footer', compact('order'))->render())
-        //            ->hideBrowserHeaderAndFooter()
-        //            ->windowSize(1920, 1080)
-        //            ->setOption('args', ['--disable-web-security'])
-        //            ->setOption('printBackground', true)
-        //            ->waitUntilNetworkIdle()
-        //            ->pdf();
-
-        return Pdf::view('store.account.orders.invoice', compact('order'))
+        return Pdf::view('store.account.orders.invoice', compact('order', 'company'))
             ->format(Format::A4)
-            ->margins(80, 24, 100, 24, Unit::Pixel)
+            ->margins(80, 24, 120, 24, Unit::Pixel)
             ->headerView('store.account.orders._invoice-header', compact('order'))
             ->footerView('store.account.orders._invoice-footer', compact('order'))
             ->withBrowsershot(function ($browsershot) {
@@ -61,8 +50,6 @@ class OrdersController extends Controller
                 $browsershot->windowSize(1920, 1080);
                 //                $browsershot->setOption('args', ['--disable-web-security']);
                 //                $browsershot->setOption('args', ['--allow-file-access-from-files']);
-                //                $browsershot->setOption('printBackground', true);
-                $browsershot->waitUntilNetworkIdle();
             })
             ->name($order->order_number.'_'.$order->placed_at->format('Y-m-d').'.pdf');
         //            ->download();

@@ -19,7 +19,7 @@ class ProductVariantObserver
             $hasDiscount = $product->variants()
                 ->where(function ($query) {
                     $query->whereNotNull('discount_amount')
-                          ->orWhereNotNull('discount_display');
+                        ->orWhereNotNull('discount_display');
                 })
                 ->exists();
 

@@ -1,8 +1,4 @@
 <style>
-    @page {
-        size: A4;
-        margin: 0;
-    }
     html {
         -webkit-print-color-adjust: exact;
     }
@@ -22,7 +18,7 @@
         color: #000;
         font-weight: bold;
         text-align: center;
-        height: 125px;
+        height: 120px;
     }
     .mt-2 {
         margin-top: 8px;
@@ -64,9 +60,6 @@
     }
     .col-span-2 {
         grid-column: span 2 / span 2;
-    }
-    .col-span-3 {
-        grid-column: span 3 / span 3;
     }
     .col-span-4 {
         grid-column: span 4 / span 4;
@@ -131,22 +124,19 @@
             U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 </style>
-
 <footer class="inv_footer">
     <p style="text-align: left; font-weight: 400; font-size: 11px; margin-top: 24px" class="text-sm opacity-50">
-        We accept payment via bank card, PayPal and bank transfer. Thank you for choosing KIDD. for your baby clothing
-        needs! Your satisfaction is our priority. If you have any payment-related questions or need to make a return,
-        please contact us at hello@kidd.md
+        {{ __('invoice.footer.description') }}
     </p>
     <hr class="border-light-border my-4" />
     <div class="grid grid-cols-12 gap-4">
         <p class="col-span-2 text-start text-xs font-bold">Kidd Digital SRL</p>
         <p class="col-span-4 text-start text-xs">
-            <span class="font-bold">IDNO:</span>
+            <span class="font-bold">{{ __('invoice.footer.idno') }}:</span>
             101560000363
         </p>
         <p class="col-span-6 text-end text-xs">
-            <span class="font-bold">Address:</span>
+            <span class="font-bold">{{ __('invoice.footer.address') }}:</span>
             bd. Decebal 6/1, apt 333, Chișinău, MD-2022
         </p>
     </div>

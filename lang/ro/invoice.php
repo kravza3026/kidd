@@ -54,7 +54,7 @@ return [
 
     'footer' => [
         'description' => 'We accept payment via bank card, PayPal and bank transfer. Thank you for choosing KIDD. for your baby clothing needs! Your satisfaction is our priority. If you have any payment-related questions or need to make a return, please contact us at hello@kidd.md',
-        'idno' => 'IDNO:',
+        'idno' => 'IDNO',
         'address' => 'Adresa',
     ],
 
