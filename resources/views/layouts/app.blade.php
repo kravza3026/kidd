@@ -21,7 +21,12 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap" />
+        <link
+            rel="preload"
+            as="style"
+            onload="this.rel='stylesheet'"
+            href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap"
+        />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @cookieconsentscripts
