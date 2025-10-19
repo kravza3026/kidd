@@ -39,7 +39,7 @@
                             right_icon="false"
                             class="mx-auto my-5 w-full font-bold sm:w-1/2"
                         >
-                            <img src="{{ Vite::image('icons/size_white.png') }}" alt="size" />
+                            <img src="{{ asset('assets/images/icons/size_white.png') }}" alt="size" />
                             Check size
                         </x-ui.button>
                     </div>
