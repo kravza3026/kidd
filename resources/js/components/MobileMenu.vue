@@ -46,13 +46,11 @@
                     </div>
 
                     <!-- Cart -->
-                    <div class="flex-1 group">
+                    <div class="flex-1 group ">
 
                         <a
                             class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
                             :href="`/${locale}/cart`"
-                            @click.prevent="toggleCart"
-
                         >
                           <div
 

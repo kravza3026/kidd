@@ -8,6 +8,7 @@
     $family = !request()->has('filters.family.0') && array_key_exists('family', request()->get('filters', [])) && count(request('filters')['family']);
     $showClearButton = request()->has('filters') && ($size || $fabric || $color || $gender || $season || $price || $family);
 @endphp
+
 <form class="w-full h-full" action="{!! url()->current() !!}" accept-charset="ascii" name="filtersForm" id="filtersForm">
     @if( !is_null( request('term') ) )
         <input type="hidden" name="term" value="{!! request('term') !!}">

@@ -298,3 +298,10 @@ input:checked + .checkboxLabelCircle::after {
 .swal2-close:focus-visible {
     box-shadow: none !important;
 }
+
+#cookies-policy .cookies__category input:checked+.cookies__box:after{
+    background-color: var(--color-olive)!important;
+}
+#cookies-policy .cookies__details{
+    color: var(--color-olive)!important;
+}

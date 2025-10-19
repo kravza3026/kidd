@@ -8,7 +8,7 @@
     align="top"
     width="w-size"
     trigger-classes="{{ $in_use ? 'bg-secondary border-darkest-snow border' : 'border border-transparent' }} px-3 py-2 rounded-full justify-center items-center gap-2 flex"
-    content-classes="p-3 bg-white rounded-full"
+    content-classes="p-3 bg-white "
 >
     <x-slot name="trigger">
         <div

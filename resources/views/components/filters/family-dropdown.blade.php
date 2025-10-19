@@ -5,7 +5,7 @@
 
 <x-ui.dropdown class="" align="top" width="w-size"
             trigger-classes="{{ $in_use ? 'bg-secondary border-darkest-snow border' : 'border border-transparent' }} px-3 py-2 rounded-full justify-center items-center gap-2 flex"
-            content-classes="p-3 bg-white rounded-full">
+            content-classes="p-3 bg-white">
     <x-slot name="trigger">
         <div class="cursor-pointer flex justify-start items-center gap-1 {{ $in_use ? 'text-olive font-extrabold' : 'text-black font-medium' }} text-sm leading-[14px]">
             {{ __('filters.family_member') }}
