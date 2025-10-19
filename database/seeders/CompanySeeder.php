@@ -15,6 +15,7 @@ class CompanySeeder extends Seeder
         Company::create([
             'name' => 'Edwards Digital SRL',
             'idno' => '1234567890',
+
             'logo' => 'https://via.placeholder.com/150',
             'description' => 'This is a test company.',
 
@@ -22,23 +23,17 @@ class CompanySeeder extends Seeder
             'phone' => '+373 60 55 88 45',
             'website' => 'https://kidd.md',
 
-            'address_line_1' => '123 Test St',
-            'address_line_2' => 'Apt 123',
-            'city' => 'Test City',
-            'country' => 'Test Country',
-
             'tva' => 20,
 
-            'bank_name' => 'Test Bank',
-            'bank_branch' => 'Test Branch',
-            'bank_account' => '1234567890',
-            'bank_swift' => 'TESTMD22',
-            'bank_iban' => 'MD1234567890',
-            'bank_bic' => 'TESTMD22XXX',
-            'bank_code' => '1234567890',
-            'bank_address' => '123 Test St',
-            'bank_city' => 'Test City',
-            'bank_country' => 'Test Country',
+            'bank' => [
+                'bank_name' => 'Test Bank',
+                'bank_branch' => 'Test Branch',
+                'bank_account' => '1234567890',
+                'bank_swift' => 'TESTMD22',
+                'bank_iban' => 'MD1234567890',
+                'bank_bic' => 'TESTMD22XXX',
+                'bank_code' => '1234567890',
+            ],
 
             'facebook' => 'https://facebook.com',
             'instagram' => 'https://instagram.com',

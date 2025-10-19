@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('timezone')->default('Europe/Chisinau');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->unsignedInteger('sort_order')->default(1);
             $table->timestamps();
             $table->softDeletes();
 
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //        Schema::dropIfExists('countries');
+        Schema::dropIfExists('countries');
     }
 };

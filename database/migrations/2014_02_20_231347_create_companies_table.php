@@ -23,25 +23,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
 
-            $table->string('address_line_1')->nullable();
-            $table->string('address_line_2')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
-
             $table->unsignedInteger('tva')->default(20);
 
-            $table->string('bank_name')->nullable();
-            $table->string('bank_branch')->nullable();
-
-            $table->string('bank_account')->nullable();
-            $table->string('bank_swift')->nullable();
-            $table->string('bank_iban')->nullable();
-            $table->string('bank_bic')->nullable();
-            $table->string('bank_code')->nullable();
-
-            $table->string('bank_address')->nullable();
-            $table->string('bank_city')->nullable();
-            $table->string('bank_country')->nullable();
+            $table->json('bank')->nullable();
 
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();

@@ -16,8 +16,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Region::class)->constrained()->cascadeOnDelete();
             $table->json('name');
-            $table->unsignedSmallInteger('sort_order')->default(1);
             $table->unsignedInteger('external_code')->nullable();
+            $table->unsignedInteger('sort_order')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //        Schema::dropIfExists('cities');
+        Schema::dropIfExists('cities');
     }
 };
