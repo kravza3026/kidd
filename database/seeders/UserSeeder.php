@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpExpressionResultUnusedInspection */
+<?php
+
+/** @noinspection PhpExpressionResultUnusedInspection */
 
 namespace Database\Seeders;
 

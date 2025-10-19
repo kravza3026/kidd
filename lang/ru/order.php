@@ -88,6 +88,7 @@ return [
         'billing_building' => '№ дома',
         'billing_postal_code' => 'Почтовый индекс',
         'billing_apartment' => 'Квартира',
+        'billing_apartment_short' => 'кв.',
         'billing_entrance' => 'Подъезд',
         'billing_floor' => 'Этаж',
         'billing_intercom' => 'Домофон',

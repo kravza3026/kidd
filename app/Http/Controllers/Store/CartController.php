@@ -120,14 +120,12 @@ class CartController extends Controller
         $cartItems = LaraCart::getItems();
         $response = [
             'items' => [],
-
             'fees' => LaraCart::getFees(),
             'coupons' => LaraCart::getCoupons(),
             'count' => LaraCart::count($withItemQty = false),
             'sub_total' => LaraCart::subTotal($formatted = false, $withDiscount = true) / 100,
             'fee_sub_total' => LaraCart::feeSubTotal($formatted = false, $withDiscount = true) / 100,
             'total_discount' => LaraCart::discountTotal($formatted = false) / 100,
-
             'total' => LaraCart::total($formatted = false, $withDiscount = false),
             'grand_total' => LaraCart::total($formatted = false, $withDiscount = true),
         ];

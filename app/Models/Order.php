@@ -125,4 +125,12 @@ class Order extends Model
             //            set: fn ($value) => (int) str_replace(['#ORD-', 'ORD-'], '', $value),
         );
     }
+
+    protected function invoiceNumber(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => sprintf('INV-%06d', $this->attributes['order_number']),// : strtoupper(uniqid('INV-', false)),
+            //            set: fn ($value) => (int) str_replace(['#ORD-', 'ORD-'], '', $value),
+        );
+    }
 }

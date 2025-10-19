@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Vacancy;
+use Illuminate\Database\Seeder;
 use Spatie\Tags\Tag;
 
 class VacancySeeder extends Seeder

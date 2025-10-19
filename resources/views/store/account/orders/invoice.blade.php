@@ -1,139 +1,181 @@
+@use('App\Enums\AddressType as AddressType')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <title>{{ config('app.name') }} - Moldova</title>
+        <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap" rel="stylesheet" />
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            html {
+                -webkit-print-color-adjust: exact;
+            }
+            @page {
+                size: A4;
+                page-break-after: always;
+            }
+        </style>
+    </head>
+    <body class="font-onest text-charcoal relative min-h-screen bg-white">
+        <main class="mx-auto my-6 w-full">
+            <section class="my-6">
+                <div class="grid grid-cols-17 justify-between gap-x-13">
+                    <div class="col-span-4 space-y-10">
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
+                                {{ __('invoice.heading.billing_date') }}
+                            </p>
+                            <p class="font-medium">{{ $order->placed_at->format('d/m/Y') }}</p>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
+                                {{ __('invoice.heading.due_date') }}
+                            </p>
+                            <p class="font-medium">{{ $order->placed_at->addWeekdays(3)->format('d/m/Y') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-span-6 space-y-2">
+                        <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.heading.seller.title') }}
+                        </p>
+                        <p class="font-medium">
+                            {{ $company->name }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.seller.address') }}</span>
+                            {{ $company->address_line_1 }}
+                            {{ $company->address_line_2 }}, {{ $company->city }}, {{ $company->country }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.seller.idno') }}</span>
+                            {{ $company->idno }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.seller.bank') }}</span>
+                            {{ $company->bank_name }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.seller.iban_mdl') }}</span>
+                            {{ $company->bank_iban }}
+                        </p>
+                    </div>
+                    <div class="col-span-6 space-y-2">
+                        <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.heading.buyer.title') }}
+                        </p>
+                        <p class="font-medium">
+                            {{ $order->customer->first_name }} {{ $order->customer->last_name }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.buyer.address') }}</span>
+                            {{ $order->billing->street_name }} {{ $order->billing->building }},
+                            @if ($order->billing->apartment)
+                                {{ __('invoice.heading.buyer.address_apt') }}
+                                {{ $order->billing->apartment }},
+                            @endif
 
-    <title>{{ config('app.name') }} - Moldova</title>
+                            {{ $order->billing->city->name }}, {{ $order->billing->region->name }}
+                            {{ $order->billing->postal_code }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.buyer.phone') }}</span>
+                            {{ $order->customer->phone }}
+                        </p>
+                        <p class="text-sm">
+                            <span>{{ __('invoice.heading.buyer.email') }}</span>
+                            {{ $order->customer->email }}
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <hr class="border-light-border my-4" />
+            <section class="mt-8">
+                <p class="text-4xl">
+                    {{ __('invoice.heading.invoice') }}
+                    <span class="opacity-35">#{{ $order->invoice_number }}</span>
+                </p>
+                <div class="mt-4">
+                    <div class="grid grid-cols-17 gap-x-4">
+                        <p class="col-span-1 text-[10px] font-bold tracking-widest uppercase opacity-35">#</p>
+                        <p class="col-span-8 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_heading.product_name_color_size') }}
+                        </p>
+                        <p class="col-span-1 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_heading.quantity') }}
+                        </p>
+                        <p class="col-span-1 text-[10px] font-bold tracking-widest uppercase opacity-35"></p>
+                        <p class="col-span-3 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_heading.price') }}
+                        </p>
+                        <p class="col-span-3 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_heading.amount') }}
+                        </p>
+                    </div>
+                    <hr class="border-light-border my-4" />
+                    {{-- @for ($i = 1; $i < 21; $i++) --}}
+                    {{-- @if ($i == 12 || ($i > 12 && ($i - 11) % 17 === 0)) --}}
+                    {{--  --}}
+                    {{-- @pageBreak --}}
+                    {{--  --}}
+                    {{-- <br /> --}}
+                    {{-- @endif --}}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap" rel="stylesheet" />
+                    @foreach ($order->items as $item)
+                        <div class="my-2 grid grid-cols-17 gap-x-4 pt-2 pb-2">
+                            <p class="col-span-1 text-sm tracking-widest opacity-35">
+                                {{-- {{ sprintf('%02d', $i) }}. --}}
+                                {{ sprintf('%02d', $loop->iteration) }}.
+                            </p>
+                            <div class="col-span-8 text-sm tracking-normal">
+                                {{ $item->variant_snapshot['product']['name'][app()->getLocale()] }}
+                                <br />
+                                <p class="text-[12px] opacity-55">
+                                    {{ $item->variant_snapshot['color']['name'][app()->getLocale()] }} /
+                                    {{ $item->variant_snapshot['size']['name'][app()->getLocale()] }} /
+                                    <span class="text-[11px] font-bold">
+                                        {{ $item->variant_snapshot['sku'] }}
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="col-span-1 text-sm tracking-widest">
+                                {{ $item->quantity }}
+                            </p>
+                            <p class="col-span-1 text-sm tracking-widest">
+                                <span class="font-normal opacity-35">×</span>
+                            </p>
+                            <p class="col-span-3 text-sm tracking-widest">
+                                {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] / 100]) }}
+                            </p>
+                            <p class="col-span-3 text-sm font-medium tracking-widest">
+                                {{ __('invoice.table_row.price', ['price' => $item->variant_snapshot['price_final'] * $item->quantity / 100]) }}
+                            </p>
+                        </div>
+                    @endforeach
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+                    {{-- @endfor --}}
 
-</head>
-<body>
+                    <hr class="border-light-border my-4" />
 
-<main   class="max-w-3xl min-h-screen mx-auto flex flex-col justify-between py-4"
+                    <div class="my-4 grid grid-cols-17 items-center gap-4">
+                        <p class="col-span-3 col-start-12 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_footer.subtotal') }}
+                        </p>
+                        <p class="col-span-3 text-base font-medium tracking-widest">1400 lei</p>
 
->
-   <header>
-       <div class="flex justify-between">
-           <img src="{{Vite::image('/icons/logo_outline.png')}}" alt="logo">
-           <div class="flex gap-x-18 text-[12px] font-medium">
-               <div class="grid">
-                   <a href="www.kidd.md">www.kidd.md</a>
-                   <a href="mailto:hello@kidd.md">hello@kidd.md</a>
-               </div>
-               <div class="grid">
-                   <a href="tel:+373 (22) 000 321">+373 (79) 000 321</a>
-                   <a href="tel:+373 (79) 000 321">+373 (79) 000 321</a>
-               </div>
-           </div>
-       </div>
-       <hr class="my-4 border-light-border">
-   </header>
-   <div class="content py-6">
-       <section class="my-6">
-           <div class="grid justify-between grid-cols-17 gap-x-13">
-               <div class="space-y-10 col-span-4">
-                   <div class="space-y-4">
-                       <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Billing date</p>
-                       <p class="font-medium">03/10/2023</p>
-                   </div>
-                   <div class="space-y-4">
-                       <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Billing date</p>
-                       <p class="font-medium">03/10/2023</p>
-                   </div>
-               </div>
-               <div class="space-y-4 col-span-6">
-                   <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Seller</p>
-                   <p class="font-medium">KIDD. Digital SRL</p>
-                   <p class="text-sm"><span>Address</span>: bd. Decebal 6/1, cab. 333, mun. Chișinău, MD-2022</p>
-                   <p class="text-sm"><span>IDNO:</span> 101560000363</p>
-                   <p class="text-sm"><span>Bank:</span> Moldova Agroindbank</p>
-                   <p class="text-sm"><span>SWIFT:</span> KEDSLT2VXXX</p>
-
-               </div>
-               <div class="space-y-4 col-span-6">
-                   <p class="opacity-35 uppercase font-bold text-[10px] tracking-widest">Buyer</p>
-                   <p class="font-medium">Dionisie Ghețu</p>
-                   <p class="text-sm"><span>Address</span>: Address: Alba Iulia 75, ap. 623, mun. Chișinău, MD-2071</p>
-                   <p class="text-sm"><span>Phone:</span> +373 (60) 394 474</p>
-                   <p class="text-sm"><span>E-mail:</span> ghetsudionysiy@gmail.com</p>
-
-
-               </div>
-           </div>
-       </section>
-       <hr class="my-4 border-light-border">
-       <section class="py-8">
-           <p class="text-4xl py-4">Invoice <span class="opacity-35">№ 173–963</span></p>
-           <div class="mt-4">
-               <div class="grid grid-cols-17 gap-x-6">
-                   <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest">#</p>
-                   <p class="col-span-8 opacity-35 uppercase font-bold text-[10px] tracking-widest">Product title</p>
-                   <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest">QTY</p>
-                   <p class="col-span-1 opacity-35 uppercase font-bold text-[10px] tracking-widest"></p>
-                   <p class="col-span-3 opacity-35 uppercase font-bold text-[10px] tracking-widest">Price</p>
-                   <p class="col-span-3 opacity-35 uppercase font-bold text-[10px] tracking-widest">Amount</p>
-               </div>
-               <hr class="my-4 border-light-border">
-               <div class="grid grid-cols-17 gap-x-6 my-4">
-                   <p class="col-span-1 opacity-35  text-base tracking-widest">01.</p>
-                   <p class="col-span-8 text-base tracking-widest">Summer Cotton Jumpsuit Beige 0–3M</p>
-                   <p class="col-span-1 text-base tracking-widest">1</p>
-                   <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
-                   <p class="col-span-3 text-base tracking-widest">240 lei</p>
-                   <p class="col-span-3 text-base tracking-widest font-medium">240 lei</p>
-               </div>
-               <div class="grid grid-cols-17 gap-x-6 my-4">
-                   <p class="col-span-1 opacity-35  text-base tracking-widest">02.</p>
-                   <p class="col-span-8 text-base tracking-widest">Thin Pants Black 6–9M</p>
-                   <p class="col-span-1 text-base tracking-widest">2</p>
-                   <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
-                   <p class="col-span-3 text-base tracking-widest">165 lei </p>
-                   <p class="col-span-3 text-base tracking-widest font-medium">330 lei</p>
-               </div>
-               <div class="grid grid-cols-17 gap-x-6 my-4">
-                   <p class="col-span-1 opacity-35  text-base tracking-widest">03.</p>
-                   <p class="col-span-8 text-base tracking-widest">Flutter Sleeve Dress Turquoise 0–3M</p>
-                   <p class="col-span-1 text-base tracking-widest">2</p>
-                   <p class="col-span-1 text-base tracking-widest"><span class="opacity-35 font-normal">×</span></p>
-                   <p class="col-span-3 text-base tracking-widest">240 lei</p>
-                   <p class="col-span-3 text-base tracking-widest font-medium">480 lei</p>
-               </div>
-               <hr class="my-4 border-light-border">
-
-               <div class="grid grid-cols-17 items-center gap-4 my-4">
-                   <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Subtotal</p>
-                   <p class="col-span-3 text-base font-medium tracking-widest">1400 lei</p>
-
-                   <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Shipment</p>
-                   <p class="col-span-3 text-base font-medium tracking-widest">50 lei</p>
-                   <hr class="my-4 col-start-12 col-span-6 border-light-border">
-                   <p class="col-span-3 col-start-12 opacity-35 uppercase text-[10px] font-bold tracking-widest">Shipment</p>
-                   <p class="col-span-3 text-xl font-bold tracking-widest">1450 lei</p>
-
-               </div>
-
-           </div>
-       </section>
-   </div>
-    <footer>
-        <p class="opacity-50 text-sm">We accept payment via bank card, PayPal and bank transfer. Thank you for choosing KIDD. for your baby clothing needs! Your satisfaction is our priority. If you have any payment-related questions or need to make a return, please contact us at hello@kidd.md</p>
-        <hr class="my-4 border-light-border">
-        <div class="grid grid-cols-12 gap-4">
-            <p class="col-span-2 font-bold text-[12px]">Kidd Digital SRL</p>
-            <p class="text-[12px] col-span-4"><span class="font-bold">IDNO:</span> 101560000363</p>
-            <p class="col-span-6 text-[12px] text-end"><span class="font-bold">Address: </span>bd. Decebal 6/1, apt 333, Chișinău, MD-2022</p>
-        </div>
-        <span class="block w-full h-4 gradient_r-b !rounded-none mt-2"></span>
-    </footer>
-</main>
-
-</body>
+                        <p class="col-span-3 col-start-12 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_footer.shipping') }}
+                        </p>
+                        <p class="col-span-3 text-base font-medium tracking-widest">50 lei</p>
+                        <hr class="border-light-border col-span-6 col-start-12 my-4" />
+                        <p class="col-span-3 col-start-12 text-[10px] font-bold tracking-widest uppercase opacity-35">
+                            {{ __('invoice.table_footer.total') }}
+                        </p>
+                        <p class="col-span-3 text-xl font-bold tracking-widest">1450 lei</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>

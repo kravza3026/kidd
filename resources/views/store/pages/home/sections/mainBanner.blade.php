@@ -1,7 +1,7 @@
 <section
     class="big-slider relative h-[400px] w-full md:h-[754px]"
     style="
-        background-image: url({{ Vite::image('home-page/bigBanner.jpg') }});
+        background-image: url({{ Vite::image('home-page/bigBanner.webp') }});
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

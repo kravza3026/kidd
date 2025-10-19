@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -76,7 +75,7 @@ class ProductFactory extends Factory
                 ]),
             ],
 
-            'main_image' => 'products/product_'.rand(1, 9).'.png',
+            'main_image' => 'products/product_'.rand(1, 9).'.webp',
 
             'rating' => rand(1, 5),
             'review_count' => fake()->randomNumber(rand(2, 3)),

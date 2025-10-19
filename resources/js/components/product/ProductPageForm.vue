@@ -184,14 +184,14 @@ const handleFavoriteClick = (id, name) => {
 
     <div class="max-w-full flex-col relative justify-start items-start flex page-fade"  >
         <div class="pb-8  flex-col max-w-full justify-start items-start gap-3 flex">
-            <div class="justify-start  items-start gap-4 inline-flex">
-                <div class="opacity-80 text-center max-w-full text-charcoal text-[24px] md:text-3xl font-bold leading-[62.40px] text-nowrap">
+            <div class="justify-start relative items-start gap-4 inline-flex">
+                <div class="opacity-80 md:text-center max-w-full text-charcoal text-[24px] md:text-3xl font-bold leading-[62.40px]">
                     {{ product.name[locale] }}
                 </div>
 
-                <div v-if="product.is_new" class="justify-center relative items-center gap-2 flex">
+                <div v-if="product.is_new" class="justify-center  items-center gap-2 flex">
                     <div
-                        class="absolute left-2/3 uppercase font-bold -translate-x-2/5 top-0 mt-0 w-max bg-olive text-white text-sm px-3 py-1 rounded-full transition-opacity duration-300">
+                        class="absolute -right-16 uppercase font-bold -translate-x-2/5 top-0 mt-0 w-max bg-olive text-white text-sm px-3 py-1 rounded-full transition-opacity duration-300">
                         {{ $t('product.new') }}
                         <div
                             class="absolute -bottom-0.5 left-1/3 rotate-90 w-0 h-0 border-l-8 -z-1 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></div>

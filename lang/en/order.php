@@ -88,6 +88,7 @@ return [
         'billing_building' => 'Building',
         'billing_postal_code' => 'Postal code',
         'billing_apartment' => 'Apartment',
+        'billing_apartment_short' => 'apt.',
         'billing_entrance' => 'Entrance',
         'billing_floor' => 'Floor',
         'billing_intercom' => 'Intercom',

@@ -88,6 +88,7 @@ return [
         'billing_building' => 'Nr. clădire',
         'billing_postal_code' => 'Cod poștal',
         'billing_apartment' => 'Apartament',
+        'billing_apartment_short' => 'ap.',
         'billing_entrance' => 'Scară',
         'billing_floor' => 'Etaj',
         'billing_intercom' => 'Interfon',
