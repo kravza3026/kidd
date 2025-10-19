@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\AddressType;
 use App\Models\Location;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LocationSeeder extends Seeder
@@ -40,9 +39,9 @@ class LocationSeeder extends Seeder
             'contact_last_name' => 'Z',
             'contact_phone' => '+37360558845',
             'contact_email' => 'warehouse@kidd.md',
-            'company_name' => "S&M Retail SRL",
-            'company_code' => "SMR",
-            'vat_code' => "1015600010567",
+            'company_name' => 'S&M Retail SRL',
+            'company_code' => 'SMR',
+            'vat_code' => '1015600010567',
             'street_name' => 'str. Muncești',
             'building' => '3',
             'entrance' => null,
@@ -82,9 +81,9 @@ class LocationSeeder extends Seeder
             'contact_last_name' => 'Z',
             'contact_phone' => '+37360558845',
             'contact_email' => 'store3@kidd.md',
-            'company_name' => "S&M Retail SRL",
-            'company_code' => "SMR",
-            'vat_code' => "1015600010567",
+            'company_name' => 'S&M Retail SRL',
+            'company_code' => 'SMR',
+            'vat_code' => '1015600010567',
             'street_name' => 'str. Arborilor',
             'building' => '21',
             'entrance' => null,
@@ -124,9 +123,9 @@ class LocationSeeder extends Seeder
             'contact_last_name' => 'Z',
             'contact_phone' => '+37360558845',
             'contact_email' => 'store7@kidd.md',
-            'company_name' => "S&M Retail SRL",
-            'company_code' => "SMR",
-            'vat_code' => "1015600010567",
+            'company_name' => 'S&M Retail SRL',
+            'company_code' => 'SMR',
+            'vat_code' => '1015600010567',
             'street_name' => 'str. Decebal',
             'building' => '6/1',
             'entrance' => '2',

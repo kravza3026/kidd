@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
@@ -16,7 +15,7 @@ class CountrySeeder extends Seeder
         Country::create([
             'name' => [
                 'ro' => 'Moldova',
-                'ru' => 'Молдова'
+                'ru' => 'Молдова',
             ],
             'iso_alpha2' => 'MD',
             'iso_alpha3' => 'MDA',
@@ -33,7 +32,7 @@ class CountrySeeder extends Seeder
         Country::create([
             'name' => [
                 'ro' => 'România',
-                'ru' => 'Румыния'
+                'ru' => 'Румыния',
             ],
             'iso_alpha2' => 'RO',
             'iso_alpha3' => 'ROU',
