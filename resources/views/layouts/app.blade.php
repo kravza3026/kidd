@@ -17,7 +17,7 @@
         <!-- Favicons -->
         <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('common/favicon_32x32.ico') }}" />
         <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('common/favicon_16x16.ico') }}" />
-        <link rel="icon" type="image/x-icon" href="{{ Vite::image('common/favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ Vite::image('favicon.png') }}" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -31,6 +31,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @cookieconsentscripts
         @stack('head')
+        @include('layouts.partials.analytics')
     </head>
     <body>
         @include('layouts.partials.header')
@@ -91,5 +92,16 @@
                 });
             </script>
         @endif
+
+        {{-- Pixel NoScript Start --}}
+        <noscript>
+            <img
+                height="1"
+                width="1"
+                style="display: none"
+                src="https://www.facebook.com/tr?id=2308317899361524&ev=PageView&noscript=1"
+            />
+        </noscript>
+        {{-- Pixel NoScript End --}}
     </body>
 </html>

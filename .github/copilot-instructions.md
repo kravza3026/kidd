@@ -8,16 +8,21 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.11
+- php - 8.4.13
 - laravel/framework (LARAVEL) - v12
+- laravel/mcp (MCP) - v0
 - laravel/prompts (PROMPTS) - v0
 - laravel/reverb (REVERB) - v1
+- laravel/sanctum (SANCTUM) - v4
 - laravel/scout (SCOUT) - v10
 - tightenco/ziggy (ZIGGY) - v2
 - laravel/pint (PINT) - v1
+- laravel/sail (SAIL) - v1
+- phpunit/phpunit (PHPUNIT) - v11
 - alpinejs (ALPINEJS) - v3
 - vue (VUE) - v3
 - laravel-echo (ECHO) - v2
+- prettier (PRETTIER) - v3
 - tailwindcss (TAILWINDCSS) - v4
 
 
@@ -109,7 +114,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Add useful array shape type definitions for arrays when appropriate.
 
 ## Enums
-- That being said, keys in an Enum should follow existing application Enum conventions.
+- Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
 
 
 === herd rules ===
@@ -188,12 +193,41 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
 
 
+=== mcp/core rules ===
+
+## Laravel MCP
+
+- MCP (Model Context Protocol) is very new. You must use the `search-docs` tool to get documentation for how to write and test Laravel MCP servers, tools, resources, and prompts effectively.
+- MCP servers need to be registered with a route or handle in `routes/ai.php`. Typically, they will be registered using `Mcp::web()` to register a HTTP streaming MCP server.
+- Servers are very testable - use the `search-docs` tool to find testing instructions.
+- Do not run `mcp:start`. This command hangs waiting for JSON RPC MCP requests.
+- Some MCP clients use Node, which has its own certificate store. If a user tries to connect to their web MCP server locally using https://, it could fail due to this reason. They will need to switch to http:// during local development.
+
+
 === pint/core rules ===
 
 ## Laravel Pint Code Formatter
 
 - You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
 - Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
+
+
+=== phpunit/core rules ===
+
+## PHPUnit Core
+
+- This application uses PHPUnit for testing. All tests must be written as PHPUnit classes. Use `php artisan make:test --phpunit <name>` to create a new test.
+- If you see a test using "Pest", convert it to PHPUnit.
+- Every time a test has been updated, run that singular test.
+- When the tests relating to your feature are passing, ask the user if they would like to also run the entire test suite to make sure everything is still passing.
+- Tests should test all of the happy paths, failure paths, and weird paths.
+- You must not remove any tests or test files from the tests directory without approval. These are not temporary or helper files, these are core to the application.
+
+### Running Tests
+- Run the minimal number of tests, using an appropriate filter, before finalizing.
+- To run all tests: `php artisan test`.
+- To run all tests in a file: `php artisan test tests/Feature/ExampleTest.php`.
+- To filter on a particular test name: `php artisan test --filter=testName` (recommended after making a change to a related file).
 
 
 === tailwindcss/core rules ===
@@ -229,7 +263,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - `corePlugins` is not supported in Tailwind v4.
 - In Tailwind v4, you import Tailwind using a regular CSS `@import` statement, not using the `@tailwind` directives used in v3:
 
-<code-snippet name="Tailwind v4 Import Tailwind Diff" lang="diff"
+<code-snippet name="Tailwind v4 Import Tailwind Diff" lang="diff">
    - @tailwind base;
    - @tailwind components;
    - @tailwind utilities;

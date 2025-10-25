@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Number;
@@ -43,13 +44,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //        Model::automaticallyEagerLoadRelationships();
-        Model::preventLazyLoading(! $this->app->isProduction());
+
+        if ($this->app->isProduction()) {
+            URL::forceScheme('https');
+            //        Model::automaticallyEagerLoadRelationships();
+            Model::preventLazyLoading();
+        }
 
         ProductVariant::observe(ProductVariantObserver::class);
 
         //        Vite::prefetch(7);
-        Vite::useWaterfallPrefetching(7);
+        Vite::useWaterfallPrefetching(5);
         //        Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
@@ -85,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
-        if (! app()->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             // Share cached data with views, globally
             $regions = Cache::rememberForever('regions', function () {
                 return Region::all();
@@ -124,7 +129,7 @@ class AppServiceProvider extends ServiceProvider
 
         }
 
-        app()->bind(PdfFactory::class, function ($service, $app) {
+        $this->app->bind(PdfFactory::class, function ($service, $app) {
             return (new PdfFactory)->withBrowsershot(
                 function ($browserShot) {
                     $browserShot->setOption(
@@ -135,8 +140,9 @@ class AppServiceProvider extends ServiceProvider
                     );
                     $browserShot->setOption('printBackground', true);
                     $browserShot->hideBrowserHeaderAndFooter();
-                    $browserShot->noSandbox();
+                    //                    $browserShot->noSandbox();
                     $browserShot->waitUntilNetworkIdle();
+                    $browserShot->setCustomTempPath(storage_path('app/private/tmp'));
                 }
             );
         });

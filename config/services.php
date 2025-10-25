@@ -40,12 +40,16 @@ return [
     ],
 
     'ga4' => [
-        'measurement_id' => env('GA4_MEASUREMENT_ID'),
+        'measurement_id' => env('GA4_MEASUREMENT_ID', 'G-2PGQD62044'),
         'api_secret' => env('GA4_API_SECRET'),
     ],
 
+    'gtag' => [
+        'id' => env('GTAG_ID', 'GTM-M8KLG54J'),
+    ],
+
     'fb_pixel' => [
-        'pixel_id' => env('FB_PIXEL_ID'),
+        'pixel_id' => env('FB_PIXEL_ID', '2308317899361524'),
         'access_token' => env('FB_PIXEL_ACCESS_TOKEN'),
     ],
 
