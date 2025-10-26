@@ -7,7 +7,7 @@
     }
     gtag('js', new Date());
 
-    gtag('config', {{ config('services.ga4.measurement_id') }});
+    gtag('config', '{{ config('services.ga4.measurement_id') }}');
 </script>
 
 <!-- Google Tag Manager -->
@@ -21,7 +21,7 @@
         j.async = true;
         j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', {{ config('services.gtag.id') }});
+    })(window, document, 'script', 'dataLayer', '{{ config('services.gtag.id') }}');
 </script>
 <!-- End Google Tag Manager -->
 
