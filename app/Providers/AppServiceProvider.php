@@ -47,15 +47,15 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->isProduction()) {
             URL::forceScheme('https');
-            //        Model::automaticallyEagerLoadRelationships();
+            Model::automaticallyEagerLoadRelationships();
             Model::preventLazyLoading();
         }
 
         ProductVariant::observe(ProductVariantObserver::class);
 
-        //        Vite::prefetch(7);
-        Vite::useWaterfallPrefetching(5);
-        //        Vite::useAggressivePrefetching();
+        Vite::prefetch(3);
+        //        Vite::useWaterfallPrefetching(5);
+        Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
         Vite::macro('css', fn (string $asset) => $this->asset("resources/css/{$asset}"));
@@ -142,7 +142,6 @@ class AppServiceProvider extends ServiceProvider
                     $browserShot->hideBrowserHeaderAndFooter();
                     //                    $browserShot->noSandbox();
                     $browserShot->waitUntilNetworkIdle();
-                    $browserShot->setCustomTempPath(storage_path('app/private/tmp'));
                 }
             );
         });

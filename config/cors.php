@@ -23,14 +23,13 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        //        'https://kidd.md',
-        //        'https://api.kidd.md',
-        //        'https://cp.kidd.md',
+        'https://kidd.md', // Main Site
+        'https://api.kidd.md', // API
+        'https://cp.kidd.md', // Control Panel
 
-        'http://kidd.test', // TODO Remove on production
-        'https://kidd.test',
-        'http://api.kidd.test',  // API HTTP
+        'https://kidd.test', // Main Site HTTPS
         'https://api.kidd.test', // API HTTPS
+        'https://cp.kidd.test', // Control Panel HTTPS
     ],
 
     'allowed_origins_patterns' => [

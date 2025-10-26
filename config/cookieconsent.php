@@ -37,7 +37,7 @@ return [
     'cookie' => [
         'name' => 'kidd_cookie_consent',
         'duration' => (60 * 24 * 365),
-        'domain' => null,
+        'domain' => '.'.env('ROUTER_SHOP_URL', '.kidd.md'),
     ],
 
     /*

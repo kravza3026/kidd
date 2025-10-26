@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -30,7 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/api.php'));
 
             Route::domain(config('app.admin_url'))
-                ->middleware(['web', 'auth:web'])
+                ->middleware(['web', 'auth:web', AdminMiddleware::class])
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
 
@@ -71,10 +72,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
     })
-//    ->withBroadcasting(
-//        __DIR__.'/../routes/channels.php',
-//        ['prefix' => 'v1', 'middleware' => ['api', 'auth:sanctum']],
-//    )
+    ->withBroadcasting(
+        __DIR__.'/../routes/channels.php',
+        ['prefix' => 'v1', 'middleware' => ['api', 'auth:sanctum']],
+    )
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
