@@ -27,8 +27,10 @@ Route::group([
     Route::get('catalog', [ProductsController::class, 'index'])
         ->name('products.index');
     Route::get(LaravelLocalization::transRoute('catalog/{category}'), [ProductsController::class, 'index'])
+        ->middleware('slug.locale')
         ->name('products.category.index');
     Route::get(LaravelLocalization::transRoute('catalog/{category}/{product}'), [ProductsController::class, 'show'])->scopeBindings()
+        ->middleware('slug.locale')
         ->name('products.show');
 
     Route::get('cart/checkout', [CheckoutController::class, 'index'])
@@ -55,6 +57,7 @@ Route::group([
 
     Route::group([
         //        'middleware' => 'cache.headers:public;max_age=60000;etag' // TODO - Production enable
+        'middleware' => 'slug.locale',
     ], function () {
 
         Route::get(LaravelLocalization::transRoute('routes.topline.locations'), [LocationsController::class, 'index'])
