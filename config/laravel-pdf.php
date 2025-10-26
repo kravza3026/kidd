@@ -11,6 +11,8 @@ return [
          * Configure the paths to Node.js, npm, Chrome, and other binaries.
          * Leave null to use system defaults or Browsershot's auto-detection.
          */
+        //        'node_binary' => env('LARAVEL_PDF_NODE_BINARY', '/home/edwardz/.nvm/versions/node/v22.19.0/bin/node'),
+        //        'npm_binary' => env('LARAVEL_PDF_NPM_BINARY', '/home/edwardz/.nvm/versions/node/v22.19.0/bin/npm'),
         'node_binary' => env('LARAVEL_PDF_NODE_BINARY'),
         'npm_binary' => env('LARAVEL_PDF_NPM_BINARY'),
         'include_path' => env('LARAVEL_PDF_INCLUDE_PATH'),
