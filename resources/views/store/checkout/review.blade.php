@@ -102,7 +102,7 @@
                     </svg>
                 </a>
             </div>
-            <div class="grid grid-cols-2 gap-y-6 text-sm lg:grid-cols-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 text-sm lg:grid-cols-4">
                 <div>
                     <p class="opacity-60">{{ __('checkout.contact.form.first_name') }}:</p>
                     <p class="text-base font-bold">{{ $checkoutData['contact_first_name'] ?? '--' }}</p>
@@ -165,11 +165,11 @@
                             {{ $billing_region->cities->where('id', $checkoutData['billing_city'])->first()->name ?? '--' }}
                         </p>
                     </div>
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <p class="opacity-60">{{ __('checkout.payment.form.billing_street_name') }}.</p>
                         <p class="text-base font-bold">
                             {{ $checkoutData['billing_street_name'] ?? '--' }}
-                            {{ $checkoutData['billing_building'] ?? '--' }} dfs fds fds fd fdfdfdsbgdjbgkd fbd jkfdkjb
+                            {{ $checkoutData['billing_building'] ?? '--' }}
                         </p>
                     </div>
                     <div>

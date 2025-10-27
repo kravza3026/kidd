@@ -53,6 +53,8 @@ export default {
 </script>
 <template>
 <div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
+<!--    {{product}}-->
+<!--    <div class="genderImg size-4 flex justify-center items-center" v-html="product.icon"></div>-->
     <div
         class="bg-white md:bg-card-bg overflow-hidden hover:overflow-visible focus:overflow-visible group-hover:bg-white border border-light-border md:border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
     >

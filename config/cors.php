@@ -24,11 +24,15 @@ return [
 
     'allowed_origins' => [
         'https://kidd.md', // Main Site
+        'http://kidd.md', // Main Site
         'https://api.kidd.md', // API
+        'http://api.kidd.md', // API
         'https://cp.kidd.md', // Control Panel
 
         'https://kidd.test', // Main Site HTTPS
+        'http://kidd.test', // Main Site HTTPS
         'https://api.kidd.test', // API HTTPS
+        'http://api.kidd.test', // API HTTPS
         'https://cp.kidd.test', // Control Panel HTTPS
     ],
 

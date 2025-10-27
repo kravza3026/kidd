@@ -1,9 +1,9 @@
 @use('Money\Currency;use Money\Money; use Money\Currencies\ISOCurrencies; use Money\Formatter\IntlMoneyFormatter')
-<div class="rounded-2xl bg-white p-6 shadow">
+<div class="rounded-2xl bg-white md:p-6 md:shadow !border-0">
     <h2 class="mb-6 text-2xl font-bold">{{ __('checkout.summary.sections.products.title') }}</h2>
 
     <!-- Order Items -->
-    <div class="max-h-[40vh] space-y-4 overflow-y-auto">
+    <div class="max-h-[40vh] space-y-4 overflow-y-auto p-4 md:p-0 shadow md:shadow-none rounded-2xl md:rounded-none">
         @foreach ($items as $item)
             <div class="flex items-start gap-3">
                 <div class="bg-light-orange h-[72px] w-[72px] rounded-xl p-2">
@@ -42,9 +42,9 @@
         @endforeach
     </div>
 
-    <hr class="border-light-border my-6" />
+    <hr class="border-light-border my-6 hidden md:block" />
     <!-- Order Totals -->
-    <div class="space-y-3">
+    <div class="space-y-3 mt-6 md:mt-0">
         <p class="text-2xl font-bold">
             {{ __('checkout.summary.sections.discount.title') }}
         </p>

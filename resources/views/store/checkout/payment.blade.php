@@ -317,6 +317,7 @@
                     class="space-y-4"
                     x-show="method == 1"
                 >
+
                     <div class="lg:border border-light-border space-y-4 rounded-2xl ">
                         <div class="lg:bg-light-orange flex-wrap grid grid-cols-12 items-center justify-between rounded-t-2xl lg:p-4">
                             <h2 class="col-span-5 lg:col-span-4 text-xl lg:text-base leading-[-2%] font-bold ">
@@ -335,15 +336,17 @@
                                 </label>
                             </div>
                             @auth
-                                <span class="col-span-12 lg:hidden my-3">
-                                    {{ __('checkout.payment.form.saved_addresses') }}
-                                </span>
-                                <div class="relative col-span-12 lg:col-span-4">
-                                    <button
-                                        type="button"
-                                        class="border-light-border focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
-                                        id="saved_addresses"
-                                    >
+                                @if(auth()->user()->billingAddresses ->isNotEmpty())
+
+{{--                                        <span class="col-span-12 lg:hidden my-3 mr-0">--}}
+{{--                                    {{ __('checkout.payment.form.saved_addresses') }}--}}
+{{--                                    </span>--}}
+                                       <div class="relative lg:col-span-4 col-span-12 mt-2">
+                                           <button
+                                               type="button"
+                                               class="border-light-border focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
+                                               id="saved_addresses"
+                                           >
                                         <span class="flex items-center gap-x-2">
                                             <span class="opacity-40">
                                                 <img
@@ -360,48 +363,48 @@
                                                 id="selected-option"
                                             ></span>
                                         </span>
-                                        <span>
+                                               <span>
                                             <img
                                                 src="{{ Vite::image('icons/select-arrows_o.svg') }}"
                                                 alt=""
                                             />
                                         </span>
-                                    </button>
-                                    <ul
-                                        class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
-                                        id="saved_addresses-options"
-                                    >
-                                        @foreach (auth()->user()->billingAddresses as $address)
-                                            {{-- {{old('saved_address', $checkoutData['saved_address'])}} --}}
-                                            {{-- {{$address->label}} --}}
-                                            <li
-                                                data-billing-region="{{ $address->region_id }}"
-                                                data-billing-city="{{ $address->city_id }}"
-                                                data-billing-street-name="{{ $address->street_name }}"
-                                                data-billing-building="{{ $address->building }}"
-                                                data-billing-postal-code="{{ $address->postal_code }}"
-                                                data-billing-apartment="{{ $address->apartment }}"
-                                                data-billing-floor="{{ $address->floor }}"
-                                                data-billing-entrance="{{ $address->entrance }}"
-                                                data-billing-intercom="{{ $address->intercom }}"
-                                                data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
-                                                class="saved-address relative m-1 flex cursor-pointer items-center gap-x-2 rounded-2xl"
-                                            >
-                                                <input
-                                                    id="address-{{ $address->id }}"
-                                                    class="peer hidden"
-                                                    type="radio"
-                                                    name="payment_address"
-                                                    value="{{ $address->label }}"
-                                                    x-bind:selected="
+                                           </button>
+                                           <ul
+                                               class="absolute z-10 mt-2 hidden w-full rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
+                                               id="saved_addresses-options"
+                                           >
+                                               @foreach (auth()->user()->billingAddresses as $address)
+                                                   {{-- {{old('saved_address', $checkoutData['saved_address'])}} --}}
+                                                   {{-- {{$address->label}} --}}
+                                                   <li
+                                                       data-billing-region="{{ $address->region_id }}"
+                                                       data-billing-city="{{ $address->city_id }}"
+                                                       data-billing-street-name="{{ $address->street_name }}"
+                                                       data-billing-building="{{ $address->building }}"
+                                                       data-billing-postal-code="{{ $address->postal_code }}"
+                                                       data-billing-apartment="{{ $address->apartment }}"
+                                                       data-billing-floor="{{ $address->floor }}"
+                                                       data-billing-entrance="{{ $address->entrance }}"
+                                                       data-billing-intercom="{{ $address->intercom }}"
+                                                       data-selected="{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}"
+                                                       class="saved-address relative m-1 flex cursor-pointer items-center gap-x-2 rounded-2xl"
+                                                   >
+                                                       <input
+                                                           id="address-{{ $address->id }}"
+                                                           class="peer hidden"
+                                                           type="radio"
+                                                           name="payment_address"
+                                                           value="{{ $address->label }}"
+                                                           x-bind:selected="
                                                         checked &&
                                                             '{{ old('saved_address', $checkoutData['saved_address'] ?? '') == $address->label ? 'true' : 'false' }}'
                                                     "
-                                                />
-                                                <label
-                                                    class="hover:bg-light-orange m-1 w-full cursor-pointer rounded-2xl px-4 py-2"
-                                                    for="address-{{ $address->id }}"
-                                                >
+                                                       />
+                                                       <label
+                                                           class="hover:bg-light-orange m-1 w-full cursor-pointer rounded-2xl px-4 py-2"
+                                                           for="address-{{ $address->id }}"
+                                                       >
                                                     <span
                                                         class="marker flex w-full items-center justify-start gap-x-2"
                                                     >
@@ -417,15 +420,18 @@
 
                                                         {{ $address->label }}
                                                     </span>
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                                       </label>
+                                                   </li>
+                                               @endforeach
+                                           </ul>
+                                       </div>
+
+                                @endif
+
                             @endauth
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:p-4">
-                            <div class="col-span-1  lg:col-span-6 mt-3">
+                        <div class="grid grid-cols-4 lg:grid-cols-12 gap-4 lg:p-4">
+                            <div class="col-span-4  lg:col-span-6 mt-3">
                                 <label for="billing_region" class="text-charcoal block text-sm font-medium">
                                     {{ __('checkout.payment.form.billing_region') }}
                                 </label>
@@ -451,7 +457,7 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="col-span-1 lg:col-span-6 mt-3">
+                            <div class="col-span-4 lg:col-span-6 mt-3">
                                 <label for="billing_city" class="text-charcoal block text-sm font-medium">
                                     {{ __('checkout.payment.form.billing_city') }}
                                 </label>
@@ -478,7 +484,7 @@
                                 @enderror
                             </div>
                             <x-ui.input-label
-                                :customClass="'col-span-1 lg:col-span-6'"
+                                :customClass="'col-span-4 lg:col-span-6'"
                                 for="billing_street_name"
                                 name="billing_street_name"
                                 :label="__('checkout.payment.form.billing_street_name')"
@@ -487,7 +493,7 @@
                                 x-bind:value="same_as_shipping ? shippingStreetName : billingStreetName"
                             />
                             <x-ui.input-label
-                                :customClass="'col-span-1 lg:col-span-3'"
+                                :customClass="'col-span-2 lg:col-span-3'"
                                 :placeholder="'Building number'"
                                 for="billing_building"
                                 name="billing_building"
@@ -498,7 +504,7 @@
                             />
 
                             <x-ui.input-label
-                                :customClass="'postal-code-handler col-span-1 lg:col-span-3'"
+                                :customClass="'postal-code-handler col-span-2 lg:col-span-3'"
                                 :placeholder="'Postal code'"
                                 id="billing_postal_code"
                                 for="billing_postal_code"
@@ -510,6 +516,13 @@
                             />
                         </div>
                     </div>
+                </div>
+                <div class="mt-4 flex items-start gap-x-4">
+                    <x-ui.checkbox required name="terms"></x-ui.checkbox>
+                    <label for="terms" class="leading-[-2%]">
+                        {!! __('general.checkbox.terms', ['url' => route('terms')]) !!}
+                    </label>
+                    <x-input-error class="mt-2" :messages="$errors->get('terms')" />
                 </div>
                 <div id="transfer-details" class="space-y-4" x-show="method == 2">
                     <h2 class="text-lg font-bold">Transfer</h2>
