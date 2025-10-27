@@ -14,6 +14,7 @@ return [
         'status' => 'Status',
         'quantity' => 'Items',
         'placed_at' => 'Date placed',
+        'placed_at_date' => 'Placed :date',
         'delivered_at' => 'Date delivered',
         'price' => 'Price',
     ],

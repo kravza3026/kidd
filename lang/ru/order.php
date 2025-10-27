@@ -14,6 +14,7 @@ return [
         'status' => 'Статус',
         'quantity' => 'Кол-во',
         'placed_at' => 'Дата заказа',
+        'placed_at_date' => 'Оформлен :date',
         'delivered_at' => 'Дата доставки',
         'price' => 'Цена',
     ],
