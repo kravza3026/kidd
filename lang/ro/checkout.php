@@ -7,7 +7,7 @@ return [
         'shipping' => 'Detalii livrare',
         'contacts' => 'Date de contact',
         'payment' => 'Detalii plată',
-        'review' => 'Revizuire comandă',
+        'review' => 'Sumar',
     ],
 
     'summary' => [
@@ -106,6 +106,7 @@ return [
 
     'continue' => 'Continuă',
     'shipping_to' => 'cu livrare la',
+    'complete_checkout' => 'Finalizează comanda',
 
     'payment' => [
         'billing_title' => 'Adresă facturare',

@@ -52,6 +52,17 @@ export default {
         empty: 'Nu aveți produse in coș',
         empty_description: 'Să găsim ceva drăguț',
         btn_explore: 'Explorează ținute',
+        delete: 'Șterge',
+
+        summary: {
+            title: 'Sumar comandă',
+            products: 'Produse',
+            discount: 'Reducere',
+            shipping: 'Taxa de livrare',
+            total: 'Total comandă',
+        },
+
+        checkout_btn: 'Comandă',
     },
     address: {
         type_shipping: 'Adresa de livrare',

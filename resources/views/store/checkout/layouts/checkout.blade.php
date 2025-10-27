@@ -7,7 +7,7 @@
             <h1 class="flex items-center gap-x-3 text-3xl font-bold lg:text-5xl">
                 {{ __('checkout.page_title') }}
                 <span class="text-[8px] opacity-10 lg:hidden">&#11044;</span>
-                <span>{{ $step }}</span>
+                <span class="lg:hidden">{{ __('checkout.steps.'.strtolower($step)) }}</span>
             </h1>
         </div>
 

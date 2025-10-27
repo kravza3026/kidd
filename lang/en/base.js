@@ -52,6 +52,17 @@ export default {
         empty: 'Cart is empty',
         empty_description: 'Let’s find something cute',
         btn_explore: 'Explore outfits',
+        delete: 'Delete',
+
+        summary: {
+            title: 'Order summary',
+            products: 'Products',
+            discount: 'Discount',
+            shipping: 'Delivery',
+            total: 'Total',
+        },
+
+        checkout_btn: 'Continue to checkout',
     },
     address: {
         type_shipping: 'Shipping address',

@@ -84,6 +84,7 @@ return [
 
     'continue' => 'Продолжить',
     'shipping_to' => 'с доставкой в',
+    'complete_checkout' => 'Оформить заказ',
 
     'payment' => [
         'billing_title' => 'Адрес счёта',

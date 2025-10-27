@@ -1,205 +1,206 @@
-
 <script>
-import { ref, computed, watch, onMounted, onUnmounted,getCurrentInstance } from 'vue'
+import { computed, getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
 import clickOutside from '@/clickOutside.js';
-import { emitter } from '@/eventBus.js'
-import iconTrash from '@img/common/trash.svg'
-import iconTrashMobile from '@img/icons/trash_b.png'
-import iconCheck from '@img/icons/checked_white.svg'
-import iconDelete from '@img/icons/close.svg'
-import { useI18n } from 'vue-i18n'
-import BaseCheckbox from "@/components/ui/BaseCheckbox.vue";
-import selectIcon from "@img/icons/select-arrows_o.svg"
-import Button from "@/components/ui/Button.vue";
+import { emitter } from '@/eventBus.js';
+import iconTrash from '@img/common/trash.svg';
+import iconTrashMobile from '@img/icons/trash_b.png';
+import iconCheck from '@img/icons/checked_white.svg';
+import iconDelete from '@img/icons/close.svg';
+import basket_empty from '@img/basket_empty.svg';
+import { useI18n } from 'vue-i18n';
+import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
+import selectIcon from '@img/icons/select-arrows_o.svg';
+import Button from '@/components/ui/Button.vue';
+
 export default {
     name: 'Cart',
-    components: {Button, BaseCheckbox},
+    components: { Button, BaseCheckbox },
 
     directives: {
         clickOutside,
     },
-    data(){
+    data() {
         return {
-            iconTrash,iconCheck,iconDelete,iconTrashMobile,
+            iconTrash,
+            iconCheck,
+            iconDelete,
+            iconTrashMobile,
+            basket_empty,
             cartItems: [],
-        }
+        };
     },
-    setup(){
-        const { locale, t, n } = useI18n()
-        const isMobile = ref(false)
-        const { proxy } = getCurrentInstance()
+    setup() {
+        const { locale, t, n } = useI18n();
+        const isMobile = ref(false);
+        const { proxy } = getCurrentInstance();
 
         const checkIsMobile = () => {
-            isMobile.value = window.innerWidth <= 768 // наприклад, 768px як межа
-        }
+            isMobile.value = window.innerWidth <= 768; // наприклад, 768px як межа
+        };
 
         onMounted(() => {
-            checkIsMobile()
-            window.addEventListener('resize', checkIsMobile)
-        })
+            checkIsMobile();
+            window.addEventListener('resize', checkIsMobile);
+        });
 
         onUnmounted(() => {
-            window.removeEventListener('resize', checkIsMobile)
-        })
+            window.removeEventListener('resize', checkIsMobile);
+        });
         const getColorById = (item, id) => {
-            return item.product.variants
-                .map(v => v.color)
-                .find(c => c.id === id);
-        }
+            return item.product.variants.map((v) => v.color).find((c) => c.id === id);
+        };
         // Отримати назву розміру за id
         const getSizeNameById = (item, id) => {
-            const size = item.product.variants
-                .map(v => v.size)
-                .find(s => s.id === id)
-            return size ? size.name[locale.value] : ''
-        }
+            const size = item.product.variants.map((v) => v.size).find((s) => s.id === id);
+            return size ? size.name[locale.value] : '';
+        };
         // Коли обирають розмір
         const selectSize = (item, sizeId) => {
-            item.selectedSizeId = sizeId
-            item.sizeDropdownOpen = false
-            updateAvailableColors(item)
-            updateSelectedPrice(item)
-            updateItem(item)
-        }
+            item.selectedSizeId = sizeId;
+            item.sizeDropdownOpen = false;
+            updateAvailableColors(item);
+            updateSelectedPrice(item);
+            updateItem(item);
+        };
         // Коли обирають колір
         const selectColor = (item, colorId) => {
-            item.selectedColorId = colorId
-            item.colorDropdownOpen = false
-            updateSelectedPrice(item)
-            updateItem(item)
-        }
+            item.selectedColorId = colorId;
+            item.colorDropdownOpen = false;
+            updateSelectedPrice(item);
+            updateItem(item);
+        };
         // Отримати список унікальних розмірів (для dropdown)
         const getUniqueSizes = (item) => {
-            const seen = new Set()
+            const seen = new Set();
             return item.product.variants
-                .map(v => v.size)
-                .filter(s => {
-                    if (seen.has(s.id)) return false
-                    seen.add(s.id)
-                    return true
-                })
-        }
+                .map((v) => v.size)
+                .filter((s) => {
+                    if (seen.has(s.id)) return false;
+                    seen.add(s.id);
+                    return true;
+                });
+        };
         // Отримати кольори, доступні лише для обраного розміру
         const getAvailableColors = (item) => {
-            if (!item.selectedSizeId) return []
+            if (!item.selectedSizeId) return [];
 
-            const seen = new Set()
+            const seen = new Set();
             return item.product.variants
-                .filter(v => v.size.id === item.selectedSizeId)
-                .map(v => v.color)
-                .filter(c => {
-                    if (seen.has(c.id)) return false
-                    seen.add(c.id)
-                    return true
-                })
-        }
+                .filter((v) => v.size.id === item.selectedSizeId)
+                .map((v) => v.color)
+                .filter((c) => {
+                    if (seen.has(c.id)) return false;
+                    seen.add(c.id);
+                    return true;
+                });
+        };
         // Після вибору розміру, оновлюємо список доступних кольорів
         const updateAvailableColors = (item) => {
-            const colors = getAvailableColors(item)
-            console.log(colors)
-            item.selectedColorId = colors.length ? colors[0].id : null
-        }
+            const colors = getAvailableColors(item);
+            console.log(colors);
+            item.selectedColorId = colors.length ? colors[0].id : null;
+        };
         const getAllColorsWithAvailability = (item) => {
-                const allColors = []
-                const seen = new Set()
-                const currentSizeId = item.selectedSizeId
-                item.product.variants.forEach(variant => {
-                    const { color, size } = variant
-                    if (!seen.has(color.id)) {
-                        seen.add(color.id)
+            const allColors = [];
+            const seen = new Set();
+            const currentSizeId = item.selectedSizeId;
+            item.product.variants.forEach((variant) => {
+                const { color, size } = variant;
+                if (!seen.has(color.id)) {
+                    seen.add(color.id);
 
-                        const isAvailableForCurrentSize = item.product.variants.some(v =>
-                            v.color.id === color.id && v.size.id === currentSizeId
-                        )
+                    const isAvailableForCurrentSize = item.product.variants.some(
+                        (v) => v.color.id === color.id && v.size.id === currentSizeId,
+                    );
 
-                        allColors.push({
-                            ...color,
-                            available: isAvailableForCurrentSize,
-                        })
-                    }
-                })
+                    allColors.push({
+                        ...color,
+                        available: isAvailableForCurrentSize,
+                    });
+                }
+            });
 
-                return allColors
-            }
-        const min = 1
-        const max = 30
+            return allColors;
+        };
+        const min = 1;
+        const max = 30;
         const increment = (item) => {
             if (item.quantity < max) {
-                item.quantity++
-                updateItem(item)
+                item.quantity++;
+                updateItem(item);
             }
-        }
+        };
 
         const decrement = (item) => {
             if (item.quantity > min) {
-                item.quantity--
-                updateItem(item)
+                item.quantity--;
+                updateItem(item);
             }
-        }
+        };
         const updateSelectedPrice = (item) => {
-            const variant = item.product.variants.find(v =>
-                v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
-            )
-            item.selectedPriceOnline = variant?.price_online ?? 0
-            item.selectedPriceFinal = variant?.price_final ?? 0
-            item.selectedDiscount = variant?.discount_amount ?? 0
-        }
+            const variant = item.product.variants.find(
+                (v) => v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId,
+            );
+            item.selectedPriceOnline = variant?.price_online ?? 0;
+            item.selectedPriceFinal = variant?.price_final ?? 0;
+            item.selectedDiscount = variant?.discount_amount ?? 0;
+        };
 
         const cartTotalOnline = computed(() => {
             return proxy.cartItems.reduce((total, item) => {
-                return total + item.selectedPriceOnline * item.quantity
-            }, 0)
-        })
+                return total + item.selectedPriceOnline * item.quantity;
+            }, 0);
+        });
 
         const cartTotal = computed(() => {
             return proxy.cartItems.reduce((total, item) => {
-                return total + item.selectedPriceFinal * item.quantity
-            }, 0)
-        })
+                return total + item.selectedPriceFinal * item.quantity;
+            }, 0);
+        });
 
         const totalDiscount = computed(() => {
             return proxy.cartItems.reduce((acc, item) => {
-                const discount = item.selectedDiscount || 0
-                return acc + (discount * item.quantity)
-            }, 0)
-        })
+                const discount = item.selectedDiscount || 0;
+                return acc + discount * item.quantity;
+            }, 0);
+        });
         const updateItem = async (item) => {
-            const variant = item.product.variants.find(v =>
-                v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId
-            )
+            const variant = item.product.variants.find(
+                (v) => v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId,
+            );
             if (!variant) return;
             try {
-                await axios.put(`cart/${item.hash}`, {
-                   variant_id: variant.id,
-                   quantity: item.quantity
-                }).then(response => {
-                    if (response.data?.alert)
-                        window.toast(response.data.alert);
-                });
+                await axios
+                    .put(`cart/${item.hash}`, {
+                        variant_id: variant.id,
+                        quantity: item.quantity,
+                    })
+                    .then((response) => {
+                        if (response.data?.alert) window.toast(response.data.alert);
+                    });
                 emitter.emit('cart-updated');
             } catch (err) {
                 console.error('Server error:', err);
             }
-        }
+        };
         const toggleConfirm = (item) => {
-            item.showConfirm = !item.showConfirm
-        }
+            item.showConfirm = !item.showConfirm;
+        };
         const removeItem = async (item) => {
             try {
-                await axios.delete(`cart/${item.hash}`)
-                    .then(response => {
-                        if (response.data?.alert)
-                            window.toast(response.data.alert);
-                    });
-                proxy.cartItems = proxy.cartItems.filter(i => i.hash !== item.hash)
-                emitter.emit('cart-updated')
+                await axios.delete(`cart/${item.hash}`).then((response) => {
+                    if (response.data?.alert) window.toast(response.data.alert);
+                });
+                proxy.cartItems = proxy.cartItems.filter((i) => i.hash !== item.hash);
+                emitter.emit('cart-updated');
             } catch (err) {
-                console.error('Server error:', err)
+                console.error('Server error:', err);
             }
-        }
+        };
 
         return {
-            t,n,
+            t,
+            n,
             locale,
             selectIcon,
             isMobile,
@@ -213,23 +214,25 @@ export default {
             getSizeNameById,
             getColorById,
             getAllColorsWithAvailability,
-            increment, decrement,
-            cartTotal,totalDiscount,cartTotalOnline,
-            toggleConfirm,removeItem
-
-        }
+            increment,
+            decrement,
+            cartTotal,
+            totalDiscount,
+            cartTotalOnline,
+            toggleConfirm,
+            removeItem,
+        };
     },
     methods: {
-
         async getCartItems() {
             try {
-                const response = await window.axios.get(`cart`)
+                const response = await window.axios.get(`cart`);
                 const grandTotal = response.data.grand_total;
                 const total = response.data.total;
-                this.cartItems = response.data.items.map(item => {
-                    const selectedVariant = item.product.variants.find(v =>
-                        v.size.id === item.size.id && v.color.id === item.color.id
-                    )
+                this.cartItems = response.data.items.map((item) => {
+                    const selectedVariant = item.product.variants.find(
+                        (v) => v.size.id === item.size.id && v.color.id === item.color.id,
+                    );
                     return {
                         ...item,
                         quantity: item.quantity || 1,
@@ -242,148 +245,173 @@ export default {
                         sizeDropdownOpen: false,
                         colorDropdownOpen: false,
                         showConfirm: false,
-                    }
-                })
+                    };
+                });
             } catch (error) {
-                console.error('Server error:', error) // TODO Remove in production
+                console.error('Server error:', error); // TODO Remove in production
             }
         },
     },
     mounted() {
         this.getCartItems();
-
     },
-}
+};
 </script>
 
 <template>
-
-   <div class="w-full  lg:flex justify-between gap-x-16">
-       <div class="w-full basis-full">
-           <div class="mb-4 inline-block relative text-5xl font-bold leading-[62px] tracking-[-2%] text-charcoal/80">
-               <h1>{{ $t('cart.title') }}</h1>
-               <p class="absolute w-7 h-6 py-2 px-3 flex justify-center items-center text-white text-sm font-extrabold rounded-full -right-10 top-0 bg-olive">
-                   <span class="p-2">{{ cartItems.length }}</span>
-                   <span class="absolute -z-1 -bottom-[2px] left-1/12 rotate-95 w-4 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></span>
-               </p>
-           </div>
-            <div class=" border lg:border-none border-light-border rounded-lg mb-7 md:px-5 lg:px-0 shadow-sm lg:shadow-none py-1">
-
-                <div
-
-                    v-for="(cartItem, index) in cartItems"
-                    :key="cartItem.hash"
-                    class="w-full relative">
-                    <div v-if="isMobile"
-
-                    >
-                        <div class="grid grid-cols-12 gap-x-3 items-center  justify-between  my-2 py-2 px-3">
-                            <div class="col-span-3 max-w-[100px] h-fit px-1 py-2 flex justify-center bg-light-orange rounded-2xl">
-                                <img class="max-w-[80px]" :src='cartItem.img' alt="{{cartItem.name}}">
+    <div class="w-full justify-between gap-x-16 lg:flex">
+        <div class="w-full basis-full">
+            <div class="text-charcoal/80 relative mb-4 inline-block text-5xl leading-[62px] font-bold tracking-[-2%]">
+                <h1>{{ $t('cart.title') }}</h1>
+                <p
+                    class="bg-olive absolute top-0 -right-10 flex h-6 w-7 items-center justify-center rounded-full px-3 py-2 text-sm font-extrabold text-white"
+                >
+                    <span class="p-2">{{ cartItems.length }}</span>
+                    <span
+                        class="border-b-olive absolute -bottom-[2px] left-1/12 -z-1 h-0 w-4 rotate-95 border-r-8 border-b-8 border-l-8 border-r-transparent border-l-transparent"
+                    ></span>
+                </p>
+            </div>
+            <div
+                v-if="cartItems.length > 0"
+                class="border-light-border mb-7 rounded-lg border py-1 shadow-sm md:px-5 lg:border-none lg:px-0 lg:shadow-none"
+            >
+                <div v-for="(cartItem, index) in cartItems" :key="cartItem.hash" class="relative w-full">
+                    <div v-if="isMobile">
+                        <div class="my-2 grid grid-cols-12 items-center justify-between gap-x-3 px-3 py-2">
+                            <div
+                                class="bg-light-orange col-span-3 flex h-fit max-w-[100px] justify-center rounded-2xl px-1 py-2"
+                            >
+                                <img :src="cartItem.img" alt="{{cartItem.name}}" class="max-w-[80px]" />
                             </div>
                             <div class="col-span-9">
-                                <div class="h-full flex flex-col justify-between">
+                                <div class="flex h-full flex-col justify-between">
                                     <div>
-                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
-                                        <div class="flex items-center gap-x-2 mt-1">
-                                            <div class="border-r-light-border border-r-2 pr-2 flex items-center gap-x-2">
-                                                <div class="size-5 rounded-full border border-light-border" :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"></div>
-                                                <p class="text-sm opacity-40">{{cartItem.color.name}}</p>
+                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{
+                                            cartItem.product.name[locale]
+                                        }}</a>
+                                        <div class="mt-1 flex items-center gap-x-2">
+                                            <div
+                                                class="border-r-light-border flex items-center gap-x-2 border-r-2 pr-2"
+                                            >
+                                                <div
+                                                    :style="{
+                                                        backgroundColor:
+                                                            getColorById(cartItem, cartItem.selectedColorId)?.hex ||
+                                                            cartItem.hex,
+                                                    }"
+                                                    class="border-light-border size-5 rounded-full border"
+                                                ></div>
+                                                <p class="text-sm opacity-40">{{ cartItem.color.name }}</p>
                                             </div>
-                                            <p class="text-sm opacity-40">{{cartItem.size.name}}</p>
+                                            <p class="text-sm opacity-40">{{ cartItem.size.name }}</p>
                                         </div>
                                     </div>
-                                    <div class="flex justify-between items-center w-full">
-                                        <div class="py-2 flex items-center gap-x-2 justify-between w-full">
+                                    <div class="flex w-full items-center justify-between">
+                                        <div class="flex w-full items-center justify-between gap-x-2 py-2">
                                             <p>
-                                                {{cartItem.quantity}} x
+                                                {{ cartItem.quantity }} x
                                                 <span>{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</span>
-                                                <span class="text-sm opacity-40 line-through px-1">{{$n(cartItem.selectedPriceOnline / 100, 'currency')}}</span>
+                                                <span class="px-1 text-sm line-through opacity-40">{{
+                                                    $n(cartItem.selectedPriceOnline / 100, 'currency')
+                                                }}</span>
                                             </p>
                                             <p class="text-olive text-[16px] font-bold">
-                                                {{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}
+                                                {{
+                                                    $n(
+                                                        (cartItem.selectedPriceFinal / 100) * cartItem.quantity,
+                                                        'currency',
+                                                    )
+                                                }}
                                             </p>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                             <div
-                                    v-click-outside="() => cartItem.showConfirm = false"
-                                    @click="toggleConfirm(cartItem)"
-                                    class="absolute col-span-2 flex justify-center items-center h-fit  right-2 top-1 ">
-                                    <div class="text-olive  p-2 rounded-full border border-light-border  cursor-pointer">
-                                        <img :src="iconTrashMobile" alt="" />
-                                    </div>
-
-
-                                    <transition name="fade-slide" appear>
-                                        <div
-                                            v-if="cartItem.showConfirm"
-                                            class="absolute w-full -left-1 grid gap-x-2 flex-col gap-y-2 justify-between items-center -bottom-14"
-                                        >
-                                            <div
-                                                class=" duration-300 transition-all ease-in-out shadow-sm rounded-lg w-10  py-1 px-0 flex items-center justify-center bg-olive h-5"
-                                                @click="toggleConfirm(cartItem)"
-                                            >
-                                                <img class="size-3" :src="iconDelete" alt="icon remove" />
-                                            </div>
-                                            <div
-                                                @click="removeItem(cartItem)"
-                                                class=" duration-300 transition-all ease-in-out shadow-sm rounded-lg w-10 text-center py-1 px-0 flex justify-center bg-danger h-5"
-                                            >
-                                                <img class="size-3" :src="iconCheck" alt="" />
-                                            </div>
-                                        </div>
-                                    </transition>
-
+                                v-click-outside="() => (cartItem.showConfirm = false)"
+                                class="absolute top-1 right-2 col-span-2 flex h-fit items-center justify-center"
+                                @click="toggleConfirm(cartItem)"
+                            >
+                                <div class="text-olive border-light-border cursor-pointer rounded-full border p-2">
+                                    <img :src="iconTrashMobile" alt="" />
                                 </div>
 
-
+                                <transition appear name="fade-slide">
+                                    <div
+                                        v-if="cartItem.showConfirm"
+                                        class="absolute -bottom-14 -left-1 grid w-full flex-col items-center justify-between gap-x-2 gap-y-2"
+                                    >
+                                        <div
+                                            class="bg-olive flex h-5 w-10 items-center justify-center rounded-lg px-0 py-1 shadow-sm transition-all duration-300 ease-in-out"
+                                            @click="toggleConfirm(cartItem)"
+                                        >
+                                            <img :src="iconDelete" alt="icon remove" class="size-3" />
+                                        </div>
+                                        <div
+                                            class="bg-danger flex h-5 w-10 justify-center rounded-lg px-0 py-1 text-center shadow-sm transition-all duration-300 ease-in-out"
+                                            @click="removeItem(cartItem)"
+                                        >
+                                            <img :src="iconCheck" alt="" class="size-3" />
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
                         </div>
                         <hr v-if="index < cartItems.length - 1" class="border-light-border" />
                     </div>
 
-
-                    <div v-else >
-                        <div class="grid grid-cols-12 justify-between items-center my-2 py-2">
+                    <div v-else>
+                        <div class="my-2 grid grid-cols-12 items-center justify-between py-2">
                             <div class="col-span-10 flex items-center gap-x-6">
                                 <div class="flex gap-x-6">
-                                    <div class="p-2 bg-light-orange rounded-2xl">
-                                        <img class="w-[84px]" :src='cartItem.img' alt="{{cartItem.name}}">
+                                    <div class="bg-light-orange rounded-2xl p-2">
+                                        <img
+                                            :src="cartItem.img"
+                                            alt="{{ cartItem.product.name[locale] }}"
+                                            class="w-[84px]"
+                                        />
                                     </div>
                                 </div>
                                 <div>
                                     <div>
-                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{cartItem.name}}</a>
+                                        <a :href="cartItem.product.url" class="text-[20px] font-medium">{{
+                                            cartItem.product.name[locale]
+                                        }}</a>
                                         <div class="flex gap-x-2">
-                                            <p class="opacity-60 pb-5">{{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}</p>
-                                            <p class="opacity-40 pb-5 line-through">{{ $n(cartItem.selectedPriceOnline / 100, 'currency') }} lei</p>
+                                            <p class="pb-5 opacity-60">
+                                                {{ $n(cartItem.selectedPriceFinal / 100, 'currency') }}
+                                            </p>
+                                            <p class="pb-5 line-through opacity-40">
+                                                {{ $n(cartItem.selectedPriceOnline / 100, 'currency') }} lei
+                                            </p>
                                         </div>
-
                                     </div>
                                     <div class="flex gap-x-2">
-
-                                        <div class="relative min-w-42 shadow-sm rounded-lg">
+                                        <div class="relative min-w-42 rounded-lg shadow-sm">
                                             <div
-                                                class="border border-light-border px-3 py-1 rounded-lg  w-full flex justify-between items-center"
+                                                v-click-outside="() => (cartItem.sizeDropdownOpen = false)"
+                                                class="border-light-border flex w-full items-center justify-between rounded-lg border px-3 py-1"
                                                 @click="cartItem.sizeDropdownOpen = !cartItem.sizeDropdownOpen"
-                                                v-click-outside="() => cartItem.sizeDropdownOpen = false"
-
                                             >
-                                                <p>{{ getSizeNameById(cartItem, cartItem.selectedSizeId) || cartItem.size }}</p>
-                                                <img :src="selectIcon" alt="selectIcon">
+                                                <p>
+                                                    {{
+                                                        getSizeNameById(cartItem, cartItem.selectedSizeId) ||
+                                                        cartItem.size
+                                                    }}
+                                                </p>
+                                                <img :src="selectIcon" alt="selectIcon" />
                                             </div>
 
                                             <ul
                                                 v-if="cartItem.sizeDropdownOpen"
-                                                class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                                                class="border-light-border absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded border bg-white shadow-sm"
                                             >
                                                 <li
                                                     v-for="size in getUniqueSizes(cartItem)"
                                                     :key="size.id"
+                                                    class="cursor-pointer px-3 py-2 hover:bg-gray-100"
                                                     @click="selectSize(cartItem, size.id)"
-                                                    class="px-3 py-2 cursor-pointer hover:bg-gray-100"
                                                 >
                                                     {{ size.name[locale] }}
                                                 </li>
@@ -391,154 +419,174 @@ export default {
                                         </div>
 
                                         <!-- Випадаючий список кольору -->
-                                        <div class="relative min-w-42 rounded-lg shadow-sm" >
+                                        <div class="relative min-w-42 rounded-lg shadow-sm">
                                             <div
-                                                class="border border-light-border px-3 py-1 rounded-lg w-full flex justify-between items-center"
+                                                v-click-outside="() => (cartItem.colorDropdownOpen = false)"
+                                                class="border-light-border flex w-full items-center justify-between rounded-lg border px-3 py-1"
                                                 @click="cartItem.colorDropdownOpen = !cartItem.colorDropdownOpen"
-                                                v-click-outside="() => cartItem.colorDropdownOpen = false"
                                             >
-
                                                 <p class="flex items-center gap-x-2">
-                                            <span
-                                                v-if="cartItem.selectedColorId || cartItem.hex"
-                                                class="block min-w-5 min-h-5 rounded-full border border-light-border"
-                                                :style="{ backgroundColor: getColorById(cartItem, cartItem.selectedColorId)?.hex || cartItem.hex }"
-                                            ></span>
-                                                    {{ getColorById(cartItem, cartItem.selectedColorId)?.name[locale] || getColorById(cartItem, cartItem.color_id)?.name[locale] }}
-
+                                                    <span
+                                                        v-if="cartItem.selectedColorId || cartItem.hex"
+                                                        :style="{
+                                                            backgroundColor:
+                                                                getColorById(cartItem, cartItem.selectedColorId)?.hex ||
+                                                                cartItem.hex,
+                                                        }"
+                                                        class="border-light-border block min-h-5 min-w-5 rounded-full border"
+                                                    ></span>
+                                                    {{
+                                                        getColorById(cartItem, cartItem.selectedColorId)?.name[
+                                                            locale
+                                                        ] || getColorById(cartItem, cartItem.color_id)?.name[locale]
+                                                    }}
                                                 </p>
-                                                <img :src="selectIcon" alt="selectIcon">
-
+                                                <img :src="selectIcon" alt="selectIcon" />
                                             </div>
 
                                             <ul
                                                 v-if="cartItem.colorDropdownOpen"
-                                                class="absolute z-10 w-full mt-1 bg-white border border-light-border rounded shadow-sm max-h-60 overflow-auto"
+                                                class="border-light-border absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded border bg-white shadow-sm"
                                             >
                                                 <li
                                                     v-for="color in getAllColorsWithAvailability(cartItem)"
                                                     :key="color.id"
-                                                    @click="color.available && selectColor(cartItem, color.id)"
-                                                    class="px-3 flex gap-x-2 py-2 cursor-pointer hover:bg-gray-100"
                                                     :class="{
-                                                        'hover:bg-gray-100 cursor-pointer': color.available,
-                                                        'opacity-50 cursor-not-allowed': !color.available
-                                                      }"
+                                                        'cursor-pointer hover:bg-gray-100': color.available,
+                                                        'cursor-not-allowed opacity-50': !color.available,
+                                                    }"
+                                                    class="flex cursor-pointer gap-x-2 px-3 py-2 hover:bg-gray-100"
+                                                    @click="color.available && selectColor(cartItem, color.id)"
                                                 >
-                                                <span
-                                                    class="w-5 h-5 block rounded-full border border-light-border"
-                                                    :style="{ backgroundColor: color.hex }"
-                                                ></span>
+                                                    <span
+                                                        :style="{ backgroundColor: color.hex }"
+                                                        class="border-light-border block h-5 w-5 rounded-full border"
+                                                    ></span>
                                                     {{ color.name[locale] }}
                                                 </li>
                                             </ul>
                                         </div>
                                         <div
-                                            class="flex justify-between min-w-24 items-center gap-x-2 border border-light-border rounded-lg shadow-sm px-2 py-1 select-none"
+                                            class="border-light-border flex min-w-24 items-center justify-between gap-x-2 rounded-lg border px-2 py-1 shadow-sm select-none"
                                         >
-                                            <div class="font-bold cursor-pointer" @click="decrement(cartItem)">
+                                            <div class="cursor-pointer font-bold" @click="decrement(cartItem)">
                                                 <p class="opacity-40">-</p>
                                             </div>
                                             <div>{{ cartItem.quantity }}</div>
-                                            <div class="font-bold cursor-pointer" @click="increment(cartItem)">
+                                            <div class="cursor-pointer font-bold" @click="increment(cartItem)">
                                                 <p class="opacity-40">+</p>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-span-2 grid justify-end content-between min-h-full gap-6">
+                            <div class="col-span-2 grid min-h-full content-between justify-end gap-6">
                                 <div class="flex justify-end">
-                                    <p class="text-olive font-bold">{{$n((cartItem.selectedPriceFinal / 100) * cartItem.quantity,'currency') }}</p>
+                                    <p class="text-olive font-bold">
+                                        {{ $n((cartItem.selectedPriceFinal / 100) * cartItem.quantity, 'currency') }}
+                                    </p>
                                 </div>
                                 <div
-                                    v-click-outside="() => cartItem.showConfirm = false"
+                                    v-click-outside="() => (cartItem.showConfirm = false)"
+                                    class="text-olive bg-light-orange border-light-border shadow-sn shadow-olive relative flex h-fit w-fit cursor-pointer content-between justify-end gap-x-2 rounded-lg border px-4 py-2"
                                     @click="toggleConfirm(cartItem)"
-                                    class="flex justify-end content-between h-fit w-fit gap-x-2 text-olive bg-light-orange border border-light-border py-2 px-4 rounded-lg shadow-sn shadow-olive cursor-pointer relative">
+                                >
                                     <img :src="iconTrash" alt="" />
-                                    <p class="text-sm font-bold">Delete</p>
+                                    <p class="text-sm font-bold">
+                                        {{ $t('cart.delete') }}
+                                    </p>
 
-
-                                    <transition name="fade-slide" appear>
+                                    <transition appear name="fade-slide">
                                         <div
                                             v-if="cartItem.showConfirm"
-                                            class="absolute w-full right-0 flex gap-x-2 justify-between items-center -bottom-8"
+                                            class="absolute right-0 -bottom-8 flex w-full items-center justify-between gap-x-2"
                                         >
                                             <div
-                                                class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-olive h-5"
+                                                class="bg-olive flex h-5 w-full justify-center rounded-2xl py-1 text-center opacity-85 shadow-sm transition-all duration-300 ease-in-out hover:opacity-100"
                                                 @click="toggleConfirm(cartItem)"
                                             >
                                                 <img :src="iconDelete" alt="" />
                                             </div>
                                             <div
+                                                class="bg-danger flex h-5 w-full justify-center rounded-2xl py-1 text-center opacity-85 shadow-sm transition-all duration-300 ease-in-out hover:opacity-100"
                                                 @click="removeItem(cartItem)"
-                                                class="hover:opacity-100 opacity-85 duration-300 transition-all ease-in-out shadow-sm rounded-2xl w-full text-center py-1 flex justify-center bg-danger h-5"
                                             >
                                                 <img :src="iconCheck" alt="" />
                                             </div>
                                         </div>
                                     </transition>
-
                                 </div>
                             </div>
                         </div>
-                        <hr class="my-4 border-light-border" />
+                        <hr class="border-light-border my-4" />
                     </div>
-
                 </div>
             </div>
-       </div>
-       <!--  Summary  -->
-       <div class="w-full sticky top-10 grow-5 flex-shrink-0 basis-[340px] h-fit flex border border-[#eeeeee]/70 rounded-xl shadow-sm">
-           <div class="w-full grow-0  flex border border-[#eeeeee]/70 rounded-xl shadow-lg">
-               <div class="text-nowrap static w-full h-auto p-6">
-                   <h4 class="flex pb-6 w-full text-2xl text-gray-800 font-bold leading-6 tracking-[-2%]">
-                       Order summary
-                   </h4>
+            <div v-else class="grid justify-center p-4 text-center md:p-6">
+                <img :src="basket_empty" alt="" class="mx-auto py-4" />
+                <div class="py-4">
+                    <p class="py-1 text-lg">
+                        {{ $t('cart.empty') }}
+                    </p>
+                    <p class="py-1 text-sm font-normal opacity-60">
+                        {{ $t('cart.empty_description') }}
+                    </p>
+                </div>
+                <Button :href="route('products.index')" customClass="mx-auto mt-0 w-full" display-as="a" withArrow>
+                    {{ $t('cart.btn_explore') }}
+                </Button>
+            </div>
+        </div>
+        <!--  Summary  -->
+        <div
+            v-if="cartItems.length > 0"
+            class="sticky top-10 flex h-fit w-full flex-shrink-0 grow-5 basis-[340px] rounded-xl border border-[#eeeeee]/70 shadow-sm"
+        >
+            <div class="flex w-full grow-0 rounded-xl border border-[#eeeeee]/70 shadow-lg">
+                <div class="static h-auto w-full p-6 text-nowrap">
+                    <h4 class="flex w-full pb-6 text-2xl leading-6 font-bold tracking-[-2%] text-gray-800">
+                        {{ $t('cart.summary.title') }}
+                    </h4>
 
-                   <div class="flex w-full flex-col py-6 border-y border-dark-snow space-y-4 ">
-                       <div class="flex w-full justify-between ">
-                        <span class="font-normal text-base tracking-[-2%] text-charcoal/40">
-                            Products
-                        </span>
-                           <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                            {{ $n(cartTotalOnline/100,'currency') }}
-                        </span>
-                       </div>
-
-                       <div class="flex w-full justify-between">
-                            <span class="font-normal text-base tracking-[-2%] text-charcoal/40">
-                               Discount
+                    <div class="border-dark-snow flex w-full flex-col space-y-4 border-y py-6">
+                        <div class="flex w-full justify-between">
+                            <span class="text-charcoal/40 text-base font-normal tracking-[-2%]">
+                                {{ $t('cart.summary.products') }}
                             </span>
-                           <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                                {{ $n(totalDiscount/100,'currency')}}
+                            <span class="text-charcoal text-base font-medium tracking-[-2%]">
+                                {{ $n(cartTotalOnline / 100, 'currency') }}
                             </span>
-                       </div>
+                        </div>
 
-                   </div>
+                        <div class="flex w-full justify-between">
+                            <span class="text-charcoal/40 text-base font-normal tracking-[-2%]">
+                                {{ $t('cart.summary.discount') }}
+                            </span>
+                            <span class="text-charcoal text-base font-medium tracking-[-2%]">
+                                {{ $n(totalDiscount / 100, 'currency') }}
+                            </span>
+                        </div>
+                    </div>
 
-                   <div class="flex w-full pt-6 justify-between">
-                    <span class="font-medium text-base tracking-[-2%] text-charcoal">
-                        Grand total
-                    </span>
-                       <span class="font-extrabold text-base tracking-[-2%] text-charcoal">
-                      {{ $n(cartTotal/100, 'currency') }}
-                    </span>
-                   </div>
+                    <div class="flex w-full justify-between pt-6">
+                        <span class="text-charcoal text-base font-medium tracking-[-2%]">
+                            {{ $t('cart.summary.total') }}
+                        </span>
+                        <span class="text-charcoal text-base font-extrabold tracking-[-2%]">
+                            {{ $n(cartTotal / 100, 'currency') }}
+                        </span>
+                    </div>
 
-                   <div class="flex w-full pt-6">
-                       <Button :display-as="`a`" class="w-full" :href="`cart/checkout`" withArrow>Continue to checkout</Button>
-                   </div>
-
-               </div>
-           </div>
-       </div>
-   </div>
-
-
-
+                    <div class="flex w-full pt-6">
+                        <Button :display-as="`a`" :href="`cart/checkout`" class="w-full" withArrow>
+                            {{ $t('cart.checkout_btn') }}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <!--<style scoped>-->

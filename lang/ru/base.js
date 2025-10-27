@@ -52,6 +52,17 @@ export default {
         empty: 'Корзина пуста',
         empty_description: 'Найдём что-нибудь милое',
         btn_explore: 'Каталог нарядов',
+        delete: 'Удалить',
+
+        summary: {
+            title: 'Итоги',
+            products: 'Товары',
+            discount: 'Скидка',
+            shipping: 'Доставка',
+            total: 'Итого',
+        },
+
+        checkout_btn: 'Оформить заказ',
     },
     address: {
         type_shipping: 'Адрес доставки',

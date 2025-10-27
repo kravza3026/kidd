@@ -84,6 +84,7 @@ return [
 
     'continue' => 'Continue',
     'shipping_to' => 'shipping to',
+    'complete_checkout' => 'Finish order',
 
     'payment' => [
         'billing_title' => 'Billing address',

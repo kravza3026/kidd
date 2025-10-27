@@ -1,113 +1,122 @@
 <template>
     <div>
         <!-- Нижнє меню -->
-        <div class="menu lg:hidden fixed z-30 bottom-0 w-full pb-3 bg-white">
-            <div class="bg-white py-1 border-y border-gray-200">
+        <div class="menu fixed bottom-0 z-30 w-full bg-white pb-3 lg:hidden">
+            <div class="border-y border-gray-200 bg-white py-1">
                 <div class="flex">
                     <!-- Explore -->
-                    <div class="flex-1 group">
+                    <div class="group flex-1">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleExplore"
                         >
                             <span
                                 :class="{ 'text-olive': exploreOpen }"
-                                class="block text-charcoal/60 font-bold px-1 pt-1 pb-2"
+                                class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold"
                             >
-                                  <img
-                                      :src="exploreOpen ? menuOpenIcon : menuIcon"
-                                      alt="menu"
-                                      class="mx-auto pb-1 opacity-65"
-                                  />
-                                <span class="block text-[12px] pb-1">{{ this.$t('menu.catalog') }}</span>
+                                <img
+                                    :src="exploreOpen ? menuOpenIcon : menuIcon"
+                                    alt="menu"
+                                    class="mx-auto pb-1 opacity-65"
+                                />
+                                <span class="block pb-1 text-[12px]">{{ this.$t('menu.catalog') }}</span>
                             </span>
                         </a>
                     </div>
 
-
-                    <div class="flex-1 group">
+                    <div class="group flex-1">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleSearch"
                         >
                             <span
                                 :class="{ 'text-olive': searchOpen }"
-                                class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
+                                class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold"
+                            >
                                 <img
-                                    :src="searchOpen ?  searchOpenIcon : searchIcon"
+                                    :src="searchOpen ? searchOpenIcon : searchIcon"
                                     alt="search"
-                                    class="mx-auto pb-1 opacity-65 w-[24px] h-[24px]"
+                                    class="mx-auto h-[24px] w-[24px] pb-1 opacity-65"
                                 />
-                                <span class="block text-[12px] pb-1">{{ this.$t('menu.search') }}</span>
+                                <span class="block pb-1 text-[12px]">{{ this.$t('menu.search') }}</span>
                             </span>
                         </a>
                     </div>
 
                     <!-- Cart -->
-                    <div class="flex-1 group ">
-
+                    <div class="group flex-1">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
                             :href="`/${locale}/cart`"
+                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                         >
-                          <div
+                            <div class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">
+                                <div class="mx-auto w-fit pb-1">
+                                    <div class="group relative">
+                                        <img
+                                            :src="cartIcon"
+                                            alt="cart"
+                                            class="opacity-65 md:opacity-100"
+                                            height="24"
+                                            width="24"
+                                        />
+                                        <div
+                                            v-if="cartItems.length > 0"
+                                            class="bg-olive absolute -top-2 -right-2 flex h-[16px] w-[16px] items-center justify-center rounded-full p-1"
+                                        >
+                                            <span class="text-[10px] text-white">{{ cartItems.length }}</span>
+                                        </div>
 
-                              class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                           <div class="mx-auto w-fit pb-1">
-                               <div class="group relative">
-                                   <img :src="cartIcon" width="24" height="24" alt="cart" class="opacity-65 md:opacity-100">
-                                   <div v-if="cartItems.length > 0" class="absolute flex items-center justify-center -top-2 -right-2 bg-olive rounded-full p-1 w-[16px] h-[16px]">
-                                       <span class="text-[10px] text-white">{{cartItems.length}}</span>
-                                   </div>
-
-                                   <div class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                                       {{ $t('cart.tooltip') }}
-                                       <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
-                                   </div>
-                               </div>
-                           </div>
-                            <span
-                                :class="{ 'text-olive': cartOpen }"
-                                class="block text-[12px] pb-1">{{ this.$t('menu.cart') }}</span>
-                          </div>
+                                        <div
+                                            class="absolute top-full left-2/3 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-3 py-1 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                        >
+                                            {{ $t('cart.tooltip') }}
+                                            <div
+                                                class="absolute -top-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span :class="{ 'text-olive': cartOpen }" class="block pb-1 text-[12px]">{{
+                                    this.$t('menu.cart')
+                                }}</span>
+                            </div>
                         </a>
                     </div>
 
                     <!-- Help -->
-                    <div class="flex-1 group">
+                    <div class="group flex-1">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 "
-                            :href="`/${locale}/help`"
+                            :href="'/' + locale + '' + route('help', {}, false)"
+                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400"
                         >
-                          <span  class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                            <img
-                                :src="isHelpActive ? faqOpenIcon : faqIcon"
-                                alt="faq"
-                                class="mx-auto pb-1 opacity-65"
-                            />
-                            <span
-                                :class="{ 'text-olive': isHelpActive }"
-                                class="block text-[12px] pb-1">{{ this.$t('menu.help') }}</span>
-
-                          </span>
+                            <span class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">
+                                <img
+                                    :src="isHelpActive ? faqOpenIcon : faqIcon"
+                                    alt="faq"
+                                    class="mx-auto pb-1 opacity-65"
+                                />
+                                <span :class="{ 'text-olive': isHelpActive }" class="block pb-1 text-[12px]">{{
+                                    this.$t('menu.help')
+                                }}</span>
+                            </span>
                         </a>
                     </div>
 
                     <!-- Account -->
-                    <div class="flex-1 group">
+                    <div class="group flex-1">
                         <a
-                            class="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleUser"
                         >
-                          <div class="block text-charcoal/60 font-bold px-1 pt-1 pb-2">
-                           <div class="mx-auto w-fit pb-1">
-                               <UserDropdown :user="user" :is-authenticated="isAuthenticated" />
-                           </div>
-                            <span class="block text-[12px] pb-1">{{ this.$t('menu.account') }}</span>
-                          </div>
+                            <div class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">
+                                <div class="mx-auto w-fit pb-1">
+                                    <UserDropdown :is-authenticated="isAuthenticated" :user="user" />
+                                </div>
+                                <span class="block pb-1 text-[12px]">{{ this.$t('menu.account') }}</span>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -117,9 +126,9 @@
         <!-- Мобільний пошук -->
         <transition name="fade">
             <div
-                ref="mobileSearch"
                 v-if="searchOpen"
-                class=" top-[72px] lg:hidden bg-white border-t border-t-light-border fixed z-50 w-full h-[calc(100%-162px)] left-0 overflow-auto"
+                ref="mobileSearch"
+                class="border-t-light-border fixed top-[72px] left-0 z-50 h-[calc(100%-162px)] w-full overflow-auto border-t bg-white lg:hidden"
             >
                 <Search ref="searchComponent" @close="closeSearch" />
             </div>
@@ -137,13 +146,13 @@ import cartIcon from '@img/icons/cart.svg';
 import faqIcon from '@img/icons/faq.svg';
 import faqOpenIcon from '@img/icons/olive/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
-import CartDropdown from "@/components/cart/CartDropdown.vue";
-import UserDropdown from "@/components/account/UserDropdown.vue";
-import { emitter } from '@/eventBus.js'
-import {onMounted, ref} from "vue";
-import {useI18n} from "vue-i18n";
+import CartDropdown from '@/components/cart/CartDropdown.vue';
+import UserDropdown from '@/components/account/UserDropdown.vue';
+import { emitter } from '@/eventBus.js';
+import { inject, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const currentPath = '/' + (window.location.pathname.split('/')[2] || '')
+const currentPath = '/' + (window.location.pathname.split('/')[2] || '');
 export default {
     name: 'MobileMenu',
     props: {
@@ -155,10 +164,9 @@ export default {
             type: Object,
             default: () => ({}),
         },
-
     },
 
-    components: {UserDropdown, CartDropdown, Search},
+    components: { UserDropdown, CartDropdown, Search },
     data() {
         return {
             exploreOpen: false,
@@ -170,24 +178,25 @@ export default {
             searchIcon,
             searchOpenIcon,
             cartIcon,
-            faqIcon,faqOpenIcon,
+            faqIcon,
+            faqOpenIcon,
             userIcon,
             currentPath,
-
         };
     },
     setup() {
         const { locale, t, n } = useI18n();
         const cartItems = ref([]);
+        const route = inject('route');
         const getCartItems = async () => {
-            await window.axios.get('cart')
+            await window.axios
+                .get('cart')
                 .then((response) => {
                     cartItems.value = response.data.items;
-
-                }).catch((error) => {
+                })
+                .catch((error) => {
                     console.error('Server error:', error);
                     cartItems.value = [];
-
                 });
         };
         emitter.on('cart-updated', getCartItems);
@@ -196,11 +205,9 @@ export default {
             getCartItems();
             emitter.on('cart-updated', getCartItems);
         });
-        return{
-            cartItems
-        }
-
-
+        return {
+            cartItems,
+        };
     },
 
     computed: {
@@ -209,9 +216,8 @@ export default {
         },
         isHelpActive() {
             return window.location.pathname.includes('/help');
-        }
+        },
     },
-
 
     methods: {
         toggleExplore() {
@@ -265,9 +271,7 @@ export default {
             this.searchOpen = false;
             document.body.classList.remove('overflow-hidden');
         },
-
-    }
-
+    },
 };
 </script>
 
