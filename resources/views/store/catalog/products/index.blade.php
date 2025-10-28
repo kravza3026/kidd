@@ -1,5 +1,7 @@
 <x-app-layout>
     <main class="container">
+
+
         <div class=" bg-white z-50  mt-12 mb-6 flex-col justify-start items-start gap-6 flex">
             <div class="justify-start items-start gap-2 inline-flex">
                 <div class="opacity-80 text-black text-5xl font-bold leading-10">{{ $category->exists ? $category->name : __('general.products') }}</div>
@@ -7,7 +9,12 @@
                     <div class="text-white text-sm font-extrabold leading-none">{{ $products->total() }}</div>
                 </div>
             </div>
-            @include('store.catalog.products._filters')
+            <div class="hidden md:block">
+                @include('store.catalog.products._filters')
+            </div>
+            <div class="md:hidden">
+                @include('store.catalog.products._filters-mobile')
+            </div>
         </div>
 
         <div class="mb-24">

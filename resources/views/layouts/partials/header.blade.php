@@ -1,4 +1,4 @@
-<header class="border-b-light-border sticky top-0 z-10 border-b bg-white lg:relative">
+<header class="border-b-light-border !sticky top-0 z-10 border-b bg-white lg:relative">
     @include('layouts.nav.topline')
 
     <nav class="relative z-10 container flex h-[72px] justify-between font-bold lg:h-[88px]">

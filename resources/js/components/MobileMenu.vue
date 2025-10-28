@@ -1,7 +1,142 @@
+<script>
+import Search from './Search.vue';
+import menuIcon from '@img/icons/menu.svg';
+import menuOpenIcon from '@img/icons/olive/menuOpen.svg';
+import searchIcon from '@img/icons/search.svg';
+import searchOpenIcon from '@img/icons/olive/searchOpen.svg';
+import cartIcon from '@img/icons/cart.svg';
+import faqIcon from '@img/icons/faq.svg';
+import faqOpenIcon from '@img/icons/olive/faq_active.svg';
+import userIcon from '@img/icons/user.svg';
+import CartDropdown from '@/components/cart/CartDropdown.vue';
+import UserDropdown from '@/components/account/UserDropdown.vue';
+import { emitter } from '@/eventBus.js';
+import { inject, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const currentPath = '/' + (window.location.pathname.split('/')[2] || '');
+export default {
+    name: 'MobileMenu',
+    props: {
+        isAuthenticated: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+
+    components: { UserDropdown, CartDropdown, Search },
+    data() {
+        return {
+            exploreOpen: false,
+            searchOpen: false,
+            cartOpen: false,
+            userOpen: false,
+            menuIcon,
+            menuOpenIcon,
+            searchIcon,
+            searchOpenIcon,
+            cartIcon,
+            faqIcon,
+            faqOpenIcon,
+            userIcon,
+            currentPath,
+        };
+    },
+    setup() {
+        const { locale, t, n } = useI18n();
+        const cartItems = ref([]);
+        const route = inject('route');
+        const getCartItems = async () => {
+            await window.axios
+                .get('cart')
+                .then((response) => {
+                    cartItems.value = response.data.items;
+                })
+                .catch((error) => {
+                    console.error('Server error:', error);
+                    cartItems.value = [];
+                });
+        };
+        emitter.on('cart-updated', getCartItems);
+
+        onMounted(() => {
+            getCartItems();
+            emitter.on('cart-updated', getCartItems);
+        });
+        return {
+            cartItems,
+        };
+    },
+
+    computed: {
+        locale() {
+            return document.documentElement.lang || 'ro';
+        },
+        isHelpActive() {
+            return window.location.pathname.includes('/help');
+        },
+    },
+
+    methods: {
+        toggleExplore() {
+            this.searchOpen = false;
+            this.cartOpen = false;
+            this.userOpen = false;
+
+            this.exploreOpen = !this.exploreOpen;
+
+            if (window.Alpine?.store('dropdown')) {
+                window.Alpine.store('dropdown').toggle();
+            }
+
+            document.body.classList.toggle('overflow-hidden', this.exploreOpen);
+        },
+        toggleSearch() {
+
+            this.exploreOpen = false;
+            this.cartOpen = false;
+            this.userOpen = false;
+
+            this.searchOpen = !this.searchOpen;
+            document.body.classList.toggle('overflow-hidden', this.searchOpen);
+
+            if (this.searchOpen) {
+                this.$nextTick(() => {
+                    this.$refs.searchComponent?.openSearchFromOutside();
+                });
+            }
+        },
+        toggleCart() {
+
+            this.exploreOpen = false;
+            this.searchOpen = false;
+            this.userOpen = false;
+
+            this.cartOpen = !this.cartOpen;
+            document.body.classList.toggle('overflow-hidden', this.cartOpen);
+        },
+        toggleUser() {
+            this.exploreOpen = false;
+            this.searchOpen = false;
+            this.cartOpen = false;
+
+            this.userOpen = !this.userOpen;
+            document.body.classList.toggle('overflow-hidden', this.userOpen);
+        },
+        closeSearch() {
+            this.searchOpen = false;
+            document.body.classList.remove('overflow-hidden');
+        },
+    },
+};
+</script>
 <template>
     <div>
-        <!-- Нижнє меню -->
-        <div class="menu fixed bottom-0 z-30 w-full bg-white pb-3 lg:hidden">
+        <div class="menu bottom-0 z-10 w-full bg-white lg:hidden">
             <div class="border-y border-gray-200 bg-white py-1">
                 <div class="flex">
                     <!-- Explore -->
@@ -136,144 +271,7 @@
     </div>
 </template>
 
-<script>
-import Search from './Search.vue';
-import menuIcon from '@img/icons/menu.svg';
-import menuOpenIcon from '@img/icons/olive/menuOpen.svg';
-import searchIcon from '@img/icons/search.svg';
-import searchOpenIcon from '@img/icons/olive/searchOpen.svg';
-import cartIcon from '@img/icons/cart.svg';
-import faqIcon from '@img/icons/faq.svg';
-import faqOpenIcon from '@img/icons/olive/faq_active.svg';
-import userIcon from '@img/icons/user.svg';
-import CartDropdown from '@/components/cart/CartDropdown.vue';
-import UserDropdown from '@/components/account/UserDropdown.vue';
-import { emitter } from '@/eventBus.js';
-import { inject, onMounted, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 
-const currentPath = '/' + (window.location.pathname.split('/')[2] || '');
-export default {
-    name: 'MobileMenu',
-    props: {
-        isAuthenticated: {
-            type: Boolean,
-            default: false,
-        },
-        user: {
-            type: Object,
-            default: () => ({}),
-        },
-    },
-
-    components: { UserDropdown, CartDropdown, Search },
-    data() {
-        return {
-            exploreOpen: false,
-            searchOpen: false,
-            cartOpen: false,
-            userOpen: false,
-            menuIcon,
-            menuOpenIcon,
-            searchIcon,
-            searchOpenIcon,
-            cartIcon,
-            faqIcon,
-            faqOpenIcon,
-            userIcon,
-            currentPath,
-        };
-    },
-    setup() {
-        const { locale, t, n } = useI18n();
-        const cartItems = ref([]);
-        const route = inject('route');
-        const getCartItems = async () => {
-            await window.axios
-                .get('cart')
-                .then((response) => {
-                    cartItems.value = response.data.items;
-                })
-                .catch((error) => {
-                    console.error('Server error:', error);
-                    cartItems.value = [];
-                });
-        };
-        emitter.on('cart-updated', getCartItems);
-
-        onMounted(() => {
-            getCartItems();
-            emitter.on('cart-updated', getCartItems);
-        });
-        return {
-            cartItems,
-        };
-    },
-
-    computed: {
-        locale() {
-            return document.documentElement.lang || 'ro';
-        },
-        isHelpActive() {
-            return window.location.pathname.includes('/help');
-        },
-    },
-
-    methods: {
-        toggleExplore() {
-            // Закриваємо інші
-            this.searchOpen = false;
-            this.cartOpen = false;
-            this.userOpen = false;
-
-            this.exploreOpen = !this.exploreOpen;
-
-            if (window.Alpine?.store('dropdown')) {
-                window.Alpine.store('dropdown').toggle();
-            }
-
-            document.body.classList.toggle('overflow-hidden', this.exploreOpen);
-        },
-        toggleSearch() {
-            // Закриваємо інші
-            this.exploreOpen = false;
-            this.cartOpen = false;
-            this.userOpen = false;
-
-            this.searchOpen = !this.searchOpen;
-            document.body.classList.toggle('overflow-hidden', this.searchOpen);
-
-            if (this.searchOpen) {
-                this.$nextTick(() => {
-                    this.$refs.searchComponent?.openSearchFromOutside();
-                });
-            }
-        },
-        toggleCart() {
-            // Закриваємо інші
-            this.exploreOpen = false;
-            this.searchOpen = false;
-            this.userOpen = false;
-
-            this.cartOpen = !this.cartOpen;
-            document.body.classList.toggle('overflow-hidden', this.cartOpen);
-        },
-        toggleUser() {
-            // Закриваємо інші
-            this.exploreOpen = false;
-            this.searchOpen = false;
-            this.cartOpen = false;
-
-            this.userOpen = !this.userOpen;
-            document.body.classList.toggle('overflow-hidden', this.userOpen);
-        },
-        closeSearch() {
-            this.searchOpen = false;
-            document.body.classList.remove('overflow-hidden');
-        },
-    },
-};
-</script>
 
 <style scoped>
 .fade-enter-active,

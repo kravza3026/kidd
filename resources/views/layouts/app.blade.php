@@ -33,20 +33,25 @@
         @stack('head')
         @include('layouts.partials.analytics')
     </head>
-    <body>
-        @include('layouts.partials.header')
+    <body @class(['page-fade', 'bg-white', 'min-h-[calc(100vh-250px)]', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
 
-        <main
-            @class(['page-fade', 'bg-white', 'min-h-[calc(100vh-250px)]', '!bg-[#FAFAFA]' => request()->is('*/account/*')])
-        >
-            {{ $slot }}
-        </main>
-        @include('layouts.partials.footer')
 
-        <div
-            data-vue-component="mobileMenu"
-            data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
-        ></div>
+            @include('layouts.partials.header')
+
+           <main>
+               {{ $slot }}
+           </main>
+
+            @include('layouts.partials.footer')
+            <div
+                class="fixed bottom-0 left-0 right-0 z-[1000] bg-white"
+                data-vue-component="mobileMenu"
+                data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
+            ></div>
+
+
+
+
         <div data-vue-component="ScrollToTop"></div>
         <div
             class="backdrop fixed inset-0 z-[2] bg-black/70"

@@ -1,3 +1,89 @@
+<script>
+import profileIcon from '@img/user.svg';
+import arrow from '@img/icons/profile/arrow.svg';
+import logout from '@img/icons/profile/logout.svg';
+import Account from '@img/icons/profile/Account.svg';
+import Favorite from '@img/icons/profile/Favorite.svg';
+import Address from '@img/icons/profile/Location.svg';
+import Order from '@img/icons/profile/Order.svg';
+import Button from "@/components/ui/Button.vue";
+
+export default {
+    name: 'UserDropdown',
+    components: {
+        Button,
+    },
+    props: {
+        isAuthenticated: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+    data() {
+        return {
+            open: false,
+            profileIcon,arrow,Account,Favorite,Address,Order,logout,
+            errors: {},
+        };
+    },
+    methods: {
+        toggle() {
+            this.open = !this.open;
+        },
+        handleClickOutside(event) {
+            const dropdown = this.$refs.dropdownUser;
+            if (dropdown && !dropdown.contains(event.target)) {
+                this.open = false;
+            }
+        },
+        handleLogin() {
+            this.errors = {}; // Reset errors before login attempt
+            // Handle login logic here
+            const form = document.forms['authLogin'];
+            const email = form.email.value;
+            const password = form.password.value;
+
+            window.axios.post( this.route('login'), { email, password })
+                .then(response => {
+                    // this.$emit('login', response.data);
+                    // this.open = false;
+                    window.location.reload(); // Reload to update user state
+                })
+                .catch(error => {
+                    if (error.response && error.response.status === 422) {
+                        this.errors = error.response.data.errors || {};
+                        console.log('Validation errors:');
+                        console.dir( this.errors);
+                    } else {
+                        console.error('Login failed:', error);
+                    }
+                });
+        },
+        handleLogout() {
+            // Handle logout logic here
+            window.axios.post(this.route('logout'))
+                .then(() => {
+                    // this.$emit('logout');
+                    // this.open = false;
+                    window.location.reload(); // Reload to update user state
+                })
+                .catch(error => {
+                    console.error('Logout failed:', error);
+                });
+        },
+    },
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
+    },
+};
+</script>
 <template>
     <div class="cart relative cursor-pointer " ref="dropdownUser" @click="toggle">
        <div class="group relative">
@@ -101,92 +187,7 @@
     </div>
 </template>
 
-<script>
-import profileIcon from '@img/user.svg';
-import arrow from '@img/icons/profile/arrow.svg';
-import logout from '@img/icons/profile/logout.svg';
-import Account from '@img/icons/profile/Account.svg';
-import Favorite from '@img/icons/profile/Favorite.svg';
-import Address from '@img/icons/profile/Location.svg';
-import Order from '@img/icons/profile/Order.svg';
-import Button from "@/components/ui/Button.vue";
 
-export default {
-    name: 'UserDropdown',
-    components: {
-        Button,
-    },
-    props: {
-        isAuthenticated: {
-            type: Boolean,
-            default: false,
-        },
-        user: {
-            type: Object,
-            default: () => ({}),
-        },
-    },
-    data() {
-        return {
-            open: false,
-            profileIcon,arrow,Account,Favorite,Address,Order,logout,
-            errors: {},
-        };
-    },
-    methods: {
-        toggle() {
-            this.open = !this.open;
-        },
-        handleClickOutside(event) {
-            const dropdown = this.$refs.dropdownUser;
-            if (dropdown && !dropdown.contains(event.target)) {
-                this.open = false;
-            }
-        },
-        handleLogin() {
-            this.errors = {}; // Reset errors before login attempt
-            // Handle login logic here
-            const form = document.forms['authLogin'];
-            const email = form.email.value;
-            const password = form.password.value;
-
-            window.axios.post( this.route('login'), { email, password })
-                .then(response => {
-                    // this.$emit('login', response.data);
-                    // this.open = false;
-                    window.location.reload(); // Reload to update user state
-                })
-                .catch(error => {
-                    if (error.response && error.response.status === 422) {
-                        this.errors = error.response.data.errors || {};
-                        console.log('Validation errors:');
-                        console.dir( this.errors);
-                    } else {
-                        console.error('Login failed:', error);
-                    }
-                });
-        },
-        handleLogout() {
-            // Handle logout logic here
-            window.axios.post(this.route('logout'))
-                .then(() => {
-                    // this.$emit('logout');
-                    // this.open = false;
-                    window.location.reload(); // Reload to update user state
-                })
-                .catch(error => {
-                    console.error('Logout failed:', error);
-                });
-        },
-    },
-    mounted() {
-        document.addEventListener('click', this.handleClickOutside);
-    },
-    beforeUnmount() {
-        document.removeEventListener('click', this.handleClickOutside);
-    },
-};
-</script>
 
 <style scoped>
 .slide-fade-enter-active,
