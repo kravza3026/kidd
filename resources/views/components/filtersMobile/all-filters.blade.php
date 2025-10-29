@@ -8,6 +8,7 @@
         ['title' => 'Gender', 'slug' => 'gender'],
         ['title' => 'Season', 'slug' => 'season'],
         ['title' => 'Price', 'slug' => 'price'],
+        ['title' => 'Sort', 'slug' => 'sort'],
         ['title' => 'My Family', 'slug' => 'family_members'],
     ];
     // TODO add localization //

@@ -169,7 +169,7 @@
                 initFilters() {
                     this.filters = {
                         all: @js(view('components.filtersMobile.all-filters')->render()),
-                        sort: '<div>Sort content here</div>',
+                        sort: @js((new \App\View\Components\Filters\SortDropdown(variant: 'mobile'))->render()->render()),
                         sizes: @js((new \App\View\Components\Filters\SizesDropdown(variant: 'mobile'))->render()->render()),
                         season: @js((new \App\View\Components\Filters\SeasonsDropdown(variant: 'mobile'))->render()->render()),
                         price: @js((new \App\View\Components\Filters\PriceDropdown(variant: 'mobile'))->render()->render()),
