@@ -14,7 +14,7 @@
     @if( !is_null( request('term') ) )
         <input type="hidden" name="term" value="{!! request('term') !!}">
     @endif
-    <div class="fixed top-auto cursor-pointer bottom-[100px] w-full left-0 h-14 z-[48] flex items-center justify-center">
+    <div class="fixed top-auto cursor-pointer bottom-[100px] w-full left-0 h-14 z-[2] flex items-center justify-center">
         <div class="max-w-64 mx-auto flex items-center justify-center bg-charcoal rounded-full ">
             <div
                 @click="openFilter('all')"

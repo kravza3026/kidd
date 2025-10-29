@@ -56,7 +56,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             @click.outside="open = false"
-            class="fixed top-[72px] inset-0 bg-black/50 z-30"
+            class="fixed top-[72px] inset-0 bg-black/50 z-[300]"
         >
             <div class="bg-white grid items-center justify-center p-4 absolute top-0 right-0 w-screen h-full shadow-lg">
                 <ul class="mt-4 space-y-4 text-center">
