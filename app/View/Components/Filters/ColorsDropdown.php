@@ -11,18 +11,20 @@ use Illuminate\View\Component;
 
 class ColorsDropdown extends Component
 {
+    public function __construct(public string $variant = 'desktop') {}
+
     public function render(): View|Closure|string
     {
-
         $colors = Cache::rememberForever('colors', function () {
             return Color::withCount(['products as products_count' => function ($q) {
                 $q->select(DB::raw('COUNT(DISTINCT kidd_product_variants.product_id)'));
             }])->get();
         });
 
-        return view('components.filters.colors-dropdown',
-            compact('colors')
-        );
+        $view = $this->variant === 'mobile'
+            ? 'components.filtersMobile.colors-dropdown'
+            : 'components.filters.colors-dropdown';
 
+        return view($view, compact('colors'));
     }
 }

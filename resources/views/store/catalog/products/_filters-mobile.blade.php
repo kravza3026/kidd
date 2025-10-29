@@ -6,16 +6,19 @@
     $season = !request()->has('filters.season.0') && array_key_exists('season', request()->get('filters', [])) && count(request('filters')['season']);
     $price = (request()->has('filters.price.from') && request()->get('filters')['price']['from']) || (request()->has('filters.price.to') && request()->get('filters')['price']['to']) || request()->has('filters.price.discounted');
     $family = !request()->has('filters.family.0') && array_key_exists('family', request()->get('filters', [])) && count(request('filters')['family']);
+
     $showClearButton = request()->has('filters') && ($size || $fabric || $color || $gender || $season || $price || $family);
 @endphp
 
-<form class="w-full h-full" action="{!! url()->current() !!}" accept-charset="ascii" name="filtersForm" id="filtersForm">
+<form  x-data="filtersModal()" class="w-full h-full" action="{!! url()->current() !!}" accept-charset="ascii" name="filtersForm" id="filtersForm">
     @if( !is_null( request('term') ) )
         <input type="hidden" name="term" value="{!! request('term') !!}">
     @endif
     <div class="fixed top-auto cursor-pointer bottom-[100px] w-full left-0 h-14 z-[48] flex items-center justify-center">
-        <div class="max-w-64 mx-auto flex items-center justify-center">
-            <div id="openModal" class="p-5 flex items-center rounded-full rounded-r-none h-12 bg-charcoal border-white w-1/2">
+        <div class="max-w-64 mx-auto flex items-center justify-center bg-charcoal rounded-full ">
+            <div
+                @click="openFilter('all')"
+                class="p-5 flex items-center rounded-full rounded-r-none h-12 bg-charcoal  w-1/2">
                 <div class="flex justify-start items-center gap-x-1">
                     <div class="w-3.5 h-3.5 relative">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +34,9 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-charcoal p-5 rounded-full h-12 rounded-l-none w-1/2 flex items-center justify-center gap-x-2">
+            <div
+                @click="openFilter('sort')"
+                class="bg-charcoal p-5 rounded-full h-12 rounded-l-none w-1/2 flex items-center justify-center gap-x-2">
                 <div>
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="Icon">
@@ -48,22 +53,67 @@
 
         <div
             id="modal"
-            class="fixed inset-0 h-screen w-screen bg-black/50 hidden items-end justify-center z-[9999] transition-opacity duration-500"
+            x-show="modalOpen"
+            x-cloak
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-500"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            @click.self="closeModal()"
+            class="fixed inset-0 h-screen w-screen bg-black/50 flex items-end justify-center z-[9999] "
         >
             <div
                 id="modalContent"
-                class="bg-white w-full  rounded-t-2xl py-2 relative transform   transition-transform duration-500 ease-out "
+                class="bg-white w-full  rounded-t-2xl py-2 relative "
             >
-                <div class="mb-2 relative">
+                <div
+
+                    x-init="initFilters()"
+                    x-on:open-filter.window="openFilter($event.detail)"
+                    class="mb-2 relative"
+                >
+                    <template x-if="currentFilter !== 'all'">
+                        <div class="relative flex justify-between items-center h-14 mb-4 border-b border-light-border p-4">
+                            <div class="flex items-center gap-x-2">
+                                <button @click="backToAll()" type="button" class="border border-light-border rounded-full flex items-center justify-center size-10">
+                                    <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
+                                </button>
+
+                                <span class="text-black font-bold text-2xl" x-text="currentFilterTitle"></span>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="currentFilter === 'all'">
+                        <div
+                            class="relative flex justify-between items-center h-14 mb-4 border-b border-light-border p-4">
+                            <div class="flex items-center gap-x-2">
+                                <button type="button"  @click="closeModal()"  class="border border-light-border rounded-full flex items-center justify-center size-10">
+                                    <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
+                                </button>
+                                <span class="text-black font font-bold text-2xl">Filter by</span>
+                            </div>
+                            <button type="button" class="flex items-center gap-x-2 top-2 right-3 text-black text-2xl border border-light-border rounded-full py-0 px-3">
+                                &times; <span class="text-sm">Clear filter</span>
+                            </button>
+                        </div>
+                    </template>
+
                     <x-filtersMobile.modal>
-{{--                        <x-filtersMobile.sizes-dropdown/>--}}
-{{--                        <x-filtersMobile.fabrics-dropdown/>--}}
-{{--                        <x-filtersMobile.colors-dropdown/>--}}
-{{--                        <x-filtersMobile.genders-dropdown/>--}}
-{{--                        <x-filtersMobile.seasons-dropdown/>--}}
-{{--                        <x-filtersMobile.price-dropdown/>--}}
+                        <div x-html="currentFilterHtml"></div>
                     </x-filtersMobile.modal>
+
+                    <template x-if="currentFilter !== 'all'" >
+                        <div class="px-4">
+                            <x-ui.button  size="large" left_icon="false" right_icon="false" class="my-5 !rounded-xl !py-1 !w-full mx-auto font-bold">
+                                Save & Continue
+                            </x-ui.button>
+                        </div>
+                    </template>
                 </div>
+
 
             </div>
         </div>
@@ -72,82 +122,95 @@
 
 
 <style>
-    .show-modal #modalContent {
-        transform: translateY(0) !important;
-    }
+    [x-cloak] { display: none !important; }
+    /*.show-modal #modalContent {*/
+    /*    transform: translateY(0) !important;*/
+    /*}*/
 
-    .hide-modal #modalContent {
-        transform: translateY(100%) !important;
-    }
+    /*.hide-modal #modalContent {*/
+    /*    transform: translateY(100%) !important;*/
+    /*}*/
 
-    .show-modal {
-        background-color: rgba(0, 0, 0, 0.5) !important;
-        transition: background-color 0.5s ease;
-    }
+    /*.show-modal {*/
+    /*    background-color: rgba(0, 0, 0, 0.5) !important;*/
+    /*    transition: background-color 0.5s ease;*/
+    /*}*/
 
-    .hide-modal {
-        background-color: rgba(0, 0, 0, 0) !important;
-        transition: background-color 0.5s ease;
-    }
+    /*.hide-modal {*/
+    /*    background-color: rgba(0, 0, 0, 0) !important;*/
+    /*    transition: background-color 0.5s ease;*/
+    /*}*/
 </style>
 
 @push('scripts')
     <script type="text/javascript">
-        document.querySelector('#filtersForm').addEventListener('change', function (event) {
+        // document.querySelector('#filtersForm').addEventListener('change', function (event) {
+        //
+        //     event.preventDefault();
+        //     let filter_group = event.target.closest('.filter-group');
+        //
+        //     if (event.target.classList.contains('filter-all') && filter_group.querySelector('.filter-all').checked) {
+        //         filter_group.querySelectorAll('.filter-option').forEach(item => item.checked = false);
+        //     } else if (event.target.classList.contains('filter-option')) {
+        //         filter_group.querySelector('.filter-all').checked = false;
+        //     }
+        //
+        //     setTimeout(this.submit.bind(this), 500);
+        // });
 
-            event.preventDefault();
-            let filter_group = event.target.closest('.filter-group');
 
-            if (event.target.classList.contains('filter-all') && filter_group.querySelector('.filter-all').checked) {
-                filter_group.querySelectorAll('.filter-option').forEach(item => item.checked = false);
-            } else if (event.target.classList.contains('filter-option')) {
-                filter_group.querySelector('.filter-all').checked = false;
+        function filtersModal() {
+
+            return {
+                filters: {},
+                titles: {
+                    all: 'All filters',
+                    sort: 'Sort by',
+                    sizes: 'Size',
+                    fabrics: 'Fabric type',
+                    color: 'Color',
+                    gender: 'Genders',
+                    season: 'Seasons',
+                    price: 'Price',
+                    @auth
+                    family_members: 'My Family',
+                    @endauth
+                },
+                currentFilter: 'all', // базово — список усіх фільтрів
+                get currentFilterHtml() {
+                    return this.filters[this.currentFilter] || '';
+                },
+                get currentFilterTitle() {
+                    return this.titles[this.currentFilter] || '';
+                },
+                initFilters() {
+                    this.filters = {
+                        all: @js(view('components.filtersMobile.all-filters')->render()),
+                        sort: '<div>Sort content here</div>',
+                        sizes: @js((new \App\View\Components\Filters\SizesDropdown(variant: 'mobile'))->render()->render()),
+                        season: @js((new \App\View\Components\Filters\SeasonsDropdown(variant: 'mobile'))->render()->render()),
+                        price: @js((new \App\View\Components\Filters\PriceDropdown(variant: 'mobile'))->render()->render()),
+                        gender: @js((new \App\View\Components\Filters\GendersDropdown(variant: 'mobile'))->render()->render()),
+                        fabrics: @js((new \App\View\Components\Filters\FabricsDropdown(variant: 'mobile'))->render()->render()),
+                        color: @js((new \App\View\Components\Filters\ColorsDropdown(variant: 'mobile'))->render()->render()),
+                        @auth
+                        family_members: @js((new \App\View\Components\Filters\FamilyDropdown(variant: 'mobile'))->render()->render()),
+                        @endauth
+
+                    };
+                },
+                modalOpen: false,
+                openFilter(filterName) {
+                    this.currentFilter = filterName;
+                    this.modalOpen = true;
+                },
+                backToAll() {
+                    this.currentFilter = 'all';
+                },
+                closeModal() {
+                    this.modalOpen = false;
+                },
             }
-
-            setTimeout(this.submit.bind(this), 500);
-        });
-        document.addEventListener("DOMContentLoaded", () => {
-            const modal = document.getElementById("modal");
-            const modalContent = document.getElementById("modalContent");
-
-            const openModal = () => {
-                // Початковий стан — невидимий і знизу
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
-                modal.classList.add("hide-modal"); // фон прозорий
-                modalContent.style.transform = "translateY(100%)"; // знизу
-                document.body.style.overflow = "hidden";
-
-                // Через кілька мілісекунд запускаємо анімацію
-                requestAnimationFrame(() => {
-                    modal.classList.remove("hide-modal");
-                    modal.classList.add("show-modal");
-                    modalContent.style.transform = "translateY(0)";
-                });
-            };
-
-            const closeModal = () => {
-                modal.classList.remove("show-modal");
-                modal.classList.add("hide-modal");
-                modalContent.style.transform = "translateY(100%)";
-
-                setTimeout(() => {
-                    modal.classList.add("hidden");
-                    modal.classList.remove("flex", "hide-modal");
-                    document.body.style.overflow = "";
-                }, 500); // відповідає duration-500
-            };
-
-            document.getElementById("openModal").onclick = openModal;
-            document.getElementById("closeModal").onclick = closeModal;
-
-            // Закриття по кліку на фон
-            modal.addEventListener("click", (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-
-
-        });
+        }
     </script>
 @endpush

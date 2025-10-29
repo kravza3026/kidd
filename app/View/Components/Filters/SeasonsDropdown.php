@@ -10,11 +10,13 @@ use Illuminate\View\Component;
 
 class SeasonsDropdown extends Component
 {
+    public function __construct(public string $variant = 'desktop') {}
     /**
      * Get the view / contents that represent the component.
      *
      * @return View
      */
+
     public function render(): View|Closure|string
     {
 
@@ -22,9 +24,13 @@ class SeasonsDropdown extends Component
             return Season::all();
         });
 
-        return view('components.filters.seasons-dropdown',
-            compact('seasons')
-        );
+        $view = $this->variant === 'mobile'
+            ? 'components.filtersMobile.seasons-dropdown'
+            : 'components.filters.seasons-dropdown';
+
+        return view($view, compact('seasons'));
+
+
 
     }
 }

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class PriceDropdown extends Component
+class SortBy extends Component
 {
     /**
      * Create a new component instance.
@@ -19,8 +19,8 @@ class PriceDropdown extends Component
     public function render(): View|Closure|string
     {
         $view = $this->variant === 'mobile'
-            ? 'components.filtersMobile.price-dropdown'
-            : 'components.filters.price-dropdown';
+            ? 'components.filtersMobile.sort-dropdown'
+            : 'components.filters.sort-dropdown';
 
         return view($view);
     }

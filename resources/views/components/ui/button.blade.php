@@ -20,7 +20,7 @@
     }
 @endphp
 
-<{{$as}} {{ $attributes->merge(['class' => ' cursor-pointer shadow-md hover:shadow-sm shadow-olive border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit py-3
+<{{$as}} {{ $attributes->merge(['class' => ' cursor-pointer shadow-sm hover:shadow-none shadow-olive border-b-4 hover:bg-dark-olive duration-500 transition-all ease-in-out border-dark-olive flex gap-5 items-center bg-olive justify-center w-fit py-3
 md:py-4
  px-10 my-5 rounded-2xl text-white']) }}>
     @if(filter_var($left_icon, FILTER_VALIDATE_BOOLEAN))

@@ -10,21 +10,23 @@ use Illuminate\View\Component;
 
 class SizesDropdown extends Component
 {
+    public function __construct(public string $variant = 'desktop'){}
+
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View
     {
-
         $sizes = Cache::rememberForever('sizes', function () {
             return Size::withCount(['products as products_count' => function ($q) {
                 $q->select(DB::raw('COUNT(DISTINCT kidd_product_variants.product_id)'));
             }])->get();
         });
 
-        return view('components.filters.sizes-dropdown',
-            compact('sizes')
-        );
+        $view = $this->variant === 'mobile'
+            ? 'components.filtersMobile.sizes-dropdown'
+            : 'components.filters.sizes-dropdown';
 
+        return view($view, compact('sizes'));
     }
 }

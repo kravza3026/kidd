@@ -38,7 +38,7 @@
 
             @include('layouts.partials.header')
 
-           <main>
+           <main class="min-h-[calc(100vh-250px)]">
                {{ $slot }}
            </main>
 

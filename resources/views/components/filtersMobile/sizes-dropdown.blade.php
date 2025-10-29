@@ -4,17 +4,6 @@
 @endphp
 
 
-<div class="relative flex justify-between items-center h-14 mb-4 border-b border-light-border p-4">
-    <div class="flex items-center gap-x-2">
-        <button type="button"  id="closeModal"  class="border border-light-border rounded-full flex items-center justify-center size-10">
-            <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
-        </button>
-        <span class="text-black font font-bold text-2xl">Filter by</span>
-    </div>
-    <button type="button" class="flex items-center gap-x-2 top-2 right-3 text-black text-2xl border border-light-border rounded-full py-0 px-3">
-        &times; <span class="text-sm">Clear filter</span>
-    </button>
-</div>
 
 <div class="filter-group w-screen  grid space-y-[3px] z-[7000] left-0 bottom-0 px-2 bg-white">
     <label  for="filter_{{ $componentName }}_0"

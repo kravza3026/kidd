@@ -52,7 +52,7 @@ export default {
 }
 </script>
 <template>
-<div  class="cursor-pointer relative z-0 group p-1 hover:z-10">
+<div  class="cursor-pointer relative z-0 group p-1 hover:z-[2]">
    <div
         class="bg-white md:bg-card-bg overflow-hidden hover:overflow-visible focus:overflow-visible group-hover:bg-white border border-light-border md:border-transparent group-hover:border-black/10 transition-all ease-in-out rounded-xl py-4 px-2 relative"
     >

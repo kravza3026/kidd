@@ -9,19 +9,21 @@ use Illuminate\View\Component;
 
 class FabricsDropdown extends Component
 {
+    public function __construct(public string $variant = 'desktop') {}
+
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View
+    public function render(): View|string
     {
-
         $fabrics = Cache::rememberForever('fabrics', function () {
             return Fabric::all();
         });
 
-        return view('components.filters.fabrics-dropdown',
-            compact('fabrics')
-        );
+        $view = $this->variant === 'mobile'
+            ? 'components.filtersMobile.fabrics-dropdown'
+            : 'components.filters.fabrics-dropdown';
 
+        return view($view, compact('fabrics'));
     }
 }
