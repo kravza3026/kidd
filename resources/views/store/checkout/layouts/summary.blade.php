@@ -1,9 +1,9 @@
 @use('Money\Currency;use Money\Money; use Money\Currencies\ISOCurrencies; use Money\Formatter\IntlMoneyFormatter')
-<div class="rounded-2xl bg-white md:p-6 md:shadow !border-0">
+<div class="rounded-2xl !border-0 bg-white md:p-6 md:shadow">
     <h2 class="mb-6 text-2xl font-bold">{{ __('checkout.summary.sections.products.title') }}</h2>
 
     <!-- Order Items -->
-    <div class="max-h-[40vh] space-y-4 overflow-y-auto p-4 md:p-0 shadow md:shadow-none rounded-2xl md:rounded-none">
+    <div class="max-h-[40vh] space-y-4 overflow-y-auto rounded-2xl p-4 shadow md:rounded-none md:p-0 md:shadow-none">
         @foreach ($items as $item)
             <div class="flex items-start gap-3">
                 <div class="bg-light-orange h-[72px] w-[72px] rounded-xl p-2">
@@ -44,20 +44,28 @@
 
     <hr class="border-light-border my-6 hidden md:block" />
     <!-- Order Totals -->
-    <div class="space-y-3 mt-6 md:mt-0">
+    <div class="mt-6 space-y-3 md:mt-0">
         <p class="text-2xl font-bold">
             {{ __('checkout.summary.sections.discount.title') }}
         </p>
-        <p class="text-sm">
-            {!! __('checkout.summary.sections.discount.not_registered.text', ['href' => route('register'), 'amount' => 10]) !!}
-        </p>
-        <form class="flex items-center gap-x-3" action="">
+        @guest
+            <p class="text-sm">
+                {!! __('checkout.summary.sections.discount.not_registered.text', ['href' => route('register'), 'amount' => 10]) !!}
+            </p>
+        @endguest
+
+        <form class="flex w-full items-center justify-between gap-x-3" action="">
             <input
                 type="text"
-                class="border-light-border h-12 flex-1 rounded-xl border px-4"
+                class="border-light-border h-12 w-auto min-w-fit rounded-xl border px-4"
                 placeholder="{{ __('checkout.summary.sections.discount.code_placeholder') }}"
             />
-            <x-primary-button as="button" class="w-auto px-6 !py-3 !leading-5" right_icon="false" type="submit">
+            <x-primary-button
+                as="button"
+                class="w-auto min-w-fit px-4 !py-3 !leading-5"
+                right_icon="false"
+                type="submit"
+            >
                 {{ __('checkout.summary.sections.discount.apply_btn') }}
             </x-primary-button>
         </form>

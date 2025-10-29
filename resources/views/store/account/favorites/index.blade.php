@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="mx-auto max-w-5xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
+    <div class="mx-auto max-w-5xl xl:max-w-7xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
         <div class="bg-white shadow-xl sm:rounded-xl">
             @include('store.account.nav')
 
@@ -8,7 +8,7 @@
                     <!-- Product grid -->
                     {{-- // TODO - update this condition when we have a proper favorites system --}}
                     <div class="mb-12 space-y-20">
-                        <div class="grid grid-cols-1 gap-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3">
+                        <div class="grid grid-cols-1 gap-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                             <!-- Product grid -->
                             @foreach ($products as $product)
                                 <div data-vue-component="ProductCard" data-product='@json($product)'></div>

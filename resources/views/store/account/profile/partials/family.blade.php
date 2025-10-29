@@ -3,17 +3,17 @@
 >
     <header class="p-2 lg:p-0">
         <h2 class="text-2xl font-bold text-gray-900">
-            {{ __('My Family Filters') }}
+            {{ __('account.profile.family.title') }}
         </h2>
 
         <p class="mt-1 max-w-[70%] text-sm text-balance text-gray-600 sm:max-w-none">
-            {!! __('Filter clothing by predefined profiles of your children') !!}
+            {!! __('account.profile.family.description') !!}
         </p>
     </header>
 
     @foreach (auth()->user()->family as $family)
-{{--        {{ $family->name }}--}}
-{{--        {{ var_dump($family->compatible_sizes_ids) }}--}}
+        {{ $family->name }}
+        {{ var_dump($family->compatible_sizes_ids) }}
     @endforeach
 
     <div class="family_list mt-6 mb-8 flex flex-grow flex-col gap-y-4">

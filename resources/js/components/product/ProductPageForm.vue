@@ -286,6 +286,19 @@ const handleFavoriteClick = (id, name) => {
                                 :class="{ 'opacity-40 cursor-not-allowed': !availableSizes.some(s => s.id === size.id) }"
                                 class="px-2 md:px-5 py-[5px] md:py-[13px] bg-white rounded-[100px] border min-w-16 md:min-w-32 text-center border-[#eeeeee] peer-checked:border-olive"
                             >
+
+                                <!--Replace this with correct..-->
+                                <!--Replace this with correct..-->
+                                <!--Replace this with correct..-->
+                                <template v-for="(member, index) in product.compatible_with" :key="member.id">
+                                    <span v-if="member.compatible_size_id == size.id">
+                                        [{{ member.letter }} - ({{member.compatible_size_id}}) - {{ member.name }}]
+                                    </span>
+                                </template>
+                                <!--Replace this with correct..-->
+                                <!--Replace this with correct..-->
+                                <!--Replace this with correct..-->
+
                                 <span class="text-charcoal text-sm font-bold leading-[14px]">
                                   {{ size.name[locale] }}
                                 </span>
