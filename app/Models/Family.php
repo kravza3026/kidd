@@ -96,13 +96,13 @@ class Family extends Model
 
     public function getCompatibleSizesIdsAttribute()
     {
-        return Cache::flexible($this->compatibilityCacheKey(), [10, 60], function () {
+        return Cache::flexible($this->compatibilityCacheKey(), [360, 1440], function () {
             return $this->compatibleSizes()->pluck('id')->toArray();
         }, alwaysDefer: true);
     }
 
     public function compatibleSizes()
     {
-        return Size::forMember($this);
+        return Size::forMember($this)->get();
     }
 }

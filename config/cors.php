@@ -37,8 +37,8 @@ return [
     ],
 
     'allowed_origins_patterns' => [
-        //        '^https?://.*\.kidd\.md',
-        //        '^https?://.*\.kidd\.test$',
+        '^https?://.*\.kidd\.md',
+        '^https?://.*\.kidd\.test$',
     ],
 
     'allowed_headers' => ['*'],

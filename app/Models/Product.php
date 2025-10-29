@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Arr;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
@@ -92,8 +94,8 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         'season',
         'fabric',
         'variants',
-        'variants.color',
-        'variants.size',
+        //        'variants.color',
+        //        'variants.size',
         //        'variants.images',
     ];
 
@@ -104,6 +106,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     protected $appends = [
         'url',
+        'compatible_with',
     ];
 
     /**
@@ -112,14 +115,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Get the variants associated with the product.
-     */
-    public function variants(): HasMany
-    {
-        return $this->hasMany(ProductVariant::class);
     }
 
     /**
@@ -152,6 +147,37 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     public function fabric(): BelongsTo
     {
         return $this->belongsTo(Fabric::class);
+    }
+
+    public function getCompatibleWithAttribute(): ?array
+    {
+        $compatible_members = [];
+
+        if (auth()->check()) {
+            $members = auth()->user()->family;
+            foreach ($members as $member) {
+                if ($this->gender_id == $member->gender_id || $this->gender_id == 1) { // 1 - Unisex
+                    $variants = $this->variants->whereIn('size_id', Arr::flatten($member->compatible_sizes_ids));
+                    if ($variants->count()) {
+                        $member_data['id'] = $member->id;
+                        $member_data['name'] = $member->name;
+                        $member_data['letter'] = Str::limit($member->name, 1, '');
+                        $member_data['compatible_size_id'] = Arr::sole($member->compatible_sizes_ids);
+                        array_push($compatible_members, $member_data);
+                    }
+                }
+            }
+        }
+
+        return $compatible_members;
+    }
+
+    /**
+     * Get the variants associated with the product.
+     */
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 
     /**

@@ -36,7 +36,14 @@
                     </svg>
                 </a>
             </div>
-            <div class="grid grid-cols-2 gap-y-6 text-sm lg:grid-cols-4">
+
+            <div class="grid grid-cols-2 gap-y-6 text-sm xl:grid-cols-4">
+                <div class="col-span-2">
+                    <p class="opacity-60">{{ __('checkout.shipping.form.shipping_method') }}:</p>
+                    <p class="text-base font-bold">
+                        {{ \App\Enums\ShippingMethod::tryFrom($checkoutData['shipping_method'])->label() }}
+                    </p>
+                </div>
                 <div>
                     <p class="opacity-60">{{ __('checkout.shipping.form.shipping_region') }}:</p>
                     <p class="text-base font-bold">{{ $shipping_region->name ?? '--' }}</p>
@@ -47,33 +54,35 @@
                         {{ $shipping_region->cities->where('id', $checkoutData['shipping_city'])->first()->name ?? '--' }}
                     </p>
                 </div>
-                <div>
+                <div class="col-span-2 md:col-span-1">
                     <p class="opacity-60">{{ __('checkout.shipping.form.shipping_street_name') }}.</p>
                     <p class="text-base font-bold">
                         {{ $checkoutData['shipping_street_name'] ?? '--' }}
-                        {{ $checkoutData['shipping_building'] ?? '--' }}
+                        {{ $checkoutData['shipping_building'] ?? '' }}
                     </p>
                 </div>
                 <div>
                     <p class="opacity-60">{{ __('checkout.shipping.form.shipping_postal_code') }}:</p>
                     <p class="text-base font-bold">{{ $checkoutData['shipping_postal_code'] ?? '--' }}</p>
                 </div>
-                <div>
-                    <p class="opacity-60">{{ __('checkout.shipping.form.shipping_apartment') }}:</p>
-                    <p class="text-base font-bold">{{ $checkoutData['shipping_apartment'] ?? '--' }}</p>
-                </div>
-                <div>
-                    <p class="opacity-60">{{ __('checkout.shipping.form.shipping_entrance') }}:</p>
-                    <p class="text-base font-bold">{{ $checkoutData['shipping_entrance'] ?? '--' }}</p>
-                </div>
-                <div>
-                    <p class="opacity-60">{{ __('checkout.shipping.form.shipping_floor') }}:</p>
-                    <p class="text-base font-bold">{{ $checkoutData['shipping_floor'] ?? '--' }}</p>
-                </div>
-                <div>
-                    <p class="opacity-60">{{ __('checkout.shipping.form.shipping_intercom') }}:</p>
-                    <p class="text-base font-bold">{{ $checkoutData['shipping_intercom'] ?? '--' }}</p>
-                </div>
+                @if ($checkoutData['shipping_apartment'])
+                    <div>
+                        <p class="opacity-60">{{ __('checkout.shipping.form.shipping_apartment') }}:</p>
+                        <p class="text-base font-bold">{{ $checkoutData['shipping_apartment'] ?? '--' }}</p>
+                    </div>
+                    <div>
+                        <p class="opacity-60">{{ __('checkout.shipping.form.shipping_entrance') }}:</p>
+                        <p class="text-base font-bold">{{ $checkoutData['shipping_entrance'] ?? '--' }}</p>
+                    </div>
+                    <div>
+                        <p class="opacity-60">{{ __('checkout.shipping.form.shipping_floor') }}:</p>
+                        <p class="text-base font-bold">{{ $checkoutData['shipping_floor'] ?? '--' }}</p>
+                    </div>
+                    <div>
+                        <p class="opacity-60">{{ __('checkout.shipping.form.shipping_intercom') }}:</p>
+                        <p class="text-base font-bold">{{ $checkoutData['shipping_intercom'] ?? '--' }}</p>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -102,7 +111,7 @@
                     </svg>
                 </a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 text-sm lg:grid-cols-4">
+            <div class="grid grid-cols-1 gap-y-6 text-sm sm:grid-cols-2 xl:grid-cols-4">
                 <div>
                     <p class="opacity-60">{{ __('checkout.contact.form.first_name') }}:</p>
                     <p class="text-base font-bold">{{ $checkoutData['contact_first_name'] ?? '--' }}</p>
@@ -154,7 +163,7 @@
                         {{ \App\Enums\PaymentMethod::tryFrom($checkoutData['payment_method'])->labelWithDesc() }}
                     </p>
                 </div>
-                <div class="grid grid-cols-2 gap-y-6 text-sm lg:grid-cols-4">
+                <div class="grid grid-cols-2 gap-y-6 text-sm xl:grid-cols-4">
                     <div>
                         <p class="opacity-60">{{ __('checkout.payment.form.billing_region') }}:</p>
                         <p class="text-base font-bold">{{ $billing_region->name ?? '--' }}</p>
