@@ -11,10 +11,10 @@
         </p>
     </header>
 
-    @foreach (auth()->user()->family as $family)
-        {{ $family->name }}
-        {{ var_dump($family->compatible_sizes_ids) }}
-    @endforeach
+    {{-- @foreach (auth()->user()->family as $family) --}}
+    {{-- {{ $family->name }} --}}
+    {{-- {{ var_dump($family->compatible_sizes_ids) }} --}}
+    {{-- @endforeach --}}
 
     <div class="family_list mt-6 mb-8 flex flex-grow flex-col gap-y-4">
         <div data-vue-component="Family"></div>
