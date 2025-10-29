@@ -55,27 +55,26 @@
             id="modal"
             x-show="modalOpen"
             x-cloak
-            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
             x-transition:leave="transition ease-in duration-500"
-            x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
+
             @click.self="closeModal()"
-            class="fixed inset-0 h-screen w-screen bg-black/50 flex items-end justify-center z-[9999] "
+            class="fixed inset-0 h-screen w-screen bg-black/50 flex items-end justify-center z-[9999]"
         >
             <div
                 id="modalContent"
-                class="bg-white w-full  rounded-t-2xl py-2 relative "
-            >
-                <div
+                x-init="initFilters()"
 
-                    x-init="initFilters()"
-                    x-on:open-filter.window="openFilter($event.detail)"
-                    class="mb-2 relative"
+                @open-filter.window="openFilter($event.detail)"
+                class="bg-white w-full rounded-t-2xl py-2 relative transform transition-transform  ease-out"
+            >
+                <div class="mb-2 relative"
                 >
                     <template x-if="currentFilter !== 'all'">
-                        <div class="relative flex justify-between items-center h-14 mb-4 border-b border-light-border p-4">
+                        <div class="relative flex justify-between items-center h-14 mb-4  border-b border-light-border p-4">
                             <div class="flex items-center gap-x-2">
                                 <button @click="backToAll()" type="button" class="border border-light-border rounded-full flex items-center justify-center size-10">
                                     <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
@@ -122,26 +121,10 @@
 
 
 <style>
-    [x-cloak] { display: none !important; }
-    /*.show-modal #modalContent {*/
-    /*    transform: translateY(0) !important;*/
-    /*}*/
-
-    /*.hide-modal #modalContent {*/
-    /*    transform: translateY(100%) !important;*/
-    /*}*/
-
-    /*.show-modal {*/
-    /*    background-color: rgba(0, 0, 0, 0.5) !important;*/
-    /*    transition: background-color 0.5s ease;*/
-    /*}*/
-
-    /*.hide-modal {*/
-    /*    background-color: rgba(0, 0, 0, 0) !important;*/
-    /*    transition: background-color 0.5s ease;*/
-    /*}*/
+    #modalContent {
+        transform: translateY(100%);
+    }
 </style>
-
 @push('scripts')
     <script type="text/javascript">
         // document.querySelector('#filtersForm').addEventListener('change', function (event) {
@@ -200,15 +183,27 @@
                     };
                 },
                 modalOpen: false,
+
                 openFilter(filterName) {
                     this.currentFilter = filterName;
                     this.modalOpen = true;
+
+                    this.$nextTick(() => {
+                        const modal = document.getElementById('modalContent');
+                        modal.style.transition = 'transform 0.5s ease-out';
+                        modal.style.transform = 'translateY(0)';
+                    });
                 },
                 backToAll() {
                     this.currentFilter = 'all';
                 },
                 closeModal() {
-                    this.modalOpen = false;
+                    const modal = document.getElementById('modalContent');
+                    modal.style.transform = 'translateY(100%)';
+
+                    setTimeout(() => {
+                        this.modalOpen = false;
+                    }, 500); // Чекаємо кінець анімації
                 },
             }
         }
