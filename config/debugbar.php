@@ -162,7 +162,7 @@ return [
      */
 
     'collectors' => [
-        'phpinfo' => false,  // Php version
+        'phpinfo' => true,  // Php version
         'messages' => true,  // Messages
         'time' => true,  // Time Datalogger
         'memory' => true,  // Memory usage
@@ -170,10 +170,10 @@ return [
         'log' => true,  // Logs from Monolog (merged in messages if enabled)
         'db' => true,  // Show database (PDO) queries and bindings
         'views' => true,  // Views with their data
-        'route' => false,  // Current route information
-        'auth' => false, // Display Laravel authentication status
+        'route' => true,  // Current route information
+        'auth' => true, // Display Laravel authentication status
         'gate' => true,  // Display Laravel Gate checks
-        'session' => false,  // Display session data
+        'session' => true,  // Display session data
         'symfony_request' => true,  // Only one can be enabled..
         'mail' => true,  // Catch mail messages
         'laravel' => true, // Laravel version and environment
@@ -181,12 +181,12 @@ return [
         'default_request' => false, // Regular or special Symfony request logger
         'logs' => false, // Add the latest log messages
         'files' => false, // Show the included files
-        'config' => false, // Display config settings
-        'cache' => false, // Display cache events
+        'config' => true, // Display config settings
+        'cache' => true, // Display cache events
         'models' => true,  // Display models
         'livewire' => true,  // Display Livewire (when available)
         'jobs' => false, // Display dispatched jobs
-        'pennant' => false, // Display Pennant feature flags
+        'pennant' => true, // Display Pennant feature flags
     ],
 
     /*
@@ -200,11 +200,11 @@ return [
 
     'options' => [
         'time' => [
-            'memory_usage' => false,  // Calculated by subtracting memory start and end, it may be inaccurate
+            'memory_usage' => true,  // Calculated by subtracting memory start and end, it may be inaccurate
         ],
         'messages' => [
             'trace' => true,          // Trace the origin of the debug message
-            'capture_dumps' => false, // Capture laravel `dump();` as message
+            'capture_dumps' => true, // Capture laravel `dump();` as message
         ],
         'memory' => [
             'reset_peak' => false,     // run memory_reset_peak_usage before collecting
@@ -225,9 +225,9 @@ return [
             'timeline' => false,  // Add the queries to the timeline
             'duration_background' => true,   // Show shaded background on each query relative to how long it took to execute.
             'explain' => [                 // Show EXPLAIN output on queries
-                'enabled' => false,
+                'enabled' => true,
             ],
-            'hints' => false,   // Show hints for common mistakes
+            'hints' => true,   // Show hints for common mistakes
             'show_copy' => true,    // Show copy button next to the query,
             'slow_threshold' => false,   // Only track queries that last longer than this time in ms
             'memory_usage' => false,   // Show queries memory usage

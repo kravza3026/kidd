@@ -157,8 +157,8 @@ export default {
         <a class="space-y-1" :href="product.url">
            <div class="flex justify-between items-center gap-2">
                <p class="text-sm text-charcoal sm:text-base truncate">
-                   {{ product.name[locale] }}</p>
-
+                   {{ product.name[locale] }}
+               </p>
            </div>
             <p class="font-bold text-charcoal text-base">
                 {{ $n(finalPrice, 'currency') }}
@@ -170,6 +170,18 @@ export default {
                     {{ $n(originalPrice, 'currency') }}
                 </span>
             </p>
+
+                <!--Replace this with correct..-->
+                <!--Replace this with correct..-->
+                <!--Replace this with correct..-->
+                <template v-for="(member, index) in product.compatible_with" :key="member.id">
+                    <span>
+                        {{ member.letter }} ({{member.name}} )
+                    </span>
+                </template>
+                <!--Replace this with correct..-->
+                <!--Replace this with correct..-->
+                <!--Replace this with correct..-->
         </a>
     </div>
 </div>
