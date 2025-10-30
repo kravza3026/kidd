@@ -18,23 +18,27 @@
                 </div>
                 <ul class="group flex items-center gap-4 xl:mt-7">
                     <li>
-                        <a href="#">
+                        <a class="group" href="{{ config('services.social_links.facebook') }}">
                             <img src="{{ Vite::image('icons/socials/facebook.svg') }}" alt="facebook icon" />
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <img src="{{ Vite::image('icons/socials/ln.svg') }}" alt="linkedin icon" />
+                        <a class="group" href="{{ config('services.social_links.instagram') }}">
+                            <img
+                                class="size-[26px] opacity-40"
+                                src="{{ Vite::image('icons/socials/instagram.svg') }}"
+                                alt="instagram icon"
+                            />
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt="youtube icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
+                        <a href="{{ config('services.social_links.messenger') }}">
                             <img src="{{ Vite::image('icons/socials/messenger.svg') }}" alt="messenger icon" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ config('services.social_links.youtube') }}">
+                            <img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt="youtube icon" />
                         </a>
                     </li>
                 </ul>

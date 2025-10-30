@@ -15,7 +15,7 @@ return [
     'subscribe' => [
         'title' => 'Subscribe to newsletter and get 10% off your first order',
         'subtitle' => 'Receive the latest updates and take advantage of our exclusive offers',
-        'email_placeholder' => 'Your email address',
+        'email_placeholder' => 'Email address',
         'subscribe_btn' => 'Subscribe',
     ],
 

@@ -24,5 +24,4 @@ class SortDropdown extends Component
 
         return view($view);
     }
-
 }

@@ -53,4 +53,11 @@ return [
         'access_token' => env('FB_PIXEL_ACCESS_TOKEN'),
     ],
 
+    'social_links' => [
+        'facebook' => env('SOCIAL_LINKS_FACEBOOK', 'https://facebook.com/kidd.moldova'),
+        'instagram' => env('SOCIAL_LINKS_INSTAGRAM', 'https://instagram.com/kidd.moldova'),
+        'messenger' => env('SOCIAL_LINKS_MESSENGER', 'https://m.me/kidd.moldova'),
+        'youtube' => env('SOCIAL_LINKS_YOUTUBE', 'https://youtube.com/'),
+    ],
+
 ];

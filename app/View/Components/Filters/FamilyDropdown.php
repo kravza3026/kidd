@@ -12,7 +12,7 @@ class FamilyDropdown extends Component
 
     public function render(): View
     {
-        $family_members = Cache::rememberForever('family_' . auth()->id(), function () {
+        $family_members = Cache::rememberForever('family_'.auth()->id(), function () {
             return auth()->user()->family;
         });
 
