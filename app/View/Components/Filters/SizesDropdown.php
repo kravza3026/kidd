@@ -10,7 +10,7 @@ use Illuminate\View\Component;
 
 class SizesDropdown extends Component
 {
-    public function __construct(public string $variant = 'desktop'){}
+    public function __construct(public string $variant = 'desktop') {}
 
     /**
      * Get the view / contents that represent the component.

@@ -32,7 +32,7 @@ return [
 
     'newsletter' => [
         'title' => 'Subscribe for newsletter',
-        'email_placeholder' => 'Enter your email address',
+        'email_placeholder' => 'Email address',
         'subscribe_button' => 'Subscribe',
     ],
 

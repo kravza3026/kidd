@@ -82,7 +82,7 @@
             <div class="align-end absolute inset-0 bottom-8 grid h-full w-full content-end items-end justify-center">
                 <p class="text-center text-[30px] font-bold text-white lg:text-[40px]">Ready for summer</p>
                 <p class="text-center text-sm font-normal text-white">Buy 4 products and get 30% off your cart</p>
-                <x-ui.button class="mx-auto">Shop now</x-ui.button>
+                <x-ui.button as="a" href="{{ route('products.index') }}" class="mx-auto">Shop now</x-ui.button>
             </div>
         </div>
     </div>

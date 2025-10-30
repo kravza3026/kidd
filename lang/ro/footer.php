@@ -32,7 +32,7 @@ return [
 
     'newsletter' => [
         'title' => 'Abonează-te la newsletter',
-        'email_placeholder' => 'Introduceți adresa de email',
+        'email_placeholder' => 'Adresa de e-mail',
         'subscribe_button' => 'Abonează-te',
     ],
 

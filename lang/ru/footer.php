@@ -32,7 +32,7 @@ return [
 
     'newsletter' => [
         'title' => 'Подпишитесь на рассылку',
-        'email_placeholder' => 'Введите ваш email',
+        'email_placeholder' => 'Адрес эл. почты',
         'subscribe_button' => 'Подписаться',
     ],
 

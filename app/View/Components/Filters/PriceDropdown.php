@@ -24,5 +24,4 @@ class PriceDropdown extends Component
 
         return view($view);
     }
-
 }
