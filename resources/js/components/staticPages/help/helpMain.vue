@@ -96,11 +96,11 @@ export default {
         </div>
     </div>
 
-    <div class="tabs container grid grid-cols-2 lg:grid-cols-4 gap-3 mt-10 overflow-x-auto">
+    <div class="tabs container flex lg:grid grid-cols-4 gap-3 mt-10 overflow-x-auto">
 
         <div ref="Delivery" @click="activeTab = 'DeliveryTab'"
             :class="activeTab === 'DeliveryTab' ? 'bg-olive text-white' : 'bg-olive/5 hover:bg-olive text-charcoal hover:text-white'"
-            class="tab cursor-pointer group relative  flex lg:grid items-center flex-row gap-x-2 justify-start lg:justify-between text-start h-[124px] rounded-2xl p-3 lg:p-5  animated">
+            class="tab cursor-pointer group relative min-w-7/12 md:min-w-1/3 lg:min-w-full flex lg:grid items-center flex-row gap-x-2 justify-start lg:justify-between text-start lg:h-[124px] rounded-2xl p-3 lg:p-5  animated">
             <div
                 :class="activeTab === 'DeliveryTab' ? 'text-white ' : 'group-hover:text-white text-olive'"
                 class="tap-img ">
@@ -140,7 +140,7 @@ export default {
 
         <div ref="Payments" @click="activeTab = 'PaymentsTab'"
              :class="activeTab === 'PaymentsTab' ? 'bg-olive text-white' : 'bg-olive/5 hover:bg-olive text-charcoal hover:text-white'"
-             class="tab cursor-pointer group relative  flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start h-[124px] rounded-2xl p-3 lg:p-5  animated">
+             class="tab cursor-pointer group relative min-w-7/12 md:min-w-1/3 lg:min-w-full flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start lg:h-[124px] rounded-2xl p-3 lg:p-5  animated">
             <div
                 :class="activeTab === 'PaymentsTab' ? 'text-white ' : 'group-hover:text-white text-olive'"
                 class="tap-img ">
@@ -177,7 +177,7 @@ export default {
 
         <div ref="Account" @click="activeTab = 'AccountTab'"
              :class="activeTab === 'AccountTab' ? 'bg-olive text-white' : 'bg-olive/5 hover:bg-olive text-charcoal hover:text-white'"
-             class="tab cursor-pointer group relative  flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start h-[124px] rounded-2xl p-3 lg:p-5  animated">
+             class="tab cursor-pointer group relative min-w-7/12 md:min-w-1/3 lg:min-w-full flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start lg:h-[124px] rounded-2xl p-3 lg:p-5  animated">
             <div
                 :class="activeTab === 'AccountTab' ? 'text-white ' : 'group-hover:text-white text-olive'"
                 class="tap-img ">
@@ -216,7 +216,7 @@ export default {
 
         <div ref="Technical" @click="activeTab = 'TechnicalTab'"
              :class="activeTab === 'TechnicalTab' ? 'bg-olive text-white' : 'bg-olive/5 hover:bg-olive text-charcoal hover:text-white'"
-             class="tab cursor-pointer group relative  flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start h-[124px] rounded-2xl p-3 lg:p-5  animated">
+             class="tab cursor-pointer group relative min-w-7/12 md:min-w-1/3 lg:min-w-full flex items-center flex-row gap-x-2 lg:grid justify-start lg:justify-between text-start lg:h-[124px] rounded-2xl p-3 lg:p-5  animated">
             <div
                 :class="activeTab === 'TechnicalTab' ? 'text-white ' : 'group-hover:text-white text-olive'"
                 class="tap-img ">
