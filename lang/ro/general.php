@@ -19,6 +19,10 @@ return [
 
     'products' => 'Catalog',
 
+    'buttons' => [
+        'shop_now' => 'Cumpără acum',
+    ],
+
     'placeholder' => [
         'select' => [
             'common' => 'Selectați',

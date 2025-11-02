@@ -121,7 +121,7 @@ class Order extends Model
     protected function orderNumber(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value ? sprintf('ORD-%06d', $value) : strtoupper(uniqid('ORD-', false)),
+            get: fn ($value) => sprintf('ORD-%06d', $value),
             //            set: fn ($value) => (int) str_replace(['#ORD-', 'ORD-'], '', $value),
         );
     }

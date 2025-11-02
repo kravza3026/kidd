@@ -30,10 +30,10 @@
                         <p class="flex items-center text-sm font-bold">×{{ $item->qty }}</p>
                         <div class="flex items-center gap-x-1.5">
                             <span class="text-dark/60 font-light text-nowrap line-through">
-                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_online)->getAmount() / 100, 2)]) }}
+                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_online)->getAmount() / 100, 0)]) }}
                             </span>
                             <span class="text-olive font-bold text-nowrap">
-                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_final)->getAmount() / 100, 2)]) }}
+                                {{ __('general.price', ['price' => number_format(Money::MDL($item->variant->price_final)->getAmount() / 100, 0)]) }}
                             </span>
                         </div>
                     </div>
@@ -54,20 +54,33 @@
             </p>
         @endguest
 
-        <form class="flex w-full items-center justify-between gap-x-3" action="">
-            <input
-                type="text"
-                class="border-light-border h-12 w-auto min-w-fit rounded-xl border px-4"
-                placeholder="{{ __('checkout.summary.sections.discount.code_placeholder') }}"
-            />
-            <x-primary-button
-                as="button"
-                class="w-auto min-w-fit px-4 !py-3 !leading-5"
-                right_icon="false"
-                type="submit"
+        <form class="grid w-full grid-cols-1 gap-y-5" action="">
+            <div class="flex w-auto items-center justify-between gap-x-3">
+                <input
+                    type="text"
+                    class="border-light-border h-12 w-full min-w-auto rounded-xl border px-5"
+                    placeholder="{{ __('checkout.summary.sections.discount.code_placeholder') }}"
+                />
+                <x-primary-button
+                    as="button"
+                    class="!w-auto !min-w-fit !px-7 !py-3 !leading-5"
+                    right_icon="false"
+                    type="submit"
+                >
+                    {{ __('checkout.summary.sections.discount.apply_btn') }}
+                </x-primary-button>
+            </div>
+
+            <div
+                class="border-light-border flex h-14 w-full items-center justify-between gap-x-3 rounded-xl border bg-[#F8F7F2] px-5"
             >
-                {{ __('checkout.summary.sections.discount.apply_btn') }}
-            </x-primary-button>
+                <span>SUMMER10</span>
+                <span
+                    class="gradient_r-b_dark mask-b-to-[#000] !px-1.5 !py-0.5 text-xs leading-4 font-extrabold tracking-[-2%] text-white"
+                >
+                    -25%
+                </span>
+            </div>
         </form>
         <hr class="border-light-border my-6" />
         <p class="text-2xl font-bold">
@@ -77,7 +90,7 @@
         <div class="flex justify-between text-sm font-medium">
             <span class="text-charcoal/60">{{ __('checkout.summary.sections.summary.subtotal') }}</span>
             <span class="font-bold">
-                {{ __('general.price', ['price' => number_format($sub_total, 2)]) }}
+                {{ __('general.price', ['price' => number_format($sub_total, 0)]) }}
             </span>
         </div>
 
@@ -88,43 +101,34 @@
                     {{ __('checkout.summary.sections.summary.shipping') }}
                 </span>
                 <span class="font-bold">
-                    {{ __('general.price', ['price' => number_format($fee->amount / 100, 2)]) }}
+                    {{ __('general.price', ['price' => number_format($fee->amount / 100, 0)]) }}
                 </span>
             </div>
         @endforeach
 
-        {{-- <div class="flex justify-between text-sm"> --}}
-        {{-- <span class="text-charcoal/60">{{ __('checkout.summary.sections.summary.shipping') }}</span> --}}
-        {{-- <span class="font-bold"> --}}
-        {{-- {{ __('general.price', ['price' => round(Money::MDL(intval($fee->amount))->getAmount() / 100, 0, PHP_ROUND_HALF_EVEN)]) }} --}}
-        {{-- </span> --}}
-        {{-- </div> --}}
-
         @foreach ($coupons as $coupon)
             <div class="flex justify-between text-sm">
                 <span class="text-charcoal/60 font-medium">
-                    {{ $coupon->options['description'] }} [
                     <i class="font-bold">{{ $coupon->code }}</i>
-                    ]
                 </span>
                 <span class="font-bold">
-                    -{{ __('general.price', ['price' => number_format(($coupon->discounted) / 100, 2)]) }}
+                    - {{ __('general.price', ['price' => number_format(($coupon->discounted) / 100, 0)]) }}
                 </span>
             </div>
         @endforeach
 
         <hr class="border-light-border my-2" />
-        <div class="flex justify-between pt-3 text-base font-bold">
+        <div class="flex items-center justify-between pt-3 text-base font-bold">
             <span>{{ __('checkout.summary.sections.summary.total') }}</span>
             <span>
-                {{ __('general.price', ['price' => number_format($total, 2)]) }}
+                {{ __('general.price', ['price' => number_format($total, 0)]) }}
             </span>
         </div>
     </div>
 </div>
 <div class="gradient_r-b_dark relative mt-6 min-h-50 w-full !rounded-2xl">
     <span class="bg-charcoal/20 absolute inset-0 rounded-2xl"></span>
-    <div class="relative z-10 p-4 text-white">
+    <div class="relative z-[5] p-4 text-white">
         <p class="text-2xl">
             {{ __('checkout.summary.sections.delivery_discount.title') }}
         </p>
@@ -146,11 +150,10 @@
                         {{ __('checkout.summary.sections.delivery_discount.price', ['amount' => ($total < config('laracart.free_delivery_after')) ? Money::MDL((int) round($total, 0, PHP_ROUND_HALF_UP))->getAmount() : config('laracart.free_delivery_after')]) }}
                     </span>
                 </p>
-                {{-- TODO add progress in % --}}
                 <span
-                    class="-mr-20 max-w-[calc(100%-75px)]"
+                    class="-mr-20 max-w-[calc(100%-85px)]"
                     style="
-                        width: {{ ($total < config('laracart.free_delivery_after')) ? (int) (round($total, 0, PHP_ROUND_HALF_UP) / 10) : 100 }}%;
+                        width: {{ $total > 250 && ($total < config('laracart.free_delivery_after')) ? (int) (round($total, 0, PHP_ROUND_HALF_UP) / 10) : 90 }}%;
                     "
                 ></span>
                 <p class="relative flex items-center rounded-2xl border-2 border-white px-2 py-0.5 font-bold">

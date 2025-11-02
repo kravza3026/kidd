@@ -16,7 +16,6 @@ use App\Services\CheckoutSessionService;
 use App\Services\CheckoutViewDataService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use LukePOLO\LaraCart\Facades\LaraCart;
@@ -119,6 +118,8 @@ class CheckoutController extends Controller
                 'last_name' => $checkout['contact_last_name'],
             ]);
 
+            //        dd($customer->get());
+
             $shippingAddress = [
                 'label' => $customer->id,
                 'region_id' => $checkout['shipping_region'],
@@ -145,21 +146,20 @@ class CheckoutController extends Controller
             ]);
 
             $order->items()->createMany(
-                collect($this->viewDataService->getCartData()['items'])->map(function ($item) use ($order) {
+                collect($this->viewDataService->getCartData()['items'])->map(function ($item) {
                     return [
-                        'order_id' => $order->id,
                         'product_variant_id' => $item->options['variant']->id,
                         'variant_snapshot' => $item->options['variant']->toArray(),
                         'quantity' => $item->qty,
-                        'unit_price' => $item->price,
+                        'unit_price' => $item->options['price'],
                         'total_price' => ($item->price * $item->qty),
                     ];
                 })->toArray()
             );
 
-            $order->update([
-                'total_amount' => LaraCart::total($formatted = false, true),
-            ]);
+            //        $order->update([
+            //            'total_amount' => LaraCart::total($formatted = false, true),
+            //        ]);
 
             $address['shipping'] = $order->addresses()->create([
                 'address_type' => AddressType::Shipping,

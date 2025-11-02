@@ -231,25 +231,27 @@
 @push('head')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('loginButton2').addEventListener('click', function (e) {
-                Swal.fire({
-                    html: @json(view('store.checkout.modal')->render()),
-                    showConfirmButton: false,
-                    width: '64em',
-                    showCloseButton: false,
-                    customClass: {
-                        popup: 'my-swal-rounded',
-                    },
-                    didOpen: () => {
-                        const closeButtons = document.querySelectorAll('.closeSignIn');
-                        closeButtons.forEach((btn) => {
-                            btn.addEventListener('click', () => {
-                                Swal.close();
+            if (document.getElementById('loginButton2')) {
+                document.getElementById('loginButton2').addEventListener('click', function (e) {
+                    Swal.fire({
+                        html: @json(view('store.checkout.modal')->render()),
+                        showConfirmButton: false,
+                        width: '64em',
+                        showCloseButton: false,
+                        customClass: {
+                            popup: 'my-swal-rounded',
+                        },
+                        didOpen: () => {
+                            const closeButtons = document.querySelectorAll('.closeSignIn');
+                            closeButtons.forEach((btn) => {
+                                btn.addEventListener('click', () => {
+                                    Swal.close();
+                                });
                             });
-                        });
-                    },
+                        },
+                    });
                 });
-            });
+            }
         });
     </script>
 @endpush

@@ -291,6 +291,8 @@
                 <div
                     x-data="{
                         same_as_shipping: false,
+                        shippingApartment:
+                            '{{ old('shipping_apartment', $checkoutData['shipping_apartment'] ?? '') }}',
                         shippingPostalCode:
                             '{{ old('shipping_postal_code', $checkoutData['shipping_postal_code'] ?? '') }}',
                         shippingBuilding:
@@ -302,6 +304,9 @@
                         shippingRegion:
                             '{{ old('shipping_region', $checkoutData['shipping_region'] ?? '') }}',
 
+
+                        billingApartment:
+                            '{{ old('billing_apartment', $checkoutData['billing_apartment'] ?? '') }}',
                         billingPostalCode:
                             '{{ old('billing_postal_code', $checkoutData['billing_postal_code'] ?? '') }}',
                         billingBuilding:
@@ -320,12 +325,12 @@
 
                     <div class="lg:border border-light-border space-y-4 rounded-2xl ">
                         <div class="lg:bg-light-orange flex-wrap grid grid-cols-12 items-center justify-between rounded-t-2xl lg:p-4">
-                            <h2 class="col-span-5 lg:col-span-4 text-xl lg:text-base leading-[-2%] font-bold ">
+
+                            <h2 class="col-span-6 lg:col-span-4 text-xl lg:text-base leading-[-2%] font-bold ">
                                 {{ __('checkout.payment.billing_title') }}
                             </h2>
 
-
-                            <div class="flex justify-end col-span-7 col-start-6 lg:col-start-5 lg:col-span-4 items-center gap-x-2 mr-2">
+                            <div class="flex justify-end col-span-6 lg:col-start-5 lg:col-span-4 items-center gap-x-2 mr-2">
                                 <x-ui.checkbox
                                     id="billing_sas"
                                     x-model="same_as_shipping"
@@ -341,7 +346,7 @@
 {{--                                        <span class="col-span-12 lg:hidden my-3 mr-0">--}}
 {{--                                    {{ __('checkout.payment.form.saved_addresses') }}--}}
 {{--                                    </span>--}}
-                                       <div class="relative lg:col-span-4 col-span-12 mt-2">
+                                       <div class="relative lg:col-span-4 col-span-12 mt-4 lg:mt-0">
                                            <button
                                                type="button"
                                                class="border-light-border focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
@@ -485,6 +490,7 @@
                             </div>
                             <x-ui.input-label
                                 :customClass="'col-span-4 lg:col-span-6'"
+                                :placeholder="__('checkout.payment.form.billing_street_name_placeholder')"
                                 for="billing_street_name"
                                 name="billing_street_name"
                                 :label="__('checkout.payment.form.billing_street_name')"
@@ -494,7 +500,7 @@
                             />
                             <x-ui.input-label
                                 :customClass="'col-span-2 lg:col-span-3'"
-                                :placeholder="'Building number'"
+                                :placeholder="__('checkout.payment.form.billing_building_placeholder')"
                                 for="billing_building"
                                 name="billing_building"
                                 :label="__('checkout.payment.form.billing_building')"
@@ -504,8 +510,20 @@
                             />
 
                             <x-ui.input-label
+                                :customClass="'col-span-2 lg:col-span-3'"
+                                :placeholder="__('checkout.payment.form.billing_apartment_placeholder')"
+                                id="billing_apartment"
+                                for="billing_apartment"
+                                name="billing_apartment"
+                                :label="__('checkout.payment.form.billing_apartment')"
+                                required
+                                autocomplete="apartment"
+                                x-bind:value="same_as_shipping ? shippingApartment : billingApartment"
+                            />
+
+                            <x-ui.input-label
                                 :customClass="'postal-code-handler col-span-2 lg:col-span-3'"
-                                :placeholder="'Postal code'"
+                                :placeholder="__('checkout.payment.form.billing_postal_code_placeholder')"
                                 id="billing_postal_code"
                                 for="billing_postal_code"
                                 name="billing_postal_code"
@@ -524,6 +542,7 @@
                     </label>
                     <x-input-error class="mt-2" :messages="$errors->get('terms')" />
                 </div>
+
                 <div id="transfer-details" class="space-y-4" x-show="method == 2">
                     <h2 class="text-lg font-bold">Transfer</h2>
                 </div>

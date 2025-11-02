@@ -5,9 +5,13 @@ return [
 
     'steps' => [
         'shipping' => 'Detalii livrare',
+        'shipping_short' => 'Livrare',
         'contacts' => 'Date de contact',
+        'contacts_short' => 'Contact',
         'payment' => 'Detalii plată',
+        'payment_short' => 'Plată',
         'review' => 'Sumar',
+        'review_short' => 'Sumar',
     ],
 
     'summary' => [
@@ -49,13 +53,49 @@ return [
                     'title' => 'Regular',
                     'desc' => '3-14 zile lucrătoare',
                 ],
-                'gift' => [
-                    'title' => 'Cadou',
-                    'desc' => '3-7 zile lucrătoare',
-                ],
                 'express' => [
                     'title' => 'Expres',
                     'desc' => '1-3 zile lucrătoare',
+                    'details' => [
+                        'title' => 'Expediere rapidă și convenabilă pentru a vă depăși necesitățile',
+                        'description' => 'Comenzile de dimineață pot fi livrate până în seara aceleiași zile. Pentru comenzile plasate după-amiaza, livrarea va fi programată pentru următoarea zi lucrătoare. Acestea sunt intervale de timp aproximative și variază în funcție de volumul comenzilor și de locație.',
+                    ],
+                ],
+                'gift' => [
+                    'title' => 'Cadou',
+                    'desc' => '3-7 zile lucrătoare',
+                    'details' => [
+                        'title' => 'Fiecare cadou se simte special și personal cu ambalajul premium',
+                        'description' => 'Oferim hârtie de ambalat frumos concepută, panglică și o etichetă personalizată pentru a adăuga în plus
+                            o notă specială pentru cadoul tău.<br/><br/>
+                            <span class="text-xs opacity-75">*Dimensiunea pachetului va fi aproximativ:
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">35cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    L
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">25cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    W
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">10cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    H
+                                </span>
+                            </span></span>',
+                    ],
                 ],
             ],
 

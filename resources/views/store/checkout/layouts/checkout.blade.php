@@ -7,7 +7,8 @@
             <h1 class="flex items-center gap-x-3 text-3xl font-bold lg:text-5xl">
                 {{ __('checkout.page_title') }}
                 <span class="text-[8px] opacity-10 xl:hidden">&#11044;</span>
-                <span class="xl:hidden">{{ __('checkout.steps.'.strtolower($step)) }}</span>
+                <span class="sm:hidden">{{ __('checkout.steps.'.strtolower($step).'_short') }}</span>
+                <span class="hidden sm:inline-block xl:hidden">{{ __('checkout.steps.'.strtolower($step)) }}</span>
             </h1>
         </div>
 
@@ -27,7 +28,6 @@
         const optionsList = document.getElementById('saved_addresses-options');
         const selectedOption = document.getElementById('selected-option');
 
-        // Тогл відкриття списку
         if (selectButton && optionsList && selectedOption) {
             selectButton.addEventListener('click', () => {
                 optionsList.classList.toggle('hidden');

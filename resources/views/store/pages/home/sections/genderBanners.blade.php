@@ -3,7 +3,7 @@
         <div class="relative w-full md:w-1/2">
             <img
                 class="relative top-0 right-0 w-full rounded-2xl md:rounded-l-2xl md:rounded-r-none"
-                src="{{ Vite::image('gender_1.jpg') }}"
+                src="{{ Vite::image('gender_1.webp') }}"
                 alt=""
             />
             <div class="absolute inset-0 grid items-end">
@@ -29,7 +29,7 @@
         <div class="relative mt-7 w-full md:mt-0 md:w-1/2">
             <img
                 class="relative top-0 right-0 w-full rounded-2xl md:rounded-l-none md:rounded-r-2xl"
-                src="{{ Vite::image('gender_2.jpg') }}"
+                src="{{ Vite::image('gender_2.webp') }}"
                 alt=""
             />
             <div class="absolute inset-0 grid items-end">

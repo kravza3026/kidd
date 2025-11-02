@@ -23,6 +23,10 @@ return [
 
     'products' => 'Каталог',
 
+    'buttons' => [
+        'shop_now' => 'Купить сейчас',
+    ],
+
     'placeholder' => [
         'select' => [
             'common' => 'Выберите',
