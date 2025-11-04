@@ -31,6 +31,7 @@ export default {
         'add-to-favorite': 'Save to Favorites',
         'remove-from-favorite': 'Remove from Favorites',
         'add-to-cart': 'Add to Сart',
+        'tooltip_recommended' : 'Best for '
     },
     'user-dropdown': {
         tooltip: 'Account',

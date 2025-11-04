@@ -160,6 +160,8 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
                     $variants = $this->variants->whereIn('size_id', Arr::flatten($member->compatible_sizes_ids));
                     if ($variants->count()) {
                         $member_data['id'] = $member->id;
+
+                        $member_data['bg_color_name'] = $member->gender->bg_color;
                         $member_data['name'] = $member->name;
                         $member_data['letter'] = Str::limit($member->name, 1, '');
                         $member_data['compatible_size_id'] = Arr::sole($member->compatible_sizes_ids);

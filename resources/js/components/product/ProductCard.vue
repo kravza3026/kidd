@@ -159,6 +159,27 @@ export default {
                <p class="text-sm text-charcoal sm:text-base truncate">
                    {{ product.name[locale] }}
                </p>
+               <template v-for="(member, index) in product.compatible_with" :key="member.id">
+
+                   <div
+                       class="group/gender relative flex items-center justify-center shadow-md size-6 rounded-full"
+                       :class="product.gender.bg_color"
+                   >
+                        <span :class="member.bg_color_name" class="size-6 rounded-full  flex items-center justify-center text-white text-xs font-bold">
+                        {{ member.letter }}
+                    </span>
+                       <div
+                           class="absolute left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-4 py-1.5 rounded-full opacity-0 group-hover/gender:opacity-100 transition-opacity duration-300 z-10"
+                       >
+                           <p>{{ $t ? $t('product.tooltip_recommended') : 'Best for ' }} {{member.name}}</p>
+                           <div
+                               class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"
+                           ></div>
+                       </div>
+                   </div>
+
+
+               </template>
            </div>
             <p class="font-bold text-charcoal text-base">
                 {{ $n(finalPrice, 'currency') }}
@@ -171,17 +192,6 @@ export default {
                 </span>
             </p>
 
-                <!--Replace this with correct..-->
-                <!--Replace this with correct..-->
-                <!--Replace this with correct..-->
-                <template v-for="(member, index) in product.compatible_with" :key="member.id">
-                    <span>
-                        {{ member.letter }} ({{member.name}} )
-                    </span>
-                </template>
-                <!--Replace this with correct..-->
-                <!--Replace this with correct..-->
-                <!--Replace this with correct..-->
         </a>
     </div>
 </div>
