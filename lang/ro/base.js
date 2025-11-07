@@ -31,6 +31,7 @@ export default {
         'add-to-favorite': 'Adaugă la Favorite',
         'remove-from-favorites': 'Elimină din Favorite',
         'add-to-cart': 'Adaugă în Coș',
+        compatible_with: 'Compatibil cu {name}',
     },
     'user-dropdown': {
         tooltip: 'Cont',

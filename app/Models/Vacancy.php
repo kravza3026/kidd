@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
@@ -86,6 +87,21 @@ class Vacancy extends Model
     }
 
     /**
+     * Get Translated URLs for the product.
+     */
+    public function getTranslatedUrlsAttribute(): array
+    {
+        $urls = [];
+        foreach (array_keys(config('app.locales')) as $locale) {
+            $urls[$locale] = LaravelLocalization::getLocalizedURL($locale, route('vacancy.show', [
+                'vacancy' => $this->getTranslation('slug', $locale),
+            ]));
+        }
+
+        return $urls;
+    }
+
+    /**
      * Resolve the route binding query for the model.
      *
      * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
@@ -108,6 +124,14 @@ class Vacancy extends Model
     }
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
@@ -115,13 +139,5 @@ class Vacancy extends Model
         return SlugOptions::createWithLocales(array_keys(config('app.locales')))
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
     }
 }

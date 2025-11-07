@@ -16,6 +16,7 @@ use App\Services\CheckoutSessionService;
 use App\Services\CheckoutViewDataService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use LukePOLO\LaraCart\Facades\LaraCart;
@@ -106,11 +107,11 @@ class CheckoutController extends Controller
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
 
-        DB::transaction(function () use ($checkout, $cart) {
+        DB::transaction(function () use ($checkout) {
 
             $customer = Customer::firstOrCreate([
-                'email' => $checkout['contact_email'],
-                'phone' => $checkout['contact_phone'],
+                $checkout['contact_email'],
+                $checkout['contact_phone'],
             ], [
                 'company_id' => 1, // TODO - implement tenant...
                 'user_id' => auth()->id(),
@@ -141,7 +142,7 @@ class CheckoutController extends Controller
                 'status' => OrderStatus::Pending->value,
                 'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
                 'payment_method' => PaymentMethod::from((int) $checkout['payment_method']),
-                'cart_snapshot' => collect($cart)->toArray(),
+                //                'cart_snapshot' => collect($cart)->toArray(),
                 'notes' => '',
             ]);
 

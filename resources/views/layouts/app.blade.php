@@ -15,9 +15,11 @@
         @stack('meta')
 
         <!-- Favicons -->
-        <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('common/favicon_32x32.ico') }}" />
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('common/favicon_16x16.ico') }}" />
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ Vite::image('favicon.png') }}" />
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ Vite::image('favicon.png') }}" />
         <link rel="icon" type="image/x-icon" href="{{ Vite::image('favicon.png') }}" />
+
+        @include('layouts.partials.seo')
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -34,23 +36,18 @@
         @include('layouts.partials.analytics')
     </head>
     <body @class(['page-fade', 'bg-white', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
+        @include('layouts.partials.header')
 
+        <main class="min-h-[calc(100vh-250px)]">
+            {{ $slot }}
+        </main>
 
-            @include('layouts.partials.header')
-
-           <main class="min-h-[calc(100vh-250px)]">
-               {{ $slot }}
-           </main>
-
-            @include('layouts.partials.footer')
-            <div
-                class="!fixed !bottom-0 !left-0  z-[1000] bg-white"
-                data-vue-component="mobileMenu"
-                data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
-            ></div>
-
-
-
+        @include('layouts.partials.footer')
+        <div
+            class="!fixed !bottom-0 !left-0 z-[1000] bg-white"
+            data-vue-component="mobileMenu"
+            data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
+        ></div>
 
         <div data-vue-component="ScrollToTop"></div>
         <div

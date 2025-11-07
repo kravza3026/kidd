@@ -15,5 +15,4 @@ return [
 
     'compatible' => 'Compatible with :name',
 
-
 ];

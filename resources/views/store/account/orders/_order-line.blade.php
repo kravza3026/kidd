@@ -261,7 +261,6 @@
                     <span class="characteristics-dotted mx-2 mt-3 flex-1 opacity-10 lg:hidden"></span>
                     <span class="text-end font-bold lg:text-start">
                         {{ $order->payment_method->labelWithDesc() }}
-                        {{-- VISA ××× 4695 --}}
                     </span>
                 </p>
                 <p class="col-span-20 flex min-w-full items-center justify-between text-base lg:col-span-5 lg:grid">
@@ -271,7 +270,6 @@
                         {{-- TODO - Display discount code/s --}}
                         @forelse ($order->cart_snapshot['coupons'] as $coupon)
                             {{ $coupon['code'] }}
-                            {{-- {{ var_dump($coupon) }} --}}
                             <span class="text-dark">
                                 (-{{ ! is_int($coupon['value']) ? $coupon['value'] * 100 : $coupon['value'] / 100 }}%)
                             </span>

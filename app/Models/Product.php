@@ -106,6 +106,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     protected $appends = [
         'url',
+        'translated_urls',
         'compatible_with',
     ];
 
@@ -198,6 +199,22 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         //            'category' => $this->category->slug,
         //            'product' => $this->slug,
         //        ]);
+    }
+
+    /**
+     * Get Translated URLs for the product.
+     */
+    public function getTranslatedUrlsAttribute(): array
+    {
+        $urls = [];
+        foreach (array_keys(config('app.locales')) as $locale) {
+            $urls[$locale] = LaravelLocalization::localizeURL(route('products.show', [
+                'category' => $this->category->getTranslation('slug', $locale),
+                'product' => $this->getTranslation('slug', $locale),
+            ]), $locale);
+        }
+
+        return $urls;
     }
 
     /**
