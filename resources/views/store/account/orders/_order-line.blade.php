@@ -54,7 +54,7 @@
             </span>
             <span class="col-span-1 flex items-center justify-end gap-x-2 font-bold">
                 <span class="text-olive font-bold">
-                    {{ __('order.table_row.price', ['price' => (int) round($order->total_amount / 100, 2, PHP_ROUND_HALF_UP)]) }}
+                    {{ __('order.table_row.price', ['price' => (int) round($order->total_amount / 100, 0, PHP_ROUND_HALF_UP)]) }}
                 </span>
                 <span>
                     <svg
@@ -298,13 +298,19 @@
                     <p class="text-base opacity-40">{{ __('order.totals.subtotal') }}</p>
                     <span class="characteristics-dotted mx-2 mt-3 flex-1 opacity-10 lg:hidden"></span>
                     <p class="text-base font-bold">
-                        {{ __('general.price', ['price' => $order->items->sum('price_total') / 100]) }}
+                        {{ __('general.price', ['price' => $order->items->sum('total_price') / 100]) }}
                     </p>
                 </div>
                 <div class="col-span-20 flex items-center justify-between">
                     <p class="text-base opacity-40">{{ __('order.totals.discount') }}</p>
                     <span class="characteristics-dotted mx-2 mt-3 flex-1 opacity-10 lg:hidden"></span>
-                    <p class="text-base font-bold">-{{ __('general.price', ['price' => 13000 / 100]) }}</p>
+                    <p class="text-base font-bold">
+                        @forelse ($order->cart_snapshot['coupons'] as $coupon)
+                            {{ __('order.table_row.price', ['price' => (int) round($coupon['discounted'] / 100, 2, PHP_ROUND_HALF_UP)]) }}
+                        @empty
+                            -
+                        @endforelse
+                    </p>
                 </div>
                 <div class="col-span-20 flex items-center justify-between">
                     <p class="text-base opacity-40">{{ __('order.totals.shipping') }}</p>
@@ -317,7 +323,7 @@
                     <p class="text-base font-bold">{{ __('order.totals.total') }}</p>
                     <span class="characteristics-dotted mx-2 mt-3 flex-1 opacity-10 lg:hidden"></span>
                     <p class="text-olive text-base font-bold">
-                        {{ __('general.price', ['price' => $order->items->sum('price_total') / 100]) }}
+                        {{ __('general.price', ['price' => $order->total_amount / 100]) }}
                     </p>
                 </div>
             </div>

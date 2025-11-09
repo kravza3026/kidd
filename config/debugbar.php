@@ -39,8 +39,8 @@ return [
      */
     'storage' => [
         'enabled' => true,
-        'open' => env('DEBUGBAR_OPEN_STORAGE'), // bool/callback.
-        'driver' => 'file', // redis, file, pdo, socket, custom
+        'open' => env('DEBUGBAR_OPEN_STORAGE', true), // bool/callback.
+        'driver' => 'redis', // redis, file, pdo, socket, custom
         'path' => storage_path('debugbar'), // For file driver
         'connection' => null,   // Leave null for default connection (Redis/PDO)
         'provider' => '', // Instance of StorageInterface for custom driver
@@ -230,7 +230,7 @@ return [
             'hints' => true,   // Show hints for common mistakes
             'show_copy' => true,    // Show copy button next to the query,
             'slow_threshold' => false,   // Only track queries that last longer than this time in ms
-            'memory_usage' => false,   // Show queries memory usage
+            'memory_usage' => true,   // Show queries memory usage
             'soft_limit' => 100,      // After the soft limit, no parameters/backtrace are captured
             'hard_limit' => 500,      // After the hard limit, queries are ignored
         ],
@@ -240,7 +240,7 @@ return [
         ],
         'views' => [
             'timeline' => true,    // Add the views to the timeline
-            'data' => false,        // True for all data, 'keys' for only names, false for no parameters.
+            'data' => true,        // True for all data, 'keys' for only names, false for no parameters.
             'group' => 50,          // Group duplicate views. Pass value to auto-group, or true/false to force
             'exclude_paths' => [    // Add the paths which you don't want to appear in the views
                 'vendor/filament',   // Exclude Filament components by default
@@ -329,5 +329,5 @@ return [
      | By default, the Debugbar limits the number of frames returned by the 'debug_backtrace()' function.
      | If you need larger stacktraces, you can increase this number. Setting it to 0 will result in no limit.
      */
-    'debug_backtrace_limit' => 50,
+    'debug_backtrace_limit' => 100,
 ];

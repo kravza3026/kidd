@@ -8,7 +8,7 @@ return [
     'out_for_delivery' => 'Livrare',
     'delivered' => 'Livrat',
     'returned' => 'Returnat',
-    'cancelled' => 'Anulat',
+    'canceled' => 'Anulat',
     'completed' => 'Finisat',
     'refunded' => 'Rambursat',
 

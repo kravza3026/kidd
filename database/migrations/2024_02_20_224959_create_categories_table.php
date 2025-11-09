@@ -29,9 +29,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            // TODO Add full text search with postgres
             $table->fullText('name');
             $table->fullText('description');
-            // TODO Add full text search with postgres
         });
     }
 

@@ -49,11 +49,15 @@ return [
         'placeholder_message' => 'Operation completed successfully.',
         'img_alt-generic' => 'Generic/illustrative icon',
 
+        'title-order' => 'Thank you for your order!',
+        'message-order' => 'You will receive a confirmation email with your<br> order details and tracking information shortly.',
+        'img_alt-order' => 'Order box icon',
+
+        'img_alt-subscription' => 'Chat icon',
+
         'title-vacancy' => 'Application received',
         'message-vacancy' => 'You will soon receive a confirmation email. <br> We will get back to you shortly.<br> Thank you for your interest',
         'img_alt-vacancy' => 'File icon',
-        'img_alt-subscription' => 'Chat icon',
-        'img_alt-order' => 'Order box icon',
 
         'title-contacts' => 'Message received',
         'message-contacts' => 'We have received your message and will respond shortly.<br> Thank you for reaching out to us.',

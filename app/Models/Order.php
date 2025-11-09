@@ -22,41 +22,44 @@ class Order extends Model
     /**
      * The attributes that are mass assignable.
      */
-    //    protected $fillable = [
-    //        'customer_id',
-    //        'tracking_id',
-    //        'payment_id',
-    //        'order_number',
-    //        'total_amount',
-    //        'status',
-    //        'shipping_method',
-    //        'payment_method',
-    //        'shipping_address',
-    //        'billing_address',
-    //        'cart_snapshot',
-    //        'notes',
-    //        'placed_at',
-    //        'processed_at',
-    //        'delivered_at',
-    //    ];
-
-    protected $guarded = [];
-
-    protected array $dates = ['placed_at', 'processed_at', 'delivered_at'];
-
-    protected $hidden = [
+    protected $fillable = [
         'customer_id',
+        'tracking_id',
+        'payment_id',
+        'order_number',
+        'total_amount',
+        'status',
+        'shipping_method',
+        'payment_method',
+        'shipping_address',
+        'billing_address',
+        'cart_snapshot',
+        'notes',
+        'placed_at',
+        'processed_at',
+        'delivered_at',
+    ];
+
+    protected array $dates = [
+        'placed_at',
+        'processed_at',
+        'delivered_at',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    protected $hidden = [
+        'customer_id',
+        'deleted_at',
+    ];
+
     protected $with = [
-        //        'customer',
-        //        'user',
-        //        'items',
-        //        'shipping',
-        //        'billing',
+        'customer',
+        'user',
+        'items',
+        'shipping',
+        'billing',
     ];
 
     protected $casts = [

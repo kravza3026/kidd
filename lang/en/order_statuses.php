@@ -8,7 +8,7 @@ return [
     'out_for_delivery' => 'Out for delivery',
     'delivered' => 'Delivered',
     'returned' => 'Returned',
-    'cancelled' => 'Cancelled',
+    'canceled' => 'Cancelled',
     'completed' => 'Completed',
     'refunded' => 'Refunded',
 

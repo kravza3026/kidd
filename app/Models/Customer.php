@@ -17,16 +17,16 @@ class Customer extends Model
      *
      * @var array
      */
-    //    protected $fillable = [
-    //        'company_id',
-    //        'user_id',
-    //        'first_name',
-    //        'last_name',
-    //        'phone',
-    //        'email',
-    //    ];
+    protected $fillable = [
+        'company_id',
+        'user_id',
+        'first_name',
+        'last_name',
+        'phone',
+        'email',
+    ];
 
-    protected $guarded = [];
+    //    protected $guarded = [];
 
     public function company(): BelongsTo
     {

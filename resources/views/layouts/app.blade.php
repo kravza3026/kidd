@@ -44,7 +44,7 @@
 
         @include('layouts.partials.footer')
         <div
-            class="!fixed !bottom-0 !left-0 z-[1000] bg-white"
+            class="!fixed !bottom-0 !left-0 z-[1000] w-full bg-white"
             data-vue-component="mobileMenu"
             data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
         ></div>
@@ -71,7 +71,7 @@
                     @endif
                     @if(session('modal'))
                         Swal.fire({
-                            imageUrl: '{{ isset(session('modal')['image']['url']) ? session('modal')['image']['url'] : Vite::image('icons/file.png') }}',
+                            imageUrl: '{{ isset(session('modal')['image']['url']) ? session('modal')['image']['url'] : Vite::image('icons/olive/file.png') }}',
                             imageWidth: 200,
                             imageHeight: 200,
                             imageAlt: '{{ isset(session('modal')['image']['alt']) ? session('modal')['image']['alt'] : __('general.modal.img_alt-generic') }}',
@@ -94,16 +94,5 @@
                 });
             </script>
         @endif
-
-        {{-- Pixel NoScript Start --}}
-        <noscript>
-            <img
-                height="1"
-                width="1"
-                style="display: none"
-                src="https://www.facebook.com/tr?id=2308317899361524&ev=PageView&noscript=1"
-            />
-        </noscript>
-        {{-- Pixel NoScript End --}}
     </body>
 </html>

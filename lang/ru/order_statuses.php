@@ -8,7 +8,7 @@ return [
     'out_for_delivery' => 'Доставка',
     'delivered' => 'Доставлен',
     'returned' => 'Возвращен',
-    'cancelled' => 'Отменён',
+    'canceled' => 'Отменён',
     'completed' => 'Завершён',
     'refunded' => 'Возмещён',
 

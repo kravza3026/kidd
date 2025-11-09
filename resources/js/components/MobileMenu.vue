@@ -77,7 +77,11 @@ export default {
             return document.documentElement.lang || 'ro';
         },
         isHelpActive() {
-            return window.location.pathname.includes('/help');
+            return (
+                window.location.pathname.includes('/help') ||
+                window.location.pathname.includes('/ajutor') ||
+                window.location.pathname.includes('/помощь')
+            );
         },
     },
 
@@ -96,7 +100,6 @@ export default {
             document.body.classList.toggle('overflow-hidden', this.exploreOpen);
         },
         toggleSearch() {
-
             this.exploreOpen = false;
             this.cartOpen = false;
             this.userOpen = false;
@@ -111,7 +114,6 @@ export default {
             }
         },
         toggleCart() {
-
             this.exploreOpen = false;
             this.searchOpen = false;
             this.userOpen = false;
@@ -213,9 +215,9 @@ export default {
                                         </div>
                                     </div>
                                 </div>
-                                <span :class="{ 'text-olive': cartOpen }" class="block pb-1 text-[12px]">{{
-                                    this.$t('menu.cart')
-                                }}</span>
+                                <span :class="{ 'text-olive': cartOpen }" class="block pb-1 text-[12px]">
+                                    {{ $t('menu.cart') }}
+                                </span>
                             </div>
                         </a>
                     </div>
@@ -270,8 +272,6 @@ export default {
         </transition>
     </div>
 </template>
-
-
 
 <style scoped>
 .fade-enter-active,

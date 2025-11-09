@@ -175,27 +175,29 @@ export default {
                     <p class="text-charcoal truncate text-sm sm:text-base">
                         {{ product.name[locale] }}
                     </p>
-                    <template v-for="(member, index) in product.compatible_with" :key="member.id">
-                        <div
-                            :class="product.gender.bg_color"
-                            class="group/gender relative flex size-6 items-center justify-center gap-x-0 rounded-full shadow-md"
-                        >
-                            <span
-                                :class="member.bg_color_name"
-                                class="flex size-6 items-center justify-center rounded-full text-xs font-bold text-white"
-                            >
-                                {{ member.letter }}
-                            </span>
+                    <div class="flex items-center -space-x-1.5">
+                        <template v-for="(member, index) in product.compatible_with" :key="member.id">
                             <div
-                                class="absolute top-full left-10/12 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-4 py-1.5 text-sm text-white opacity-0 transition-opacity duration-300 group-hover/gender:opacity-100"
+                                :class="product.gender.bg_color"
+                                class="group/gender relative flex size-6 items-center justify-center gap-x-0 rounded-full shadow-md"
                             >
-                                <p>{{ $t('product.compatible_with', { name: member.name }) }}</p>
+                                <span
+                                    :class="member.bg_color_name"
+                                    class="flex size-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                                >
+                                    {{ member.letter }}
+                                </span>
                                 <div
-                                    class="absolute -top-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
-                                ></div>
+                                    class="absolute top-full left-10/12 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-4 py-1.5 text-sm text-white opacity-0 transition-opacity duration-300 group-hover/gender:opacity-100"
+                                >
+                                    <p>{{ $t('product.compatible_with', { name: member.name }) }}</p>
+                                    <div
+                                        class="absolute -top-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
+                                    ></div>
+                                </div>
                             </div>
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                 </div>
                 <p class="text-charcoal text-base font-bold">
                     {{ $n(finalPrice, 'currency') }}

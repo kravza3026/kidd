@@ -45,11 +45,15 @@ return [
         'placeholder_message' => 'Operațiune efectuată cu succes.',
         'img_alt-generic' => 'Iconiță generică/ilustrativă',
 
+        'title-order' => 'Vă mulțumim pentru comandă',
+        'message-order' => 'În curând veți primi un email de confirmare cu <br> detaliile comenzii și informațiile de livrare.',
+        'img_alt-order' => 'Imagine cutie/comandă',
+
+        'img_alt-subscription' => 'Imagine dialog',
+
         'title-vacancy' => 'Aplicație recepționată',
         'message-vacancy' => 'În curând veți primi un email de confirmare. <br> Revenim în scurt timp.<br> Vă mulțumim pentru interesul acordat',
         'img_alt-vacancy' => 'Imagine filă/fișier',
-        'img_alt-subscription' => 'Imagine dialog',
-        'img_alt-order' => 'Imagine cutie/comandă',
 
         'title-contacts' => 'Mesaj recepționat',
         'message-contacts' => 'Am primit mesajul tău și în scurt timp revenim cu un răspuns.<br> Îți mulțumim pentru că ești cu noi.',

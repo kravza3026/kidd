@@ -45,17 +45,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        if ($this->app->isProduction()) {
-            URL::forceScheme('https');
-            Model::automaticallyEagerLoadRelationships();
-            Model::preventLazyLoading();
-        }
+        //        if ($this->app->isProduction()) {
+        URL::forceScheme('https');
+        Model::automaticallyEagerLoadRelationships();
+        Model::preventLazyLoading();
+        //        }
 
         ProductVariant::observe(ProductVariantObserver::class);
 
         Vite::prefetch(3);
-        //        Vite::useWaterfallPrefetching(5);
-        Vite::useAggressivePrefetching();
+        Vite::useWaterfallPrefetching(5);
+        //        Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
         Vite::macro('css', fn (string $asset) => $this->asset("resources/css/{$asset}"));
