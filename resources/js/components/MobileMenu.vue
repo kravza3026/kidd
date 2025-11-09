@@ -135,14 +135,14 @@ export default {
 };
 </script>
 <template>
-    <div>
-        <div class="menu bottom-0 z-10 w-full bg-white lg:hidden">
+
+        <div class="menu bottom-0 w-screen z-10  bg-white lg:hidden">
             <div class="border-y border-gray-200 bg-white py-1">
-                <div class="flex">
+                <div class="flex justify-between items-center px-0 py-2">
                     <!-- Explore -->
                     <div class="group flex-1">
                         <a
-                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-2 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleExplore"
                         >
@@ -162,7 +162,7 @@ export default {
 
                     <div class="group flex-1">
                         <a
-                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-2 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleSearch"
                         >
@@ -184,7 +184,7 @@ export default {
                     <div class="group flex-1">
                         <a
                             :href="`/${locale}/cart`"
-                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-2 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                         >
                             <div class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">
                                 <div class="mx-auto w-fit pb-1">
@@ -224,7 +224,7 @@ export default {
                     <div class="group flex-1">
                         <a
                             :href="'/' + locale + '' + route('help', {}, false)"
-                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400"
+                            class="mx-auto flex w-full items-end justify-center px-2 pt-2 text-center text-gray-400"
                         >
                             <span class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">
                                 <img
@@ -242,7 +242,7 @@ export default {
                     <!-- Account -->
                     <div class="group flex-1">
                         <a
-                            class="mx-auto flex w-full items-end justify-center px-4 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
+                            class="mx-auto flex w-full items-end justify-center px-1 pt-2 text-center text-gray-400 group-hover:text-indigo-500"
                             href="#"
                             @click.prevent="toggleUser"
                         >
@@ -268,7 +268,7 @@ export default {
                 <Search ref="searchComponent" @close="closeSearch" />
             </div>
         </transition>
-    </div>
+
 </template>
 
 
