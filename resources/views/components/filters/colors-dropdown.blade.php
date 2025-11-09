@@ -18,7 +18,7 @@
             @if ($in_use)
                 <div class="bg-olive inline-flex min-w-5 items-center justify-center rounded-xl px-1 py-0.5 shadow-md">
                     <div class="text-center text-sm leading-none font-bold text-white">
-                        {{ $in_use }}ss
+                        {{ $in_use }}
                     </div>
                 </div>
             @endif

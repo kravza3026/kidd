@@ -2,24 +2,16 @@
     <div class="pageContent">
         <section class="py-section container grid justify-between lg:grid-cols-12">
             <div class="col-span-6 pr-5">
-                <h1 class="pb-[40px] text-[24px] lg:text-[40px]">
-                    For parents who want the
-                    <span class="gradient_r-b">best</span>
-                    for their children, but also value
-                    <span class="gradient_r-b">affordability</span>
-                    and
-                    <span class="gradient_r-b">practicality</span>
+                <h1 class="pb-[40px] text-2xl leading-10 text-pretty lg:text-4xl lg:leading-[150%]">
+                    {!! __('pages/about.title') !!}
                 </h1>
                 <p class="pb-[40px] leading-[150%] opacity-60 lg:leading-[175%]">
-                    At KIDD. our mission is to provide stylish, high-quality baby clothing that combines comfort and
-                    functionality. We value sustainability, using eco-friendly materials, and prioritise ethical
-                    manufacturing practices. Our custom filtering feature helps you find the perfect fit based on your
-                    child's weight, height, and age. We are committed to exceptional customer service, ensuring your
-                    satisfaction and your child's well-being. Join us as we celebrate the joy of parenthood, one outfit
-                    at a time.
+                    {!! __('pages/about.subtitle') !!}
                 </p>
 
-                <h2 class="text-[30px] leading-[-2%] font-bold lg:text-[24px]">Our values</h2>
+                <h2 class="text-[30px] leading-[-2%] font-bold lg:text-[24px]">
+                    {{ __('pages/about.our_value_title') }}
+                </h2>
                 <div class="grid items-center justify-between gap-[20px] gap-y-2 py-[20px] leading-[175%] lg:flex">
                     <div class="flex items-center">
                         <img
@@ -29,7 +21,9 @@
                             src="{{ Vite::image('staticPages/about/aboutIcon_1.png') }}"
                             alt="icon"
                         />
-                        <p class="leading-[130%] font-bold">High quality clothing that is built to last</p>
+                        <p class="leading-[130%] font-bold">
+                            {{ __('pages/about.our_values.quality') }}
+                        </p>
                     </div>
                     <div class="flex items-center">
                         <img
@@ -39,7 +33,9 @@
                             src="{{ Vite::image('staticPages/about/aboutIcon_2.png') }}"
                             alt="icon"
                         />
-                        <p class="leading-[130%] font-bold">Garments that feel good on children skin</p>
+                        <p class="leading-[130%] font-bold">
+                            {{ __('pages/about.our_values.materials') }}
+                        </p>
                     </div>
                     <div class="flex items-center">
                         <img
@@ -49,7 +45,9 @@
                             src="{{ Vite::image('staticPages/about/aboutIcon_3.png') }}"
                             alt="icon"
                         />
-                        <p class="leading-[130%] font-bold">Clothing that does not break the bank</p>
+                        <p class="leading-[130%] font-bold">
+                            {{ __('pages/about.our_values.price') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -67,28 +65,15 @@
         <section class="py-section bg-light-orange">
             <div class="container">
                 <div class="grid gap-x-2 lg:grid-cols-2">
-                    <h2 class="order-first text-[30px] font-bold lg:mb-[32px] lg:hidden">Who we are</h2>
+                    <h2 class="order-first text-[30px] font-bold lg:mb-[32px] lg:hidden">
+                        {{ __('pages/about.who_we_are.title') }}
+                    </h2>
                     <div class="order-last lg:order-none">
-                        <h2 class="mb-[32px] hidden text-[48px] font-bold lg:block">Who we are</h2>
+                        <h2 class="mb-[32px] hidden text-[48px] font-bold lg:block">
+                            {{ __('pages/about.who_we_are.title') }}
+                        </h2>
                         <p class="leading-[150%] opacity-80 lg:leading-[175%]">
-                            Our baby clothing store came to life through our own experiences as parents, combined with a
-                            burning passion for providing the best for little ones. We were inspired to create a curated
-                            collection of baby clothes that met our high expectations in terms of quality, style, and
-                            functionality. From the very beginning, we envisioned a store that would offer a delightful
-                            range of garments that not only made babies look adorable but also prioritised their comfort
-                            and well-being
-                            <br />
-                            <br />
-                            Driven by our personal journey as parents, we understood the challenges of finding clothing
-                            that ticked all the boxes: being both stylish and practical, gentle on delicate skin, and
-                            made from sustainable materials. This led us to set out on a mission to offer parents a
-                            one-stop destination for baby clothing that aligned with their values.
-                            <br />
-                            <br />
-                            We meticulously researched and collaborated with talented designers to ensure that each item
-                            in our collection met the highest standards of quality and safety. From the selection of
-                            fabrics to the attention to detail in the craftsmanship, we leave no stone unturned in our
-                            pursuit of excellence.
+                            {!! __('pages/about.who_we_are.content') !!}
                         </p>
                     </div>
                     <div class="order-1 flex justify-end py-5 lg:order-none lg:py-0">
@@ -101,27 +86,15 @@
                     </div>
                 </div>
                 <div class="pt-section grid gap-x-2 lg:grid-cols-2">
-                    <h2 class="order-first text-[30px] font-bold lg:mb-[32px] lg:hidden">What we do</h2>
+                    <h2 class="order-first text-[30px] font-bold lg:mb-[32px] lg:hidden">
+                        {{ __('pages/about.what_we_do.title') }}
+                    </h2>
                     <div>
-                        <h2 class="mb-[32px] hidden text-[48px] font-bold lg:block">What we do</h2>
+                        <h2 class="mb-[32px] hidden text-[48px] font-bold lg:block">
+                            {{ __('pages/about.what_we_do.title') }}
+                        </h2>
                         <p class="leading-[175%] opacity-80">
-                            Our commitment to sustainability is deeply rooted in our core values. We believe in leaving
-                            a positive impact on the environment and future generations. By incorporating eco-friendly
-                            practices throughout our supply chain and sourcing responsibly, we strive to make a
-                            difference.
-                            <br />
-                            <br />
-                            As parents ourselves, we understand the importance of convenience and peace of mind. That's
-                            why we've integrated a custom filtering feature into our website, allowing you to easily
-                            find the perfect fit based on your child's specific parameters such as weight, height, and
-                            age. We want to ensure that every little one feels comfortable and confident in our
-                            clothing.
-                            <br />
-                            <br />
-                            We are incredibly grateful for the opportunity to be a part of your parenting journey. Join
-                            us as we dress your little ones in adorable, high-quality clothing that reflects our
-                            passion, values, and dedication. Thank you for choosing us to be a part of your precious
-                            moments.
+                            {!! __('pages/about.what_we_do.content') !!}
                         </p>
                     </div>
                     <div class="order-first flex justify-start py-5 lg:mt-[-10%] lg:py-0 xl:mt-[-25%]">

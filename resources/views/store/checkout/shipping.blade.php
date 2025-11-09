@@ -62,11 +62,57 @@
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.regular.title') }}
                                     <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +50 {{ __('general.mdl') }}
+                                    +{{ config('laracart.delivery_prices.regular') }} {{ __('general.mdl') }}
                                 </span>
                                 </p>
                                 <p class="text-sm opacity-40">
                                     {{ __('checkout.shipping.form.shipping_methods.regular.desc') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <input
+                            type="radio"
+                            name="shipping_method"
+                            value="{{ ShippingMethod::Express }}"
+                            @checked(isset($checkoutData['shipping_method']) && $checkoutData['shipping_method'] == ShippingMethod::Express->value)
+                            class="peer absolute top-2 right-2 z-10 hidden"
+                            id="shipping_express"
+                        />
+                        <label
+                            for="shipping_express"
+                            class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
+                        >
+                            <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
+                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            </span>
+                        </label>
+                        <div
+                            class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                        >
+                            <div>
+                                <img
+                                    class="imgOutline size-12 py-3"
+                                    src="{{ Vite::image('icons/gradients/g_lightning.svg') }}"
+                                    alt=""
+                                />
+                                <img
+                                    class="imgGradient hidden size-12 py-3"
+                                    src="{{ Vite::image('icons/olive/lightning.svg') }}"
+                                    alt=""
+                                />
+                            </div>
+                            <div>
+                                <p class="mt-1 flex items-center gap-x-2 font-bold">
+                                    {{ __('checkout.shipping.form.shipping_methods.express.title') }}
+                                    <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
+                                    +{{ config('laracart.delivery_prices.expres') }} {{ __('general.mdl') }}
+                                </span>
+                                </p>
+                                <p class="text-sm opacity-40">
+                                    {{ __('checkout.shipping.form.shipping_methods.express.desc') }}
                                 </p>
                             </div>
                         </div>
@@ -108,56 +154,11 @@
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.gift.title') }}
                                     <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +100 {{ __('general.mdl') }}
+                                    +{{ config('laracart.delivery_prices.gift') }} {{ __('general.mdl') }}
                                 </span>
                                 </p>
                                 <p class="text-sm opacity-40">
                                     {{ __('checkout.shipping.form.shipping_methods.gift.desc') }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="relative">
-                        <input
-                            type="radio"
-                            name="shipping_method"
-                            value="{{ ShippingMethod::Express }}"
-                            @checked(isset($checkoutData['shipping_method']) && $checkoutData['shipping_method'] == ShippingMethod::Express->value)
-                            class="peer absolute top-2 right-2 z-10 hidden"
-                            id="shipping_express"
-                        />
-                        <label
-                            for="shipping_express"
-                            class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
-                        >
-                            <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
-                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
-                            </span>
-                        </label>
-                        <div
-                            class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
-                        >
-                            <div>
-                                <img
-                                    class="imgOutline size-12 py-3"
-                                    src="{{ Vite::image('icons/gradients/g_lightning.svg') }}"
-                                    alt=""
-                                />
-                                <img
-                                    class="imgGradient hidden size-12 py-3"
-                                    src="{{ Vite::image('icons/olive/lightning.svg') }}"
-                                    alt=""
-                                />
-                            </div>
-                            <div>
-                                <p class="mt-1 flex items-center gap-x-2 font-bold">
-                                    {{ __('checkout.shipping.form.shipping_methods.express.title') }}
-                                    <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +150 {{ __('general.mdl') }}
-                                </span>
-                                </p>
-                                <p class="text-sm opacity-40">
-                                    {{ __('checkout.shipping.form.shipping_methods.express.desc') }}
                                 </p>
                             </div>
                         </div>
@@ -171,37 +172,11 @@
                         <img src="{{ Vite::image('common/box_size.png') }}" alt="box size" />
                     </div>
                     <div class="col-span-10">
-                        <p class="text-lg font-bold">Make every gift feel special and personal with gift wrapping</p>
+                        <p class="text-lg font-bold">
+                            {{ __('checkout.shipping.form.shipping_methods.gift.details.title') }}
+                        </p>
                         <p class="text-sm leading-7">
-                            We offer beautifully designed wrapping paper, ribbon and a personalised tag to add an extra
-                            special span
-                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
-                                <span class="opacity-60">35cm</span>
-                                <span
-                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
-                                >
-                                    L
-                                </span>
-                            </span>
-                            <span class="opacity-35">×</span>
-                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
-                                <span class="opacity-60">25cm</span>
-                                <span
-                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
-                                >
-                                    W
-                                </span>
-                            </span>
-                            <span class="opacity-35">×</span>
-                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
-                                <span class="opacity-60">10cm</span>
-                                <span
-                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
-                                >
-                                    H
-                                </span>
-                            </span>
-                            to ensure safe and secure delivery.
+                            {!! __('checkout.shipping.form.shipping_methods.gift.details.description') !!}
                         </p>
                     </div>
                 </div>
@@ -213,11 +188,11 @@
                         <img src="{{ Vite::image('common/delivery_expr.png') }}" alt="box size" />
                     </div>
                     <div class="col-span-10">
-                        <p class="text-lg font-bold">Fast and convenient shipping services to exceed your needs</p>
+                        <p class="text-lg font-bold">
+                            {{ __('checkout.shipping.form.shipping_methods.express.details.title') }}
+                        </p>
                         <p class="text-sm leading-7">
-                            Morning orders can be delivered by the evening of the same day. For orders placed in the
-                            afternoon, delivery will be scheduled for the next business day. Please note that these are
-                            approximate time frames and vary based on order volume and location.
+                            {{ __('checkout.shipping.form.shipping_methods.express.details.description') }}
                         </p>
                     </div>
                 </div>

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Store;
 
-use App\Coupons\FreeDeliveryCoupon;
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Vite;
-use LukePOLO\LaraCart\Coupons\Fixed;
 use LukePOLO\LaraCart\Coupons\Percentage;
 use LukePOLO\LaraCart\Facades\LaraCart;
 
@@ -44,15 +42,15 @@ class CartController extends Controller
         //                    'qty' => 1,
         //                ]);
 
+        //        $coupons[] = new Fixed('test_fixed', 10000, [
+        //            'description' => '100 MDL reducere',
+        //            'taxable' => false,
+        //        ]);
+
         $coupons[] = new Percentage('SUMMER10', '0.1', [
             'description' => '10% Discount',
             'taxable' => false,
         ]);
-
-        //        $coupons[] = new Fixed('test_fixed', 10000,[
-        //            'description' => '100 MDL reducere',
-        //            'taxable' => false,
-        //        ]);
 
         //        $coupons[] = new FreeDeliveryCoupon('free_delivery', 10000, [
         //            'description' => 'Livrare gratuită',
@@ -64,7 +62,7 @@ class CartController extends Controller
         }
         //                LaraCart::removeCoupon('SUMMER10');
         //        LaraCart::removeCoupon('free_delivery');
-        //                LaraCart::removeCoupon('test_fixed');
+        //        LaraCart::removeCoupon('test_fixed');
 
         //        LaraCart::addFee('delivery', (50 * 100), $taxable = false, $options = ['description' => 'Delivery fee']);
         //        LaraCart::addFee('free_delivery', (-50 * 100), $taxable = false, $options = ['description' => 'Free delivery']);

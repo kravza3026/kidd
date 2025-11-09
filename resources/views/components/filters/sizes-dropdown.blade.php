@@ -75,7 +75,7 @@
                             name="filters[size][{{ $size->id }}]"
                             value="true"
                             :modelValue="request()->has('filters.size.'.$size->id)"
-                            class="rounded-full"
+                            class="filter-option rounded-full"
                         />
 
                         <span class="text-charcoal ms-2.5 text-sm leading-4 font-bold -tracking-[2%]">

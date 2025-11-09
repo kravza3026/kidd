@@ -22,7 +22,8 @@ class OrderItem extends Model
         'product_variant_id',
         'variant_snapshot',
         'quantity',
-        'price',
+        'unit_price',
+        'total_price',
     ];
 
     protected $with = [

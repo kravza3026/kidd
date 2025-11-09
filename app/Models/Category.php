@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -58,6 +59,21 @@ class Category extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Get Translated URLs for the category.
+     */
+    public function getTranslatedUrlsAttribute(): array
+    {
+        $urls = [];
+        foreach (array_keys(config('app.locales')) as $locale) {
+            $urls[$locale] = LaravelLocalization::getLocalizedURL($locale, route('products.category.index', [
+                'category' => $this->getTranslation('slug', $locale),
+            ]));
+        }
+
+        return $urls;
     }
 
     /**

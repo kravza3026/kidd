@@ -6,7 +6,7 @@
 <div class="filter-group grid space-y-[3px]">
     <label
         for="filter_{{ $componentName }}_0"
-        class="has-[:checked]:bg-secondary hover:bg-secondary focus:ring-secondary flex w-full  cursor-pointer justify-between rounded-xl px-3 py-2 text-sm"
+        class="has-[:checked]:bg-secondary hover:bg-secondary focus:ring-secondary flex w-full cursor-pointer justify-between rounded-xl px-3 py-2 text-sm"
     >
         <div class="inline-flex items-center">
             <x-ui.checkbox
@@ -20,18 +20,16 @@
             />
 
             <span class="text-charcoal ms-2.5 text-sm leading-4 font-bold -tracking-[2%]">
-                        {{ __('filters.all_colors') }}
-                    </span>
+                {{ __('filters.all_colors') }}
+            </span>
         </div>
-        <span class="text-charcoal/40 text-sm font-medium -tracking-[2%]">
-                    [{{ $colors->sum('products_count') }}]
-                </span>
+        <span class="text-charcoal/40 text-sm font-medium -tracking-[2%]">[{{ $colors->sum('products_count') }}]</span>
     </label>
 
     @foreach ($colors as $color)
         <label
             for="filter_{{ $componentName }}_{{ $color->id }}"
-            class="has-[:checked]:bg-secondary hover:bg-secondary focus:ring-secondary flex w-full  cursor-pointer justify-between rounded-xl px-3 py-2 text-sm"
+            class="has-[:checked]:bg-secondary hover:bg-secondary focus:ring-secondary flex w-full cursor-pointer justify-between rounded-xl px-3 py-2 text-sm"
         >
             <div class="inline-flex items-center">
                 <x-ui.checkbox
@@ -44,12 +42,12 @@
                 />
 
                 <span class="text-charcoal ms-2.5 text-sm leading-4 font-bold -tracking-[2%]">
-                            {{ $color->name }}
-                        </span>
+                    {{ $color->name }}
+                </span>
             </div>
             <span class="text-charcoal/40 text-sm font-medium -tracking-[2%]">
-                        [{{ $color->products_count ?? 0 }}]
-                    </span>
+                [{{ $color->products_count ?? 0 }}]
+            </span>
         </label>
     @endforeach
 </div>

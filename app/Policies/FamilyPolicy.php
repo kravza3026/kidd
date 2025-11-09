@@ -7,11 +7,7 @@ use App\Models\User;
 
 class FamilyPolicy
 {
-
-    public function before(User $user, $ability)
-    {
-
-    }
+    public function before(User $user, $ability) {}
 
     /**
      * Determine whether the user can view any models.

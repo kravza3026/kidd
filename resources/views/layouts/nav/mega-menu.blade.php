@@ -80,9 +80,15 @@
                 class="bg-filter from-charcoal/40 to-charcoal/10 absolute inset-0 rounded-2xl bg-gradient-to-t lg:rounded-none lg:rounded-br-2xl"
             ></div>
             <div class="align-end absolute inset-0 bottom-8 grid h-full w-full content-end items-end justify-center">
-                <p class="text-center text-[30px] font-bold text-white lg:text-[40px]">Ready for summer</p>
-                <p class="text-center text-sm font-normal text-white">Buy 4 products and get 30% off your cart</p>
-                <x-ui.button as="a" href="{{ route('products.index') }}" class="mx-auto">Shop now</x-ui.button>
+                <p class="text-center text-[30px] font-bold text-white lg:text-[40px]">
+                    {{ __('offers.mega-menu.title') }}
+                </p>
+                <p class="text-center text-sm font-normal text-white">
+                    {{ __('offers.mega-menu.desc') }}
+                </p>
+                <x-ui.button as="a" href="{{ route('products.index') }}" class="mx-auto">
+                    {{ __('general.buttons.shop_now') }}
+                </x-ui.button>
             </div>
         </div>
     </div>

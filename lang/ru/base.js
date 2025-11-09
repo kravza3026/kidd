@@ -31,6 +31,7 @@ export default {
         'add-to-favorite': 'Сохранить в Избранные',
         'remove-from-favorites': 'Удалить из Избранных',
         'add-to-cart': 'Добавить в Корзину',
+        compatible_with: 'Совместим с {name}',
     },
     'user-dropdown': {
         tooltip: 'Профиль',

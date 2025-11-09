@@ -56,8 +56,10 @@ Route::group([
         ->name('cart.index');
 
     Route::group([
-        //        'middleware' => 'cache.headers:public;max_age=60000;etag' // TODO - Production enable
-        'middleware' => 'slug.locale',
+        'middleware' => [
+            'cache.headers:public;max_age=86400;etag',
+            'slug.locale',
+        ],
     ], function () {
 
         Route::get(LaravelLocalization::transRoute('routes.topline.locations'), [LocationsController::class, 'index'])

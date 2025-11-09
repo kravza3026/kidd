@@ -1,230 +1,233 @@
-
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import iconAddFavorite from '@img/icons/olive/fav_icon_active.svg'
-import iconFavorited from '@img/icons/inFavorite.svg'
-import cartWhite from '@img/icons/cart_white.svg'
-import SizeGuide from "@/components/ui/sizeGuide.vue";
-import Button from "@/components/ui/Button.vue";
-import { useFavorites } from '@/useFavorites.js'
-import {useAlert} from "@/useAlert.js";
-import { emitter } from '@/eventBus.js'
-const { toggleFavorite, isFavorite } = useFavorites()
-const { showAlert } = useAlert()
+import { computed, onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import iconAddFavorite from '@img/icons/olive/fav_icon_active.svg';
+import iconFavorited from '@img/icons/inFavorite.svg';
+import cartWhite from '@img/icons/cart_white.svg';
+import SizeGuide from '@/components/ui/sizeGuide.vue';
+import Button from '@/components/ui/Button.vue';
+import { useFavorites } from '@/useFavorites.js';
+import { useAlert } from '@/useAlert.js';
+import { emitter } from '@/eventBus.js';
+
+const { toggleFavorite, isFavorite } = useFavorites();
+const { showAlert } = useAlert();
 
 const props = defineProps({
     product: {
         type: Object,
-        required: true
-    }
-})
+        required: true,
+    },
+});
 
-const { t, locale } = useI18n()
+const { t, locale } = useI18n();
 
 // --- Selection states
-const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null)
-const selectedSizeId = ref(null)
+const selectedColorId = ref(props.product.variants?.[0]?.color?.id || null);
+const selectedSizeId = ref(null);
 
 // --- Unique colors (no duplicates)
 const uniqueColors = computed(() => {
-    const seen = new Set()
+    const seen = new Set();
     return props.product.variants
-        .map(v => v.color)
-        .filter(color => {
-            if (seen.has(color.id)) return false
-            seen.add(color.id)
-            return true
-        })
-})
+        .map((v) => v.color)
+        .filter((color) => {
+            if (seen.has(color.id)) return false;
+            seen.add(color.id);
+            return true;
+        });
+});
 
 const sizes = computed(() => {
-    const allSizes = props.product.variants.map(v => v.size)
-    const unique = []
-    allSizes.forEach(s => {
-        if (!unique.find(u => u.id === s.id)) unique.push(s)
-    })
+    const allSizes = props.product.variants.map((v) => v.size);
+    const unique = [];
+    allSizes.forEach((s) => {
+        if (!unique.find((u) => u.id === s.id)) unique.push(s);
+    });
 
     return unique.sort((a, b) => {
         if (a.sort_order === b.sort_order) {
-            return a.id - b.id
+            return a.id - b.id;
         }
-        return a.sort_order - b.sort_order
-    })
-})
+        return a.sort_order - b.sort_order;
+    });
+});
 
 // --- List of available sizes for selected color
 const availableSizes = computed(() => {
     return props.product.variants
-        .filter(v => v.color.id === selectedColorId.value)
-        .map(v => v.size)
-        .filter((size, index, self) => self.findIndex(s => s.id === size.id) === index) // unique
-})
+        .filter((v) => v.color.id === selectedColorId.value)
+        .map((v) => v.size)
+        .filter((size, index, self) => self.findIndex((s) => s.id === size.id) === index); // unique
+});
 
 // --- Auto-select first available size after changing color
-watch(selectedColorId, (newColorId) => {
-    const sizes = props.product.variants
-        .filter(v => v.color.id === newColorId)
-        .map(v => v.size.id)
+watch(
+    selectedColorId,
+    (newColorId) => {
+        const sizes = props.product.variants.filter((v) => v.color.id === newColorId).map((v) => v.size.id);
 
-    selectedSizeId.value = sizes.length ? sizes[0] : null
-}, { immediate: true })
-
+        selectedSizeId.value = sizes.length ? sizes[0] : null;
+    },
+    { immediate: true },
+);
 
 // --- Currently selected variant
 const selectedVariant = computed(() => {
-    return props.product.variants.find(v =>
-        v.color.id === selectedColorId.value &&
-        v.size.id === selectedSizeId.value
-    )
-})
+    return props.product.variants.find(
+        (v) => v.color.id === selectedColorId.value && v.size.id === selectedSizeId.value,
+    );
+});
 
 // --- Selected variant ID (to send to server during purchase)
-const selectedVariantId = computed(() => selectedVariant.value?.id || null)
+const selectedVariantId = computed(() => selectedVariant.value?.id || null);
 
 // update url
 // TODO add slug color and size
 watch([selectedColorId, selectedSizeId], ([newColor, newSize]) => {
     if (newColor && newSize) {
-        const url = new URL(window.location.href)
-        url.searchParams.set("color", newColor)
-        url.searchParams.set("size", newSize)
-        window.history.replaceState({}, "", url)
+        const url = new URL(window.location.href);
+        url.searchParams.set('color', newColor);
+        url.searchParams.set('size', newSize);
+        window.history.replaceState({}, '', url);
     }
-})
+});
 onMounted(() => {
-    const url = new URL(window.location.href)
-    const colorFromUrl = url.searchParams.get("color")
-    const sizeFromUrl = url.searchParams.get("size")
+    const url = new URL(window.location.href);
+    const colorFromUrl = url.searchParams.get('color');
+    const sizeFromUrl = url.searchParams.get('size');
 
     if (colorFromUrl && sizeFromUrl) {
-        const variant = props.product.variants.find(v =>
-            String(v.color.id) === colorFromUrl &&
-            String(v.size.id) === sizeFromUrl
-        )
+        const variant = props.product.variants.find(
+            (v) => String(v.color.id) === colorFromUrl && String(v.size.id) === sizeFromUrl,
+        );
         if (variant) {
-            selectedColorId.value = variant.color.id
-            selectedSizeId.value = variant.size.id
-            return
+            selectedColorId.value = variant.color.id;
+            selectedSizeId.value = variant.size.id;
+            return;
         }
     }
 
     // fallback: перший варіант
-    const first = props.product.variants[0]
+    const first = props.product.variants[0];
     if (first) {
-        selectedColorId.value = first.color.id
-        selectedSizeId.value = first.size.id
+        selectedColorId.value = first.color.id;
+        selectedSizeId.value = first.size.id;
     }
-})
+});
 const addToCart = async (event) => {
+    if (!selectedVariantId.value) return;
+    console.log(locale.value);
+    await window.axios
+        .post('cart', {
+            variant_id: selectedVariantId.value,
+            quantity: 1,
+        })
+        .then((response) => {
+            if (response.data?.alert) {
+                showAlert(response.data?.alert);
+            }
+            emitter.emit('cart-updated');
 
-    if (!selectedVariantId.value) return
-    console.log(locale.value)
-    await window.axios.post('cart', {
-        variant_id: selectedVariantId.value,
-        quantity: 1
-    }).then((response) => {
-        if (response.data?.alert){
-            showAlert(response.data?.alert);
-        }
-        emitter.emit('cart-updated');
-
-        console.log('Product added to cart successfully');
-    }).catch(error => {
-        console.error('Error adding product to cart:', error);
-    });
-}
+            console.log('Product added to cart successfully');
+        })
+        .catch((error) => {
+            console.error('Error adding product to cart:', error);
+        });
+};
 
 // --- Selected color name (optional, but convenient)
 const selectedColorName = computed(() => {
-    return props.product.variants.find(v => v.color.id === selectedColorId.value)?.color.name || ''
-})
+    return props.product.variants.find((v) => v.color.id === selectedColorId.value)?.color.name || '';
+});
 
 // --- Prices
 const priceFinal = computed(() => {
     if (selectedVariant.value) {
-        return Math.round(selectedVariant.value.price_final / 100)
+        return Math.round(selectedVariant.value.price_final / 100);
     }
-    return 0
-})
+    return 0;
+});
 
 const priceOnline = computed(() => {
     if (selectedVariant.value) {
-        return Math.round((selectedVariant.value.price_online ?? 0) / 100)
+        return Math.round((selectedVariant.value.price_online ?? 0) / 100);
     }
-    return 0
-})
+    return 0;
+});
 
 // --- Discount
 const discountPercent = computed(() => {
     if (selectedVariant.value && selectedVariant.value.price_online) {
-        return Math.round(100 - (priceFinal.value / priceOnline.value) * 100)
+        return Math.round(100 - (priceFinal.value / priceOnline.value) * 100);
     }
-    return 0
-})
+    return 0;
+});
 
 const hasDiscount = computed(() => {
-    console.log(props.product)
-    return selectedVariant.value?.discount_display
-})
+    console.log(props.product);
+    return selectedVariant.value?.discount_display;
+});
 
-let clickedRecently = false
+let clickedRecently = false;
 
 const handleFavoriteClick = (id, name) => {
-    if (clickedRecently) return
-    clickedRecently = true
-    setTimeout(() => clickedRecently = false, 300)
-    toggleFavorite(id, name)
-
-}
-
+    if (clickedRecently) return;
+    clickedRecently = true;
+    setTimeout(() => (clickedRecently = false), 300);
+    toggleFavorite(id, name);
+};
 </script>
 
 <template>
-
-    <div class="max-w-full flex-col relative justify-start items-start flex page-fade"  >
-        <div class="pb-8  flex-col max-w-full justify-start items-start gap-3 flex">
-            <div class="justify-start relative items-start gap-4 inline-flex">
-                <div class="opacity-80 md:text-center max-w-full text-charcoal text-[24px] md:text-3xl font-bold leading-[62.40px]">
+    <div class="page-fade relative flex max-w-full flex-col items-start justify-start">
+        <div class="flex max-w-full flex-col items-start justify-start gap-3 pb-8">
+            <div class="relative inline-flex items-start justify-start gap-4">
+                <div
+                    class="text-charcoal max-w-full text-[24px] leading-[62.40px] font-bold opacity-80 md:text-center md:text-3xl"
+                >
                     {{ product.name[locale] }}
                 </div>
 
-                <div v-if="product.is_new" class="justify-center  items-center gap-2 flex">
+                <div v-if="product.is_new" class="flex items-center justify-center gap-2">
                     <div
-                        class="absolute -right-16 uppercase font-bold -translate-x-2/5 top-0 mt-0 w-max bg-olive text-white text-sm px-3 py-1 rounded-full transition-opacity duration-300">
+                        class="bg-olive absolute top-0 -right-16 mt-0 w-max -translate-x-2/5 rounded-full px-3 py-1 text-sm font-bold text-white uppercase transition-opacity duration-300"
+                    >
                         {{ $t('product.new') }}
                         <div
-                            class="absolute -bottom-0.5 left-1/3 rotate-90 w-0 h-0 border-l-8 -z-1 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-olive"></div>
+                            class="border-b-olive absolute -bottom-0.5 left-1/3 -z-1 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-l-transparent"
+                        ></div>
                     </div>
-
                 </div>
             </div>
-            <div class="overflow-hidden opacity-60 text-charcoal text-sm font-normal leading-normal">
+            <div class="text-charcoal overflow-hidden text-sm leading-normal font-normal opacity-60">
                 {{ product.description[locale] }}
             </div>
         </div>
 
         <!-- Ціна -->
-        <div class="pb-8 justify-start items-end gap-2 inline-flex">
-            <div class="opacity-80 text-charcoal text-5xl font-medium leading-[48px]">
+        <div class="inline-flex items-end justify-start gap-2 pb-8">
+            <div class="text-charcoal text-5xl leading-[48px] font-medium opacity-80">
                 {{ priceFinal }} {{ t('product.mdl') }}
             </div>
-            <div v-if="hasDiscount" class="justify-start relative items-center gap-2 flex">
+            <div v-if="hasDiscount" class="relative flex items-center justify-start gap-2">
                 <div
-                    class="absolute left-2/3 uppercase font-bold -translate-x-2/5 w-fit text-nowrap -top-full bg-danger text-white text-sm px-2 py-0 rounded-full ">
+                    class="bg-danger absolute -top-full left-2/3 w-fit -translate-x-2/5 rounded-full px-2 py-0 text-sm font-bold text-nowrap text-white uppercase"
+                >
                     -{{ selectedVariant.discount_display }}%
                     <div
-                        class="absolute -bottom-0.5 left-1/3 -z-1 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-danger"></div>
+                        class="border-b-danger absolute -bottom-0.5 left-1/3 -z-1 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-l-transparent"
+                    ></div>
                 </div>
-                <div class="opacity-30 text-right text-charcoal text-sm font-normal line-through leading-[25.20px]">
+                <div class="text-charcoal text-right text-sm leading-[25.20px] font-normal line-through opacity-30">
                     {{ priceOnline }} {{ t('product.mdl') }}
                 </div>
             </div>
         </div>
 
         <!-- Колір -->
-        <div class="w-full py-8 border-t border-[#eeeeee] flex-col justify-start items-start gap-8 flex">
-            <div class="w-full flex-col justify-start items-start gap-4 flex">
+        <div class="flex w-full flex-col items-start justify-start gap-8 border-t border-[#eeeeee] py-8">
+            <div class="flex w-full flex-col items-start justify-start gap-4">
                 <h3 class="text-sm font-medium text-gray-900">
                     {{ t('product.choose-color') }} - <span>{{ selectedColorName[locale] }}</span>
                 </h3>
@@ -244,10 +247,11 @@ const handleFavoriteClick = (id, name) => {
                                 type="radio"
                             />
                             <span
-                                class="h-8 w-8 rounded-full border relative p-1 border-black/10 border-opacity-10 bg-transparent peer-checked:ring">
+                                class="border-opacity-10 relative h-8 w-8 rounded-full border border-black/10 bg-transparent p-1 peer-checked:ring"
+                            >
                                 <span
                                     :style="{ backgroundColor: color.hex }"
-                                    class="rounded-full absolute inset-0 border border-black/10"
+                                    class="absolute inset-0 rounded-full border border-black/10"
                                 ></span>
                             </span>
                         </label>
@@ -256,81 +260,94 @@ const handleFavoriteClick = (id, name) => {
             </div>
 
             <!-- Розмір -->
-            <div class="w-full flex-col justify-start items-start gap-4 flex">
-
-
-                <div class="flex justify-between items-center w-full">
-                    <div class="text-charcoal text-base font-normal inline-flex">
+            <div class="flex w-full flex-col items-start justify-start gap-4">
+                <div class="flex w-full items-center justify-between">
+                    <div class="text-charcoal inline-flex text-base font-normal">
                         {{ t('product.desc.size') }}
                     </div>
                     <sizeGuide></sizeGuide>
-
                 </div>
                 <fieldset aria-label="Choose a size">
-                    <div class="pb-1 justify-start items-center gap-4 flex flex-wrap">
+                    <div class="flex flex-wrap items-center justify-start gap-3 pb-1 md:gap-4">
                         <label
                             v-for="size in sizes"
                             :key="size.id"
                             :aria-label="size.name"
-                            class="justify-center items-center flex"
+                            class="flex items-center justify-center"
                         >
                             <input
                                 v-model="selectedSizeId"
-                                :disabled="!availableSizes.some(s => s.id === size.id)"
+                                :disabled="!availableSizes.some((s) => s.id === size.id)"
                                 :value="size.id"
                                 class="peer sr-only"
                                 name="size-choice"
                                 type="radio"
                             />
                             <span
-                                :class="{ 'opacity-40 cursor-not-allowed': !availableSizes.some(s => s.id === size.id) }"
-                                class="px-2 md:px-5 py-[5px] md:py-[13px] bg-white rounded-[100px] border min-w-16 md:min-w-32 text-center border-[#eeeeee] peer-checked:border-olive"
+                                :class="{
+                                    'cursor-not-allowed opacity-40': !availableSizes.some((s) => s.id === size.id),
+                                }"
+                                class="peer-checked:border-olive flex w-fit min-w-auto items-center justify-center gap-x-2.5 rounded-full border border-[#eeeeee] bg-white px-3 py-3 text-center md:min-w-24 md:px-5 md:py-3"
                             >
-
-                                <!--Replace this with correct..-->
-                                <!--Replace this with correct..-->
-                                <!--Replace this with correct..-->
                                 <template v-for="(member, index) in product.compatible_with" :key="member.id">
-                                    <span v-if="member.compatible_size_id == size.id">
-                                        [{{ member.letter }} - ({{member.compatible_size_id}}) - {{ member.name }}]
-                                    </span>
+                                    <div
+                                        v-if="member.compatible_size_id == size.id"
+                                        :class="product.gender.bg_color"
+                                        class="group/gender relative flex h-4 w-auto items-center justify-center gap-x-0 rounded-full"
+                                    >
+                                        <span
+                                            :class="member.bg_color_name"
+                                            class="flex size-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                                        >
+                                            {{ member.letter }}
+                                        </span>
+                                        <div
+                                            class="absolute top-full left-10/12 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-4 py-1.5 text-sm text-white opacity-0 transition-opacity duration-300 group-hover/gender:opacity-100"
+                                        >
+                                            <p>{{ $t('product.compatible_with', { name: member.name }) }}</p>
+                                            <div
+                                                class="absolute -top-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
+                                            ></div>
+                                        </div>
+                                    </div>
                                 </template>
-                                <!--Replace this with correct..-->
-                                <!--Replace this with correct..-->
-                                <!--Replace this with correct..-->
 
-                                <span class="text-charcoal text-sm font-bold leading-[14px]">
-                                  {{ size.name[locale] }}
+                                <span class="text-charcoal text-sm leading-[14px] font-bold">
+                                    {{ size.name[locale] }}
                                 </span>
                             </span>
                         </label>
-
                     </div>
                 </fieldset>
-                <div class="w-full py-6 border-t border-b  border-[#eeeeee] flex-col justify-center items-start gap-10 flex">
-                <div class="w-full md:flex flex-row justify-between items-center gap-4">
+                <div
+                    class="flex w-full flex-col items-start justify-center gap-10 border-t border-b border-[#eeeeee] py-6"
+                >
+                    <div class="w-full flex-row items-center justify-between gap-4 md:flex">
+                        <Button
+                            buttonPrimary
+                            customClass="text-olive font-bold text-[15px] text-center w-[93vw] md:w-5/12"
+                            @click="handleFavoriteClick(product.id, product.name[locale])"
+                        >
+                            <img
+                                :src="isFavorite(product.id) ? iconFavorited : iconAddFavorite"
+                                alt=""
+                                class="size-4"
+                            />
+                            {{
+                                isFavorite(product.id)
+                                    ? t('product.remove-from-favorites')
+                                    : t('product.add-to-favorite')
+                            }}
+                        </Button>
 
-                    <Button
-                        @click="handleFavoriteClick(product.id, product.name[locale],)"
-                        buttonPrimary customClass="text-olive font-bold text-[15px] text-center w-[93vw] md:w-5/12"  >
-                        <img class="size-4" :src="isFavorite(product.id) ? iconFavorited : iconAddFavorite" alt="">
-                        {{ isFavorite(product.id) ? t('product.remove-from-favorites') : t('product.add-to-favorite') }}
-                    </Button>
-
-                    <Button
-                        @click="addToCart"
-                        customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12">
-                        <img :src="cartWhite" alt="">
-                        {{ t('product.add-to-cart') }}
-                    </Button>
-                    <div id="sticky-trigger" class="h-[1px] absolute  -bottom-[110px]"></div>
+                        <Button customClass="text-white text-[16px]  font-bold w-[93vw] md:w-7/12" @click="addToCart">
+                            <img :src="cartWhite" alt="" />
+                            {{ t('product.add-to-cart') }}
+                        </Button>
+                        <div id="sticky-trigger" class="absolute -bottom-[110px] h-[1px]"></div>
+                    </div>
                 </div>
             </div>
-
-            </div>
         </div>
-
-
     </div>
-
 </template>

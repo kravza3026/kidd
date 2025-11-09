@@ -9,7 +9,7 @@
                     <div class="text-white text-sm font-extrabold leading-none">{{ $products->total() }}</div>
                 </div>
             </div>
-            <div class="hidden md:block">
+            <div class="hidden md:block w-full">
                 @include('store.catalog.products._filters')
             </div>
             <div class="md:hidden">

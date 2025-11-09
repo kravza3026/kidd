@@ -49,6 +49,7 @@ return new class extends Migration
             $table->fullText('slug');
             $table->fullText('description');
             $table->index(columns: ['name', 'slug'], algorithm: 'gin');
+
             $table->index(['category_id']);
             $table->index(['brand_id', 'gender_id', 'season_id', 'fabric_id']);
         });

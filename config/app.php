@@ -54,6 +54,9 @@ return [
 
     'url' => env('APP_URL', 'https://kidd.md'),
 
+    'frontend_url' => env('FRONTEND_URL', 'https://kidd.md'),
+    'asset_url' => env('ASSET_URL'),
+
     'shop_url' => env('ROUTER_SHOP_URL', 'kidd.md'),
     'admin_url' => env('ROUTER_ADMIN_URL', 'cp.kidd.md'),
     'api_url' => env('ROUTER_API_URL', 'api.kidd.md'),
@@ -69,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'Europe/Chisinau',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------

@@ -18,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\View\View;
 use LukePOLO\LaraCart\Facades\LaraCart;
 use Throwable;
@@ -100,27 +101,51 @@ class CheckoutController extends Controller
         }
 
         // TODO: Implement order processing logic
-        // $orderService = app(OrderService::class);
-        // $order = $orderService->createFromCheckoutData($this->sessionService->getCheckoutData());
+        //        $orderService = app(OrderService::class);
+        //        $order = $orderService->createFromCheckoutData($this->sessionService->getCheckoutData());
         $checkout = $this->sessionService->getCheckoutData();
 
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
 
-        DB::transaction(function () use ($checkout, $cart) {
+        $customer = Customer::createOrFirst([
+            'email' => $checkout['contact_email'],
+            'phone' => $checkout['contact_phone'],
+        ], [
+            'company_id' => 1, // TODO - implement tenant...
+            'user_id' => auth()->id(),
+            'first_name' => $checkout['contact_first_name'],
+            'last_name' => $checkout['contact_last_name'],
+        ]);
 
-            $customer = Customer::firstOrCreate([
-                'email' => $checkout['contact_email'],
-                'phone' => $checkout['contact_phone'],
-            ], [
-                'company_id' => 1, // TODO - implement tenant...
-                'user_id' => auth()->id(),
-                'first_name' => $checkout['contact_first_name'],
-                'last_name' => $checkout['contact_last_name'],
+        DB::transaction(function () use ($checkout, $cart, $customer) {
+
+            $order = Order::create([
+                'customer_id' => $customer->id,
+                'tracking_id' => 1, // TODO - implement tracking id...
+                'payment_id' => 1, // TODO - implement payment id...
+                'total_amount' => LaraCart::total($formatted = false, $withDiscount = true), // Will be updated after items are added
+                'status' => OrderStatus::Pending->value,
+                'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
+                'payment_method' => PaymentMethod::from((int) $checkout['payment_method']),
+                'cart_snapshot' => collect($cart)->toArray(),
+                //                'notes' => '',
             ]);
 
+            $order->items()->createMany(
+                collect($this->viewDataService->getCartData()['items'])->map(function ($item) {
+                    return [
+                        'product_variant_id' => $item->options['variant']->id,
+                        'variant_snapshot' => $item->options['variant']->toArray(),
+                        'quantity' => $item->qty,
+                        'unit_price' => $item->options['price'],
+                        'total_price' => ($item->price * $item->qty),
+                    ];
+                })->toArray()
+            );
+
             $shippingAddress = [
-                'label' => $customer->id,
+                'label' => $customer->id.'.'.$checkout['shipping_postal_code'].'.'.AddressType::Shipping->value,
                 'region_id' => $checkout['shipping_region'],
                 'city_id' => $checkout['shipping_city'],
                 'street_name' => $checkout['shipping_street_name'],
@@ -132,56 +157,38 @@ class CheckoutController extends Controller
                 'intercom' => $checkout['shipping_intercom'],
             ];
 
-            $order = Order::create([
-                'customer_id' => $customer->id,
-                'tracking_id' => 1, // TODO - implement tracking id...
-                'payment_id' => 1, // TODO - implement payment id...
-                'total_amount' => LaraCart::total($formatted = false, $withDiscount = true), // Will be updated after items are added
-                'status' => OrderStatus::Pending->value,
-                'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
-                'payment_method' => PaymentMethod::from((int) $checkout['payment_method']),
-                'cart_snapshot' => collect($cart)->toArray(),
-                'notes' => '',
-            ]);
+            $billingAddress = [
+                'label' => $customer->id.'.'.$checkout['billing_postal_code'].'.'.AddressType::Billing->value,
+                'region_id' => $checkout['billing_region'],
+                'city_id' => $checkout['billing_city'],
+                'street_name' => $checkout['billing_street_name'],
+                'building' => $checkout['billing_building'],
+                'postal_code' => $checkout['billing_postal_code'],
+                'apartment' => $checkout['billing_apartment'],
+            ];
 
-            $order->items()->createMany(
-                collect($this->viewDataService->getCartData()['items'])->map(function ($item) use ($order) {
-                    return [
-                        'order_id' => $order->id,
-                        'product_variant_id' => $item->options['variant']->id,
-                        'variant_snapshot' => $item->options['variant']->toArray(),
-                        'quantity' => $item->qty,
-                        'unit_price' => $item->price,
-                        'total_price' => ($item->price * $item->qty),
-                    ];
-                })->toArray()
-            );
-
-            $order->update([
-                'total_amount' => LaraCart::total($formatted = false, true),
-            ]);
-
-            $address['shipping'] = $order->addresses()->create([
+            $order->addresses()->create([
                 'address_type' => AddressType::Shipping,
                 ...$shippingAddress,
             ]);
-            $address['billing'] = $address['shipping']->replicate()->fill([
-                'address_type' => AddressType::Billing,
-            ]);
-            $address['billing']->save();
 
-        });
+            $order->addresses()->create([
+                'address_type' => AddressType::Billing,
+                ...$billingAddress,
+            ]);
+
+        }, attempts: 5);
 
         $this->sessionService->clearCheckoutSession();
         LaraCart::emptyCart();
 
-        // TODO - Translate
-        Session::flash('toast', [
-            'title' => __('Order Placed'),
-            'type' => 'success',
-            'message' => __('Your order has been successfully placed.'),
-            'options' => [
-                'timer' => 3000,
+        // TODO - Use it globally.
+        Session::flash('modal', [
+            'title' => __('general.modal.title-order'),
+            'message' => __('general.modal.message-order'),
+            'image' => [
+                'url' => Vite::image('icons/olive/order.png'),
+                'alt' => __('general.modal.img_alt-order'),
             ],
         ]);
 

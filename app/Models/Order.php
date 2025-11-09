@@ -21,8 +21,6 @@ class Order extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'customer_id',
@@ -42,12 +40,17 @@ class Order extends Model
         'delivered_at',
     ];
 
-    protected array $dates = ['placed_at', 'processed_at', 'delivered_at'];
+    protected array $dates = [
+        'placed_at',
+        'processed_at',
+        'delivered_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     protected $hidden = [
         'customer_id',
-        'created_at',
-        'updated_at',
         'deleted_at',
     ];
 
@@ -121,7 +124,7 @@ class Order extends Model
     protected function orderNumber(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value ? sprintf('ORD-%06d', $value) : strtoupper(uniqid('ORD-', false)),
+            get: fn ($value) => sprintf('ORD-%06d', $value),
             //            set: fn ($value) => (int) str_replace(['#ORD-', 'ORD-'], '', $value),
         );
     }

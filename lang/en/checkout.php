@@ -5,16 +5,42 @@ return [
 
     'steps' => [
         'shipping' => 'Shipping details',
+        'shipping_short' => 'Shipping',
         'contacts' => 'Contact information',
+        'contacts_short' => 'Contact',
         'payment' => 'Payment details',
+        'payment_short' => 'Payment',
         'review' => 'Order review',
+        'review_short' => 'Review',
     ],
 
     'summary' => [
-        'subtotal' => 'Products',
-        'discount' => 'Discount',
-        'shipping' => 'Delivery',
-        'total' => 'Total',
+        'sections' => [
+            'products' => [
+                'title' => 'Products',
+            ],
+            'discount' => [
+                'title' => 'Discount code',
+                'not_registered' => [
+                    'text' => 'New customer? <a class="text-olive font-bold" href=":href">Sign Up</a> to get <span class="font-medium text-olive">:amount%</span> discount.',
+                ],
+                'code_placeholder' => 'Enter code',
+                'apply_btn' => 'Apply',
+            ],
+            'summary' => [
+                'products' => 'Products',
+                'title' => 'Order summary',
+                'subtotal' => 'Products',
+                'discount' => 'Discount',
+                'shipping' => 'Shipment cost',
+                'total' => 'Grand total',
+            ],
+            'delivery_discount' => [
+                'title' => 'Discount on delivery cost',
+                'desc' => 'Add goods worth more than :amount mdl and get discount on delivery',
+                'price' => ':amount mdl',
+            ],
+        ],
     ],
 
     'shipping' => [
@@ -27,13 +53,48 @@ return [
                     'title' => 'Regular',
                     'desc' => '3-14 business days',
                 ],
-                'gift' => [
-                    'title' => 'Gift',
-                    'desc' => '3-7 business days',
-                ],
                 'express' => [
                     'title' => 'Express',
                     'desc' => '1-3 business days',
+                    'details' => [
+                        'title' => 'Fast and convenient shipping services to exceed your needs',
+                        'description' => 'Morning orders can be delivered by the evening of the same day. For orders placed in the afternoon, delivery will be scheduled for the next business day. Please note that these are approximate time frames and vary based on order volume and location.',
+                    ],
+                ],
+                'gift' => [
+                    'title' => 'Gift',
+                    'desc' => '3-7 business days',
+                    'details' => [
+                        'title' => 'Make every gift feel special and personal with gift wrapping',
+                        'description' => 'We offer beautifully designed wrapping paper, ribbon and a personalised tag to add an extra special touch to your gift. <br/><br/>
+                            <span class="text-xs opacity-75">*Package size will be approximately:
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">35cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    L
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">25cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    W
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">10cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    H
+                                </span>
+                            </span></span>',
+                    ],
                 ],
             ],
 
@@ -53,7 +114,7 @@ return [
             'shipping_postal_code_placeholder' => 'Postal code',
 
             'shipping_apartment' => 'Apartment',
-            'shipping_apartment_placeholder' => 'Apartment number',
+            'shipping_apartment_placeholder' => 'Apartment #',
 
             'shipping_entrance' => 'Entrance',
             'shipping_entrance_placeholder' => 'Entrance',

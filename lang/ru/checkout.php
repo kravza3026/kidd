@@ -5,16 +5,42 @@ return [
 
     'steps' => [
         'shipping' => 'Детали доставки',
+        'shipping_short' => 'Доставка',
         'contacts' => 'Контактная информация',
+        'contacts_short' => 'Контакты',
         'payment' => 'Детали оплаты',
+        'payment_short' => 'Оплата',
         'review' => 'Просмотр заказа',
+        'review_short' => 'Итог',
     ],
 
     'summary' => [
-        'subtotal' => 'Цена товары',
-        'discount' => 'Скидка',
-        'shipping' => 'Доставка',
-        'total' => 'Итого',
+        'sections' => [
+            'products' => [
+                'title' => 'Товары',
+            ],
+            'discount' => [
+                'title' => 'Скидка',
+                'not_registered' => [
+                    'text' => 'Utilizator nou? <a class="text-olive font-bold" href=":href">Înregistrează-te</a> și primește <span class="font-medium text-olive">:amount%</span> reducere',
+                ],
+                'code_placeholder' => 'Скидочный код',
+                'apply_btn' => 'Применить',
+            ],
+            'summary' => [
+                'products' => 'Товары',
+                'title' => 'Итоги',
+                'subtotal' => 'Товары',
+                'discount' => 'Скидка',
+                'shipping' => 'Доставка',
+                'total' => 'Итого',
+            ],
+            'delivery_discount' => [
+                'title' => 'Бесплатная доставка',
+                'desc' => 'Добавьте товаров на сумму больше :amount лей и получите бесплатную доставку',
+                'price' => ':amount лей',
+            ],
+        ],
     ],
 
     'shipping' => [
@@ -27,13 +53,48 @@ return [
                     'title' => 'Обычная',
                     'desc' => '3-14 рабочих дней',
                 ],
-                'gift' => [
-                    'title' => 'Подарок',
-                    'desc' => '3-7 рабочих дней',
-                ],
                 'express' => [
                     'title' => 'Экспресс',
                     'desc' => '1-3 рабочих дня',
+                    'details' => [
+                        'title' => 'Быстрая и удобная доставка превзойдет ваши потребности',
+                        'description' => 'Утренние заказы могут быть доставлены к вечеру того же дня. Для заказов, размещенных во второй половине дня, доставка будет запланирована на следующий рабочий день. Обратите внимание, что это приблизительные временные рамки, которые варьируются в зависимости от объема и местоположения заказа.',
+                    ],
+                ],
+                'gift' => [
+                    'title' => 'Подарок',
+                    'desc' => '3-7 рабочих дней',
+                    'details' => [
+                        'title' => 'Сделайте каждый подарок особенным и уникальным с нашей подарочной упаковки',
+                        'description' => 'Мы предлагаем красиво оформленную упаковочную бумагу, ленту и персонализированную бирку, чтобы придать вашему подарку особый штрих. <br/><br/>
+                            <span class="text-xs opacity-75">*Размер упаковки будет приблизительно:
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">35cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    L
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">25cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    W
+                                </span>
+                            </span>
+                            <span class="opacity-35">×</span>
+                            <span class="inline-flex w-fit items-center gap-x-1 font-bold">
+                                <span class="opacity-60">10cm</span>
+                                <span
+                                    class="bg-olive inline-flex size-6 items-center justify-center rounded-full text-center text-[10px] text-white"
+                                >
+                                    H
+                                </span>
+                            </span></span>',
+                    ],
                 ],
             ],
 
@@ -92,7 +153,7 @@ return [
             'payment_method' => 'Способ оплаты',
             'payment_methods' => [
                 'cash_card_at_delivery' => 'Наличные или карта',
-                'cash_card_at_delivery_desc' => 'оплата при получении',
+                'cash_card_at_delivery_desc' => 'при получении',
 
                 'bank_transfer' => 'Банковский перевод',
                 'bank_transfer_desc' => 'для бизнес клиентов',

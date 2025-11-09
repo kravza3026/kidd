@@ -256,7 +256,7 @@ export default {
                                     {{ child.height }} {{ $t('family_member.height_label') }}
                                 </p>
                                 <p class="w-fit px-1 text-start text-sm opacity-40 lg:hidden">
-                                    {{ child.weight.toFixed(1) }} kg
+                                    {{ child.weight }} kg
                                 </p>
                             </div>
                         </div>
