@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchProductFilter
 {
-
-
-    public function __construct(public ?string $search)
-    {
-    }
+    public function __construct(public ?string $search) {}
 
     public function __invoke(Builder $query, $next)
     {

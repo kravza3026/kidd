@@ -56,7 +56,6 @@ class ProductsController extends Controller
             ->get();
 
         //        $url = 'https://kidd.test:5173/resources/images/categories/category_5.webp';
-        //                $url = 'https://expertbeauty.md/wp-content/uploads/elementor/thumbs/ChatGPT-Image-26-sept.-2025-22_42_26-rccaadhopre39nejycj593j1d13fmjjkr4kpwiodou.png';
         //        $product
         //            ->addMediaFromUrl($url)
         //            ->withResponsiveImages()

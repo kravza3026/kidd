@@ -8,12 +8,13 @@ class ColorProductFilter
 {
     public function __construct(private ?array $color)
     {
+        $this->color = array_filter($color, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
     }
 
     public function __invoke(Builder $query, $next)
     {
 
-        if (is_array($this->color) && (!array_key_exists(0, $this->color) && count($this->color))) {
+        if (is_array($this->color) && (! array_key_exists(0, $this->color) && count($this->color))) {
             $query->whereHas('variants', function ($query) {
                 $query->whereIn('color_id', array_keys($this->color));
             });
