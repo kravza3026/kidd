@@ -16,9 +16,9 @@ class CitySeeder extends Seeder
         $regions = Region::all();
 
         foreach ($regions as $region) {
-            if ($region->id != 9) {
-                continue;
-            }
+            //            if ($region->id != 9) {
+            //                continue;
+            //            }
 
             $request = Http::acceptJson()->get('https://main-api.posta.md/nomenclatures/cities', [
                 'page' => 1,
