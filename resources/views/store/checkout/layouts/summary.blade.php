@@ -8,7 +8,7 @@
             <div class="flex items-start gap-3">
                 <div class="bg-light-orange h-[72px] w-[72px] rounded-xl p-2">
                     <img
-                        src="{{ Vite::image($item->model->main_image) }}"
+                        src="{{ $item->model->media[0]->original_url }}"
                         alt="{{ $item->model->name }}"
                         class="h-full w-full object-cover"
                     />

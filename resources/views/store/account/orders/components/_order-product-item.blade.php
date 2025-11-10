@@ -2,7 +2,7 @@
     <div class="bg-card-bg h-fit max-w-3/12 rounded-2xl md:max-w-full md:rounded-t-2xl md:rounded-b-none">
         <img
             class="w-auto p-2 md:h-48 md:max-w-full md:p-8"
-            src="{{ Vite::image($product->variant->product->main_image) }}"
+            src="{{ $product->variant->product->media[0]->original_url }}"
             alt="{{ $product->variant->product->name }}"
         />
     </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="mt-1 flex items-center justify-between">
             <p class="text-olive text-base font-bold">
-                {{ (int) ($product->variant->price_final / 100) }} lei
+                {{ (int) ($product->variant->price_final / 100) }} {{ __('general.mdl') }}
                 <span class="text-dark text-sm font-bold">-{{ $product->variant->discount_display }}%</span>
             </p>
             <p class="flex items-center">

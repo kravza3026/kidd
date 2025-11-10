@@ -20,7 +20,7 @@ class SeasonsDropdown extends Component
     public function render(): View|Closure|string
     {
 
-        $seasons = Cache::rememberForever('seasons', function () {
+        $seasons = Cache::rememberForever('seasons_filter', function () {
             return Season::all();
         });
 

@@ -13,9 +13,16 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+
         Product::factory()
-            ->has(ProductVariant::factory()->count(3), 'variants')
+            ->has(ProductVariant::factory()->count(5), 'variants')
             ->count(300)
+            ->afterCreating(function (Product $product) {
+                $product
+                    ->addMedia(resource_path('/images/products/product_'.rand(1, 9).'.webp'))
+                    ->preservingOriginal()
+                    ->toMediaCollection('gallery');
+            })
             ->create();
     }
 }

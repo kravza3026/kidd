@@ -17,7 +17,7 @@ class GendersDropdown extends Component
      */
     public function render(): View|Closure|string
     {
-        $genders = Cache::rememberForever('genders', function () {
+        $genders = Cache::rememberForever('genders_filter', function () {
             return Gender::all();
         });
 

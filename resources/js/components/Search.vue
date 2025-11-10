@@ -13,17 +13,20 @@ export default {
             open: false,
             searchQuery: '',
             processed: false,
-            searchIcon,loop,gender,back,
+            searchIcon,
+            loop,
+            gender,
+            back,
             isMobile: window.innerWidth < 1024,
             products: [],
-            recommended:[]
+            recommended: [],
         };
     },
 
     computed: {
         hasSearchNoResults() {
             return this.searchQuery.trim() !== '' && this.processed;
-        }
+        },
     },
 
     created() {
@@ -37,28 +40,34 @@ export default {
             const query = this.searchQuery.trim().toLowerCase();
 
             // TODO - set url from global storage and easy accessible.
-            await axios.get('search', {
-                params: {
-                    term: query
-                }
-            })
-                .then(response => {
+            await axios
+                .get('search', {
+                    params: {
+                        term: query,
+                    },
+                })
+                .then((response) => {
                     this.products = response.data.results;
                     this.processed = true;
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Search error:', error);
                 });
-
         },
 
         async fetchTags() {
             // TODO - Implement API tags for recommended searches.
             // TODO - Make them clickable, @click set as searchQuery
-            this.recommended = ['summer cotton jumpsuit','floral print summer dress','summer shorts for boys','floral sun hat','blue sundress'];
+            this.recommended = [
+                'summer cotton jumpsuit',
+                'floral print summer dress',
+                'summer shorts for boys',
+                'floral sun hat',
+                'blue sundress',
+            ];
         },
 
-        handleType: _.debounce(function() {
+        handleType: _.debounce(function () {
             this.search();
         }, 300),
 
@@ -70,12 +79,9 @@ export default {
             const wrapper = this.$refs.searchWrapper;
             const toggle = this.$refs.searchToggle;
             if (!this.open) return;
-                if (
-                    wrapper && !wrapper.contains(event.target) &&
-                    toggle && !toggle.contains(event.target)
-                ) {
-                    this.closeSearch();
-                }
+            if (wrapper && !wrapper.contains(event.target) && toggle && !toggle.contains(event.target)) {
+                this.closeSearch();
+            }
         },
         highlightMatch(text) {
             const query = this.searchQuery.trim();
@@ -111,7 +117,6 @@ export default {
         handleResize() {
             this.isMobile = window.innerWidth < 1024;
         },
-
     },
 
     mounted() {
@@ -122,7 +127,7 @@ export default {
     beforeUnmount() {
         document.removeEventListener('click', this.handleClickOutside);
         window.removeEventListener('resize', this.handleResize);
-        window.removeEventListener('toggle-mobile-search',this.openSearchFromOutside);
+        window.removeEventListener('toggle-mobile-search', this.openSearchFromOutside);
     },
 };
 </script>
@@ -131,7 +136,7 @@ export default {
     <div>
         <div
             ref="searchToggle"
-            class="search hidden cursor-pointer w-full h-full lg:flex items-center gap-x-5"
+            class="search hidden h-full w-full cursor-pointer items-center gap-x-5 lg:flex"
             @click="open = true"
         >
             <img :src="searchIcon" alt="search" height="24" width="24" />
@@ -142,14 +147,18 @@ export default {
             <div
                 v-show="open || isMobile"
                 ref="searchWrapper"
-                class="search-input px-3 absolute lg:bottom-0 right-0 bg-white flex flex-col h-auto w-full z-50"
+                class="search-input absolute right-0 z-50 flex h-auto w-full flex-col bg-white px-3 lg:bottom-0"
             >
-                <div class="relative flex items-center w-full lg:w-10/11 mx-auto pt-0 lg:top-[-10px]">
-                    <img :src=back alt="" class="absolute lg:hidden left-6 pr-4 py-2 border-r border-r-light2-border">
+                <div class="relative mx-auto flex w-full items-center pt-0 lg:top-[-10px] lg:w-10/11">
+                    <img
+                        :src="back"
+                        alt=""
+                        class="border-r-light2-border absolute left-6 border-r py-2 pr-4 lg:hidden"
+                    />
                     <input
                         ref="searchInput"
                         v-model="searchQuery"
-                        class="w-full focus:outline-hidden h-[50px] m-2 pl-12 lg:mx-0 lg:pl-5 pr-12 rounded-md bg-light-orange"
+                        class="bg-light-orange m-2 h-[50px] w-full rounded-md pr-12 pl-12 focus:outline-hidden lg:mx-0 lg:pl-5"
                         name="term"
                         placeholder=""
                         type="text"
@@ -157,7 +166,7 @@ export default {
                         @keydown.esc="closeSearch"
                     />
                     <svg
-                        class="absolute text-olive right-4 top-1/3 transform  pointer-events-none"
+                        class="text-olive pointer-events-none absolute top-1/3 right-4 transform"
                         fill="none"
                         height="24"
                         viewBox="0 0 24 24"
@@ -173,61 +182,105 @@ export default {
                         />
                     </svg>
 
-                    <div v-if="products.length" class="w-full absolute left-0 h-fit lg:min-h-[267px] lg:max-h-[50vh] overflow-auto top-22 lg:top-[78px] mx-auto mb-4 bg-white rounded-md lg:shadow p-0" @enter="onEnter" @leave="onLeave"
-                         @after-enter="onAfterEnter">
-                        <ul  class="relative mt-2 lg:mt-0 w-full z-50">
-                            <li v-for="item in products"
+                    <div
+                        v-if="products.length"
+                        class="absolute top-22 left-0 mx-auto mb-4 h-fit w-full overflow-auto rounded-md bg-white p-0 lg:top-[78px] lg:max-h-[50vh] lg:min-h-[267px] lg:shadow"
+                        @enter="onEnter"
+                        @leave="onLeave"
+                        @after-enter="onAfterEnter"
+                    >
+                        <ul class="relative z-50 mt-2 w-full lg:mt-0">
+                            <li
+                                v-for="item in products"
                                 :key="item.id"
-                                class="px-2 py-4 lg:p-4  hover:bg-gray-100 flex justify-between items-center gap-4 border-b border-b-light-border"
+                                class="border-b-light-border flex items-center justify-between gap-4 border-b px-2 py-4 hover:bg-gray-100 lg:p-4"
                             >
-                                <a :href="item.url" class="flex gap-x-4 w-full">
-                                    <div class="bg-card-bg size-14 p-2 text-center flex items-center justify-center rounded-md">
-                                        <img :src="'/assets/images/' + item.main_image" alt='product' class="max-w-[50px] max-h-[50px] object-cover rounded-md" />
+                                <a :href="item.url" class="flex w-full gap-x-4">
+                                    <div
+                                        class="bg-card-bg flex size-14 items-center justify-center rounded-md p-2 text-center"
+                                    >
+                                        <img
+                                            :src="item.media[0].original_url"
+                                            alt="product"
+                                            class="max-h-[50px] max-w-[50px] rounded-md object-cover"
+                                        />
                                     </div>
-                                    <div class="w-full flex flex-col justify-evenly">
-                                        <div class="flex justify-start items-center w-full gap-x-2">
-                                            <p class="font-normal w-fit max-w-[calc(100%-20px)] leading-5 text-base lg:text-lg" v-html="highlightMatch(item.name[locale])"></p>
-                                            <div v-if="item.gender" :class="item.gender?.bg_color" class="p-1 group relative flex items-center justify-center rounded-full" >
-                                                <span class="flex items-center size-3" v-html="item.gender?.svg ?? ''" ></span>
-                                                <div class="absolute tooltip left-2/3 -translate-x-2/5 top-full mt-2 w-max bg-black text-white text-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100  transition-opacity duration-300 z-10">
-                                                   {{item.gender?.name[locale]}}
-                                                    <div class="absolute -top-1 left-1/3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-black"></div>
+                                    <div class="flex w-full flex-col justify-evenly">
+                                        <div class="flex w-full items-center justify-start gap-x-2">
+                                            <p
+                                                class="w-fit max-w-[calc(100%-20px)] text-base leading-5 font-normal lg:text-lg"
+                                                v-html="highlightMatch(item.name[locale])"
+                                            ></p>
+                                            <div
+                                                v-if="item.gender"
+                                                :class="item.gender?.bg_color"
+                                                class="group relative flex items-center justify-center rounded-full p-1"
+                                            >
+                                                <span
+                                                    class="flex size-3 items-center"
+                                                    v-html="item.gender?.svg ?? ''"
+                                                ></span>
+                                                <div
+                                                    class="tooltip absolute top-full left-2/3 z-10 mt-2 w-max -translate-x-2/5 rounded-full bg-black px-3 py-1 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                                >
+                                                    {{ item.gender?.name[locale] }}
+                                                    <div
+                                                        class="absolute -top-1 left-1/3 h-0 w-0 rotate-90 border-r-8 border-b-8 border-l-8 border-r-transparent border-b-black border-l-transparent"
+                                                    ></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mt-1 flex flex-wrap w-full items-center gap-x-[1px]">
-                                            <p v-for="(variant, index) in item.variants"
+                                        <div class="mt-1 flex w-full flex-wrap items-center gap-x-[1px]">
+                                            <p
+                                                v-for="(variant, index) in item.variants"
                                                 :key="variant.color.id"
-                                                class="text-xs lg:text-base pr-1  text-charcoal/40 font-light lg:pr-2 tracking-tighter"
+                                                class="text-charcoal/40 pr-1 text-xs font-light tracking-tighter lg:pr-2 lg:text-base"
                                             >
-                                                {{ variant.color.name[locale] }}<span v-if="index < item.variants.length - 1">,</span>
+                                                {{ variant.color.name[locale]
+                                                }}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
-                                            <span class="h-full block py-2 mr-2 border-r border-r-light2-border"></span>
-                                            <p v-for="(variant, index) in item.variants"
-                                               :key="variant.size.id"
-                                                class="text-xs lg:text-base text-charcoal/40 font-light lg:pr-2">
-                                                {{ variant.size.name[locale]}}<span v-if="index < item.variants.length - 1">,</span>
+                                            <span class="border-r-light2-border mr-2 block h-full border-r py-2"></span>
+                                            <p
+                                                v-for="(variant, index) in item.variants"
+                                                :key="variant.size.id"
+                                                class="text-charcoal/40 text-xs font-light lg:pr-2 lg:text-base"
+                                            >
+                                                {{ variant.size.name[locale]
+                                                }}<span v-if="index < item.variants.length - 1">,</span>
                                             </p>
                                         </div>
                                     </div>
-                                   <div class="grid align-top justify-items-end">
-                                       <p class="text-sm w-fit text-nowrap  lg:text-base text-olive font-bold">{{ $n(item.variants[0]?.price_final / 100, 'currency', 'ro') }}</p>
-                                       <p v-if="item.variants[0].price_online" class="text-xs w-fit text-nowrap lg:text-sm text-charcoal/25 line-through font-medium">
-                                           {{ $n(item.variants[0]?.price_online / 100, 'currency', 'ro') }}</p>
-                                   </div>
+                                    <div class="grid justify-items-end align-top">
+                                        <p class="text-olive w-fit text-sm font-bold text-nowrap lg:text-base">
+                                            {{ $n(item.variants[0]?.price_final / 100, 'currency', 'ro') }}
+                                        </p>
+                                        <p
+                                            v-if="item.variants[0].price_online"
+                                            class="text-charcoal/25 w-fit text-xs font-medium text-nowrap line-through lg:text-sm"
+                                        >
+                                            {{ $n(item.variants[0]?.price_online / 100, 'currency', 'ro') }}
+                                        </p>
+                                    </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div v-else-if="hasSearchNoResults" class="w-full absolute left-0 h-fit top-22  mx-auto -mt-3 mb-4 bg-white rounded-md shadow p-4" @enter="onEnter" @leave="onLeave"
-                         @after-enter="onAfterEnter">
+                    <div
+                        v-else-if="hasSearchNoResults"
+                        class="absolute top-22 left-0 mx-auto -mt-3 mb-4 h-fit w-full rounded-md bg-white p-4 shadow"
+                        @enter="onEnter"
+                        @leave="onLeave"
+                        @after-enter="onAfterEnter"
+                    >
                         <div>
                             <p class="text-sm">No relevant results found</p>
-                            <p class="text-sm opacity-60 font-normal">You can change your query or choose from suggested search options</p>
-                            <div class="flex  flex-wrap gap-x-6 gap-y-2 mt-4">
+                            <p class="text-sm font-normal opacity-60">
+                                You can change your query or choose from suggested search options
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
                                 <a v-for="item in recommended" class="flex items-center gap-x-2" href="#">
-                                    <img :src="loop" alt="recommended" class="opacity-60">
-                                    <p class="text-sm">{{item}}</p>
+                                    <img :src="loop" alt="recommended" class="opacity-60" />
+                                    <p class="text-sm">{{ item }}</p>
                                 </a>
                             </div>
                         </div>

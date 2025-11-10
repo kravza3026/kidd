@@ -109,7 +109,7 @@
                 </span>
                 <div>
                     <!-- Select -->
-                    <select form="filtersForm" name="per_page" onchange="filtersForm.submit()"
+                    <select form="filtersForm" name="per_page" onchange="document.getElementById('filtersForm').submit()"
                             class="py-1 px-3 pe-12 block w-full text-black/80 border-gray-300/30 shadow rounded-lg text-sm">
                         <option value="16" @selected(request('per_page', 16) == 16)>16</option>
                         <option value="32" @selected(request('per_page', 16) == 32)>32</option>

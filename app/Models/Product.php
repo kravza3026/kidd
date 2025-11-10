@@ -94,6 +94,7 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         'season',
         'fabric',
         'variants',
+        'media',
         //        'variants.color',
         //        'variants.size',
         //        'variants.images',
@@ -308,10 +309,6 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('thumbnail')
-            ->useFallbackUrl('/images/placeholder.png', 'preview')
-            ->useFallbackPath(public_path('images/placeholder.png'));
-
         $this->addMediaCollection('gallery')
             ->useFallbackUrl('/images/placeholder.png', 'gallery')
             ->useFallbackPath(public_path('images/placeholder.png'));
@@ -323,17 +320,19 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('preview')
-            ->performOnCollections('thumbnail')
+            ->performOnCollections('gallery')
             ->withResponsiveImages()
             ->format('webp')
             ->quality(90)
-            ->fit(Fit::Contain, 330, 360);
+            ->fit(Fit::Contain, 330, 360)
+            ->queued();
 
-        $this->addMediaConversion('gallery')
+        $this->addMediaConversion('full')
             ->performOnCollections('gallery')
             ->fit(Fit::Contain, 630, 640)
             ->quality(90)
             ->format('webp')
-            ->withResponsiveImages();
+            ->withResponsiveImages()
+            ->queued();
     }
 }

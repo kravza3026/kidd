@@ -90,6 +90,9 @@
                             html: `{!! str_replace("\n", '', trim(view('partials.modals.modal')->render())) !!}`,
 
                         });
+                        @if(session()->pull('modal'))
+
+                        @endif
                     @endif
                 });
             </script>

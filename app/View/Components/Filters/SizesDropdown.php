@@ -17,7 +17,7 @@ class SizesDropdown extends Component
      */
     public function render(): View
     {
-        $sizes = Cache::rememberForever('sizes', function () {
+        $sizes = Cache::rememberForever('sizes_filter', function () {
             return Size::withCount(['products as products_count' => function ($q) {
                 $q->select(DB::raw('COUNT(DISTINCT kidd_product_variants.product_id)'));
             }])->get();

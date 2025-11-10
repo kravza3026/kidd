@@ -34,6 +34,7 @@
             @include('store.pages.product.sections.mainSection')
         </div>
     </div>
+
     @include('store.pages.product.sections.completeLook')
     @include('store.pages.product.sections.subscribe')
 

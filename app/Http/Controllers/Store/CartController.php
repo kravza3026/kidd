@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Vite;
 use LukePOLO\LaraCart\Coupons\Percentage;
 use LukePOLO\LaraCart\Facades\LaraCart;
 
@@ -139,7 +138,7 @@ class CartController extends Controller
                     'hex' => $cartItem->options['variant']->color->hex,
                     'name' => $cartItem->options['variant']->color->name,
                 ],
-                'img' => Vite::image($cartItem->options['model']->main_image),
+                'img' => $cartItem->options['model']->media[0]->original_url,
                 'size' => [
                     'id' => $cartItem->options['variant']->size->id,
                     'name' => $cartItem->options['variant']->size->name,

@@ -15,7 +15,7 @@ class ColorsDropdown extends Component
 
     public function render(): View|Closure|string
     {
-        $colors = Cache::rememberForever('colors', function () {
+        $colors = Cache::rememberForever('colors_filter', function () {
             return Color::withCount(['products as products_count' => function ($q) {
                 $q->select(DB::raw('COUNT(DISTINCT kidd_product_variants.product_id)'));
             }])->get();

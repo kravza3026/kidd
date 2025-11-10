@@ -53,9 +53,9 @@ class AppServiceProvider extends ServiceProvider
 
         ProductVariant::observe(ProductVariantObserver::class);
 
-        Vite::prefetch(3);
+        Vite::prefetch(5);
         Vite::useWaterfallPrefetching(5);
-        //        Vite::useAggressivePrefetching();
+        Vite::useAggressivePrefetching();
 
         Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
         Vite::macro('css', fn (string $asset) => $this->asset("resources/css/{$asset}"));

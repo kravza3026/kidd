@@ -19,7 +19,9 @@ export default {
     },
     methods: {
         getImageUrl(imagePath) {
-            return `/assets/images/${imagePath}`;
+            // console.log(this.product.media[0].original_url);
+            return imagePath;
+            // return `/assets/images/${imagePath}`;
         },
     },
 
@@ -107,7 +109,7 @@ export default {
                     <a :href="product.url">
                         <img
                             :alt="product.name[locale]"
-                            :src="getImageUrl(product.main_image)"
+                            :src="getImageUrl(product.media[0].original_url)"
                             class="aspect-square max-h-[264px] w-full object-contain object-center"
                         />
                     </a>

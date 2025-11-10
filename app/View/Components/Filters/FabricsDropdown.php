@@ -16,7 +16,7 @@ class FabricsDropdown extends Component
      */
     public function render(): View|string
     {
-        $fabrics = Cache::rememberForever('fabrics', function () {
+        $fabrics = Cache::rememberForever('fabrics_filter', function () {
             return Fabric::all();
         });
 

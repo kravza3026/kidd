@@ -1,18 +1,13 @@
 @php
-    $variantImages = collect($product->variants)
-        ->pluck('images')
-        ->filter()
+    $variantImages = collect($product->getMedia('gallery'))
         ->flatMap(function ($images) {
-            if (is_string($images)) {
-                $images = json_decode($images, true);
-            }
-            return collect($images)->filter()->values();
+            return collect($images->getUrl('full'));
         })
         ->filter()
         ->unique()
         ->values();
 
-    $slides = collect([$product->main_image])
+    $slides = collect([$product->media[0]->original_url])
         ->merge($variantImages)
         ->unique()
         ->values();
