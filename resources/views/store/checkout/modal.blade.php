@@ -1,5 +1,5 @@
 <div class="modal grid grid-cols-12 gap-6 p-0">
-    <div class="col-span-6 flex justify-between flex-col gap-6 p-6">
+    <div class="col-span-12 md:col-span-6 flex justify-between flex-col gap-6 p-6">
         <div>
             <div class="flex items-center justify-between">
                 <p class="font-bold text-[32px]">Save account</p>
@@ -7,40 +7,40 @@
                     <img src="{{Vite::image('icons/close_dark.svg')}}" alt="icon_close">
                 </button>
             </div>
-            <div class="grid grid-cols-2 gap-x-6 gap-y-8 my-6">
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-8 my-6">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_like.png')}}" alt="icon_like">
                     </div>
-                    <p class="font-medium text-charcoal col-span-9 text-sm w-auto">Save cart and favorites for later</p>
+                    <p class="font-medium text-charcoal md:col-span-9 text-sm w-auto">Save cart and favorites for later</p>
                 </div>
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_child.png')}}" alt="icon_child">
                     </div>
                     <p class="font-medium text-charcoal col-span-9 text-sm w-auto">Manage personal and family data</p>
                 </div>
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_present.png')}}" alt="icon_present">
                     </div>
                     <p class="font-medium text-charcoal col-span-9 text-sm w-auto">Get personalised offers & discounts</p>
                 </div>
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_car.png')}}" alt="icon_car">
                     </div>
                     <p class="font-medium text-charcoal col-span-9 text-sm w-auto">Keep track of your
                         orders on the go</p>
                 </div>
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_mark.png')}}" alt="icon_mark">
                     </div>
                     <p class="font-medium text-charcoal col-span-9 text-sm w-auto">Save shipping info
                         for easy checkout</p>
                 </div>
-                <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
+                <div class="col-span-1 flex md:grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_return.png')}}" alt="icon_return">
                     </div>
@@ -56,7 +56,7 @@
 
         </div>
     </div>
-    <div class="col-span-6">
+    <div class="col-span-6 hidden md:block">
         <img class="w-full rounded-r-2xl" src="{{Vite::image('contactUs_bg.jpg')}}" alt="familie">
     </div>
 
