@@ -1,5 +1,5 @@
 <div class="modal grid grid-cols-12 gap-6 p-0">
-    <div class="col-span-6 flex justify-between flex-col gap-6 p-6">
+    <div class="col-span-12 md:col-span-6 flex justify-between flex-col gap-6 p-6">
         <div>
             <div class="flex items-center justify-between">
                 <p class="font-bold text-[32px]">Save account</p>
@@ -7,7 +7,7 @@
                     <img src="{{Vite::image('icons/close_dark.svg')}}" alt="icon_close">
                 </button>
             </div>
-            <div class="grid grid-cols-2 gap-x-6 gap-y-8 my-6">
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-8 my-6">
                 <div class="col-span-1 grid grid-cols-12 gap-x-2 items-center justify-start">
                     <div class="border col-span-3 border-light-border p-2 size-10 bg-light-orange rounded-full">
                         <img class="w-full" src="{{Vite::image('icons/gradients/g_like.png')}}" alt="icon_like">
@@ -56,7 +56,7 @@
 
         </div>
     </div>
-    <div class="col-span-6">
+    <div class="col-span-6 hidden md:block">
         <img class="w-full rounded-r-2xl" src="{{Vite::image('contactUs_bg.jpg')}}" alt="familie">
     </div>
 
