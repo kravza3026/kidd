@@ -8,7 +8,7 @@ class FabricProductFilter
 {
     public function __construct(private ?array $fabric)
     {
-        $this->fabric = array_filter($fabric, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
+        $this->fabric = $fabric ? array_filter($fabric, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY) : [];
     }
 
     public function __invoke(Builder $query, $next)

@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('telegram')->nullable();
             $table->string('viber')->nullable();
 
-            $table->boolean('status')->default(1);
+            $table->unsignedTinyInteger('status')->default(1);
 
             $table->timestamps();
             $table->softDeletes();

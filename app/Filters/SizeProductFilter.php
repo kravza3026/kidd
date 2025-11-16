@@ -8,7 +8,7 @@ class SizeProductFilter
 {
     public function __construct(private ?array $size)
     {
-        $this->size = array_filter($size, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
+        $this->size = $this->size ? array_filter($size, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY) : [];
     }
 
     public function __invoke(Builder $query, $next)

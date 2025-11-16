@@ -8,7 +8,7 @@ class SeasonProductFilter
 {
     public function __construct(private ?array $season)
     {
-        $this->season = array_filter($this->season, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
+        $this->season = $this->season ? array_filter($this->season, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY) : [];
     }
 
     public function __invoke(Builder $query, $next)

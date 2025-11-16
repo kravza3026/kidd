@@ -8,7 +8,7 @@ class ColorProductFilter
 {
     public function __construct(private ?array $color)
     {
-        $this->color = array_filter($color, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
+        $this->color = $this->color ? array_filter($color, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY) : [];
     }
 
     public function __invoke(Builder $query, $next)

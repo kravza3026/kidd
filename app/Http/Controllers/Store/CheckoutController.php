@@ -108,17 +108,17 @@ class CheckoutController extends Controller
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
 
-        $customer = Customer::createOrFirst([
-            'email' => $checkout['contact_email'],
-            'phone' => $checkout['contact_phone'],
-        ], [
-            'company_id' => 1, // TODO - implement tenant...
-            'user_id' => auth()->id(),
-            'first_name' => $checkout['contact_first_name'],
-            'last_name' => $checkout['contact_last_name'],
-        ]);
+        DB::transaction(function () use ($checkout, $cart) {
 
-        DB::transaction(function () use ($checkout, $cart, $customer) {
+            $customer = Customer::lockForUpdate()->firstOrCreate([
+                'email' => $checkout['contact_email'],
+                'phone' => $checkout['contact_phone'],
+            ], [
+                'company_id' => 1, // TODO - implement tenant...
+                'user_id' => auth()->id(),
+                'first_name' => $checkout['contact_first_name'],
+                'last_name' => $checkout['contact_last_name'],
+            ]);
 
             $order = Order::create([
                 'customer_id' => $customer->id,

@@ -184,6 +184,11 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function careInstructions(): BelongsToMany
+    {
+        return $this->belongsToMany(CareInstruction::class);
+    }
+
     /**
      * Get the URL for the product.
      */
@@ -310,8 +315,8 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/images/placeholder.png', 'gallery')
-            ->useFallbackPath(public_path('images/placeholder.png'));
+            ->useFallbackUrl('/images/product_placeholder.png', 'preview')
+            ->useFallbackPath(public_path('images/product_placeholder.png'));
     }
 
     /**

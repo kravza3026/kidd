@@ -16,12 +16,22 @@ class ProductSeeder extends Seeder
 
         Product::factory()
             ->has(ProductVariant::factory()->count(5), 'variants')
-            ->count(300)
+            ->count(150)
             ->afterCreating(function (Product $product) {
-                $product
-                    ->addMedia(resource_path('/images/products/product_'.rand(1, 9).'.webp'))
-                    ->preservingOriginal()
-                    ->toMediaCollection('gallery');
+
+                foreach (range(1, rand(2, 20)) as $care_id) {
+                    $instructions_ids[] = $care_id;
+                }
+
+                $product->careInstructions()->sync($instructions_ids);
+
+                foreach (range(1, rand(2, 5)) as $index) {
+                    $product
+                        ->addMedia(resource_path('/images/products/product_'.rand(1, 9).'.webp'))
+                        ->preservingOriginal()
+                        ->toMediaCollection('gallery');
+                }
+
             })
             ->create();
     }

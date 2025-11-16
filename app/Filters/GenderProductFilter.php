@@ -8,7 +8,8 @@ class GenderProductFilter
 {
     public function __construct(private ?array $gender)
     {
-        $this->gender = array_filter($gender, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY);
+
+        $this->gender = $gender ? array_filter($gender, fn ($filter) => is_int($filter), ARRAY_FILTER_USE_KEY) : [];
     }
 
     public function __invoke(Builder $query, $next)

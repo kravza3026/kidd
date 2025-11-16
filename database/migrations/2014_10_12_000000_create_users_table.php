@@ -19,9 +19,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone', 16)->unique(); // +37360558844
             $table->string('email')->unique();
-            $table->string('cart_session_id')->nullable(); // Cart session ID
-            $table->timestamp('phone_verified_at')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('default_locale', 2)->default('ro'); // Default locale for the user
 
@@ -33,6 +30,9 @@ return new class extends Migration
             $table->boolean('email_marketing')->default(1);
             $table->boolean('sms_marketing')->default(1);
 
+            $table->string('cart_session_id')->nullable(); // Cart session ID
+            $table->timestamp('phone_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
