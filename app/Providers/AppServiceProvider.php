@@ -131,17 +131,17 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(PdfFactory::class, function ($service, $app) {
             return (new PdfFactory)->withBrowsershot(
-                function ($browserShot) {
-                    $browserShot->setOption(
+                function ($browsershot) {
+                    $browsershot->setOption(
                         'args', [
                             '--disable-web-security',
                             '--allow-file-access-from-files',
                         ],
                     );
-                    $browserShot->setOption('printBackground', true);
-                    $browserShot->hideBrowserHeaderAndFooter();
-                    //                    $browserShot->noSandbox();
-                    $browserShot->waitUntilNetworkIdle();
+                    $browsershot->setOption('printBackground', true);
+                    $browsershot->hideBrowserHeaderAndFooter();
+                    $browsershot->noSandbox();
+                    $browsershot->waitUntilNetworkIdle();
                 }
             );
         });

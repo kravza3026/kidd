@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'gender_id' => Gender::BOY,
             'name' => 'Sebastian',
-            'birth_date' => '2022-08-25',
+            'birth_date' => '2024-08-25',
             'height' => 90,
             'weight' => 13200,
             'notes' => 'Test Sebastian Note!',

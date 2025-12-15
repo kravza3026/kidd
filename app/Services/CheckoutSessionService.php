@@ -6,30 +6,22 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutSessionService
 {
-    private const SESSION_STEP_KEY = 'checkout_step';
+    private const string SESSION_STEP_KEY = 'checkout_step';
 
-    private const SESSION_DATA_KEY = 'checkout_data';
+    private const string SESSION_DATA_KEY = 'checkout_data';
 
-    private const DEFAULT_STEP = 'shipping';
+    private const string DEFAULT_STEP = 'shipping';
 
     private array $steps = ['shipping', 'contact', 'payment', 'review'];
 
     /**
-     * Get the current checkout step.
+     * Store validated checkout data for a step.
      */
-    public function getCurrentStep(): string
+    public function storeStepData(array $validatedData): void
     {
-        return Session::get(self::SESSION_STEP_KEY, self::DEFAULT_STEP);
-    }
-
-    /**
-     * Set the current checkout step.
-     */
-    public function setCurrentStep(string $step): void
-    {
-        if ($this->isValidStep($step)) {
-            Session::put(self::SESSION_STEP_KEY, $step);
-        }
+        $existingData = $this->getCheckoutData();
+        $mergedData = array_merge($existingData, $validatedData);
+        Session::put(self::SESSION_DATA_KEY, $mergedData);
     }
 
     /**
@@ -41,13 +33,14 @@ class CheckoutSessionService
     }
 
     /**
-     * Store validated checkout data for a step.
+     * Move to the next step.
      */
-    public function storeStepData(array $validatedData): void
+    public function moveToNextStep(string $currentStep): string
     {
-        $existingData = $this->getCheckoutData();
-        $mergedData = array_merge($existingData, $validatedData);
-        Session::put(self::SESSION_DATA_KEY, $mergedData);
+        $nextStep = $this->getNextStep($currentStep);
+        $this->setCurrentStep($nextStep);
+
+        return $nextStep;
     }
 
     /**
@@ -65,28 +58,21 @@ class CheckoutSessionService
     }
 
     /**
-     * Get the previous step in the checkout process.
+     * Set the current checkout step.
      */
-    public function getPreviousStep(string $currentStep): string
+    public function setCurrentStep(string $step): void
     {
-        $currentIndex = array_search($currentStep, $this->steps);
-
-        if ($currentIndex === false) {
-            return self::DEFAULT_STEP;
+        if ($this->isValidStep($step)) {
+            Session::put(self::SESSION_STEP_KEY, $step);
         }
-
-        return $this->steps[max(0, $currentIndex - 1)];
     }
 
     /**
-     * Move to the next step.
+     * Check if the provided step is valid.
      */
-    public function moveToNextStep(string $currentStep): string
+    public function isValidStep(string $step): bool
     {
-        $nextStep = $this->getNextStep($currentStep);
-        $this->setCurrentStep($nextStep);
-
-        return $nextStep;
+        return in_array($step, $this->steps);
     }
 
     /**
@@ -101,6 +87,20 @@ class CheckoutSessionService
     }
 
     /**
+     * Get the previous step in the checkout process.
+     */
+    public function getPreviousStep(string $currentStep): string
+    {
+        $currentIndex = array_search($currentStep, $this->steps);
+
+        if ($currentIndex === false) {
+            return self::DEFAULT_STEP;
+        }
+
+        return $this->steps[max(0, $currentIndex - 1)];
+    }
+
+    /**
      * Clear all checkout session data.
      */
     public function clearCheckoutSession(): void
@@ -109,19 +109,19 @@ class CheckoutSessionService
     }
 
     /**
-     * Check if the provided step is valid.
-     */
-    public function isValidStep(string $step): bool
-    {
-        return in_array($step, $this->steps);
-    }
-
-    /**
      * Check if user can access the review step.
      */
     public function canAccessReview(): bool
     {
         return $this->getCurrentStep() === 'review';
+    }
+
+    /**
+     * Get the current checkout step.
+     */
+    public function getCurrentStep(): string
+    {
+        return Session::get(self::SESSION_STEP_KEY, self::DEFAULT_STEP);
     }
 
     /**

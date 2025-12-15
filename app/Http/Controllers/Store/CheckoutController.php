@@ -108,19 +108,19 @@ class CheckoutController extends Controller
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
 
-        DB::transaction(function () use ($checkout, $cart) {
+        $customer = Customer::firstOrCreate([
+            'email' => $checkout['contact_email'],
+            'phone' => $checkout['contact_phone'],
+        ], [
+            'company_id' => 1, // TODO - implement tenant...
+            'user_id' => auth()->id(),
+            'first_name' => $checkout['contact_first_name'],
+            'last_name' => $checkout['contact_last_name'],
+        ]);
 
-            $customer = Customer::lockForUpdate()->firstOrCreate([
-                'email' => $checkout['contact_email'],
-                'phone' => $checkout['contact_phone'],
-            ], [
-                'company_id' => 1, // TODO - implement tenant...
-                'user_id' => auth()->id(),
-                'first_name' => $checkout['contact_first_name'],
-                'last_name' => $checkout['contact_last_name'],
-            ]);
+        DB::transaction(function () use ($checkout, $cart, $customer) {
 
-            $order = Order::create([
+            $order = Order::lockForUpdate()->create([
                 'customer_id' => $customer->id,
                 'tracking_id' => 1, // TODO - implement tracking id...
                 'payment_id' => 1, // TODO - implement payment id...
@@ -129,7 +129,7 @@ class CheckoutController extends Controller
                 'shipping_method' => ShippingMethod::from((int) $checkout['shipping_method']),
                 'payment_method' => PaymentMethod::from((int) $checkout['payment_method']),
                 'cart_snapshot' => collect($cart)->toArray(),
-                //                'notes' => '',
+                'notes' => '',
             ]);
 
             $order->items()->createMany(
@@ -177,7 +177,7 @@ class CheckoutController extends Controller
                 ...$billingAddress,
             ]);
 
-        }, attempts: 5);
+        }, attempts: 3);
 
         $this->sessionService->clearCheckoutSession();
         LaraCart::emptyCart();

@@ -7,17 +7,14 @@ use Illuminate\Database\Seeder;
 
 class CareInstructionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-
         $instructions = [
+
             [
                 'name' => 'Wash 30 deg instruction',
                 'sort_order' => 1,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'wash-30',
                 'title' => [
                     'ro' => 'Spălați la 30° pentru a proteja țesătura',
                     'ru' => 'Стирать при 30°, чтобы сохранить ткань',
@@ -33,7 +30,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Wash 40 deg instruction',
                 'sort_order' => 2,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'wash-40',
                 'title' => [
                     'ro' => 'Spălați la 40° pentru o curățare mai eficientă',
                     'ru' => 'Стирать при 40° для более эффективной очистки',
@@ -49,7 +46,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Wash 60 deg instruction',
                 'sort_order' => 3,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'wash-60',
                 'title' => [
                     'ro' => 'Spălați la 60° pentru igienizare',
                     'ru' => 'Стирать при 60° для гигиенической обработки',
@@ -65,7 +62,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Wash 90 deg instruction',
                 'sort_order' => 4,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'wash-90',
                 'title' => [
                     'ro' => 'Spălați la 90° pentru a păstra calitatea și culoarea țesăturii',
                     'ru' => 'Стирать при 90° для сохранения качества и цвета ткани',
@@ -81,7 +78,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Hand wash instruction',
                 'sort_order' => 5,
-                'icon' => 'fa-solid fa-hand-holding',
+                'icon' => 'wash-hand',
                 'title' => [
                     'ro' => 'Spălare manuală',
                     'ru' => 'Ручная стирка',
@@ -97,7 +94,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Do not wash instruction',
                 'sort_order' => 6,
-                'icon' => 'fa-solid fa-ban',
+                'icon' => 'no-wash',
                 'title' => [
                     'ro' => 'Nu se spală',
                     'ru' => 'Не стирать',
@@ -113,7 +110,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Do not bleach',
                 'sort_order' => 7,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'no-bleach',
                 'title' => [
                     'ro' => 'Nu folosiți înălbitor',
                     'ru' => 'Не использовать отбеливатель',
@@ -129,7 +126,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Bleach allowed',
                 'sort_order' => 8,
-                'icon' => 'fa-solid fa-tshirt',
+                'icon' => 'bleach',
                 'title' => [
                     'ro' => 'Se poate folosi înălbitor',
                     'ru' => 'Разрешено использовать отбеливатель',
@@ -145,7 +142,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Tumble dry low instruction',
                 'sort_order' => 9,
-                'icon' => 'fa-solid fa-temperature-low',
+                'icon' => 'tumble-low',
                 'title' => [
                     'ro' => 'Uscare în uscător la temperatură joasă',
                     'ru' => 'Сушить в сушилке на низкой температуре',
@@ -161,7 +158,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Tumble dry medium instruction',
                 'sort_order' => 10,
-                'icon' => 'fa-solid fa-temperature-half',
+                'icon' => 'tumble-medium',
                 'title' => [
                     'ro' => 'Uscare în uscător la temperatură medie',
                     'ru' => 'Сушить в сушилке при средней температуре',
@@ -177,7 +174,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Tumble dry high instruction',
                 'sort_order' => 11,
-                'icon' => 'fa-solid fa-temperature-high',
+                'icon' => 'tumble-high',
                 'title' => [
                     'ro' => 'Uscare în uscător la temperatură înaltă',
                     'ru' => 'Сушить в сушилке на высокой температуре',
@@ -193,7 +190,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Do not tumble dry instruction',
                 'sort_order' => 12,
-                'icon' => 'fa-solid fa-ban',
+                'icon' => 'no-tumble',
                 'title' => [
                     'ro' => 'Nu folosiți uscătorul',
                     'ru' => 'Не использовать сушилку',
@@ -209,7 +206,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Line dry instruction',
                 'sort_order' => 13,
-                'icon' => 'fa-solid fa-grip-lines',
+                'icon' => 'line-dry',
                 'title' => [
                     'ro' => 'Uscare pe sârmă',
                     'ru' => 'Сушить на верёвке',
@@ -225,7 +222,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Dry flat instruction',
                 'sort_order' => 14,
-                'icon' => 'fa-solid fa-square',
+                'icon' => 'dry-flat',
                 'title' => [
                     'ro' => 'Uscare pe suprafață plană',
                     'ru' => 'Сушить в разложенном виде',
@@ -241,7 +238,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Iron low heat instruction',
                 'sort_order' => 15,
-                'icon' => 'fa-solid fa-temperature-low',
+                'icon' => 'iron-low',
                 'title' => [
                     'ro' => 'Călcați la temperatură joasă',
                     'ru' => 'Гладить при низкой температуре',
@@ -257,7 +254,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Iron medium heat instruction',
                 'sort_order' => 16,
-                'icon' => 'fa-solid fa-temperature-half',
+                'icon' => 'iron-medium',
                 'title' => [
                     'ro' => 'Călcați la temperatură medie',
                     'ru' => 'Гладить при средней температуре',
@@ -273,7 +270,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Iron high heat instruction',
                 'sort_order' => 17,
-                'icon' => 'fa-solid fa-temperature-high',
+                'icon' => 'iron-high',
                 'title' => [
                     'ro' => 'Călcați la temperatură înaltă',
                     'ru' => 'Гладить при высокой температуре',
@@ -289,7 +286,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Do not iron instruction',
                 'sort_order' => 18,
-                'icon' => 'fa-solid fa-ban',
+                'icon' => 'no-iron',
                 'title' => [
                     'ro' => 'Nu călcați',
                     'ru' => 'Не гладить',
@@ -305,7 +302,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Dry clean only instruction',
                 'sort_order' => 19,
-                'icon' => 'fa-solid fa-spray-can',
+                'icon' => 'dryclean-p',
                 'title' => [
                     'ro' => 'Doar curățare chimică',
                     'ru' => 'Только химчистка',
@@ -321,7 +318,7 @@ class CareInstructionSeeder extends Seeder
             [
                 'name' => 'Do not dry clean instruction',
                 'sort_order' => 20,
-                'icon' => 'fa-solid fa-ban',
+                'icon' => 'no-dryclean',
                 'title' => [
                     'ro' => 'Nu curățați chimic',
                     'ru' => 'Не сдавать в химчистку',
@@ -337,13 +334,7 @@ class CareInstructionSeeder extends Seeder
         ];
 
         foreach ($instructions as $instruction) {
-            CareInstruction::create([
-                'name' => $instruction['name'],
-                'sort_order' => $instruction['sort_order'],
-                'icon' => $instruction['icon'],
-                'title' => $instruction['title'],
-                'description' => $instruction['description'],
-            ]);
+            CareInstruction::create($instruction);
         }
     }
 }

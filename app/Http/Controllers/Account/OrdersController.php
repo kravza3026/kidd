@@ -48,8 +48,18 @@ class OrdersController extends Controller
             ->withBrowsershot(function ($browsershot) {
                 $browsershot->scale(0.85);
                 $browsershot->windowSize(1920, 1080);
+                $browsershot->setOption(
+                    'args', [
+                        '--disable-web-security',
+                        '--allow-file-access-from-files',
+                    ],
+                );
                 //                $browsershot->setOption('args', ['--disable-web-security']);
                 //                $browsershot->setOption('args', ['--allow-file-access-from-files']);
+                $browsershot->setOption('printBackground', true);
+                //                $browsershot->hideBrowserHeaderAndFooter();
+                //                $browsershot->noSandbox();
+                $browsershot->waitUntilNetworkIdle();
             })
             ->name($order->order_number.'_'.$order->placed_at->format('Y-m-d').'.pdf');
         //            ->download();

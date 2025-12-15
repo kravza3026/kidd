@@ -23,4 +23,25 @@ export default defineConfig({
             'ziggy-js': path.resolve('vendor/tightenco/ziggy'), // Router helper
         },
     },
+
+    // auto‑import for Vite HMR
+    safelist: ['wash-icon', 'wash-icon-sm', 'wash-icon-lg', 'wash-icon-muted', 'care-icon-wrapper'],
+
+    rules: [
+        ['.wash-icon', { width: '24px', height: '24px', color: 'currentColor' }],
+        ['.wash-icon-sm', { width: '18px', height: '18px' }],
+        ['.wash-icon-lg', { width: '32px', height: '32px' }],
+        ['.wash-icon-muted', { opacity: '0.6' }],
+        [
+            '.care-icon-wrapper',
+            {
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '24px',
+                height: '24px',
+                color: 'currentColor',
+            },
+        ],
+    ],
 });

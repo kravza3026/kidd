@@ -16,11 +16,11 @@ class ProductSeeder extends Seeder
 
         Product::factory()
             ->has(ProductVariant::factory()->count(5), 'variants')
-            ->count(150)
+            ->count(50)
             ->afterCreating(function (Product $product) {
 
-                foreach (range(1, rand(2, 20)) as $care_id) {
-                    $instructions_ids[] = $care_id;
+                foreach (range(1, rand(2, 5)) as $care_id) {
+                    $instructions_ids[] = rand(1, 20);
                 }
 
                 $product->careInstructions()->sync($instructions_ids);

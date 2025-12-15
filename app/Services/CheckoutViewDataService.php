@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Region;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use LukePOLO\LaraCart\Facades\LaraCart;
 
@@ -31,9 +32,9 @@ class CheckoutViewDataService
     /**
      * Get regions with cities from cache.
      */
-    public function getRegions(): \Illuminate\Database\Eloquent\Collection
+    public function getRegions(): Collection
     {
-        return Cache::flexible('regions', [600, 1800], function () {
+        return Cache::flexible('regions', [60 * 60, 60 * 60 * 24], function () {
             return Region::with('cities')
                 ->orderBy('sort_order')
                 ->orderBy('id')

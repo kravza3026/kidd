@@ -14,7 +14,7 @@
             }
             @page {
                 size: A4;
-                page-break-after: always;
+                /*page-break-after: always;*/
             }
         </style>
     </head>
@@ -45,8 +45,12 @@
                         </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.address') }}</span>
-                            {{ $company->address_line_1 }}
-                            {{ $company->address_line_2 }}, {{ $company->city }}, {{ $company->country }}
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->street_name }}
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->building }}
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->apartment }},</br>
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->city->name }},
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->region->name }}
+                            {{ $company->addresses()->firstWhere('address_type', AddressType::Billing)->postal_code }}
                         </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.idno') }}</span>
