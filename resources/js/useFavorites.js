@@ -18,10 +18,9 @@ export function useFavorites() {
     function saveToCookie() {
         Cookies.set(COOKIE_KEY, JSON.stringify(favorites.value), {
             expires: 30,
-            domain: '.' + window.location.hostname, // Available on example.com and its subdomains
-            secure: true, // Only sent over HTTPS
-            httpOnly: false, // Prevents client-side JS from accessing the cookie
-            sameSite: 'Lax', // Controls when cookies are sent with cross-site requests
+            domain: '.' + window.location.hostname,
+            secure: window.location.protocol === 'https:',
+            sameSite: 'Lax',
         });
 
         window.axios.get('favorites');

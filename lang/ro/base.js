@@ -1,4 +1,23 @@
 export default {
+    header: {
+        menu: {
+            catalog: 'Catalog',
+            about: 'Despre',
+            help: 'Ajutor',
+            contacts: 'Contacte',
+        },
+    },
+    offers: {
+        'mega-menu': {
+            title: 'Ești gata de vară?',
+            desc: 'Cumpără 4 produse și primește 20% reducere',
+        },
+    },
+    general: {
+        buttons: {
+            shop_now: 'Cumpără acum',
+        },
+    },
     alerts: {
         favorites: {
             addedToFavorites: 'Adăugat la Favorite',

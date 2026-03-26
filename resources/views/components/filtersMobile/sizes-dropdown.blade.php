@@ -5,7 +5,7 @@
 
 
 
-<div class="filter-group w-screen  grid space-y-[3px] z-[7000] left-0 bottom-0 px-2 bg-white">
+<div class="filter-group w-full grid space-y-[3px] z-[7000] left-0 bottom-0 px-2 bg-white">
     <label  for="filter_{{ $componentName }}_0"
            class="cursor-pointer  flex justify-between px-3 py-2 w-full has-[:checked]:bg-secondary rounded-xl text-sm hover:bg-secondary focus:ring-secondary">
         <div class="inline-flex items-center">

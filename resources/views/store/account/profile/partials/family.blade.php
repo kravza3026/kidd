@@ -12,6 +12,6 @@
     </header>
 
     <div class="family_list mt-6 mb-8 flex flex-grow flex-col gap-y-4">
-        <div data-vue-component="Family"></div>
+        <family></family>
     </div>
 </section>

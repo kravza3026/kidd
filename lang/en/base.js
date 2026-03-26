@@ -1,4 +1,23 @@
 export default {
+    header: {
+        menu: {
+            catalog: 'Explore',
+            about: 'About',
+            help: 'Help',
+            contacts: 'Contacts',
+        },
+    },
+    offers: {
+        'mega-menu': {
+            title: 'Ready for summer?',
+            desc: 'Buy 4 products and get 20% off',
+        },
+    },
+    general: {
+        buttons: {
+            shop_now: 'Shop now',
+        },
+    },
     alerts: {
         favorites: {
             addedToFavorites: 'Added to Favorites',

@@ -3,7 +3,7 @@
     $in_use = request()->has('filters') && (!request()->has('filters.fabric.0') && array_key_exists('fabric', request('filters'))) ? count(request('filters')['fabric']) : false;
 @endphp
 
-<div class="filter-group flex flex-wrap w-screen justify-center sm:grid-cols-2 gap-2">
+<div class="filter-group flex flex-wrap w-full justify-center sm:grid-cols-2 gap-2">
     <label for="filter_{{ $componentName }}_0"
            class="cursor-pointer flex flex-wrap h-[100px] w-[136px] mx-auto rounded-xl pb-4 px-4 pt-3 text-sm bg-secondary border border-darkest-snow">
         <div class="w-full flex items-center justify-end">

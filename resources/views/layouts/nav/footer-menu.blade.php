@@ -1,7 +1,7 @@
 
 <!-- Categories -->
 <div class="flex flex-col gap-2 rounded-lg bg-charcoal py-2 text-white">
-    <button type="button" @click="toggle('catalog')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
+    <button type="button" x-on:click="toggle('catalog')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
         <h5 class="text-snow text-lg opacity-60 font-bold " :class="{ 'opacity-100': open === 'catalog' }">
             {{ __('header.menu.catalog') }}
         </h5>
@@ -28,7 +28,7 @@
 
 <!-- Help -->
 <div class="flex flex-col gap-2 rounded-lg bg-charcoal py-2 text-white">
-    <button type="button" @click="toggle('help')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
+    <button type="button" x-on:click="toggle('help')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
         <h5 class="text-snow text-lg opacity-60 font-bold " :class="{ 'opacity-100': open === 'help' }">
             {{ __('footer.menu.help.title') }}
         </h5>
@@ -64,7 +64,7 @@
 
 <!-- Company -->
 <div class="flex flex-col gap-2 rounded-lg bg-charcoal py-2 text-white">
-    <button type="button" @click="toggle('company')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
+    <button type="button" x-on:click="toggle('company')" class="flex items-center justify-between cursor-pointer w-full xl:cursor-default">
         <h5 class="text-snow text-lg opacity-60 font-bold " :class="{ 'opacity-100': open === 'company' }">
             {{ __('footer.menu.company.title') }}
         </h5>

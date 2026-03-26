@@ -11,7 +11,7 @@
                         <div class="grid grid-cols-1 gap-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                             <!-- Product grid -->
                             @foreach ($products as $product)
-                                <div data-vue-component="ProductCard" data-product='@json($product)'></div>
+                                <product-card :product='@json($product)'></product-card>
                             @endforeach
                         </div>
                         {{ $products->onEachSide(1)->links() }}

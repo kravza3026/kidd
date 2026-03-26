@@ -10,6 +10,13 @@ export default {
     name: 'HelpMain',
     components: {BaseInputLabel, BaseCheckbox, BaseTextarea, Button, BaseInput},
 
+    props: {
+        tabs: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+
     data() {
         return {
             searchQuery: '',
@@ -18,12 +25,11 @@ export default {
         };
     },
 
-    setup() {
+    setup(props) {
         const activeTab = ref('DeliveryTab');
 
         const tabContentItem = computed(() => {
-            const el = document.getElementById(`tab-${activeTab.value}`);
-            return el ? el.innerHTML : '';
+            return props.tabs[activeTab.value] || '';
         });
 
         return {

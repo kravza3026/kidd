@@ -38,8 +38,8 @@
 @endphp
 
 {{--relative--}}
-<div {{ $attributes->merge(['class' => 'relative']) }} x-data="{ open: false, close() { open: false } }" @click.outside="close()" @close.stop="open = false">
-    <div @click="open = ! open" class="{{ $triggerClasses }}">
+<div {{ $attributes->merge(['class' => 'relative']) }} x-data="{ open: false, close() { open: false } }" x-on:click.outside="close()" x-on:close.stop="open = false">
+    <div x-on:click="open = ! open" class="{{ $triggerClasses }}">
         {{ $trigger }}
     </div>
 
@@ -52,7 +52,7 @@
          x-transition:leave-end="opacity-0 scale-95"
          class="absolute z-50 mt-2 {{ $width }} rounded-xl shadow-lg {{ $alignmentClasses }}"
          style="display: none;"
-         @click.outside="open = false"
+         x-on:click.outside="open = false"
     >
         <div class="rounded-xl ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
             {{ $content }}

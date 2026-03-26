@@ -3,7 +3,7 @@
         <div class="flex w-full gap-x-16">
             <div class="mt-4 flex w-full shrink-1 grow basis-full">
                 <div class="flex w-full flex-col space-y-6 last:[&>div]:border-b-0">
-                    <div data-vue-component="Cart"></div>
+                    <cart></cart>
                     <x-subscribe-form
                         title="{{ __('main.subscribe.title') }}"
                         secondaryTitle="{{ __('main.subscribe.subtitle') }}"

@@ -15,9 +15,6 @@
 
     <div class="mt-5">
         {{-- Product cards --}}
-        <div class="w-full"
-             data-vue-component="ProductsCardsSlider"
-             data-vue-props='@json(["products" => $products])'
-        ></div>
+        <products-cards-slider :products='@json($products)'></products-cards-slider>
     </div>
 </section>

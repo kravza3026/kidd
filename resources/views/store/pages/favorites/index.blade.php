@@ -9,9 +9,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 gap-y-6">
                         <!-- Product grid -->
                         @forelse ($products as $product)
-                            <div data-vue-component="ProductCard"
-                                 data-product='@json($product)'
-                            ></div>
+                            <product-card :product='@json($product)'></product-card>
                         @empty
                             <p>No products found</p>
                         @endforelse

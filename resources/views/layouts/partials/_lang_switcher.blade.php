@@ -1,8 +1,8 @@
 <div class="dropdown">
-    <div x-data="{ open: false }" class="relative inline-block text-left">
+    <div x-data="{ open: false }" class="relative z-[100002] inline-block text-left">
         <div>
             <button
-                @click="open = !open"
+                x-on:click="open = !open"
                 type="button"
                 class="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 ring-gray-300 ring-inset hover:bg-gray-50"
                 id="menu-button"
@@ -41,8 +41,8 @@
             x-transition:leave="transition duration-75 ease-in"
             x-transition:leave-start="scale-100 transform opacity-100"
             x-transition:leave-end="scale-95 transform opacity-0"
-            @click.outside="open = false"
-            class="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+            x-on:click.outside="open = false"
+            class="absolute right-0 z-[100003] mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="menu-button"

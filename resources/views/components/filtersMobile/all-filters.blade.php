@@ -35,8 +35,8 @@
             <div class="space-y-2">
                 @foreach($filters as $filter)
                     <div
+                        data-filter-slug="{{ $filter['slug'] }}"
                         class="w-full flex justify-between gap-x-2 border-b border-light-border pb-2 px-2 cursor-pointer"
-                        @click="$dispatch('open-filter', '{{ $filter['slug'] }}')"
                     >
                         <p class="text-black font-medium">{{ $filter['title'] }}</p>
                         <div class="flex gap-x-2 items-center">
@@ -51,5 +51,3 @@
 
 
         </div>
-
-

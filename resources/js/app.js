@@ -7,6 +7,11 @@ import { Ziggy } from './ziggy.js';
 import Alpine from 'alpinejs';
 import Precognition from 'laravel-precognition-alpine';
 import { default as IMask } from 'imask';
+
+import Swal from 'sweetalert2';
+import i18n from './i18n';
+import { useAlert } from '@/useAlert';
+
 import Search from './components/Search.vue';
 import MobileMenu from './components/MobileMenu.vue';
 import CartDropdown from './components/cart/CartDropdown.vue';
@@ -24,151 +29,125 @@ import Tooltip from './components/ui/tooltip.vue';
 import ScrollToTop from './components/ui/scrollToTop.vue';
 import SizeGuide from './components/ui/sizeGuide.vue';
 import HelpMain from './components/staticPages/help/helpMain.vue';
-import Swal from 'sweetalert2';
-import i18n from './i18n';
-import { useAlert } from '@/useAlert';
+import MainMenu from "@/components/main-menu.vue";
+import MegaMenu from "@/components/MegaMenu.vue";
+import TopLine from "@/components/TopLine.vue";
 
 import.meta.glob('../images/**/*');
 
+// -------------------------------
+// 🔥 GLOBALS
+// -------------------------------
 window.Swal = Swal;
 window.Alpine = Alpine;
 window.IMask = IMask;
-
 Alpine.plugin(Precognition);
 
+// toast
 const { showAlert } = useAlert();
 window.toast = showAlert;
 
-// Масив компонентів
-const components = {
-    Accordion,
-    Cart,
-    Addresses,
-    Family,
-    Search,
-    mobileMenu: MobileMenu,
-    CartDropdown,
-    UserDropdown,
-    Button,
-    Tooltip,
-    ScrollToTop,
-    SizeGuide,
-    ProductCard,
-    ProductSlider,
-    ProductPageForm,
-    ProductsCardsSlider,
-    HelpMain,
-};
-
-// Шукаємо всі елементи з data-vue-компонентом
-document.querySelectorAll('[data-vue-component]').forEach((el) => {
-    const name = el.dataset.vueComponent;
-
-    let props = {};
-    if (el.dataset.vueProps) {
-        props = JSON.parse(el.dataset.vueProps);
-    } else if (el.dataset.product) {
-        props = { product: JSON.parse(el.dataset.product) };
-    }
-
-    if (el.dataset.locale) props.locale = el.dataset.locale;
-    if (el.dataset.link) props.link = el.dataset.link;
-    if (el.dataset.title) props.title = el.dataset.title;
-    if (el.dataset.info) props.info = el.dataset.info;
-
-    if (components[name]) {
-        const app = createApp(components[name], props);
-        app.use(i18n);
-        app.use(ZiggyVue, Ziggy); // php artisan ziggy:generate
-
-        app.mount(el);
-    }
+// -------------------------------
+// 🔥 ALPINE STORE (до .start())
+// -------------------------------
+Alpine.store('dropdown', {
+    open: false,
+    toggle() {
+        this.open = !this.open;
+    },
+    close() {
+        this.open = false;
+    },
 });
 
-// Ініціалізація Alpine.js
-document.addEventListener('alpine:init', () => {
-    Alpine.store('dropdown', {
-        open: false,
-        toggle() {
-            this.open = !this.open;
-        },
-        close() {
-            this.open = false;
-        },
-    });
-});
+// -------------------------------
+// 🔥 VUE APP — (Vue first, Alpine second)
+// -------------------------------
+const app = createApp({});
 
+// всі компоненти
+app.component('top-line', TopLine);
+app.component('mobile-menu', MobileMenu);
+app.component('main-menu', MainMenu);
+app.component('mega-menu', MegaMenu);
+app.component('search-component', Search);
+app.component('cart-dropdown', CartDropdown);
+app.component('user-dropdown', UserDropdown);
+app.component('product-card', ProductCard);
+app.component('product-slider', ProductSlider);
+app.component('product-page-form', ProductPageForm);
+app.component('products-cards-slider', ProductsCardsSlider);
+app.component('accordion', Accordion);
+app.component('tooltip', Tooltip);
+app.component('scroll-to-top', ScrollToTop);
+app.component('size-guide', SizeGuide);
+app.component('help-main', HelpMain);
+app.component('addresses', Addresses);
+app.component('family', Family);
+app.component('cart', Cart);
+app.component('ui-button', Button);
+
+// плаґіни Vue
+app.use(i18n);
+app.use(ZiggyVue, Ziggy);
+
+// монтуємо Vue
+app.mount('#app');
+
+// -------------------------------
+// 🔥 ALPINE STARTS AFTER VUE
+// -------------------------------
 Alpine.start();
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('#phone, #contact_phone').forEach((phone_input) => {
-        if (phone_input !== null) {
-            IMask(phone_input, {
-                mask: '+{373} (00) 000 000',
-                lazy: true, // make placeholder always visible
-                placeholderChar: '_', // defaults to '_'
-            });
-        }
+// -------------------------------
+// 🔥 INPUT MASKS + HELPERS
+// -------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Phone mask ---
+    document.querySelectorAll('#phone, #contact_phone').forEach(el => {
+        IMask(el, {
+            mask: '+{373} (00) 000 000',
+            lazy: true,
+            placeholderChar: '_',
+        });
     });
 
-    document
-        .querySelectorAll('#billing_postal_code, #shipping_postal_code, #postal_code')
-        .forEach((postal_code_input) => {
-            if (postal_code_input !== null) {
-                IMask(postal_code_input, {
-                    mask: 'MD-0000',
-                    regex: '^(?:MD)*(\\d{4})$',
-                    lazy: false, // make placeholder always visible
-                    placeholderChar: '_', // defaults to '_'
-                });
-            }
+    // --- Postal code mask ---
+    document.querySelectorAll('#billing_postal_code, #shipping_postal_code, #postal_code')
+        .forEach(el => {
+            IMask(el, {
+                mask: 'MD-0000',
+                regex: '^(?:MD)*(\\d{4})$',
+                lazy: false,
+                placeholderChar: '_',
+            });
         });
-    // TODO add translate in toast
-    let copyBtn = document.getElementById('copyBtn');
-    if (copyBtn !== null) {
-        copyBtn.addEventListener('click', function () {
-            const text = document.getElementById('copy').innerText;
 
-            // Основний спосіб (Clipboard API)
+    // --- Copy to clipboard ---
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const text = document.getElementById('copy').innerText;
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard
-                    .writeText(text)
-                    .then(() => {
-                        toast({
-                            type: 'info',
-                            message: text,
-                            title: 'Code is copied to clipboard',
-                        });
-                    })
-                    .catch((err) => {
-                        toast({
-                            type: 'info',
-                            message: text,
-                            title: 'Could not copy to clipboard',
-                        });
-                    });
+                navigator.clipboard.writeText(text).then(() => {
+                    toast({ type: 'info', message: text, title: 'Code is copied to clipboard' });
+                });
             } else {
-                let textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed'; // не скролить сторінку
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
+                const area = document.createElement('textarea');
+                area.value = text;
+                area.style.position = 'fixed';
+                document.body.appendChild(area);
+                area.select();
+
                 try {
                     document.execCommand('copy');
-                    toast({
-                        type: 'info',
-                        message: text,
-                        title: 'Code is copied to clipboard',
-                    });
-                } catch (err) {
-                    toast({
-                        type: 'info',
-                        message: text,
-                        title: 'Could not copy to clipboard',
-                    });
+                    toast({ type: 'info', message: text, title: 'Code is copied to clipboard' });
+                } catch(err) {
+                    toast({ type: 'info', message: text, title: 'Could not copy' });
                 }
-                document.body.removeChild(textarea);
+
+                document.body.removeChild(area);
             }
         });
     }

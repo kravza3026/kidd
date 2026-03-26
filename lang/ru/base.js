@@ -1,4 +1,23 @@
 export default {
+    header: {
+        menu: {
+            catalog: 'Каталог',
+            about: 'О нас',
+            help: 'Помощь',
+            contacts: 'Контакты',
+        },
+    },
+    offers: {
+        'mega-menu': {
+            title: 'Готов к лету?',
+            desc: 'Купи 4 товара и получи 20% скидку',
+        },
+    },
+    general: {
+        buttons: {
+            shop_now: 'Купить сейчас',
+        },
+    },
     alerts: {
         favorites: {
             addedToFavorites: 'Добавлено в Избранные',
@@ -64,6 +83,14 @@ export default {
         },
 
         checkout_btn: 'Оформить заказ',
+    },
+    header:{
+      menu:{
+          catalog:"Каталог",
+          about:"О нас",
+          help:"Помощь",
+          contacts:"Контакты",
+      }
     },
     address: {
         type_shipping: 'Адрес доставки',

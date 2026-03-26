@@ -1,5 +1,6 @@
 <script>
 import Search from './Search.vue';
+import { isMegaOpen, toggleMegaMenu, closeMegaMenu } from '@/stores/megaMenu';
 import menuIcon from '@img/icons/menu.svg';
 import menuOpenIcon from '@img/icons/olive/menuOpen.svg';
 import searchIcon from '@img/icons/search.svg';
@@ -25,6 +26,10 @@ export default {
         user: {
             type: Object,
             default: () => ({}),
+        },
+        helpUrl: {
+            type: String,
+            default: '#',
         },
     },
 
@@ -69,7 +74,16 @@ export default {
         });
         return {
             cartItems,
+            isMegaOpen,
+            toggleMegaMenu,
+            closeMegaMenu,
         };
+    },
+
+    watch: {
+        isMegaOpen(val) {
+            document.body.classList.toggle('overflow-hidden', val);
+        },
     },
 
     computed: {
@@ -91,13 +105,9 @@ export default {
             this.cartOpen = false;
             this.userOpen = false;
 
-            this.exploreOpen = !this.exploreOpen;
+            this.toggleMegaMenu();
 
-            if (window.Alpine?.store('dropdown')) {
-                window.Alpine.store('dropdown').toggle();
-            }
-
-            document.body.classList.toggle('overflow-hidden', this.exploreOpen);
+            document.body.classList.toggle('overflow-hidden', this.isMegaOpen.value);
         },
         toggleSearch() {
             this.exploreOpen = false;
@@ -138,7 +148,7 @@ export default {
 </script>
 <template>
 
-        <div class="menu bottom-0 w-screen z-10  bg-white lg:hidden">
+        <div class="menu bottom-0 w-full z-10  bg-white lg:hidden">
             <div class="border-y border-gray-200 bg-white py-1">
                 <div class="flex justify-between items-center px-0 py-2">
                     <!-- Explore -->
@@ -149,11 +159,11 @@ export default {
                             @click.prevent="toggleExplore"
                         >
                             <span
-                                :class="{ 'text-olive': exploreOpen }"
+                                :class="{ 'text-olive': isMegaOpen }"
                                 class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold"
                             >
                                 <img
-                                    :src="exploreOpen ? menuOpenIcon : menuIcon"
+                                    :src="isMegaOpen ? menuOpenIcon : menuIcon"
                                     alt="menu"
                                     class="mx-auto pb-1 opacity-65"
                                 />
@@ -225,7 +235,7 @@ export default {
                     <!-- Help -->
                     <div class="group flex-1">
                         <a
-                            :href="'/' + locale + '' + route('help', {}, false)"
+                            :href="helpUrl"
                             class="mx-auto flex w-full items-end justify-center px-2 pt-2 text-center text-gray-400"
                         >
                             <span class="text-charcoal/60 block px-1 pt-1 pb-2 font-bold">

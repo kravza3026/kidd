@@ -18,6 +18,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
+            vue: 'vue/dist/vue.esm-bundler.js', // <--- важливо
             '@': path.resolve(__dirname, 'resources/js'),
             '@img': path.resolve(__dirname, 'resources/images'), // опціонально для зображень
             'ziggy-js': path.resolve('vendor/tightenco/ziggy'), // Router helper

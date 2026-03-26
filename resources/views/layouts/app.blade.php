@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="overflow-x-hidden">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,30 +35,27 @@
         @stack('head')
         @include('layouts.partials.analytics')
     </head>
-    <body @class(['page-fade', 'bg-white', '!bg-[#FAFAFA]' => request()->is('*/account/*')])>
-        @include('layouts.partials.header')
+    <body @class(['page-fade', 'bg-white','overflow-x-hidden', '!bg-[#FAFAFA]' => request()->is('*/account/*')]) >
+        <div id="app">
+            @include('layouts.partials.header')
 
-        <main class="min-h-[calc(100vh-250px)]">
-            {{ $slot }}
-        </main>
+            <main class="min-h-[calc(100vh-250px)] pb-[90px] lg:pb-0">
+                {{ $slot }}
+            </main>
+
+            <div class="fixed bottom-0 left-0 z-[1000] w-full bg-white lg:hidden">
+                <mobile-menu
+                    :user="{{ json_encode(auth()->user()) }}"
+                    :is-authenticated="{{ json_encode(auth()->check()) }}"
+                    help-url="{{ url(LaravelLocalization::getCurrentLocale() . '/' . trans('routes.menu.help', [], LaravelLocalization::getCurrentLocale())) }}"
+                ></mobile-menu>
+            </div>
+
+            <scroll-to-top></scroll-to-top>
+        </div>
 
         @include('layouts.partials.footer')
-        <div
-            class="!fixed !bottom-0 !left-0 z-[1000] w-full bg-white"
-            data-vue-component="mobileMenu"
-            data-vue-props="{{ json_encode(['user' => auth()->user(), 'isAuthenticated' => auth()->check()]) }}"
-        ></div>
 
-        <div data-vue-component="ScrollToTop"></div>
-        <div
-            class="backdrop fixed inset-0 z-[2] bg-black/70"
-            x-data
-            x-cloak
-            x-show="$store.dropdown.open"
-            x-transition:enter="transition duration-200 ease-out"
-            x-transition:enter-start="opacity-0 scale-95 "
-            x-transition:enter-end="opacity-100 "
-        ></div>
 
         @cookieconsentview
         @stack('scripts')

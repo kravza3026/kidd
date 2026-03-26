@@ -17,7 +17,7 @@
     <div class="fixed top-auto cursor-pointer bottom-[100px] w-full left-0 h-14 z-[2] flex items-center justify-center">
         <div class="max-w-64 mx-auto flex items-center justify-center bg-charcoal rounded-full ">
             <div
-                @click="openFilter('all')"
+                x-on:click="openFilter('all')"
                 class="p-5 flex items-center rounded-full rounded-r-none h-12 bg-charcoal  w-1/2">
                 <div class="flex justify-start items-center gap-x-1">
                     <div class="w-3.5 h-3.5 relative">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div
-                @click="openFilter('sort')"
+                x-on:click="openFilter('sort')"
                 class="bg-charcoal p-5 rounded-full h-12 rounded-l-none w-1/2 flex items-center justify-center gap-x-2">
                 <div>
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,62 +55,90 @@
             id="modal"
             x-show="modalOpen"
             x-cloak
-            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-500"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-
-            @click.self="closeModal()"
-            class="fixed inset-0 h-screen w-screen bg-black/50 flex items-end justify-center z-[9999]"
+            x-on:click.self="closeModal()"
+            class="fixed inset-0 z-[9999] h-screen w-screen"
         >
+            <div class="fixed inset-0 bg-black/50" x-on:click="closeModal()"></div>
             <div
                 id="modalContent"
                 x-init="initFilters()"
-
-                @open-filter.window="openFilter($event.detail)"
-                class="bg-white w-full rounded-t-2xl py-2 relative transform transition-transform  ease-out"
+                x-on:open-filter.window="openFilter($event.detail)"
+                x-on:click="handleModalClick($event)"
+                x-transition:enter="transform transition ease-out duration-300"
+                x-transition:enter-start="translate-y-full"
+                x-transition:enter-end="translate-y-0"
+                x-transition:leave="transform transition ease-in duration-200"
+                x-transition:leave-start="translate-y-0"
+                x-transition:leave-end="translate-y-full"
+                class="fixed inset-x-0 bottom-0 flex h-[85vh] w-screen flex-col overflow-hidden rounded-t-[24px] bg-white shadow-2xl"
             >
-                <div class="mb-2 relative"
-                >
-                    <template x-if="currentFilter !== 'all'">
-                        <div class="relative flex justify-between items-center h-14 mb-4  border-b border-light-border p-4">
-                            <div class="flex items-center gap-x-2">
-                                <button @click="backToAll()" type="button" class="border border-light-border rounded-full flex items-center justify-center size-10">
-                                    <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
-                                </button>
-
-                                <span class="text-black font-bold text-2xl" x-text="currentFilterTitle"></span>
-                            </div>
-                        </div>
-                    </template>
-
-                    <template x-if="currentFilter === 'all'">
-                        <div
-                            class="relative flex justify-between items-center h-14 mb-4 border-b border-light-border p-4">
-                            <div class="flex items-center gap-x-2">
-                                <button type="button"  @click="closeModal()"  class="border border-light-border rounded-full flex items-center justify-center size-10">
-                                    <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
-                                </button>
-                                <span class="text-black font font-bold text-2xl">Filter by</span>
-                            </div>
-                            <button type="button" class="flex items-center gap-x-2 top-2 right-3 text-black text-2xl border border-light-border rounded-full py-0 px-3">
-                                &times; <span class="text-sm">Clear filter</span>
+                <div class="relative flex min-h-0 flex-1 flex-col">
+                    <!-- Back arrow header (specific filter view) -->
+                    <div
+                        x-show="currentFilter !== 'all'"
+                        class="relative flex h-16 shrink-0 items-center justify-between border-b border-light-border bg-white px-4"
+                    >
+                        <div class="flex items-center gap-x-2">
+                            <button x-on:click="backToAll()" type="button" class="border border-light-border rounded-full flex items-center justify-center size-10">
+                                <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
                             </button>
+                            <span class="text-black font-bold text-2xl" x-text="currentFilterTitle"></span>
                         </div>
-                    </template>
+                    </div>
 
-                    <x-filtersMobile.modal>
-                        <div x-html="currentFilterHtml"></div>
-                    </x-filtersMobile.modal>
-
-                    <template x-if="currentFilter !== 'all'" >
-                        <div class="px-4">
-                            <x-ui.button  size="large" left_icon="false" right_icon="false" class="my-5 !rounded-xl !py-1 !w-full mx-auto font-bold">
-                                Save & Continue
-                            </x-ui.button>
+                    <!-- All-filters header -->
+                    <div
+                        x-show="currentFilter === 'all'"
+                        class="relative flex h-16 shrink-0 items-center justify-between border-b border-light-border bg-white px-4"
+                    >
+                        <div class="flex items-center gap-x-2">
+                            <button type="button" x-on:click="closeModal()" class="border border-light-border rounded-full flex items-center justify-center size-10">
+                                <img class="rotate-180" src="{{ Vite::image('icons/right_arrow.svg') }}" alt="" />
+                            </button>
+                            <span class="text-black font font-bold text-2xl">Filter by</span>
                         </div>
-                    </template>
+                        <button type="button" class="flex items-center gap-x-2 top-2 right-3 text-black text-2xl border border-light-border rounded-full py-0 px-3">
+                            &times; <span class="text-sm">Clear filter</span>
+                        </button>
+                    </div>
+
+                    <!-- Content area -->
+                    <div class="relative min-h-0 flex-1 overflow-hidden">
+                        <!-- All filters list -->
+                        <div
+                            x-show="currentFilter === 'all'"
+                            class="absolute inset-0 overflow-y-auto px-4 py-4"
+                        >
+                            <x-filtersMobile.all-filters />
+                        </div>
+
+                        <!-- Specific filter content (slides up from bottom) -->
+                        <div
+                            x-show="currentFilter !== 'all'"
+                            class="absolute inset-0 overflow-y-auto px-4 py-4"
+                        >
+                            <div x-html="currentFilterHtml"></div>
+                        </div>
+                    </div>
+
+                    <!-- Apply button (specific filter view) -->
+                    <div
+                        x-show="currentFilter !== 'all'"
+                        class="border-t border-light-border bg-white px-4 py-4 shrink-0"
+                    >
+                        <button
+                            type="submit"
+                            class="bg-olive border-dark-olive text-white flex w-full items-center justify-center rounded-xl border-b-4 px-6 py-4 text-base font-bold shadow-sm transition-all duration-500 ease-in-out hover:bg-dark-olive hover:shadow-none"
+                        >
+                            Apply filters
+                        </button>
+                    </div>
                 </div>
 
 
@@ -118,13 +146,6 @@
         </div>
 
 </form>
-
-
-<style>
-    #modalContent {
-        transform: translateY(100%);
-    }
-</style>
 @push('scripts')
     <script type="text/javascript">
         // document.querySelector('#filtersForm').addEventListener('change', function (event) {
@@ -166,6 +187,14 @@
                 get currentFilterTitle() {
                     return this.titles[this.currentFilter] || '';
                 },
+                hydrateModalContent() {
+                    this.$nextTick(() => {
+                        const container = document.getElementById('modalSlotContainer');
+                        if (container && window.Alpine?.initTree) {
+                            window.Alpine.initTree(container);
+                        }
+                    });
+                },
                 initFilters() {
                     this.filters = {
                         all: @js(view('components.filtersMobile.all-filters')->render()),
@@ -181,29 +210,27 @@
                         @endauth
 
                     };
+                    this.hydrateModalContent();
                 },
                 modalOpen: false,
 
                 openFilter(filterName) {
                     this.currentFilter = filterName;
                     this.modalOpen = true;
-
-                    this.$nextTick(() => {
-                        const modal = document.getElementById('modalContent');
-                        modal.style.transition = 'transform 0.5s ease-out';
-                        modal.style.transform = 'translateY(0)';
-                    });
+                    this.hydrateModalContent();
                 },
                 backToAll() {
                     this.currentFilter = 'all';
+                    this.hydrateModalContent();
+                },
+                handleModalClick(event) {
+                    const filterTrigger = event.target.closest('[data-filter-slug]');
+                    if (filterTrigger) {
+                        this.openFilter(filterTrigger.dataset.filterSlug);
+                    }
                 },
                 closeModal() {
-                    const modal = document.getElementById('modalContent');
-                    modal.style.transform = 'translateY(100%)';
-
-                    setTimeout(() => {
-                        this.modalOpen = false;
-                    }, 500); // Чекаємо кінець анімації
+                    this.modalOpen = false;
                 },
             }
         }
