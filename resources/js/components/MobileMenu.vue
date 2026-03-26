@@ -11,8 +11,9 @@ import faqOpenIcon from '@img/icons/olive/faq_active.svg';
 import userIcon from '@img/icons/user.svg';
 import CartDropdown from '@/components/cart/CartDropdown.vue';
 import UserDropdown from '@/components/account/UserDropdown.vue';
-import { emitter } from '@/eventBus.js';
-import { inject, onMounted, ref } from 'vue';
+import { useCartStore } from '@/stores/cart';
+import { storeToRefs } from 'pinia';
+import { inject, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const currentPath = '/' + (window.location.pathname.split('/')[2] || '');
@@ -53,25 +54,14 @@ export default {
     },
     setup() {
         const { locale, t, n } = useI18n();
-        const cartItems = ref([]);
+        const cartStore = useCartStore();
+        const { items: cartItems } = storeToRefs(cartStore);
         const route = inject('route');
-        const getCartItems = async () => {
-            await window.axios
-                .get('cart')
-                .then((response) => {
-                    cartItems.value = response.data.items;
-                })
-                .catch((error) => {
-                    console.error('Server error:', error);
-                    cartItems.value = [];
-                });
-        };
-        emitter.on('cart-updated', getCartItems);
 
         onMounted(() => {
-            getCartItems();
-            emitter.on('cart-updated', getCartItems);
+            cartStore.fetchCart();
         });
+
         return {
             cartItems,
             isMegaOpen,

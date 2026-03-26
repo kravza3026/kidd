@@ -80,7 +80,7 @@
 
                                             <Button
                                                 display-as="a"
-                                                :href="route('size-chart')"
+                                                :href="sizeChartUrl"
                                                 class=""
                                             >
                                                 <p class="border-none outline-none">View full size chart</p>
@@ -105,6 +105,13 @@ import sizeIcon from '@img/icons/olive/size.svg';
 import { useI18n } from 'vue-i18n';
 import Button from "@/components/ui/Button.vue";
 
-const { t, locale } = useI18n();
+const props = defineProps({
+    sizeChartUrl: {
+        type: String,
+        default: '',
+    },
+})
+
+const { t } = useI18n();
 const open = ref(false)
 </script>

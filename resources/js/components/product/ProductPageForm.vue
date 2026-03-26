@@ -6,17 +6,22 @@ import iconFavorited from '@img/icons/inFavorite.svg';
 import cartWhite from '@img/icons/cart_white.svg';
 import SizeGuide from '@/components/ui/sizeGuide.vue';
 import Button from '@/components/ui/Button.vue';
-import { useFavorites } from '@/useFavorites.js';
+import { useFavoritesStore } from '@/stores/favorites';
+import { useCartStore } from '@/stores/cart';
 import { useAlert } from '@/useAlert.js';
-import { emitter } from '@/eventBus.js';
 
-const { toggleFavorite, isFavorite } = useFavorites();
+const { toggleFavorite, isFavorite } = useFavoritesStore();
+const cartStore = useCartStore();
 const { showAlert } = useAlert();
 
 const props = defineProps({
     product: {
         type: Object,
         required: true,
+    },
+    sizeChartUrl: {
+        type: String,
+        default: '',
     },
 });
 
@@ -127,7 +132,7 @@ const addToCart = async (event) => {
             if (response.data?.alert) {
                 showAlert(response.data?.alert);
             }
-            emitter.emit('cart-updated');
+            cartStore.fetchCart();
 
             console.log('Product added to cart successfully');
         })
@@ -265,7 +270,7 @@ const handleFavoriteClick = (id, name) => {
                     <div class="text-charcoal inline-flex text-base font-normal">
                         {{ t('product.desc.size') }}
                     </div>
-                    <sizeGuide></sizeGuide>
+                    <sizeGuide :size-chart-url="sizeChartUrl"></sizeGuide>
                 </div>
                 <fieldset aria-label="Choose a size">
                     <div class="flex flex-wrap items-center justify-start gap-3 pb-1 md:gap-4">

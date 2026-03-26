@@ -4,8 +4,9 @@ import cartIcon from '@img/cart.svg';
 import cartIconOpen from '@img/icons/olive/cartOpen.svg';
 import basket_empty from '@img/basket_empty.svg';
 import Button from '@/components/ui/Button.vue';
-import { emitter } from '@/eventBus.js';
-import {useI18n} from "vue-i18n";
+import { useCartStore } from '@/stores/cart';
+import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
 
 export default {
     name: 'CartDropdown',
@@ -14,23 +15,10 @@ export default {
     },
     setup() {
         const { locale, t, n } = useI18n();
-        const cartItems = ref([]);
-        const cartGrandTotal = ref(0);
+        const cartStore = useCartStore();
+        const { items: cartItems, grandTotal: cartGrandTotal } = storeToRefs(cartStore);
         const open = ref(false);
         const dropdown = ref(null);
-        const getCartItems = async () => {
-            await window.axios.get('cart')
-                .then((response) => {
-                cartItems.value = response.data.items;
-                cartGrandTotal.value = response.data.grand_total;
-            }).catch((error) => {
-                console.error('Server error:', error);
-                cartItems.value = [];
-                cartGrandTotal.value = 0;
-            });
-
-        };
-        getCartItems.fetched = false;
 
         const handleClickOutside = (event) => {
             if (dropdown.value && !dropdown.value.contains(event.target)) {
@@ -39,14 +27,12 @@ export default {
         };
 
         onMounted(() => {
-            getCartItems();
+            cartStore.fetchCart();
             document.addEventListener('click', handleClickOutside);
-            emitter.on('cart-updated', getCartItems);
         });
 
         onUnmounted(() => {
             document.removeEventListener('click', handleClickOutside);
-            emitter.off('cart-updated', getCartItems);
         });
 
         return {

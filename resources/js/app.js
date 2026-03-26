@@ -1,6 +1,7 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import { ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy.js';
 
@@ -88,6 +89,7 @@ app.component('cart', Cart);
 app.component('ui-button', Button);
 
 // плаґіни Vue
+app.use(createPinia());
 app.use(i18n);
 app.use(ZiggyVue, Ziggy);
 

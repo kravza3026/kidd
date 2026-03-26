@@ -1,5 +1,5 @@
 <script>
-import { useFavorites } from '@/useFavorites.js';
+import { useFavoritesStore } from '@/stores/favorites';
 import { useI18n } from 'vue-i18n';
 
 export default {
@@ -13,7 +13,7 @@ export default {
     setup() {
         const { locale, t, n } = useI18n();
 
-        const { toggleFavorite, isFavorite } = useFavorites();
+        const { toggleFavorite, isFavorite } = useFavoritesStore();
 
         return { toggleFavorite, isFavorite, locale };
     },

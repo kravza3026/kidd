@@ -1,7 +1,7 @@
 <script>
-import { computed, getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue';
 import clickOutside from '@/clickOutside.js';
-import { emitter } from '@/eventBus.js';
+import { useCartStore } from '@/stores/cart';
 import iconTrash from '@img/common/trash.svg';
 import iconTrashMobile from '@img/icons/trash_b.png';
 import iconCheck from '@img/icons/checked_white.svg';
@@ -31,6 +31,7 @@ export default {
     },
     setup() {
         const { locale, t, n } = useI18n();
+        const cartStore = useCartStore();
         const isMobile = ref(false);
         const { proxy } = getCurrentInstance();
 
@@ -170,15 +171,7 @@ export default {
             );
             if (!variant) return;
             try {
-                await axios
-                    .put(`cart/${item.hash}`, {
-                        variant_id: variant.id,
-                        quantity: item.quantity,
-                    })
-                    .then((response) => {
-                        if (response.data?.alert) window.toast(response.data.alert);
-                    });
-                emitter.emit('cart-updated');
+                await cartStore.updateItem(item.hash, variant.id, item.quantity);
             } catch (err) {
                 console.error('Server error:', err);
             }
@@ -188,11 +181,8 @@ export default {
         };
         const removeItem = async (item) => {
             try {
-                await axios.delete(`cart/${item.hash}`).then((response) => {
-                    if (response.data?.alert) window.toast(response.data.alert);
-                });
+                await cartStore.removeItem(item.hash);
                 proxy.cartItems = proxy.cartItems.filter((i) => i.hash !== item.hash);
-                emitter.emit('cart-updated');
             } catch (err) {
                 console.error('Server error:', err);
             }
@@ -202,6 +192,7 @@ export default {
             t,
             n,
             locale,
+            cartStore,
             selectIcon,
             isMobile,
             // основні методи
@@ -226,10 +217,8 @@ export default {
     methods: {
         async getCartItems() {
             try {
-                const response = await window.axios.get(`cart`);
-                const grandTotal = response.data.grand_total;
-                const total = response.data.total;
-                this.cartItems = response.data.items.map((item) => {
+                await this.cartStore.fetchCart();
+                this.cartItems = this.cartStore.items.map((item) => {
                     const selectedVariant = item.product.variants.find(
                         (v) => v.size.id === item.size.id && v.color.id === item.color.id,
                     );

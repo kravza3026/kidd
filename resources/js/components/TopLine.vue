@@ -37,7 +37,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
 </script>
 
 <template>
-    <div class="bg-light-orange hidden lg:block">
+    <div class="bg-light-orange relative z-[100002] hidden lg:block">
         <div class="container flex justify-between">
             <!-- Left links -->
             <div class="flex-1 flex items-center gap-5">
