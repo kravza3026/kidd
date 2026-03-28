@@ -3,15 +3,15 @@
     $progressWidth = '25%';
     $step = 'Shipping'
 @endphp
+
 @use('App\Enums\ShippingMethod')
 @section('checkout-form')
-
     <div class="pb-section grid grid-cols-17 gap-4">
-        <div class="col-span-1 hidden lg:flex items-start justify-start">
+        <div class="col-span-1 hidden items-start justify-start lg:flex">
             <p class="bg-olive flex size-8 items-center justify-center rounded-full text-sm font-bold text-white">1</p>
         </div>
         <div class="col-span-17 lg:col-span-16">
-            <div class="hidden lg:block mb-8">
+            <div class="mb-8 hidden lg:block">
                 <h1 class="text-3xl font-bold">
                     {{ __('checkout.steps.shipping') }}
                 </h1>
@@ -23,8 +23,7 @@
                 <label for="shipping_method" class="text-charcoal mb-2 block text-xl font-bold lg:font-medium">
                     {{ __('checkout.shipping.form.shipping_method') }}
                 </label>
-                <div class="grid min-h-10 grid-cols-1 lg:grid-cols-3 gap-4">
-
+                <div class="grid min-h-10 grid-cols-1 gap-4 lg:grid-cols-3">
                     <div class="relative">
                         <input
                             type="radio"
@@ -39,12 +38,16 @@
                             for="shipping_method_regular"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
-                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            <span
+                                class="border-olive absolute top-1/3 right-4 z-20 flex size-6 items-center justify-center rounded-full border-1 lg:top-2 lg:right-2 lg:size-4"
+                            >
+                                <span
+                                    class="marker peer-checked:bg-olive block size-3.5 rounded-full lg:h-[10px] lg:w-[10px]"
+                                ></span>
                             </span>
                         </label>
                         <div
-                            class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative flex rounded-2xl border-2 bg-white p-3 duration-300 lg:flex-col peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
                             <div>
                                 <img
@@ -62,8 +65,8 @@
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.regular.title') }}
                                     <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +{{ config('laracart.delivery_prices.regular') }} {{ __('general.mdl') }}
-                                </span>
+                                        +{{ config('laracart.delivery_prices.regular') }} {{ __('general.mdl') }}
+                                    </span>
                                 </p>
                                 <p class="text-sm opacity-40">
                                     {{ __('checkout.shipping.form.shipping_methods.regular.desc') }}
@@ -85,12 +88,16 @@
                             for="shipping_express"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                            <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
-                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            <span
+                                class="border-olive absolute top-1/3 right-4 z-20 flex size-6 items-center justify-center rounded-full border-1 lg:top-2 lg:right-2 lg:size-4"
+                            >
+                                <span
+                                    class="marker peer-checked:bg-olive block size-3.5 rounded-full lg:h-[10px] lg:w-[10px]"
+                                ></span>
                             </span>
                         </label>
                         <div
-                            class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative flex rounded-2xl border-2 bg-white p-3 duration-300 lg:flex-col peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
                             <div>
                                 <img
@@ -108,8 +115,8 @@
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.express.title') }}
                                     <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +{{ config('laracart.delivery_prices.expres') }} {{ __('general.mdl') }}
-                                </span>
+                                        +{{ config('laracart.delivery_prices.expres') }} {{ __('general.mdl') }}
+                                    </span>
                                 </p>
                                 <p class="text-sm opacity-40">
                                     {{ __('checkout.shipping.form.shipping_methods.express.desc') }}
@@ -131,12 +138,16 @@
                             for="shipping_gift"
                             class="peer-checked:[&_.marker]:bg-olive absolute inset-0 z-10 bg-transparent"
                         >
-                             <span class="border-olive flex justify-center items-center absolute top-1/3 lg:top-2 right-4 lg:right-2 z-20 size-6 lg:size-4 rounded-full border-1 ">
-                                <span class="marker block peer-checked:bg-olive size-3.5 lg:h-[10px] lg:w-[10px] rounded-full"></span>
+                            <span
+                                class="border-olive absolute top-1/3 right-4 z-20 flex size-6 items-center justify-center rounded-full border-1 lg:top-2 lg:right-2 lg:size-4"
+                            >
+                                <span
+                                    class="marker peer-checked:bg-olive block size-3.5 rounded-full lg:h-[10px] lg:w-[10px]"
+                                ></span>
                             </span>
                         </label>
                         <div
-                            class="border-light-border flex lg:flex-col peer-checked:border-olive peer-checked:bg-light-orange relative rounded-2xl border-2 bg-white p-3 duration-300 peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
+                            class="border-light-border peer-checked:border-olive peer-checked:bg-light-orange relative flex rounded-2xl border-2 bg-white p-3 duration-300 lg:flex-col peer-checked:[&_.imgGradient]:block peer-checked:[&_.imgOutline]:hidden"
                         >
                             <div>
                                 <img
@@ -154,8 +165,8 @@
                                 <p class="mt-1 flex items-center gap-x-2 font-bold">
                                     {{ __('checkout.shipping.form.shipping_methods.gift.title') }}
                                     <span class="bg-olive rounded-4xl px-2 py-0.5 text-xs font-bold text-white">
-                                    +{{ config('laracart.delivery_prices.gift') }} {{ __('general.mdl') }}
-                                </span>
+                                        +{{ config('laracart.delivery_prices.gift') }} {{ __('general.mdl') }}
+                                    </span>
                                 </p>
                                 <p class="text-sm opacity-40">
                                     {{ __('checkout.shipping.form.shipping_methods.gift.desc') }}
@@ -166,7 +177,7 @@
                 </div>
                 <div
                     id="shipping_2_description"
-                    class="shipping-block bg-light-orange grid hidden grid-cols-1 lg:grid-cols-12 items-center gap-6 rounded-2xl p-4"
+                    class="shipping-block bg-light-orange grid hidden grid-cols-1 items-center gap-6 rounded-2xl p-4 lg:grid-cols-12"
                 >
                     <div class="col-span-2">
                         <img src="{{ Vite::image('common/box_size.png') }}" alt="box size" />
@@ -182,7 +193,7 @@
                 </div>
                 <div
                     id="shipping_3_description"
-                    class="shipping-block bg-light-orange grid hidden grid-cols-1 lg:grid-cols-12 items-center gap-6 rounded-2xl p-4"
+                    class="shipping-block bg-light-orange grid hidden grid-cols-1 items-center gap-6 rounded-2xl p-4 lg:grid-cols-12"
                 >
                     <div class="col-span-2">
                         <img src="{{ Vite::image('common/delivery_expr.png') }}" alt="box size" />
@@ -197,8 +208,10 @@
                     </div>
                 </div>
                 <div class="border-light-border space-y-4 rounded-2xl border">
-                    <div class="lg:bg-light-orange grid grid-cols-1 lg:grid-cols-12 items-center justify-between rounded-t-2xl mb-0 lg:mb-2 p-4 pb-0 lg:pb-4">
-                        <h2 class="col-span-8 text-base font-bold py-3 lg:py-0">
+                    <div
+                        class="lg:bg-light-orange mb-0 grid grid-cols-1 items-center justify-between rounded-t-2xl p-4 pb-0 lg:mb-2 lg:grid-cols-12 lg:pb-4"
+                    >
+                        <h2 class="col-span-8 py-3 text-base font-bold lg:py-0">
                             {{ __('checkout.shipping.shipping_title') }}
                         </h2>
                         <div class="col-span-1 lg:col-span-4">
@@ -209,7 +222,7 @@
                                     </span>
                                     <button
                                         type="button"
-                                        class="border-light-border mt-3 lg:mt-0  focus:border-olive flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0"
+                                        class="border-light-border focus:border-olive mt-3 flex w-full cursor-pointer items-center justify-between rounded-xl border bg-white px-3 py-2 text-left text-sm shadow-sm ring-0 lg:mt-0"
                                         id="saved_addresses"
                                     >
                                         <span class="flex items-center gap-x-2">
@@ -276,14 +289,15 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-12 gap-4 p-4">
-                        <div class="col-span-12 lg:col-span-6 mt-0 lg:mt-3">
-
-
+                        <div class="col-span-12 mt-0 lg:col-span-6 lg:mt-3">
                             <label for="shipping_region" class="text-charcoal block text-sm font-medium">
                                 {{ __('checkout.shipping.form.shipping_region') }}
                             </label>
                             <select
                                 required
+                                hx-get="{{ route('api.cities') }}"
+                                hx-target="#shipping_city"
+                                hx-trigger="change,load"
                                 name="shipping_region"
                                 id="shipping_region"
                                 class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
@@ -304,7 +318,7 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-span-12 lg:col-span-6 mt-0 lg:mt-3">
+                        <div class="col-span-12 mt-0 lg:col-span-6 lg:mt-3">
                             <label for="shipping_city" class="text-charcoal block text-sm font-medium">
                                 {{ __('checkout.shipping.form.shipping_city') }}
                             </label>
@@ -312,7 +326,7 @@
                                 required
                                 name="shipping_city"
                                 id="shipping_city"
-                                class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors"
+                                class="focus:border-olive focus:ring-olive mt-3 w-full rounded-xl border border-gray-200 bg-white p-3 transition-colors initializing"
                             >
                                 <option value="0">
                                     {{ __('checkout.shipping.form.shipping_city_placeholder') }}
@@ -416,7 +430,7 @@
                 @enderror
 
                 <div class="flex justify-start pt-2">
-                    <x-ui.button as="button" class="w-full sm:w-auto px-15 !py-3" right_icon="false" type="submit">
+                    <x-ui.button as="button" class="w-full px-15 !py-3 sm:w-auto" right_icon="false" type="submit">
                         {{ __('checkout.continue') }}
                     </x-ui.button>
                 </div>
@@ -424,7 +438,6 @@
         </div>
     </div>
     <div class="hidden lg:block">
-
         <hr class="border-light-border my-6" />
         <div class="flex items-center gap-x-4 font-medium">
             <p
@@ -471,5 +484,19 @@
                 document.getElementById(`shipping_${checked.value}_description`)?.classList.remove('hidden');
             }
         });
+
+        document.body.addEventListener('htmx:afterSwap', function(evt) {
+            // evt.detail.target is the element that received the new content
+            if (evt.detail.target.id === 'shipping_city') {
+                console.log("Content was swapped into:");
+                console.dir(evt.detail.target);
+                const savedValue = {{ old('shipping_city', $checkoutData['shipping_city'] ?? 0) }};
+                if (savedValue && evt.detail.target.classList.contains('initializing')) {
+                    evt.detail.target.value = savedValue;
+                    evt.detail.target.classList.remove('initializing');
+                }
+            }
+        });
+
     </script>
 @endpush

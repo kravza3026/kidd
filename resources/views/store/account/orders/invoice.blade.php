@@ -14,7 +14,7 @@
             }
             @page {
                 size: A4;
-                /*page-break-after: always;*/
+                break-after: auto;
             }
         </style>
     </head>
@@ -22,7 +22,7 @@
         <main class="mx-auto my-6 w-full">
             <section class="my-6">
                 <div class="grid grid-cols-17 justify-between gap-x-13">
-                    <div class="col-span-4 space-y-10">
+                    <div class="col-span-3 space-y-10">
                         <div class="space-y-2">
                             <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
                                 {{ __('invoice.heading.billing_date') }}
@@ -36,7 +36,7 @@
                             <p class="font-medium">{{ $order->placed_at->addWeekdays(3)->format('d/m/Y') }}</p>
                         </div>
                     </div>
-                    <div class="col-span-6 space-y-2">
+                    <div class="col-span-7 space-y-2">
                         <p class="text-[10px] font-bold tracking-widest uppercase opacity-35">
                             {{ __('invoice.heading.seller.title') }}
                         </p>
@@ -58,11 +58,13 @@
                         </p>
                         <p class="text-sm">
                             <span>{{ __('invoice.heading.seller.bank') }}</span>
-                            {{ $company->bank_name }}
+                            {{ $company->bank['bank_name'] }}
+                            {{ $company->bank['bank_account'] }}
                         </p>
                         <p class="text-sm">
-                            <span>{{ __('invoice.heading.seller.iban_mdl') }}</span>
-                            {{ $company->bank_iban }}
+                            <span>BIC/{{ __('invoice.heading.seller.iban_mdl') }}</span>
+                            {{ $company->bank['bank_bic'] }}/
+                            {{ $company->bank['bank_iban'] }}
                         </p>
                     </div>
                     <div class="col-span-6 space-y-2">
@@ -118,13 +120,6 @@
                         </p>
                     </div>
                     <hr class="border-light-border my-4" />
-                    {{-- @for ($i = 1; $i < 21; $i++) --}}
-                    {{-- @if ($i == 12 || ($i > 12 && ($i - 11) % 17 === 0)) --}}
-                    {{--  --}}
-                    {{-- @pageBreak --}}
-                    {{--  --}}
-                    {{-- <br /> --}}
-                    {{-- @endif --}}
 
                     @foreach ($order->items as $item)
                         <div class="my-2 grid grid-cols-17 gap-x-4 pt-2 pb-2">

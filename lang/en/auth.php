@@ -52,6 +52,10 @@ return [
             'no_account' => 'New customer?',
             'register_btn' => 'Register now',
         ],
+        'modal' => [
+            'continue_as_guest' => 'No, continue as a guest',
+            'create_account' => 'Yes, create account',
+        ],
     ],
     'password-forgot' => [],
 ];

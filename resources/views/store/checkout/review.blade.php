@@ -216,7 +216,7 @@
             <div class="flex items-center justify-between pt-8">
                 <x-ui.button
                     as="button"
-                    class="!mt-0 px-15 !py-3"
+                    class="!mt-0 w-full px-15 !py-3 sm:w-auto"
                     right_icon="false"
                     id="{{ auth()->check() ? 'placeOrder' : 'loginButton2' }}"
                     type="{{ auth()->check() ? 'submit' : 'button' }}"

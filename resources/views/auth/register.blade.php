@@ -2,7 +2,7 @@
     <div class="container">
         <div class="py-section grid grid-cols-1 gap-x-10 lg:grid-cols-2">
             <div>
-                <h1 class="text-[30px] font-bold md:text-[32px]">
+                <h1 class="text-3xl font-bold md:text-[32px]">
                     {{ __('auth.register.form.title') }}
                 </h1>
                 <form method="POST" action="{{ route('register') }}">
@@ -87,9 +87,9 @@
                             />
                         </div>
                     </div>
-                    <div class="my-6 flex gap-x-4">
+                    <div class="my-6 flex items-center justify-start gap-x-4">
                         <x-ui.checkbox id="TermsAndConditions" name="consent" required></x-ui.checkbox>
-                        <x-input-label class="flex items-center gap-x-1 !leading-5" for="TermsAndConditions">
+                        <x-input-label class="space-x-1 !leading-5" for="TermsAndConditions">
                             {!! __('auth.register.form.consent', ['terms_url' => LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.terms'), 'privacy_url' => LaravelLocalization::getURLFromRouteNameTranslated(App::currentLocale(), 'routes.topline.terms')]) !!}
                         </x-input-label>
                     </div>
@@ -108,11 +108,9 @@
             <div class="hidden lg:block">
                 <div
                     style="background-image: url('{{ Vite::image('contactUs_bg.jpg') }}')"
-                    class="relative flex h-full min-h-[400px] items-end rounded-2xl bg-cover bg-center bg-no-repeat md:min-h-[500px]"
+                    class="relative flex h-full min-h-100 items-end rounded-2xl bg-cover bg-center bg-no-repeat md:min-h-125"
                 >
-                    <div
-                        class="from-charcoal/70 to-charcoal/50 absolute inset-0 z-0 rounded-2xl bg-gradient-to-t"
-                    ></div>
+                    <div class="from-charcoal/70 to-charcoal/50 absolute inset-0 z-0 rounded-2xl bg-linear-to-t"></div>
                     <div
                         class="relative z-10 grid w-full grid-cols-3 justify-center py-10 text-white select-none md:px-3 lg:gap-4 lg:px-4 xl:gap-6 xl:px-6"
                     >

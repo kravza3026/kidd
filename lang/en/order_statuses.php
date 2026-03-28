@@ -13,6 +13,7 @@ return [
     'refunded' => 'Refunded',
 
     'expired' => 'Expired',
+    'failed' => 'Failed',
     'shipped' => 'Shipped',
 
 ];

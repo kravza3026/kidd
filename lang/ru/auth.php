@@ -52,6 +52,10 @@ return [
             'no_account' => 'Еще не зарегистрирован?',
             'register_btn' => 'Создать аккаунт',
         ],
+        'modal' => [
+            'continue_as_guest' => 'Продолжить без регистрации',
+            'create_account' => 'Да, создать аккаунт',
+        ],
     ],
     'password-forgot' => [],
 ];

@@ -52,6 +52,10 @@ return [
             'no_account' => 'Nu ai cont?',
             'register_btn' => 'Înregistrează-te',
         ],
+        'modal' => [
+            'continue_as_guest' => 'Continuă fără înregistrare',
+            'create_account' => 'Da, înregistrează-mă',
+        ],
     ],
     'password-forgot' => [],
 ];

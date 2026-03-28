@@ -1,16 +1,17 @@
 @use('Money\Currency;use Money\Money; use Money\Currencies\ISOCurrencies; use Money\Formatter\IntlMoneyFormatter')
-<div class="rounded-2xl !border-0 bg-white md:p-6 md:shadow">
+<div class="rounded-2xl border-0! bg-white md:p-6 md:shadow">
     <h2 class="mb-6 text-2xl font-bold">{{ __('checkout.summary.sections.products.title') }}</h2>
 
     <!-- Order Items -->
-    <div class="max-h-[40vh] space-y-4 overflow-y-auto rounded-2xl p-4 shadow md:rounded-none md:p-0 md:shadow-none">
+    <div class="max-h-[44vh] space-y-4 overflow-y-auto rounded-2xl p-4 shadow md:rounded-none md:p-0 md:shadow-none">
         @foreach ($items as $item)
+            {!! $item->model->getFirstMedia() !!}
             <div class="flex items-start gap-3">
-                <div class="bg-light-orange h-[72px] w-[72px] rounded-xl p-2">
+                <div class="bg-light-orange h-18 w-18 rounded-xl p-2">
                     <img
                         src="{{ $item->model->media[0]->original_url }}"
                         alt="{{ $item->model->name }}"
-                        class="h-full w-full object-cover"
+                        class="h-full w-auto object-cover"
                     />
                 </div>
                 <div class="flex flex-1 flex-col gap-y-1">

@@ -13,6 +13,7 @@ return [
     'refunded' => 'Rambursat',
 
     'expired' => 'Expirat',
+    'failed' => 'Eșuat',
     'shipped' => 'Expediat',
 
 ];

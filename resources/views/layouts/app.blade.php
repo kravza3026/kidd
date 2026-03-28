@@ -1,5 +1,12 @@
 <!DOCTYPE html>
+<<<<<<< Updated upstream
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="overflow-x-hidden">
+=======
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    hx-headers='{"Accept-Language": "{{ str_replace('_', '-', app()->getLocale()) }}"}'
+>
+>>>>>>> Stashed changes
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,7 +33,7 @@
         <link
             rel="preload"
             as="style"
-            onload="this.rel='stylesheet'"
+            onload="this.rel = 'stylesheet'"
             href="https://fonts.googleapis.com/css2?family=Onest:wght@300..700&display=swap"
         />
 

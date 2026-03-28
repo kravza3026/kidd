@@ -8,7 +8,7 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.15
+- php - 8.4.19
 - laravel/framework (LARAVEL) - v12
 - laravel/mcp (MCP) - v0
 - laravel/pennant (PENNANT) - v1
@@ -303,4 +303,12 @@ protected function isAccessible(User $user, ?string $path = null): bool
 | overflow-ellipsis | text-ellipsis |
 | decoration-slice | box-decoration-slice |
 | decoration-clone | box-decoration-clone |
+
+
+=== spatie/laravel-medialibrary rules ===
+
+## Media Library
+
+- `spatie/laravel-medialibrary` associates files with Eloquent models, with support for collections, conversions, and responsive images.
+- Always activate the `medialibrary-development` skill when working with media uploads, conversions, collections, responsive images, or any code that uses the `HasMedia` interface or `InteractsWithMedia` trait.
 </laravel-boost-guidelines>

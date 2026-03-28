@@ -47,7 +47,7 @@
                     />
                 </svg>
             </form>
-            <div class="flex items-center gap-x-4 lg:gap-x-6">
+            <div class="flex items-center gap-x-4 lg:gap-x-4">
                 <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
                     <span class="sr-only">View notifications</span>
                     <svg
@@ -75,13 +75,11 @@
                     <button class="relative flex items-center">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">Open user menu</span>
-                        <img
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                            class="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
-                        />
+
                         <span class="hidden lg:flex lg:items-center">
-                            <span aria-hidden="true" class="ml-4 text-sm/6 font-semibold text-gray-900">Tom Cook</span>
+                            <span aria-hidden="true" class="text-sm/6 font-semibold text-gray-900">
+                                {{ auth()->user()->name }}
+                            </span>
                             <svg
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
@@ -100,7 +98,7 @@
                     <el-menu
                         anchor="bottom end"
                         popover
-                        class="w-32 origin-top-right rounded-md bg-white py-2 shadow-lg outline-1 outline-gray-900/5 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                        class="mt-3 w-44 origin-top-right rounded-md bg-white py-2 shadow-lg outline-1 outline-gray-900/5 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                     >
                         <a
                             href="#"

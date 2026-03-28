@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="py-section relative container mx-auto !py-14">
-        <div class="fixed top-[72px] left-0 z-10 h-1 w-full bg-white lg:hidden">
+        <div class="fixed top-18 left-0 z-10 h-1 w-full bg-white lg:hidden">
             <div class="progress bg-olive h-full duration-500" style="width: {{ $progressWidth ?? '0%' }}"></div>
         </div>
         <div class="mb-5 opacity-80 lg:mb-12 lg:opacity-100">
@@ -81,6 +81,12 @@
             });
         }
     </script>
+    @push('head')
+        <meta name="htmx-config" content='{"selfRequestsOnly":false}' />
+        <meta name="htmx-config" content='{"htmx.config.withCredentials":true}' />
+    @endpush
+
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
     <style>
         input[name='saved_address']:checked + label {
             background-color: var(--color-light-orange);

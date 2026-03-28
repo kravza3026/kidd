@@ -13,6 +13,7 @@
 /*    scrollbar-gutter: stable;*/
 /*}*/
 @theme {
+    --font-onest: "Onest", sans-serif;
 
     --color-light-orange: #F8F7F2;
     --color-dark: #22222280;
@@ -99,8 +100,6 @@
     font-family: "Onest", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
-
-
 }
 
 :focus {

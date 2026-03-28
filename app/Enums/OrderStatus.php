@@ -25,7 +25,7 @@ enum OrderStatus: int
 
     public static function forSelect(): array
     {
-        return array_column(self::cases(), 'name', 'id');
+        return array_column(self::labelWithDesc(), 'name', 'id');
     }
 
     public static function labelWithDesc(): array
