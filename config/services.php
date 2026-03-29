@@ -58,6 +58,7 @@ return [
         'instagram' => env('SOCIAL_LINKS_INSTAGRAM', 'https://instagram.com/kidd.moldova'),
         'messenger' => env('SOCIAL_LINKS_MESSENGER', 'https://m.me/kidd.moldova'),
         'youtube' => env('SOCIAL_LINKS_YOUTUBE', 'https://youtube.com/'),
+        'tiktok' => env('SOCIAL_LINKS_TIKTOK', 'https://tiktok.com/'),
     ],
 
 ];

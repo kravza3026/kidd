@@ -14,12 +14,12 @@ class Location extends Model
     /**
      * Location type Warehouse
      */
-    const int TYPE_WAREHOUSE = 1;
+    public const TYPE_WAREHOUSE = 1;
 
     /**
      * Location type Store
      */
-    const int TYPE_STORE = 2;
+    public const TYPE_STORE = 2;
 
     protected array $translatable = [
         'name',

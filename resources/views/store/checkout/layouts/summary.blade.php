@@ -64,7 +64,7 @@
                 />
                 <x-primary-button
                     as="button"
-                    class="!w-auto !min-w-fit !px-7 !py-3 !leading-5"
+                    class="w-auto! min-w-fit! px-7! py-3! leading-5!"
                     right_icon="false"
                     type="submit"
                 >
@@ -77,7 +77,7 @@
             >
                 <span>SUMMER10</span>
                 <span
-                    class="gradient_r-b_dark mask-b-to-[#000] !px-1.5 !py-0.5 text-xs leading-4 font-extrabold tracking-[-2%] text-white"
+                    class="gradient_r-b_dark mask-b-to-[#000] px-1.5! py-0.5! text-xs leading-4 font-extrabold tracking-[-2%] text-white"
                 >
                     -25%
                 </span>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-section relative container mx-auto !py-14">
+    <div class="py-section relative container mx-auto py-14!">
         <div class="fixed top-18 left-0 z-10 h-1 w-full bg-white lg:hidden">
             <div class="progress bg-olive h-full duration-500" style="width: {{ $progressWidth ?? '0%' }}"></div>
         </div>

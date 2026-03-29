@@ -151,7 +151,7 @@ class CartController extends Controller
 
         }
 
-        return $response;
+        return response($response, status: 200);
     }
 
     public function store(Request $request)
@@ -207,7 +207,7 @@ class CartController extends Controller
         return response([
             'alert' => [
                 'title' => __('alerts.cart.title'), // TODO - Translation
-                'type' => 'success', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'type' => 'cart', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.updated'), // TODO - Translation
                 //                'button' => [
                 //                    'label' => __('menu.cart'),
@@ -227,8 +227,8 @@ class CartController extends Controller
 
         return response([
             'alert' => [
-                'title' => 'Cart', // TODO - Translation
-                'type' => 'info', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
+                'title' => __('alerts.cart.title'), // TODO - Translation
+                'type' => 'cart', // 'favorite' | 'cart' | 'success' | 'info' | 'error (cross "x")',
                 'message' => __('alerts.cart.removed'), // TODO - Translation
                 'options' => [
                     'timer' => 1000,

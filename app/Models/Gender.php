@@ -10,11 +10,11 @@ class Gender extends Model
 {
     use HasTranslations;
 
-    public const int UNISEX = 1;
+    public const UNISEX = 1;
 
-    public const int BOY = 2;
+    public const BOY = 2;
 
-    public const int GIRL = 3;
+    public const GIRL = 3;
 
     public array $translatable = [
         'name',

@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isProduction()) {
             URL::forceScheme('https');
         }
+
         Model::automaticallyEagerLoadRelationships();
         Model::preventLazyLoading();
 

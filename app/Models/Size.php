@@ -13,11 +13,11 @@ class Size extends Model
     use HasTranslatableSlug, HasTranslations;
 
     // TODO - Move to Enum
-    const int TYPE_CLOTH = 1;
+    public const TYPE_CLOTH = 1;
 
-    const int TYPE_SHOES = 2;
+    public const TYPE_SHOES = 2;
 
-    const int TYPE_ACCESSORY = 3;
+    public const TYPE_ACCESSORY = 3;
 
     public array $translatable = [
         'name',

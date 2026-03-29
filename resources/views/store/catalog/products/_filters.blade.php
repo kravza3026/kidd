@@ -45,7 +45,7 @@
                     <div class="flex items-center justify-center gap-2 rounded-full px-3 py-2">
                         <a
                             href="{{ url()->current() }}"
-                            class="filter-clear text-olive flex cursor-pointer items-center justify-start gap-1 text-sm leading-[14px] font-bold underline underline-offset-2"
+                            class="filter-clear text-olive flex cursor-pointer items-center justify-start gap-1 text-sm leading-3.5 font-bold underline underline-offset-2"
                         >
                             <svg
                                 class="text-olive size-4 flex-shrink-0 group-hover:rotate-180"

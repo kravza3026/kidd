@@ -1,4 +1,17 @@
 <x-app-layout>
+    @push('meta')
+        @include('layouts.partials.schema.category', ['category' => $category, 'products' => $products])
+        @include('layouts.partials.schema.breadcrumbs', ['breadcrumbs' => $category->exists
+            ? [
+                ['name' => __('header.menu.catalog'), 'url' => route('products.index')],
+                ['name' => $category->name, 'url' => route('products.category.index', $category)],
+            ]
+            : [
+                ['name' => __('header.menu.catalog'), 'url' => route('products.index')],
+            ]
+        ])
+    @endpush
+
     <main class="container">
 
 

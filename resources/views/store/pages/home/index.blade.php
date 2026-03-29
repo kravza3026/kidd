@@ -1,4 +1,8 @@
 <x-app-layout>
+    @push('meta')
+        @include('layouts.partials.schema.homepage')
+    @endpush
+
     <div class="pageContent">
         {{-- Main banner at the top of the homepage --}}
         @include('store.pages.home.sections.mainBanner')

@@ -1,4 +1,11 @@
 <x-app-layout>
+    @push('meta')
+        @include('layouts.partials.schema.faq', ['faqs' => __('help-faq')])
+        @include('layouts.partials.schema.breadcrumbs', ['breadcrumbs' => [
+            ['name' => __('header.menu.help'), 'url' => route('help')],
+        ]])
+    @endpush
+
     <div class="pageContent">
         <section class="pt-section">
             @php

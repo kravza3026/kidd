@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
 
         Product::factory()
             ->has(ProductVariant::factory()->count(5), 'variants')
-            ->count(50)
+            ->count(123)
             ->afterCreating(function (Product $product) {
 
                 foreach (range(1, rand(2, 5)) as $care_id) {

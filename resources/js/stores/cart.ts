@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 
 export const useCartStore = defineStore('cart', () => {
-    const items = ref<any[]>([])
+    const items = reactive<any[]>([])
     const grandTotal = ref(0)
 
     async function fetchCart() {

@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutSessionService
 {
-    private const string SESSION_STEP_KEY = 'checkout_step';
+    private const SESSION_STEP_KEY = 'checkout_step';
 
-    private const string SESSION_DATA_KEY = 'checkout_data';
+    private const SESSION_DATA_KEY = 'checkout_data';
 
-    private const string DEFAULT_STEP = 'shipping';
+    private const DEFAULT_STEP = 'shipping';
 
     private array $steps = ['shipping', 'contact', 'payment', 'review'];
 

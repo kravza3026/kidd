@@ -28,7 +28,7 @@ class BrandSeeder extends Seeder
                 'ru' => 'KIDD. - американская многонациональная компания с штаб-квартирой в Купертино, штат Калифорния, занимающаяся разработкой, производством и продажей электроники, программного обеспечения и онлайн-сервисов.',
                 'en' => 'KIDD. is an American multinational corporation headquartered in Cupertino, California, that designs, manufactures, and sells electronics, software, and online services.',
             ],
-            'logo' => 'brands/apple.png',
+            'logo' => asset('assets/images/logo.svg'),
         ]);
     }
 }

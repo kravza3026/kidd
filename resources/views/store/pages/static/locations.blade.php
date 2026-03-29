@@ -1,4 +1,11 @@
 <x-app-layout>
+    @push('meta')
+        @include('layouts.partials.schema.locations', ['locations' => $locations])
+        @include('layouts.partials.schema.breadcrumbs', ['breadcrumbs' => [
+            ['name' => __('header.topline.locations'), 'url' => route('locations')],
+        ]])
+    @endpush
+
     @push('head')
         {{-- <link rel="stylesheet" href="{{ asset('css/locations.css') }}"> --}}
     @endpush
