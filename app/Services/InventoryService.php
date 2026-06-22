@@ -9,8 +9,11 @@ use App\Models\Order;
 use App\Models\ProductVariant;
 use App\Models\StockMovement;
 use App\Models\Warehouse;
+use App\Notifications\Admin\LowStockAlert;
+use App\Support\AdminAudience;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Single source of truth for stock changes. Every change goes through a signed stock-movement
@@ -49,6 +52,8 @@ class InventoryService
                 throw InsufficientStockException::for($variant, $warehouse, $current, $quantity);
             }
 
+            $beforeTotal = (int) $variant->quantity;
+
             $movement = StockMovement::create([
                 'product_variant_id' => $variant->id,
                 'warehouse_id' => $warehouse->id,
@@ -62,6 +67,7 @@ class InventoryService
 
             $this->writeInventory($variant, $warehouse, $next, $inventory);
             $this->recomputeVariantTotal($variant);
+            $this->maybeAlertLowStock($variant, $beforeTotal, $quantity);
 
             return $movement;
         });
@@ -234,5 +240,22 @@ class InventoryService
     protected function recomputeVariantTotal(ProductVariant $variant): void
     {
         $variant->forceFill(['quantity' => $this->totalFor($variant)])->saveQuietly();
+    }
+
+    /**
+     * Notify staff once, when a reduction takes a variant from above the low-stock
+     * threshold to at or below it (the crossing), so the alert isn't repeated while low.
+     */
+    protected function maybeAlertLowStock(ProductVariant $variant, int $beforeTotal, int $change): void
+    {
+        if ($change >= 0) {
+            return;
+        }
+
+        $threshold = (int) config('admin.low_stock_threshold', 5);
+
+        if ($beforeTotal > $threshold && (int) $variant->quantity <= $threshold) {
+            Notification::send(AdminAudience::for('stock'), new LowStockAlert($variant));
+        }
     }
 }

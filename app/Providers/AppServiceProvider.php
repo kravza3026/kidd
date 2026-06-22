@@ -5,12 +5,18 @@ namespace App\Providers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\ContactInquire;
 use App\Models\Gender;
+use App\Models\Order;
 use App\Models\ProductVariant;
 use App\Models\Region;
 use App\Models\Season;
 use App\Models\Size;
+use App\Models\VacancyApplication;
+use App\Observers\ContactInquireObserver;
+use App\Observers\OrderObserver;
 use App\Observers\ProductVariantObserver;
+use App\Observers\VacancyApplicationObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -60,6 +66,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         ProductVariant::observe(ProductVariantObserver::class);
+        Order::observe(OrderObserver::class);
+        ContactInquire::observe(ContactInquireObserver::class);
+        VacancyApplication::observe(VacancyApplicationObserver::class);
 
         Vite::prefetch(5);
         Vite::useWaterfallPrefetching(5);
