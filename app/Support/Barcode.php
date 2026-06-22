@@ -4,6 +4,8 @@ namespace App\Support;
 
 use App\Models\ProductVariant;
 use Illuminate\Support\Str;
+use Picqer\Barcode\BarcodeGenerator;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 
 /**
  * Generates and validates 1D EAN-13 barcodes for product variants.
@@ -61,5 +63,17 @@ class Barcode
         }
 
         return self::checkDigit(substr($value, 0, 12)) === substr($value, 12, 1);
+    }
+
+    /**
+     * Render an EAN-13 barcode as an inline SVG, or null if the value isn't a valid EAN-13.
+     */
+    public static function svg(string $value, float $widthFactor = 2, float $height = 40): ?string
+    {
+        if (! self::isValidEan13($value)) {
+            return null;
+        }
+
+        return (new BarcodeGeneratorSVG)->getBarcode($value, BarcodeGenerator::TYPE_EAN_13, $widthFactor, $height);
     }
 }
