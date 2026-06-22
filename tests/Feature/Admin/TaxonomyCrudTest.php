@@ -146,12 +146,13 @@ it('creates a size with type and ranges', function () {
 
 it('lists care instructions by their title (label attribute)', function () {
     actingAsAdmin();
-    $care = CareInstruction::factory()->create([
+    CareInstruction::factory()->create([
+        'name' => 'legacy-internal-key',
         'title' => ['ro' => 'Spălare', 'ru' => 'Стирка', 'en' => 'Machine wash'],
     ]);
 
     $this->get(route('admin.care-instructions.index'))->assertOk()->assertSeeLivewire(CareInstructions\Index::class);
-    Livewire::test(CareInstructions\Index::class)->assertSee('Machine wash')->assertDontSee($care->name);
+    Livewire::test(CareInstructions\Index::class)->assertSee('Machine wash')->assertDontSee('legacy-internal-key');
 });
 
 it('creates a care instruction with title, description and icon', function () {

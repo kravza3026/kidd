@@ -33,6 +33,17 @@
                     </div>
                 @endif
 
+                @if (count($groups))
+                    <x-admin.field :label="__('Group')" name="attribute_group_id" :hint="__('Optional — group this item under an editable heading.')">
+                        <select wire:model="attribute_group_id" class="admin-input cursor-pointer sm:w-64">
+                            <option value="">{{ __('— Ungrouped —') }}</option>
+                            @foreach ($groups as $id => $label)
+                                <option value="{{ $id }}">{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </x-admin.field>
+                @endif
+
                 <x-admin.field :label="__('Sort order')" name="sort_order">
                     <input type="number" wire:model="sort_order" class="admin-input w-32" />
                 </x-admin.field>
