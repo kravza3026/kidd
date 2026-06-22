@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Livewire\Admin\Support;
+
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Component;
+
+/**
+ * Shared create/edit form for simple translatable taxonomy resources. Concrete subclasses
+ * provide a typed mount() for route-model binding that delegates to init(), and may add
+ * fields by overriding applyTo()/extraRules()/withDescription().
+ */
+abstract class TaxonomyForm extends Component
+{
+    public ?int $recordId = null;
+
+    /** @var array<string, string> */
+    public array $name = [];
+
+    public int $sort_order = 0;
+
+    /** @return class-string<Model> */
+    abstract protected function modelClass(): string;
+
+    abstract protected function resourceKey(): string;
+
+    abstract protected function routePrefix(): string;
+
+    abstract protected function title(): string;
+
+    protected function init(?Model $record): void
+    {
+        $this->name = array_fill_keys(array_keys(config('app.locales')), '');
+
+        if ($record?->exists) {
+            $this->authorize('update', $record);
+            $this->recordId = $record->id;
+            $this->name = array_merge($this->name, $record->getTranslations('name'));
+            $this->sort_order = (int) ($record->sort_order ?? 0);
+            $this->fillExtra($record);
+        } else {
+            $this->authorize('create', $this->modelClass());
+        }
+    }
+
+    protected function fillExtra(Model $record): void {}
+
+    protected function applyTo(Model $record): void
+    {
+        $record->name = $this->name;
+        $record->sort_order = $this->sort_order;
+    }
+
+    protected function withDescription(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function extraRules(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function rules(): array
+    {
+        $rules = ['sort_order' => ['integer', 'min:0', 'max:65535']];
+
+        foreach (array_keys(config('app.locales')) as $locale) {
+            $rules["name.{$locale}"] = ['required', 'string', 'max:255'];
+        }
+
+        return array_merge($rules, $this->extraRules());
+    }
+
+    public function save(): void
+    {
+        $this->validate();
+
+        $class = $this->modelClass();
+        $editing = (bool) $this->recordId;
+        $record = $editing ? $class::findOrFail($this->recordId) : new $class;
+
+        $this->applyTo($record);
+        $record->save();
+
+        session()->flash('success', $editing ? __('Saved.') : __('Created.'));
+
+        $this->redirectRoute($this->routePrefix().'.index', navigate: true);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.admin.taxonomy.form', [
+            'title' => $this->title(),
+            'routePrefix' => $this->routePrefix(),
+            'editing' => (bool) $this->recordId,
+            'withDescription' => $this->withDescription(),
+        ]);
+    }
+}

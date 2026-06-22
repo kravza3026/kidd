@@ -3,10 +3,13 @@
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 use App\Http\Controllers\Admin\OrdersController;
+use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Products;
+use App\Livewire\Admin\Seasons;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -28,11 +31,32 @@ if (! function_exists('livewireResource')) {
     }
 }
 
+if (! function_exists('livewireTaxonomy')) {
+    /**
+     * Simple taxonomy resources: index + create/edit only (no detail page).
+     *
+     * @param  class-string  $namespace
+     */
+    function livewireTaxonomy(string $uri, string $param, string $module, string $namespace): void
+    {
+        Route::middleware("module:{$module}")->group(function () use ($uri, $param, $namespace) {
+            Route::livewire($uri, "{$namespace}\\Index")->name("{$uri}.index");
+            Route::livewire("{$uri}/create", "{$namespace}\\Form")->name("{$uri}.create");
+            Route::livewire("{$uri}/{{$param}:id}/edit", "{$namespace}\\Form")->name("{$uri}.edit");
+        });
+    }
+}
+
 Route::livewire('/', Dashboard::class)->name('home');
 
 livewireResource('categories', 'category', 'category', Categories::class);
 livewireResource('products', 'product', 'product', Products::class);
 livewireResource('customers', 'customer', 'customer', Customers::class);
+
+// Catalog taxonomy (simple translatable resources).
+livewireTaxonomy('brands', 'brand', 'brand', Brands::class);
+livewireTaxonomy('seasons', 'season', 'season', Seasons::class);
+livewireTaxonomy('fabrics', 'fabric', 'fabric', Fabrics::class);
 
 // Not yet rebuilt as full CRUD — converted to Livewire as each is implemented.
 Route::resource('orders', OrdersController::class);
