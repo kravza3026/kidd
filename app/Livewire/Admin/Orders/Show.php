@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Orders;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Services\InventoryService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
@@ -26,7 +27,7 @@ class Show extends Component
         $this->notes = (string) $order->notes;
     }
 
-    public function updateStatus(): void
+    public function updateStatus(InventoryService $inventory): void
     {
         $this->authorize('update', $this->order);
 
@@ -35,10 +36,20 @@ class Show extends Component
             'notes' => ['nullable', 'string', 'max:2000'],
         ]);
 
+        $status = OrderStatus::from($this->status);
+
         $this->order->update([
-            'status' => OrderStatus::from($this->status),
+            'status' => $status,
             'notes' => $this->notes,
         ]);
+
+        // Keep inventory in step with fulfilment: deduct when the order reaches a fulfilling
+        // status, restore it if the order is later cancelled or returned. Both are idempotent.
+        if ($status->consumesStock()) {
+            $inventory->commitOrder($this->order, auth()->id());
+        } elseif ($status->restoresStock()) {
+            $inventory->releaseOrder($this->order, auth()->id());
+        }
 
         $this->dispatch('toast', type: 'success', message: __('Order updated.'));
     }
