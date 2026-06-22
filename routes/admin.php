@@ -4,6 +4,7 @@
 
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Cities;
 use App\Livewire\Admin\Colors;
 use App\Livewire\Admin\Companies;
 use App\Livewire\Admin\ContactInquiries;
@@ -15,6 +16,7 @@ use App\Livewire\Admin\Locations;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
+use App\Livewire\Admin\Regions;
 use App\Livewire\Admin\Roles;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
@@ -99,6 +101,8 @@ livewireResource('vacancies', 'vacancy', 'vacancy', Vacancies::class);
 livewireTaxonomy('companies', 'company', 'company', Companies::class);
 livewireTaxonomy('warehouses', 'warehouse', 'warehouse', Warehouses::class);
 livewireTaxonomy('locations', 'location', 'location', Locations::class);
+livewireTaxonomy('regions', 'region', 'region', Regions::class);
+livewireTaxonomy('cities', 'city', 'city', Cities::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
 
