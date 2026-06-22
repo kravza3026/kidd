@@ -5,6 +5,7 @@
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Colors;
+use App\Livewire\Admin\Companies;
 use App\Livewire\Admin\ContactInquiries;
 use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
@@ -17,6 +18,7 @@ use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
 use App\Livewire\Admin\Vacancies;
 use App\Livewire\Admin\VacancyApplications;
+use App\Livewire\Admin\Warehouses;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -91,5 +93,7 @@ Route::middleware('module:order')->group(function () {
 
 // Content & ops.
 livewireResource('vacancies', 'vacancy', 'vacancy', Vacancies::class);
+livewireTaxonomy('companies', 'company', 'company', Companies::class);
+livewireTaxonomy('warehouses', 'warehouse', 'warehouse', Warehouses::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
