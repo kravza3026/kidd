@@ -21,6 +21,7 @@ use App\Livewire\Admin\Regions;
 use App\Livewire\Admin\Roles;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
+use App\Livewire\Admin\Tags;
 use App\Livewire\Admin\Users;
 use App\Livewire\Admin\Vacancies;
 use App\Livewire\Admin\VacancyApplications;
@@ -91,6 +92,7 @@ livewireTaxonomy('genders', 'gender', 'gender', Genders::class);
 livewireTaxonomy('colors', 'color', 'color', Colors::class);
 livewireTaxonomy('sizes', 'size', 'size', Sizes::class);
 livewireTaxonomy('care-instructions', 'careInstruction', 'careInstruction', CareInstructions::class);
+livewireTaxonomy('tags', 'tag', 'tag', Tags::class);
 
 // Orders — list + detail with status management (admin order-builder is a follow-up).
 Route::middleware('module:order')->group(function () {

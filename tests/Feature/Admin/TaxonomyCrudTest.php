@@ -7,6 +7,7 @@ use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
+use App\Livewire\Admin\Tags;
 use App\Models\Brand;
 use App\Models\CareInstruction;
 use App\Models\Color;
@@ -14,6 +15,7 @@ use App\Models\Fabric;
 use App\Models\Gender;
 use App\Models\Season;
 use App\Models\Size;
+use App\Models\Tag;
 use App\Models\User;
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\RolesSeeder;
@@ -193,6 +195,57 @@ it('edits a care instruction title and persists to the title column', function (
         ->assertRedirect(route('admin.care-instructions.index'));
 
     expect($care->fresh()->getTranslation('title', 'en'))->toBe('Tumble dry low');
+});
+
+it('lists tags', function () {
+    actingAsAdmin();
+    $tag = Tag::create(['name' => ['ro' => 'Remote', 'ru' => 'Удалённо', 'en' => 'Remote']]);
+
+    $this->get(route('admin.tags.index'))->assertOk()->assertSeeLivewire(Tags\Index::class);
+    Livewire::test(Tags\Index::class)->assertSee('Remote');
+});
+
+it('creates a tag with a type and auto slug', function () {
+    actingAsAdmin();
+
+    Livewire::test(Tags\Form::class)
+        ->set('name.ro', 'Cu normă întreagă')
+        ->set('name.ru', 'Полная занятость')
+        ->set('name.en', 'Full-time')
+        ->set('type', 'employment')
+        ->call('save')
+        ->assertRedirect(route('admin.tags.index'));
+
+    $tag = Tag::query()->latest('id')->first();
+
+    expect($tag->getTranslation('name', 'en'))->toBe('Full-time')
+        ->and($tag->type)->toBe('employment')
+        ->and($tag->getTranslation('slug', 'en'))->toBe('full-time');
+});
+
+it('requires a tag name', function () {
+    actingAsAdmin();
+
+    Livewire::test(Tags\Form::class)
+        ->set('name.ro', '')->set('name.ru', '')->set('name.en', '')
+        ->call('save')
+        ->assertHasErrors(['name.en']);
+});
+
+it('edits then deletes a tag', function () {
+    actingAsAdmin();
+    $tag = Tag::create(['name' => ['ro' => 'x', 'ru' => 'y', 'en' => 'Draft']]);
+
+    Livewire::test(Tags\Form::class, ['tag' => $tag])
+        ->assertSet('recordId', $tag->id)
+        ->set('name.en', 'On-Site')
+        ->call('save')
+        ->assertRedirect(route('admin.tags.index'));
+
+    expect($tag->fresh()->getTranslation('name', 'en'))->toBe('On-Site');
+
+    Livewire::test(Tags\Index::class)->call('delete', $tag->id);
+    expect(Tag::find($tag->id))->toBeNull();
 });
 
 it('forbids HR from taxonomy and 404s when a module is disabled', function () {

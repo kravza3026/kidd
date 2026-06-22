@@ -41,7 +41,7 @@
                             <td class="admin-table-cell">
                                 <div class="flex items-center justify-end gap-1">
                                     @can("{$resource}.update")
-                                        <a href="{{ route($routePrefix.'.edit', $row) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
+                                        <a href="{{ route($routePrefix.'.edit', $row->id) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
                                     @endcan
                                     @can("{$resource}.delete")
                                         <button type="button" wire:click="delete({{ $row->id }})" wire:confirm="{{ __('Delete this item?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
