@@ -15,6 +15,7 @@ use App\Livewire\Admin\Locations;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
+use App\Livewire\Admin\Roles;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
 use App\Livewire\Admin\Vacancies;
@@ -99,3 +100,6 @@ livewireTaxonomy('warehouses', 'warehouse', 'warehouse', Warehouses::class);
 livewireTaxonomy('locations', 'location', 'location', Locations::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
+
+// Platform.
+livewireTaxonomy('roles', 'role', 'role', Roles::class);
