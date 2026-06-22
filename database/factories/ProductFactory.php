@@ -2,6 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Fabric;
+use App\Models\Gender;
+use App\Models\Season;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Vite;
 
@@ -75,11 +80,13 @@ class ProductFactory extends Factory
         return [
             'is_visible' => true,
 
-            'category_id' => rand(2, 6), // Category::factory(),
-            'brand_id' => 1,
-            'gender_id' => rand(1, 3),
-            'season_id' => rand(1, 5),
-            'fabric_id' => rand(1, 5),
+            // Reuse seeded taxonomy when present, otherwise stand one up so factory-only
+            // tests satisfy the required foreign keys.
+            'category_id' => Category::query()->inRandomOrder()->value('id') ?? Category::factory(),
+            'brand_id' => Brand::query()->inRandomOrder()->value('id') ?? Brand::factory(),
+            'gender_id' => Gender::query()->inRandomOrder()->value('id') ?? Gender::factory(),
+            'season_id' => Season::query()->inRandomOrder()->value('id') ?? Season::factory(),
+            'fabric_id' => Fabric::query()->inRandomOrder()->value('id') ?? Fabric::factory(),
 
             'name' => [
                 'ro' => $names['ro'][$names_row_num],
