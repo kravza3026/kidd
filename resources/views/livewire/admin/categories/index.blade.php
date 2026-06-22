@@ -54,19 +54,7 @@
                                 />
                             </td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $category)
-                                        <a href="{{ route('admin.categories.edit', $category) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $category)
-                                        <button
-                                            type="button"
-                                            wire:click="delete({{ $category->id }})"
-                                            wire:confirm="{{ __('Delete this category?') }}"
-                                            class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10"
-                                        >{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$category" :edit-url="route('admin.categories.edit', $category)" :delete-id="$category->id" :delete-confirm="__('Delete this category?')" />
                             </td>
                         </tr>
                     @empty

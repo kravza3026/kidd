@@ -44,14 +44,7 @@
                             </td>
                             <td class="admin-table-cell text-ink-muted">{{ $vacancy->applications_count }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $vacancy)
-                                        <a href="{{ route('admin.vacancies.edit', $vacancy) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $vacancy)
-                                        <button type="button" wire:click="delete({{ $vacancy->id }})" wire:confirm="{{ __('Delete this vacancy?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$vacancy" :edit-url="route('admin.vacancies.edit', $vacancy)" :delete-id="$vacancy->id" :delete-confirm="__('Delete this vacancy?')" />
                             </td>
                         </tr>
                     @empty

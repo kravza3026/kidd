@@ -44,16 +44,7 @@
                                 </div>
                             </td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $user)
-                                        <a href="{{ route('admin.users.edit', $user) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $user)
-                                        @if ($user->id !== auth()->id())
-                                            <button type="button" wire:click="delete({{ $user->id }})" wire:confirm="{{ __('Delete this user?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                        @endif
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$user" :edit-url="route('admin.users.edit', $user)" :delete-id="$user->id !== auth()->id() ? $user->id : null" :delete-confirm="__('Delete this user?')" />
                             </td>
                         </tr>
                     @empty

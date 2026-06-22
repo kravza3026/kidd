@@ -20,7 +20,7 @@
                 <td class="admin-table-cell text-ink-muted">{{ $col['value']($item) }}</td>
             @endforeach
             <td class="admin-table-cell" wire:sort:ignore>
-                <x-admin.row-actions :resource="$resource" :edit-url="route($routePrefix.'.edit', $item->id)" :delete-id="$item->id" />
+                <x-admin.row-actions :model="$item" :edit-url="route($routePrefix.'.edit', $item->id)" :delete-id="$item->id" />
             </td>
         </tr>
     @empty

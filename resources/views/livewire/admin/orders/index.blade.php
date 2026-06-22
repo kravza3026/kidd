@@ -51,12 +51,7 @@
                             <td class="admin-table-cell text-ink">{{ number_format($order->total_amount / 100, 2) }} MDL</td>
                             <td class="admin-table-cell text-ink-muted">{{ $order->created_at?->format('Y-m-d H:i') }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('admin.orders.show', $order) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('View') }}</a>
-                                    @can('delete', $order)
-                                        <button type="button" wire:click="delete({{ $order->id }})" wire:confirm="{{ __('Delete this order?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$order" :view-url="route('admin.orders.show', $order)" :delete-id="$order->id" :delete-confirm="__('Delete this order?')" />
                             </td>
                         </tr>
                     @empty

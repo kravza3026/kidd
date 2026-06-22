@@ -57,14 +57,7 @@
                                 <x-admin.status-badge :color="$product->is_visible ? 'green' : 'gray'" :label="$product->is_visible ? __('Visible') : __('Hidden')" />
                             </td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $product)
-                                        <a href="{{ route('admin.products.edit', $product) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $product)
-                                        <button type="button" wire:click="delete({{ $product->id }})" wire:confirm="{{ __('Delete this product?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$product" :edit-url="route('admin.products.edit', $product)" :delete-id="$product->id" :delete-confirm="__('Delete this product?')" />
                             </td>
                         </tr>
                     @empty

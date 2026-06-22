@@ -41,16 +41,13 @@
                             <td class="admin-table-cell text-ink-muted">{{ $role->permissions_count }}</td>
                             <td class="admin-table-cell text-ink-muted">{{ $role->users_count }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('role.update')
-                                        <a href="{{ route('admin.roles.edit', $role) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('role.delete')
-                                        @unless (in_array($role->name, $protected, true))
-                                            <button type="button" wire:click="delete({{ $role->id }})" wire:confirm="{{ __('Delete this role?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                        @endunless
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions
+                                    :edit-url="route('admin.roles.edit', $role)"
+                                    :can-edit="auth()->user()?->can('role.update')"
+                                    :delete-id="$role->id"
+                                    :can-delete="auth()->user()?->can('role.delete') && ! in_array($role->name, $protected, true)"
+                                    :delete-confirm="__('Delete this role?')"
+                                />
                             </td>
                         </tr>
                     @empty

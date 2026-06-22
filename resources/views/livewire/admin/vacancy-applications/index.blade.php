@@ -36,12 +36,7 @@
                             <td class="admin-table-cell text-ink-muted">{{ $application->vacancy?->getTranslation('title', app()->getLocale()) ?? '—' }}</td>
                             <td class="admin-table-cell text-ink-muted">{{ $application->created_at?->diffForHumans() }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('admin.vacancy-applications.show', $application) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('View') }}</a>
-                                    @can('delete', $application)
-                                        <button type="button" wire:click="delete({{ $application->id }})" wire:confirm="{{ __('Delete this application?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$application" :view-url="route('admin.vacancy-applications.show', $application)" :can-view="true" :delete-id="$application->id" :delete-confirm="__('Delete this application?')" />
                             </td>
                         </tr>
                     @empty

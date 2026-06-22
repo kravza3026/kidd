@@ -41,14 +41,7 @@
                             <td class="admin-table-cell text-ink-muted">{{ $customer->phone }}</td>
                             <td class="admin-table-cell text-ink-muted">{{ $customer->orders_count }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $customer)
-                                        <a href="{{ route('admin.customers.edit', $customer) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $customer)
-                                        <button type="button" wire:click="delete({{ $customer->id }})" wire:confirm="{{ __('Delete this customer?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$customer" :edit-url="route('admin.customers.edit', $customer)" :delete-id="$customer->id" :delete-confirm="__('Delete this customer?')" />
                             </td>
                         </tr>
                     @empty

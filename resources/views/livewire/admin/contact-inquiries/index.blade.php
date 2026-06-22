@@ -36,12 +36,7 @@
                             <td class="admin-table-cell text-ink-muted">{{ \Illuminate\Support\Str::limit($inquiry->message, 60) }}</td>
                             <td class="admin-table-cell text-ink-muted">{{ $inquiry->created_at?->diffForHumans() }}</td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('admin.contact-inquiries.show', $inquiry) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('View') }}</a>
-                                    @can('delete', $inquiry)
-                                        <button type="button" wire:click="delete({{ $inquiry->id }})" wire:confirm="{{ __('Delete this inquiry?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$inquiry" :view-url="route('admin.contact-inquiries.show', $inquiry)" :can-view="true" :delete-id="$inquiry->id" :delete-confirm="__('Delete this inquiry?')" />
                             </td>
                         </tr>
                     @empty

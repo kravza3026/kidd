@@ -39,7 +39,7 @@
                                 <td class="admin-table-cell text-ink-muted">{{ $col['value']($row) }}</td>
                             @endforeach
                             <td class="admin-table-cell">
-                                <x-admin.row-actions :resource="$resource" :edit-url="route($routePrefix.'.edit', $row->id)" :delete-id="$row->id" />
+                                <x-admin.row-actions :model="$row" :edit-url="route($routePrefix.'.edit', $row->id)" :delete-id="$row->id" />
                             </td>
                         </tr>
                     @empty

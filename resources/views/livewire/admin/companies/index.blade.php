@@ -40,14 +40,7 @@
                                 <x-admin.status-badge :color="(int) $company->status === 1 ? 'green' : 'gray'" :label="(int) $company->status === 1 ? __('Active') : __('Inactive')" />
                             </td>
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can('update', $company)
-                                        <a href="{{ route('admin.companies.edit', $company) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can('delete', $company)
-                                        <button type="button" wire:click="delete({{ $company->id }})" wire:confirm="{{ __('Delete this company?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :model="$company" :edit-url="route('admin.companies.edit', $company)" :delete-id="$company->id" :delete-confirm="__('Delete this company?')" />
                             </td>
                         </tr>
                     @empty
