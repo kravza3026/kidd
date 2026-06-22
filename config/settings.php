@@ -1,5 +1,6 @@
 <?php
 
+use App\Settings\NotificationSettings;
 use App\Settings\StoreSettings;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelSettings\SettingsCasts\DataCast;
@@ -16,6 +17,7 @@ return [
      */
     'settings' => [
         StoreSettings::class,
+        NotificationSettings::class,
     ],
 
     /*

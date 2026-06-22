@@ -12,6 +12,7 @@ use App\Notifications\Admin\NewContactInquiry;
 use App\Notifications\Admin\NewJobApplication;
 use App\Notifications\Admin\NewOrderPlaced;
 use App\Services\InventoryService;
+use App\Settings\NotificationSettings;
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Support\Facades\Notification;
@@ -87,6 +88,16 @@ it('does not alert when stock stays above the threshold', function () {
     $service->record($variant, $warehouse, StockMovementType::Sale, -2); // still 18
 
     Notification::assertNotSentTo($manager, LowStockAlert::class);
+});
+
+it('does not notify when the type is disabled in settings', function () {
+    Notification::fake();
+    app(NotificationSettings::class)->fill(['notify_new_order' => false])->save();
+    $manager = staffUser('manager');
+
+    Order::factory()->create();
+
+    Notification::assertNotSentTo($manager, NewOrderPlaced::class);
 });
 
 it('shows unread notifications in the bell and marks them read', function () {

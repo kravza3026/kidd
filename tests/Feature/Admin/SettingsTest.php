@@ -2,6 +2,7 @@
 
 use App\Livewire\Admin\Settings\Edit;
 use App\Models\User;
+use App\Settings\NotificationSettings;
 use App\Settings\StoreSettings;
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\RolesSeeder;
@@ -49,6 +50,21 @@ it('validates url and email fields', function () {
         ->set('contact_email', 'not-an-email')
         ->call('save')
         ->assertHasErrors(['facebook_url', 'contact_email']);
+});
+
+it('saves notification toggles', function () {
+    actingAsAdmin();
+
+    Livewire::test(Edit::class)
+        ->set('notify_low_stock', false)
+        ->set('notify_new_order', false)
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $settings = app(NotificationSettings::class);
+    expect($settings->notify_low_stock)->toBeFalse()
+        ->and($settings->notify_new_order)->toBeFalse()
+        ->and($settings->notify_new_inquiry)->toBeTrue();
 });
 
 it('forbids a role without settings permission', function () {

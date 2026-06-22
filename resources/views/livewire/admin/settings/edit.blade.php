@@ -35,6 +35,15 @@
             </div>
         </x-admin.card>
 
+        <x-admin.card :title="__('Notifications')" :description="__('Which admin alerts are sent.')">
+            <div class="divide-y divide-line">
+                <x-admin.switch wire-model="notify_new_order" :label="__('New order')" />
+                <x-admin.switch wire-model="notify_new_inquiry" :label="__('New contact inquiry')" />
+                <x-admin.switch wire-model="notify_new_application" :label="__('New job application')" />
+                <x-admin.switch wire-model="notify_low_stock" :label="__('Low stock')" />
+            </div>
+        </x-admin.card>
+
         <div class="flex items-center gap-3">
             <button type="submit" class="admin-btn admin-btn--primary" wire:loading.attr="disabled" wire:target="save">
                 <span wire:loading.remove wire:target="save">{{ __('Save settings') }}</span>
