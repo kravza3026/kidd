@@ -27,6 +27,21 @@ abstract class TaxonomyIndex extends Component
     /** @return array<int, array{label: string, value: callable}> */
     abstract protected function columns(): array;
 
+    /**
+     * The translatable model attribute used as the primary label column. Most taxonomy
+     * uses `name`; resources like CareInstruction (which store `title`) override this.
+     */
+    protected function labelAttribute(): string
+    {
+        return 'name';
+    }
+
+    /** Heading shown above the label column. */
+    protected function labelHeading(): string
+    {
+        return __('Name');
+    }
+
     protected function countRelation(): ?string
     {
         return 'products';
@@ -50,14 +65,15 @@ abstract class TaxonomyIndex extends Component
     {
         $locale = app()->getLocale();
         $model = $this->modelClass();
-        $sort = $this->sortField === 'name' ? "name->{$locale}" : $this->sortField;
+        $label = $this->labelAttribute();
+        $sort = $this->sortField === $label ? "{$label}->{$locale}" : $this->sortField;
 
         $query = $model::query();
         if ($this->countRelation()) {
             $query->withCount($this->countRelation());
         }
         $query
-            ->when($this->search !== '', fn ($q) => $q->where("name->{$locale}", 'ilike', '%'.$this->search.'%'))
+            ->when($this->search !== '', fn ($q) => $q->where("{$label}->{$locale}", 'ilike', '%'.$this->search.'%'))
             ->orderBy($sort, $this->safeSortDirection());
 
         return view('livewire.admin.taxonomy.index', [
@@ -66,6 +82,8 @@ abstract class TaxonomyIndex extends Component
             'routePrefix' => $this->routePrefix(),
             'resource' => $this->resourceKey(),
             'columns' => $this->columns(),
+            'labelAttribute' => $label,
+            'labelHeading' => $this->labelHeading(),
         ]);
     }
 }

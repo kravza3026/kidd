@@ -15,8 +15,22 @@ abstract class TaxonomyForm extends Component
 {
     public ?int $recordId = null;
 
-    /** @var array<string, string> */
+    /**
+     * Generic translatable label bag, bound by the shared Blade as `wire-model="name"`.
+     * It persists to the model attribute named by labelAttribute() — usually `name`, but
+     * `title` for resources like CareInstruction. Keep the property name `name` so the
+     * Blade binding and `name.{locale}` validation/error keys stay aligned.
+     *
+     * @var array<string, string>
+     */
     public array $name = [];
+
+    /**
+     * Optional translatable description bag, persisted only when withDescription() is true.
+     *
+     * @var array<string, string>
+     */
+    public array $description = [];
 
     public int $sort_order = 0;
 
@@ -29,14 +43,31 @@ abstract class TaxonomyForm extends Component
 
     abstract protected function title(): string;
 
+    /** Model attribute the label bag persists to. */
+    protected function labelAttribute(): string
+    {
+        return 'name';
+    }
+
+    /** Label shown above the translatable field. */
+    protected function nameLabel(): string
+    {
+        return __('Name');
+    }
+
     protected function init(?Model $record): void
     {
-        $this->name = array_fill_keys(array_keys(config('app.locales')), '');
+        $locales = array_keys(config('app.locales'));
+        $this->name = array_fill_keys($locales, '');
+        $this->description = array_fill_keys($locales, '');
 
         if ($record?->exists) {
             $this->authorize('update', $record);
             $this->recordId = $record->id;
-            $this->name = array_merge($this->name, $record->getTranslations('name'));
+            $this->name = array_merge($this->name, $record->getTranslations($this->labelAttribute()));
+            if ($this->withDescription()) {
+                $this->description = array_merge($this->description, $record->getTranslations('description'));
+            }
             $this->sort_order = (int) ($record->sort_order ?? 0);
             $this->fillExtra($record);
         } else {
@@ -48,8 +79,12 @@ abstract class TaxonomyForm extends Component
 
     protected function applyTo(Model $record): void
     {
-        $record->name = $this->name;
+        $record->{$this->labelAttribute()} = $this->name;
         $record->sort_order = $this->sort_order;
+
+        if ($this->withDescription()) {
+            $record->description = $this->description;
+        }
     }
 
     protected function withDescription(): bool
@@ -84,6 +119,10 @@ abstract class TaxonomyForm extends Component
 
         foreach (array_keys(config('app.locales')) as $locale) {
             $rules["name.{$locale}"] = ['required', 'string', 'max:255'];
+
+            if ($this->withDescription()) {
+                $rules["description.{$locale}"] = ['nullable', 'string', 'max:2000'];
+            }
         }
 
         return array_merge($rules, $this->extraRules());
@@ -113,6 +152,7 @@ abstract class TaxonomyForm extends Component
             'editing' => (bool) $this->recordId,
             'withDescription' => $this->withDescription(),
             'extraFields' => $this->extraFields(),
+            'nameLabel' => $this->nameLabel(),
         ]);
     }
 }

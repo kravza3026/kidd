@@ -24,7 +24,7 @@
             <table class="min-w-full divide-y divide-line text-sm">
                 <thead class="bg-surface-2 text-xs tracking-wide text-ink-muted uppercase">
                     <tr>
-                        <x-admin.th field="name" :label="__('Name')" :sort-field="$sortField" :sort-direction="$sortDirection" />
+                        <x-admin.th :field="$labelAttribute" :label="$labelHeading" :sort-field="$sortField" :sort-direction="$sortDirection" />
                         @foreach ($columns as $col)
                             <th class="admin-table-cell text-left font-medium">{{ $col['label'] }}</th>
                         @endforeach
@@ -34,7 +34,7 @@
                 <tbody class="divide-y divide-line">
                     @forelse ($rows as $row)
                         <tr wire:key="tax-{{ $row->id }}" class="hover:bg-surface-2">
-                            <td class="admin-table-cell font-medium text-ink">{{ $row->getTranslation('name', app()->getLocale()) }}</td>
+                            <td class="admin-table-cell font-medium text-ink">{{ $row->getTranslation($labelAttribute, app()->getLocale()) }}</td>
                             @foreach ($columns as $col)
                                 <td class="admin-table-cell text-ink-muted">{{ $col['value']($row) }}</td>
                             @endforeach

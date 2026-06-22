@@ -1,12 +1,14 @@
 <?php
 
 use App\Livewire\Admin\Brands;
+use App\Livewire\Admin\CareInstructions;
 use App\Livewire\Admin\Colors;
 use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
 use App\Models\Brand;
+use App\Models\CareInstruction;
 use App\Models\Color;
 use App\Models\Fabric;
 use App\Models\Gender;
@@ -138,6 +140,59 @@ it('creates a size with type and ranges', function () {
     expect($size->getTranslation('name', 'en'))->toBe('M')
         ->and($size->min_age)->toBe(12)
         ->and($size->max_weight)->toBe(12000);
+});
+
+it('lists care instructions by their title (label attribute)', function () {
+    actingAsAdmin();
+    $care = CareInstruction::factory()->create([
+        'title' => ['ro' => 'Spălare', 'ru' => 'Стирка', 'en' => 'Machine wash'],
+    ]);
+
+    $this->get(route('admin.care-instructions.index'))->assertOk()->assertSeeLivewire(CareInstructions\Index::class);
+    Livewire::test(CareInstructions\Index::class)->assertSee('Machine wash')->assertDontSee($care->name);
+});
+
+it('creates a care instruction with title, description and icon', function () {
+    actingAsAdmin();
+
+    Livewire::test(CareInstructions\Form::class)
+        ->set('name.ro', 'Nu înălbiți')
+        ->set('name.ru', 'Не отбеливать')
+        ->set('name.en', 'Do not bleach')
+        ->set('description.en', 'Avoid chlorine bleach')
+        ->set('icon', 'no-bleach')
+        ->set('sort_order', 3)
+        ->call('save')
+        ->assertRedirect(route('admin.care-instructions.index'));
+
+    $care = CareInstruction::query()->latest('id')->first();
+
+    expect($care->getTranslation('title', 'en'))->toBe('Do not bleach')
+        ->and($care->getTranslation('description', 'en'))->toBe('Avoid chlorine bleach')
+        ->and($care->icon)->toBe('no-bleach')
+        ->and($care->sort_order)->toBe(3);
+});
+
+it('requires a care instruction title', function () {
+    actingAsAdmin();
+
+    Livewire::test(CareInstructions\Form::class)
+        ->set('name.ro', '')->set('name.ru', '')->set('name.en', '')
+        ->call('save')
+        ->assertHasErrors(['name.en']);
+});
+
+it('edits a care instruction title and persists to the title column', function () {
+    actingAsAdmin();
+    $care = CareInstruction::factory()->create();
+
+    Livewire::test(CareInstructions\Form::class, ['careInstruction' => $care])
+        ->assertSet('recordId', $care->id)
+        ->set('name.en', 'Tumble dry low')
+        ->call('save')
+        ->assertRedirect(route('admin.care-instructions.index'));
+
+    expect($care->fresh()->getTranslation('title', 'en'))->toBe('Tumble dry low');
 });
 
 it('forbids HR from taxonomy and 404s when a module is disabled', function () {

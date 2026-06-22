@@ -3,6 +3,7 @@
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 use App\Livewire\Admin\Brands;
+use App\Livewire\Admin\CareInstructions;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Cities;
 use App\Livewire\Admin\Colors;
@@ -89,6 +90,7 @@ livewireTaxonomy('fabrics', 'fabric', 'fabric', Fabrics::class);
 livewireTaxonomy('genders', 'gender', 'gender', Genders::class);
 livewireTaxonomy('colors', 'color', 'color', Colors::class);
 livewireTaxonomy('sizes', 'size', 'size', Sizes::class);
+livewireTaxonomy('care-instructions', 'careInstruction', 'careInstruction', CareInstructions::class);
 
 // Orders — list + detail with status management (admin order-builder is a follow-up).
 Route::middleware('module:order')->group(function () {

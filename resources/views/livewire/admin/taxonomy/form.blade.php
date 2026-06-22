@@ -9,7 +9,7 @@
     <form wire:submit="save" class="space-y-5">
         <x-admin.card :title="__('Details')">
             <div class="grid gap-4">
-                <x-admin.translatable wire-model="name" :label="__('Name')" required />
+                <x-admin.translatable wire-model="name" :label="$nameLabel" required />
 
                 @if ($withDescription)
                     <x-admin.translatable wire-model="description" :label="__('Description')" textarea />
