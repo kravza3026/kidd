@@ -112,3 +112,6 @@ livewireTaxonomy('roles', 'role', 'role', Roles::class);
 Route::middleware('module:audit')->group(function () {
     Route::livewire('audit', App\Livewire\Admin\Audit\Index::class)->name('audit.index');
 });
+
+// Living style guide — no permission gate beyond admin access; a build/design reference.
+Route::livewire('design', App\Livewire\Admin\Design\Index::class)->name('design.index');

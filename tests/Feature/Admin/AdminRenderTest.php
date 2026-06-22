@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\Categories\Form;
+use App\Livewire\Admin\Design\Index;
 use App\Models\Category;
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\RolesSeeder;
@@ -41,4 +42,13 @@ it('renders the category edit form prefilled (Livewire)', function () {
     $this->get(route('admin.categories.edit', $category))
         ->assertOk()
         ->assertSeeLivewire(Form::class);
+});
+
+it('renders the design system style guide showcasing components', function () {
+    $this->get(route('admin.design.index'))
+        ->assertOk()
+        ->assertSeeLivewire(Index::class)
+        ->assertSee('Design system')
+        ->assertSee('Status badges')
+        ->assertSee('Brand &amp; surface tokens', false);
 });
