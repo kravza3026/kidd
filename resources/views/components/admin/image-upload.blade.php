@@ -6,22 +6,21 @@
 ])
 
 @php
-    // $current may be a MediaLibrary media collection, an array of URLs, or a single URL.
     $current = $current instanceof \Illuminate\Support\Collection ? $current->all() : (array) $current;
 @endphp
 
 <div class="flex flex-col gap-2">
     @if ($label)
-        <x-input-label>{{ $label }}</x-input-label>
+        <label class="admin-label">{{ $label }}</label>
     @endif
 
     @if (! empty($current))
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-2">
             @foreach ($current as $media)
                 <img
                     src="{{ is_string($media) ? $media : $media->getUrl() }}"
                     alt=""
-                    class="h-20 w-20 rounded-xl border border-[#eeeeee] object-cover"
+                    class="h-16 w-16 rounded-lg border border-line object-cover"
                 />
             @endforeach
         </div>
@@ -32,6 +31,6 @@
         name="{{ $multiple ? $name.'[]' : $name }}"
         @if ($multiple) multiple @endif
         accept="image/*"
-        {{ $attributes->merge(['class' => 'block w-full text-sm text-gray-600 file:mr-4 file:rounded-xl file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-charcoal hover:file:bg-gray-200']) }}
+        {{ $attributes->merge(['class' => 'block w-full text-sm text-ink-muted file:mr-4 file:rounded-lg file:border-0 file:bg-surface-2 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-ink hover:file:bg-line']) }}
     />
 </div>

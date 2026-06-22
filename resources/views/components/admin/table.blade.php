@@ -4,9 +4,9 @@
     'searchPlaceholder' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'overflow-hidden rounded-2xl border border-[#eeeeee] bg-white shadow-sm']) }}>
+<div {{ $attributes->merge(['class' => 'admin-card overflow-hidden']) }}>
     @if ($search)
-        <div class="border-b border-[#f3f3f3] px-4 py-3">
+        <div class="border-b border-line px-3 py-2.5">
             <form method="GET" class="flex items-center gap-2">
                 {{-- Preserve other query params (filters) while searching/paginating. --}}
                 @foreach (request()->except(['search', 'page']) as $key => $value)
@@ -20,28 +20,26 @@
                     name="search"
                     value="{{ request('search') }}"
                     placeholder="{{ $searchPlaceholder ?? __('Search…') }}"
-                    class="w-full max-w-xs rounded-xl border-[1.5px] border-[#eeeeee] p-2.5 text-sm focus:border-gray-200 focus:ring-gray-200"
+                    class="admin-input max-w-xs"
                 />
-                <button type="submit" class="rounded-xl bg-charcoal px-4 py-2.5 text-sm font-semibold text-white">
-                    {{ __('Search') }}
-                </button>
+                <button type="submit" class="admin-btn admin-btn--secondary">{{ __('Search') }}</button>
             </form>
         </div>
     @endif
 
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-[#f3f3f3] text-left text-sm">
-            <thead class="bg-gray-50 text-xs uppercase tracking-wide text-gray-500">
+        <table class="min-w-full divide-y divide-line text-left text-sm">
+            <thead class="bg-surface-2 text-xs tracking-wide text-ink-muted uppercase">
                 <tr>{{ $head }}</tr>
             </thead>
-            <tbody class="divide-y divide-[#f7f7f7]">
+            <tbody class="divide-y divide-line">
                 {{ $slot }}
             </tbody>
         </table>
     </div>
 
     @if ($paginator && $paginator->hasPages())
-        <div class="border-t border-[#f3f3f3] px-4 py-3">
+        <div class="border-t border-line px-3 py-2.5">
             {{ $paginator->withQueryString()->links() }}
         </div>
     @endif

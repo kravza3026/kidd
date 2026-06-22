@@ -11,10 +11,10 @@
             @checked(old($name, $checked))
             {{ $attributes->merge(['class' => 'peer sr-only']) }}
         />
-        <span class="h-6 w-11 rounded-full bg-gray-200 transition peer-checked:bg-charcoal"></span>
-        <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-5"></span>
+        <span class="h-5 w-9 rounded-full bg-line transition peer-checked:bg-olive"></span>
+        <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
     </span>
     @if ($label)
-        <span class="text-sm text-gray-700">{{ $label }}</span>
+        <span class="text-sm text-ink">{{ $label }}</span>
     @endif
 </label>

@@ -1,14 +1,14 @@
 @props(['title' => null, 'description' => null])
 
-<div {{ $attributes->merge(['class' => 'rounded-2xl border border-[#eeeeee] bg-white shadow-sm']) }}>
+<div {{ $attributes->merge(['class' => 'admin-card']) }}>
     @if ($title || $description || isset($actions))
-        <div class="flex items-start justify-between gap-4 border-b border-[#f3f3f3] px-6 py-4">
+        <div class="flex items-start justify-between gap-3 border-b border-line px-4 py-3">
             <div>
                 @if ($title)
-                    <h3 class="text-base font-semibold text-[#020202]">{{ $title }}</h3>
+                    <h3 class="text-sm font-semibold text-ink">{{ $title }}</h3>
                 @endif
                 @if ($description)
-                    <p class="mt-1 text-sm text-gray-500">{{ $description }}</p>
+                    <p class="mt-0.5 text-xs text-ink-muted">{{ $description }}</p>
                 @endif
             </div>
             @isset($actions)
@@ -17,5 +17,5 @@
         </div>
     @endif
 
-    <div class="px-6 py-5">{{ $slot }}</div>
+    <div class="px-4 py-4">{{ $slot }}</div>
 </div>

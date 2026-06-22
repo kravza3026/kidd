@@ -13,7 +13,7 @@ beforeEach(function () {
 it('renders the status badge', function () {
     $this->blade('<x-admin.status-badge color="green" label="Active" />')
         ->assertSee('Active')
-        ->assertSee('bg-green-100', false);
+        ->assertSee('bg-olive/15', false);
 });
 
 it('renders the page header with an actions slot', function () {

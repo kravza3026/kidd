@@ -2,15 +2,15 @@
 
 @php
     $palette = [
-        'gray' => 'bg-gray-100 text-gray-700',
-        'green' => 'bg-green-100 text-green-700',
-        'red' => 'bg-red-100 text-red-700',
-        'yellow' => 'bg-yellow-100 text-yellow-800',
-        'blue' => 'bg-blue-100 text-blue-700',
-        'purple' => 'bg-purple-100 text-purple-700',
+        'gray' => 'bg-surface-2 text-ink-muted',
+        'green' => 'bg-olive/15 text-dark-olive dark:text-olive',
+        'red' => 'bg-danger/10 text-danger',
+        'yellow' => 'bg-amber-400/15 text-amber-600 dark:text-amber-400',
+        'blue' => 'bg-sky-400/15 text-sky-600 dark:text-sky-400',
+        'purple' => 'bg-purple-400/15 text-purple-600 dark:text-purple-400',
     ];
 @endphp
 
-<span {{ $attributes->merge(['class' => 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium '.($palette[$color] ?? $palette['gray'])]) }}>
+<span {{ $attributes->merge(['class' => 'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium '.($palette[$color] ?? $palette['gray'])]) }}>
     {{ $label ?? $slot }}
 </span>

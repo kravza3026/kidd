@@ -36,6 +36,7 @@
         "@tailwindplus/elements": "^1.0.0",
         "@zxing/browser": "^0.2.0",
         "alpinejs": "^3.14.9",
+        "apexcharts": "^5.15.2",
         "instantsearch.js": "^4.102.0",
         "js-cookie": "^3.0.5",
         "laravel-precognition-alpine": "^0.7.2",

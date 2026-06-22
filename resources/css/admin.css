@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Class-based dark mode: `dark:` applies when an ancestor has the `.dark` class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Typefaces: Inter for dense data, Comfortaa for display/brand. */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Comfortaa', sans-serif;
+
+    /* Brand */
+    --color-olive: #a8ba66;
+    --color-dark-olive: #94a652;
+    --color-danger: #fd3333;
+
+    /* Semantic surfaces — values come from the variables below and flip in dark mode. */
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-line: var(--line);
+    --color-ink: var(--ink);
+    --color-ink-muted: var(--ink-muted);
+    --color-ink-subtle: var(--ink-subtle);
+    --color-olive-soft: var(--olive-soft);
+}
+
+@layer base {
+    :root {
+        --canvas: #f6f6f6;
+        --surface: #ffffff;
+        --surface-2: #f8f7f2;
+        --line: #eeeeee;
+        --ink: #020202;
+        --ink-muted: #5b616e;
+        --ink-subtle: #9ca3af;
+        --olive-soft: #eef2dd;
+        color-scheme: light;
+    }
+
+    .dark {
+        --canvas: #0f0f11;
+        --surface: #18181b;
+        --surface-2: #1f1f23;
+        --line: #2a2a30;
+        --ink: #f4f4f5;
+        --ink-muted: #a1a1aa;
+        --ink-subtle: #6b7280;
+        --olive-soft: #283019;
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-canvas text-ink antialiased;
+        font-family: var(--font-sans);
+    }
+
+    h1, h2, h3, .font-display {
+        font-family: var(--font-display);
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* Density toggle (data-density on <html>): compact is the default, dense data UI. */
+    html[data-density='comfortable'] .admin-input {
+        @apply px-3.5 py-2.5;
+    }
+
+    html[data-density='comfortable'] .admin-table-cell {
+        @apply py-3;
+    }
+
+    .admin-table-cell {
+        @apply px-3 py-2;
+    }
+}
+
+@layer components {
+    /* Buttons — flat (no storefront glow), info-dense */
+    .admin-btn {
+        @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .admin-btn--primary {
+        @apply bg-olive text-white hover:bg-dark-olive;
+    }
+
+    .admin-btn--secondary {
+        @apply border border-line bg-surface text-ink hover:bg-surface-2;
+    }
+
+    .admin-btn--danger {
+        @apply bg-danger text-white hover:brightness-95;
+    }
+
+    .admin-btn--ghost {
+        @apply text-ink-muted hover:bg-surface-2 hover:text-ink;
+    }
+
+    /* Surfaces */
+    .admin-card {
+        @apply rounded-xl border border-line bg-surface;
+    }
+
+    /* Form controls */
+    .admin-input {
+        @apply w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-olive focus:ring-1 focus:ring-olive/40 focus:outline-none;
+    }
+
+    .admin-label {
+        @apply text-xs font-semibold text-ink;
+    }
+}
