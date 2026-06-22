@@ -17,17 +17,17 @@
         <div aria-hidden="true" class="h-6 w-px bg-line lg:hidden"></div>
 
         <div class="flex flex-1 items-center gap-x-3 self-stretch lg:gap-x-5">
-            <form action="#" method="GET" class="grid flex-1 grid-cols-1">
-                <input
-                    name="search"
-                    placeholder="{{ __('Search…') }}"
-                    aria-label="Search"
-                    class="col-start-1 row-start-1 block size-full bg-transparent pl-7 text-sm text-ink outline-hidden placeholder:text-ink-muted"
-                />
-                <svg viewBox="0 0 20 20" fill="currentColor" class="pointer-events-none col-start-1 row-start-1 size-4 self-center text-ink-muted">
+            <button
+                type="button"
+                @click="$dispatch('admin-palette')"
+                class="flex flex-1 items-center gap-2 rounded-lg border border-line bg-surface-2 px-3 py-1.5 text-sm text-ink-muted hover:text-ink"
+            >
+                <svg viewBox="0 0 20 20" fill="currentColor" class="size-4">
                     <path d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" fill-rule="evenodd" />
                 </svg>
-            </form>
+                <span class="hidden sm:inline">{{ __('Search & jump…') }}</span>
+                <kbd class="ml-auto hidden rounded border border-line px-1.5 py-0.5 text-[10px] sm:inline">⌘K</kbd>
+            </button>
 
             <div class="flex items-center gap-x-2 lg:gap-x-3">
                 {{-- Theme switcher --}}

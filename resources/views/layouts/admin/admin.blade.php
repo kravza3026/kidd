@@ -66,6 +66,8 @@
             </main>
         </div>
 
+        @include('layouts.admin.command-palette')
+
         @livewireScripts
     </body>
 </html>

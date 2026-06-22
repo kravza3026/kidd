@@ -19,6 +19,14 @@ it('renders the dashboard with stat cards', function () {
         ->assertSee('Products');
 });
 
+it('renders the command palette with discovered destinations', function () {
+    $this->get(route('admin.home'))
+        ->assertOk()
+        ->assertSee('Jump to…')
+        ->assertSee('admin-palette', false)   // ⌘K dispatch wiring
+        ->assertSee('Categories');            // a discovered destination in the palette JSON
+});
+
 it('renders the category create form (Livewire)', function () {
     $this->get(route('admin.categories.create'))
         ->assertOk()
