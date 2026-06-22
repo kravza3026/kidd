@@ -11,6 +11,7 @@ use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
+use App\Livewire\Admin\Locations;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
@@ -95,5 +96,6 @@ Route::middleware('module:order')->group(function () {
 livewireResource('vacancies', 'vacancy', 'vacancy', Vacancies::class);
 livewireTaxonomy('companies', 'company', 'company', Companies::class);
 livewireTaxonomy('warehouses', 'warehouse', 'warehouse', Warehouses::class);
+livewireTaxonomy('locations', 'location', 'location', Locations::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
