@@ -24,8 +24,8 @@ class OrderFactory extends Factory
             'status' => 1, // Enum // 1 = Pending, 2 = Processing, 3 = Delivered, 4 = Canceled, 5 = Returned.
             'shipping_method' => 1, // Enum // 1 = Standard, 2 = Gift, 3 = Express
             'payment_method' => 1, // Enum // 1 = Cash on Delivery, 2 = Credit Card, 3 = Online Payment, 4 = Payment Terminal.
-            'shipping_address' => $this->faker->address(),
-            'billing_address' => $this->faker->address(),
+            // Addresses are attached via the polymorphic Address relation (shipping()/billing()),
+            // not stored as columns on the orders table.
             'cart_snapshot' => $this->faker->words(),
             'notes' => $this->faker->word(),
             'placed_at' => Carbon::now(),

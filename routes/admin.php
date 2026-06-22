@@ -2,7 +2,6 @@
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
-use App\Http\Controllers\Admin\OrdersController;
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Colors;
@@ -10,6 +9,8 @@ use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
+use App\Livewire\Admin\Orders\Index;
+use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
@@ -64,6 +65,8 @@ livewireTaxonomy('genders', 'gender', 'gender', Genders::class);
 livewireTaxonomy('colors', 'color', 'color', Colors::class);
 livewireTaxonomy('sizes', 'size', 'size', Sizes::class);
 
-// Not yet rebuilt as full CRUD — converted to Livewire as each is implemented.
-Route::resource('orders', OrdersController::class);
-Route::resource('invoices', OrdersController::class);
+// Orders — list + detail with status management (admin order-builder is a follow-up).
+Route::middleware('module:order')->group(function () {
+    Route::livewire('orders', Index::class)->name('orders.index');
+    Route::livewire('orders/{order:id}', Show::class)->name('orders.show');
+});
