@@ -15,6 +15,7 @@ use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Seasons;
 use App\Livewire\Admin\Sizes;
+use App\Livewire\Admin\Vacancies;
 use App\Livewire\Admin\VacancyApplications;
 use Illuminate\Support\Facades\Route;
 
@@ -88,6 +89,7 @@ Route::middleware('module:order')->group(function () {
     Route::livewire('orders/{order:id}', Show::class)->name('orders.show');
 });
 
-// Content & ops inboxes (storefront-submitted records).
+// Content & ops.
+livewireResource('vacancies', 'vacancy', 'vacancy', Vacancies::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
