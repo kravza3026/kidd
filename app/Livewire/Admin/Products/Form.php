@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Products;
 
 use App\Models\Brand;
+use App\Models\CareInstruction;
 use App\Models\Category;
 use App\Models\Fabric;
 use App\Models\Gender;
@@ -50,6 +51,9 @@ class Form extends Component
 
     public bool $is_bestseller = false;
 
+    /** @var array<int, int> */
+    public array $selectedCareInstructions = [];
+
     /** @var array<int, TemporaryUploadedFile> */
     public array $gallery = [];
 
@@ -68,6 +72,7 @@ class Form extends Component
                 'category_id', 'brand_id', 'gender_id', 'season_id', 'fabric_id', 'barcode',
                 'is_visible', 'is_new', 'has_discount', 'is_featured', 'is_bestseller',
             ]));
+            $this->selectedCareInstructions = $product->careInstructions()->pluck('care_instructions.id')->all();
         } else {
             $this->authorize('create', Product::class);
         }
@@ -92,6 +97,8 @@ class Form extends Component
             'is_bestseller' => ['boolean'],
             'gallery' => ['nullable', 'array'],
             'gallery.*' => ['image', 'max:4096'],
+            'selectedCareInstructions' => ['array'],
+            'selectedCareInstructions.*' => ['integer', 'exists:care_instructions,id'],
         ];
 
         foreach (array_keys(config('app.locales')) as $locale) {
@@ -125,6 +132,8 @@ class Form extends Component
         ]);
         $product->save();
 
+        $product->careInstructions()->sync($this->selectedCareInstructions);
+
         foreach ($this->gallery as $file) {
             $product->addMedia($file->getRealPath())
                 ->usingFileName($file->getClientOriginalName())
@@ -147,6 +156,7 @@ class Form extends Component
             'genders' => Gender::orderBy('sort_order')->get()->mapWithKeys(fn ($g) => [$g->id => $g->getTranslation('name', $locale)]),
             'seasons' => Season::orderBy('sort_order')->get()->mapWithKeys(fn ($s) => [$s->id => $s->getTranslation('name', $locale)]),
             'fabrics' => Fabric::orderBy('sort_order')->get()->mapWithKeys(fn ($f) => [$f->id => $f->getTranslation('name', $locale)]),
+            'careInstructions' => CareInstruction::orderBy('sort_order')->get()->mapWithKeys(fn ($c) => [$c->id => $c->getTranslation('title', $locale)]),
         ]);
     }
 }

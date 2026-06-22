@@ -2,6 +2,7 @@
 
 use App\Livewire\Admin\Products\Form;
 use App\Livewire\Admin\Products\Index;
+use App\Models\CareInstruction;
 use App\Models\Category;
 use App\Models\Gender;
 use App\Models\Product;
@@ -50,6 +51,24 @@ it('creates a product with relations, flags and an auto slug', function () {
         ->and($product->gender_id)->toBe($gender->id)
         ->and($product->is_featured)->toBeTrue()
         ->and($product->getTranslation('slug', 'en'))->not->toBeEmpty();
+});
+
+it('syncs care instructions onto the product', function () {
+    actingAsAdmin();
+    $category = Category::factory()->create();
+    $gender = Gender::factory()->create();
+    $care = CareInstruction::factory()->count(2)->create();
+
+    Livewire::test(Form::class)
+        ->set('name.ro', 'Tricou')->set('name.ru', 'Майка')->set('name.en', 'Tee')
+        ->set('category_id', $category->id)
+        ->set('gender_id', $gender->id)
+        ->set('selectedCareInstructions', [$care[0]->id, $care[1]->id])
+        ->call('save')
+        ->assertRedirect(route('admin.products.index'));
+
+    $product = Product::query()->latest('id')->first();
+    expect($product->careInstructions)->toHaveCount(2);
 });
 
 it('requires name, category and gender', function () {

@@ -69,7 +69,7 @@
                 </div>
             </x-admin.card>
 
-            <x-admin.card :title="__('Gallery')" :description="__('Variant-level images & the variant matrix come next.')">
+            <x-admin.card :title="__('Gallery')" :description="__('Product images. Manage colour/size variants from the product page.')">
                 @if ($editing && $product->getMedia('gallery')->isNotEmpty())
                     <div class="mb-3 flex flex-wrap gap-2">
                         @foreach ($product->getMedia('gallery') as $media)
@@ -96,6 +96,21 @@
                     <x-admin.switch wire-model="is_featured" :label="__('Featured')" />
                     <x-admin.switch wire-model="is_bestseller" :label="__('Bestseller')" />
                 </div>
+            </x-admin.card>
+
+            <x-admin.card :title="__('Care instructions')">
+                @if (count($careInstructions))
+                    <div class="flex max-h-56 flex-col gap-1.5 overflow-y-auto">
+                        @foreach ($careInstructions as $id => $label)
+                            <label class="flex cursor-pointer items-center gap-2 text-sm" wire:key="care-{{ $id }}">
+                                <input type="checkbox" wire:model="selectedCareInstructions" value="{{ $id }}" class="size-4 accent-olive" />
+                                <span class="text-ink">{{ $label }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-xs text-ink-muted">{{ __('No care instructions yet.') }}</p>
+                @endif
             </x-admin.card>
 
             <div class="flex flex-col gap-2">
