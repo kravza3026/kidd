@@ -2,9 +2,9 @@
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
-use App\Http\Controllers\Admin\CustomersController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +32,8 @@ Route::livewire('/', Dashboard::class)->name('home');
 
 livewireResource('categories', 'category', 'category', Categories::class);
 livewireResource('products', 'product', 'product', Products::class);
+livewireResource('customers', 'customer', 'customer', Customers::class);
 
 // Not yet rebuilt as full CRUD — converted to Livewire as each is implemented.
 Route::resource('orders', OrdersController::class);
-Route::resource('customers', CustomersController::class);
 Route::resource('invoices', OrdersController::class);
