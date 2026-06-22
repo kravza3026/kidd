@@ -31,7 +31,8 @@ class UserFactory extends Factory
             'company_id' => Company::query()->value('id') ?? Company::factory(),
             'first_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->firstName(),
             'last_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->lastName(),
-            'phone' => fake()->unique()->e164PhoneNumber(),
+            // Valid Moldovan mobile number (the app's E164 cast + phone rules target MD).
+            'phone' => '+37360'.fake()->unique()->numerify('######'),
             'phone_verified_at' => now(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
