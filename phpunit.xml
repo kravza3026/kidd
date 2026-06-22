@@ -40,7 +40,6 @@
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="SCOUT_DRIVER" value="collection"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
         <env name="PENNANT_STORE" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
