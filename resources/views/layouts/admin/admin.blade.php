@@ -26,7 +26,8 @@
             @include('layouts.admin.header')
 
             <main class="py-10">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
+                    <x-admin.flash />
                     {{ $slot }}
                 </div>
             </main>

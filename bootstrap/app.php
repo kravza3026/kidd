@@ -1,9 +1,18 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EnsureModuleEnabled;
+use App\Http\Middleware\EnsureSlugMatchesLocaleMiddleware;
+use App\Http\Middleware\SetDefaultLocaleForUrls;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath;
+use Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect;
+use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -53,23 +62,24 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->prependToPriorityList(
-            before: \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            prepend: \App\Http\Middleware\SetDefaultLocaleForUrls::class,
+            before: SubstituteBindings::class,
+            prepend: SetDefaultLocaleForUrls::class,
         );
 
         $middleware->appendToPriorityList(
-            after: \App\Http\Middleware\SetDefaultLocaleForUrls::class,
-            append: \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+            after: SetDefaultLocaleForUrls::class,
+            append: LaravelLocalizationRoutes::class,
         );
 
         $middleware->alias([
             // Other Middleware aliases
-            'slug.locale' => \App\Http\Middleware\EnsureSlugMatchesLocaleMiddleware::class,
-            'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-            'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-            'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
-            'localeCookieRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
-            'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'module' => EnsureModuleEnabled::class,
+            'slug.locale' => EnsureSlugMatchesLocaleMiddleware::class,
+            'localize' => LaravelLocalizationRoutes::class,
+            'localizationRedirect' => LaravelLocalizationRedirectFilter::class,
+            'localeSessionRedirect' => LocaleSessionRedirect::class,
+            'localeCookieRedirect' => LocaleCookieRedirect::class,
+            'localeViewPath' => LaravelLocalizationViewPath::class,
         ]);
 
     })

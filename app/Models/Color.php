@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -9,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Color extends Model
 {
-    use HasTranslatableSlug, HasTranslations;
+    use HasFactory, HasTranslatableSlug, HasTranslations;
 
     public array $translatable = [
         'name',

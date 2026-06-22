@@ -30,14 +30,19 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.23",
         "@heroicons/vue": "^2.2.0",
+        "@meilisearch/instant-meilisearch": "^0.31.2",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/typography": "^0.5.16",
         "@tailwindplus/elements": "^1.0.0",
+        "@zxing/browser": "^0.2.0",
         "alpinejs": "^3.14.9",
+        "instantsearch.js": "^4.102.0",
         "js-cookie": "^3.0.5",
         "laravel-precognition-alpine": "^0.7.2",
         "laravel-precognition-vue": "^0.7.2",
+        "latest": "^0.2.0",
         "lodash": "^4.17.21",
+        "meilisearch": "^0.57.0",
         "mitt": "^3.0.1",
         "pinia": "^3.0.4",
         "puppeteer": "^24.19.0",
@@ -45,6 +50,7 @@
         "swiper": "^11.2.10",
         "vue": "^3.5.17",
         "vue-i18n": "^9.14.5",
+        "vue-instantsearch": "^4.26.9",
         "vue-router": "^4.5.1"
     }
 }

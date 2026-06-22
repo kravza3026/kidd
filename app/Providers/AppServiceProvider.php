@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -51,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
 
         Model::automaticallyEagerLoadRelationships();
         Model::preventLazyLoading();
+
+        // The `admin` role is the all-access super-role: it short-circuits every
+        // authorization check, so finer roles only need explicit permission subsets.
+        Gate::before(function ($user, string $ability) {
+            return method_exists($user, 'hasRole') && $user->hasRole('admin') ? true : null;
+        });
 
         ProductVariant::observe(ProductVariantObserver::class);
 

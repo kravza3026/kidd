@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -24,7 +26,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => 1,
+            // Reuse a seeded company when present, otherwise stand one up so factory-only
+            // tests satisfy the required company_id foreign key.
+            'company_id' => Company::query()->value('id') ?? Company::factory(),
             'first_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->firstName(),
             'last_name' => fake(fake()->randomElement(['ro_RO', 'ru_RU', 'en_EN']))->lastName(),
             'phone' => fake()->unique()->e164PhoneNumber(),
