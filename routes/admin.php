@@ -21,6 +21,7 @@ use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Regions;
 use App\Livewire\Admin\Roles;
 use App\Livewire\Admin\Seasons;
+use App\Livewire\Admin\Settings\Edit;
 use App\Livewire\Admin\Sizes;
 use App\Livewire\Admin\Tags;
 use App\Livewire\Admin\Users;
@@ -125,6 +126,9 @@ livewireTaxonomy('users', 'user', 'user', Users::class);
 livewireTaxonomy('roles', 'role', 'role', Roles::class);
 Route::middleware('module:audit')->group(function () {
     Route::livewire('audit', App\Livewire\Admin\Audit\Index::class)->name('audit.index');
+});
+Route::middleware('module:setting')->group(function () {
+    Route::livewire('settings', Edit::class)->name('settings.edit');
 });
 
 // Living style guide — no permission gate beyond admin access; a build/design reference.

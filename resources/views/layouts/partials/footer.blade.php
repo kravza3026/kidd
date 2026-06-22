@@ -1,3 +1,4 @@
+@php($storeSettings = app(App\Settings\StoreSettings::class))
 <footer
     class="bg-charcoal mt-7 pt-5 pb-28 lg:pb-5 xl:mt-0"
     x-data="{
@@ -18,12 +19,12 @@
                 </div>
                 <ul class="group flex items-center gap-4 xl:mt-7">
                     <li>
-                        <a class="group" href="{{ config('services.social_links.facebook') }}">
+                        <a class="group" href="{{ $storeSettings->facebook_url ?: config('services.social_links.facebook') }}">
                             <img src="{{ Vite::image('icons/socials/facebook.svg') }}" alt="facebook icon" />
                         </a>
                     </li>
                     <li>
-                        <a class="group" href="{{ config('services.social_links.instagram') }}">
+                        <a class="group" href="{{ $storeSettings->instagram_url ?: config('services.social_links.instagram') }}">
                             <img
                                 class="size-[26px] opacity-40"
                                 src="{{ Vite::image('icons/socials/instagram.svg') }}"
@@ -32,12 +33,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ config('services.social_links.messenger') }}">
+                        <a href="{{ $storeSettings->messenger_url ?: config('services.social_links.messenger') }}">
                             <img src="{{ Vite::image('icons/socials/messenger.svg') }}" alt="messenger icon" />
                         </a>
                     </li>
                     <li>
-                        <a href="{{ config('services.social_links.youtube') }}">
+                        <a href="{{ $storeSettings->youtube_url ?: config('services.social_links.youtube') }}">
                             <img src="{{ Vite::image('icons/socials/youtube_i.svg') }}" alt="youtube icon" />
                         </a>
                     </li>
