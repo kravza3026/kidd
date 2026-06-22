@@ -5,11 +5,14 @@
 use App\Http\Controllers\Admin\OrdersController;
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Colors;
 use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Fabrics;
+use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Seasons;
+use App\Livewire\Admin\Sizes;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -57,6 +60,9 @@ livewireResource('customers', 'customer', 'customer', Customers::class);
 livewireTaxonomy('brands', 'brand', 'brand', Brands::class);
 livewireTaxonomy('seasons', 'season', 'season', Seasons::class);
 livewireTaxonomy('fabrics', 'fabric', 'fabric', Fabrics::class);
+livewireTaxonomy('genders', 'gender', 'gender', Genders::class);
+livewireTaxonomy('colors', 'color', 'color', Colors::class);
+livewireTaxonomy('sizes', 'size', 'size', Sizes::class);
 
 // Not yet rebuilt as full CRUD — converted to Livewire as each is implemented.
 Route::resource('orders', OrdersController::class);

@@ -15,7 +15,23 @@
                     <x-admin.translatable wire-model="description" :label="__('Description')" textarea />
                 @endif
 
-                {{ $slot ?? '' }}
+                @if (! empty($extraFields))
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        @foreach ($extraFields as $field)
+                            <x-admin.field :label="$field['label']" :name="$field['model']">
+                                @if (($field['type'] ?? 'text') === 'select')
+                                    <select wire:model="{{ $field['model'] }}" class="admin-input cursor-pointer">
+                                        @foreach ($field['options'] ?? [] as $value => $label)
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <input type="{{ $field['type'] ?? 'text' }}" wire:model="{{ $field['model'] }}" class="admin-input" />
+                                @endif
+                            </x-admin.field>
+                        @endforeach
+                    </div>
+                @endif
 
                 <x-admin.field :label="__('Sort order')" name="sort_order">
                     <input type="number" wire:model="sort_order" class="admin-input w-32" />

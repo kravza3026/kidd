@@ -1,11 +1,17 @@
 <?php
 
 use App\Livewire\Admin\Brands;
+use App\Livewire\Admin\Colors;
 use App\Livewire\Admin\Fabrics;
+use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Seasons;
+use App\Livewire\Admin\Sizes;
 use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Fabric;
+use App\Models\Gender;
 use App\Models\Season;
+use App\Models\Size;
 use App\Models\User;
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\RolesSeeder;
@@ -81,6 +87,57 @@ it('edits a fabric', function () {
         ->assertRedirect(route('admin.fabrics.index'));
 
     expect($fabric->fresh()->getTranslation('name', 'en'))->toBe('Linen X');
+});
+
+it('creates a gender with code and colour', function () {
+    actingAsAdmin();
+
+    Livewire::test(Genders\Form::class)
+        ->set('name.ro', 'U')->set('name.ru', 'U')->set('name.en', 'Unisex')
+        ->set('code', 'U')
+        ->set('bg_color', '#eeeeee')
+        ->call('save')
+        ->assertRedirect(route('admin.genders.index'));
+
+    $gender = Gender::query()->latest('id')->first();
+    expect($gender->getTranslation('name', 'en'))->toBe('Unisex')
+        ->and($gender->code)->toBe('U')
+        ->and($gender->getRawOriginal('bg_color'))->toBe('#eeeeee');
+});
+
+it('creates a color with hex and type', function () {
+    actingAsAdmin();
+
+    Livewire::test(Colors\Form::class)
+        ->set('name.ro', 'R')->set('name.ru', 'R')->set('name.en', 'Red')
+        ->set('hex', '#ff0000')
+        ->set('type', 1)
+        ->call('save')
+        ->assertRedirect(route('admin.colors.index'));
+
+    $color = Color::query()->latest('id')->first();
+    expect($color->getTranslation('name', 'en'))->toBe('Red')
+        ->and($color->hex)->toBe('#ff0000')
+        ->and($color->getTranslation('slug', 'en'))->not->toBeEmpty();
+});
+
+it('creates a size with type and ranges', function () {
+    actingAsAdmin();
+
+    Livewire::test(Sizes\Form::class)
+        ->set('name.ro', 'M')->set('name.ru', 'M')->set('name.en', 'M')
+        ->set('type', Size::TYPE_CLOTH)
+        ->set('min_age', 12)
+        ->set('max_age', 24)
+        ->set('min_weight', 8000)
+        ->set('max_weight', 12000)
+        ->call('save')
+        ->assertRedirect(route('admin.sizes.index'));
+
+    $size = Size::query()->latest('id')->first();
+    expect($size->getTranslation('name', 'en'))->toBe('M')
+        ->and($size->min_age)->toBe(12)
+        ->and($size->max_weight)->toBe(12000);
 });
 
 it('forbids HR from taxonomy and 404s when a module is disabled', function () {

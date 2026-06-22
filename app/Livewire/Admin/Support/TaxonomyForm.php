@@ -58,6 +58,16 @@ abstract class TaxonomyForm extends Component
     }
 
     /**
+     * Extra scalar fields rendered after name/description.
+     *
+     * @return array<int, array{model: string, label: string, type?: string, options?: array<int|string, string>}>
+     */
+    protected function extraFields(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<string, mixed>
      */
     protected function extraRules(): array
@@ -102,6 +112,7 @@ abstract class TaxonomyForm extends Component
             'routePrefix' => $this->routePrefix(),
             'editing' => (bool) $this->recordId,
             'withDescription' => $this->withDescription(),
+            'extraFields' => $this->extraFields(),
         ]);
     }
 }
