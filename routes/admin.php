@@ -5,6 +5,7 @@
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Colors;
+use App\Livewire\Admin\ContactInquiries;
 use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Fabrics;
@@ -30,6 +31,21 @@ if (! function_exists('livewireResource')) {
             Route::livewire($uri, "{$namespace}\\Index")->name("{$uri}.index");
             Route::livewire("{$uri}/create", "{$namespace}\\Form")->name("{$uri}.create");
             Route::livewire("{$uri}/{{$param}:id}/edit", "{$namespace}\\Form")->name("{$uri}.edit");
+            Route::livewire("{$uri}/{{$param}:id}", "{$namespace}\\Show")->name("{$uri}.show");
+        });
+    }
+}
+
+if (! function_exists('livewireInbox')) {
+    /**
+     * Read-only "inbox" resources: index + show only (storefront-submitted records).
+     *
+     * @param  class-string  $namespace
+     */
+    function livewireInbox(string $uri, string $param, string $module, string $namespace): void
+    {
+        Route::middleware("module:{$module}")->group(function () use ($uri, $param, $namespace) {
+            Route::livewire($uri, "{$namespace}\\Index")->name("{$uri}.index");
             Route::livewire("{$uri}/{{$param}:id}", "{$namespace}\\Show")->name("{$uri}.show");
         });
     }
@@ -70,3 +86,6 @@ Route::middleware('module:order')->group(function () {
     Route::livewire('orders', Index::class)->name('orders.index');
     Route::livewire('orders/{order:id}', Show::class)->name('orders.show');
 });
+
+// Content & ops inboxes (storefront-submitted records).
+livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
