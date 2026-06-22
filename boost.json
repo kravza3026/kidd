@@ -1,17 +1,17 @@
 {
     "agents": [
-        "claude_code",
-        "copilot",
-        "junie"
+        "claude_code"
     ],
+    "cloud": false,
     "guidelines": true,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
     "packages": [
         "spatie/laravel-activitylog",
         "spatie/laravel-medialibrary",
         "spatie/laravel-pdf",
-        "spatie/laravel-permission"
+        "spatie/laravel-permission",
+        "spatie/laravel-translatable"
     ],
     "sail": false,
     "skills": [
@@ -19,9 +19,14 @@
         "mcp-development",
         "pennant-development",
         "scout-development",
+        "livewire-development",
+        "pest-testing",
+        "echo-vue-development",
+        "echo-development",
         "tailwindcss-development",
         "medialibrary-development",
         "laravel-pdf",
-        "laravel-permission-development"
+        "laravel-permission-development",
+        "translatable-development"
     ]
 }

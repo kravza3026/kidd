@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends Factory<Category>
  */
 class CategoryFactory extends Factory
 {
@@ -18,7 +19,8 @@ class CategoryFactory extends Factory
     {
 
         return [
-            'parent_id' => 1,
+            // Top-level by default so factory-only tests don't depend on a seeded parent.
+            'parent_id' => null,
             'is_visible' => true,
             'name' => [
                 'ro' => fake('ro_RO')->words(rand(2, 3), true),
