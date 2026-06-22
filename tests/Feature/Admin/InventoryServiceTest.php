@@ -2,23 +2,10 @@
 
 use App\Enums\StockMovementType;
 use App\Exceptions\InsufficientStockException;
-use App\Models\Color;
 use App\Models\Order;
-use App\Models\Product;
-use App\Models\ProductVariant;
-use App\Models\Size;
 use App\Models\StockMovement;
 use App\Models\Warehouse;
 use App\Services\InventoryService;
-
-function makeVariant(): ProductVariant
-{
-    return ProductVariant::factory()->for(Product::factory())->create([
-        'color_id' => Color::factory()->create()->id,
-        'size_id' => Size::factory()->create()->id,
-        'quantity' => 0,
-    ]);
-}
 
 beforeEach(function () {
     $this->service = app(InventoryService::class);

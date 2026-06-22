@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Color;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Pest\Browser\Playwright\Playwright;
@@ -50,4 +54,17 @@ function actingAsAdmin(): User
     test()->actingAs($user);
 
     return $user;
+}
+
+/**
+ * Create a product variant with its own fresh colour and size (so it satisfies the
+ * unique colour+size combo without depending on seeded taxonomy), with zero stock.
+ */
+function makeVariant(): ProductVariant
+{
+    return ProductVariant::factory()->for(Product::factory())->create([
+        'color_id' => Color::factory()->create()->id,
+        'size_id' => Size::factory()->create()->id,
+        'quantity' => 0,
+    ]);
 }

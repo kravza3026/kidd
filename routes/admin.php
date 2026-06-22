@@ -13,6 +13,7 @@ use App\Livewire\Admin\Customers;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
+use App\Livewire\Admin\Inventory\Manage;
 use App\Livewire\Admin\Locations;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
@@ -96,6 +97,12 @@ livewireTaxonomy('colors', 'color', 'color', Colors::class);
 livewireTaxonomy('sizes', 'size', 'size', Sizes::class);
 livewireTaxonomy('care-instructions', 'careInstruction', 'careInstruction', CareInstructions::class);
 livewireTaxonomy('tags', 'tag', 'tag', Tags::class);
+
+// Inventory — variant × warehouse stock with a movement ledger.
+Route::middleware('module:inventory')->group(function () {
+    Route::livewire('inventory', App\Livewire\Admin\Inventory\Index::class)->name('inventory.index');
+    Route::livewire('inventory/{variant:id}', Manage::class)->name('inventory.show');
+});
 
 // Orders — list + detail with status management (admin order-builder is a follow-up).
 Route::middleware('module:order')->group(function () {
