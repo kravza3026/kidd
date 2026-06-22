@@ -10,7 +10,13 @@
 
 <div class="space-y-5">
     <x-admin.breadcrumbs :items="[['label' => __('Orders')]]" />
-    <x-admin.page-header :title="__('Orders')" :subtitle="__('Manage customer orders')" />
+    <x-admin.page-header :title="__('Orders')" :subtitle="__('Manage customer orders')">
+        <x-slot:actions>
+            @can('create', App\Models\Order::class)
+                <x-admin.button :href="route('admin.orders.create')" wire:navigate>{{ __('New order') }}</x-admin.button>
+            @endcan
+        </x-slot:actions>
+    </x-admin.page-header>
 
     <div class="admin-card overflow-hidden">
         <div class="flex flex-wrap items-center gap-2 border-b border-line p-2.5">

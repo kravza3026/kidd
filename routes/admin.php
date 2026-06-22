@@ -15,6 +15,7 @@ use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Inventory\Manage;
 use App\Livewire\Admin\Locations;
+use App\Livewire\Admin\Orders\Form;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
 use App\Livewire\Admin\Products;
@@ -106,9 +107,10 @@ Route::middleware('module:inventory')->group(function () {
     Route::livewire('inventory/{variant:id}', Manage::class)->name('inventory.show');
 });
 
-// Orders — list + detail with status management (admin order-builder is a follow-up).
+// Orders — list, builder (create), and detail with status management + stock deduction.
 Route::middleware('module:order')->group(function () {
     Route::livewire('orders', Index::class)->name('orders.index');
+    Route::livewire('orders/create', Form::class)->name('orders.create');
     Route::livewire('orders/{order:id}', Show::class)->name('orders.show');
 });
 
