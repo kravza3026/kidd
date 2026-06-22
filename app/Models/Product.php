@@ -287,7 +287,9 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     public function searchableAs(): string
     {
-        return 'products_index';
+        // Include the Scout prefix so the engine's index name matches the one
+        // scout:sync-index-settings configures (it prefixes the config key).
+        return config('scout.prefix').'products_index';
     }
 
     /**
@@ -309,8 +311,9 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
 
         return [
             'id' => (int) $this->id,
-            'name' => (array) $this->name,
-            'description' => (array) $this->description,
+            // Index every locale so search matches RO/RU/EN names, not just the active one.
+            'name' => $this->getTranslations('name'),
+            'description' => $this->getTranslations('description'),
             'category_id' => $this->category_id,
             'brand_id' => $this->brand_id,
             'gender_id' => $this->gender_id,

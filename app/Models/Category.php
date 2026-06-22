@@ -92,7 +92,7 @@ class Category extends Model
      */
     public function searchableAs(): string
     {
-        return 'categories_index';
+        return config('scout.prefix').'categories_index';
     }
 
     public function toSearchableArray(): array
