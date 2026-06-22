@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -15,7 +18,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasFactory, HasTranslatableSlug, HasTranslations, Searchable, SoftDeletes;
+    use Auditable, HasFactory, HasTranslatableSlug, HasTranslations, Searchable, SoftDeletes;
 
     public array $translatable = [
         'name',
@@ -101,7 +104,7 @@ class Category extends Model
         ];
     }
 
-    public function resolveRouteBindingQuery($query, $value, $field = null): Model|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder|\Illuminate\Contracts\Database\Eloquent\Builder
+    public function resolveRouteBindingQuery($query, $value, $field = null): Model|Relation|Builder|\Illuminate\Contracts\Database\Eloquent\Builder
     {
         $field = $field ?? $this->getRouteKeyName();
 

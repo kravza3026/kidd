@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
 use Arr;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia, LocalizedUrlRoutable
 {
-    use HasFactory, HasTranslatableSlug, HasTranslations, InteractsWithMedia, Searchable, SoftDeletes;
+    use Auditable, HasFactory, HasTranslatableSlug, HasTranslations, InteractsWithMedia, Searchable, SoftDeletes;
 
     /**
      * The attributes that are translatable.

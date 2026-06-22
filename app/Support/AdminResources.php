@@ -55,6 +55,7 @@ class AdminResources
         'user' => 'Users & staff',
         'role' => 'Roles & permissions',
         'setting' => 'Settings',
+        'audit' => 'Audit log',
     ];
 
     /**
@@ -62,7 +63,7 @@ class AdminResources
      *
      * @var list<string>
      */
-    public const PLATFORM_RESOURCES = ['user', 'role', 'setting', 'company'];
+    public const PLATFORM_RESOURCES = ['user', 'role', 'setting', 'company', 'audit'];
 
     /**
      * All permission names across every resource and action.

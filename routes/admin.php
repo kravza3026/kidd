@@ -109,3 +109,6 @@ livewireInbox('vacancy-applications', 'application', 'vacancyApplication', Vacan
 // Platform.
 livewireTaxonomy('users', 'user', 'user', Users::class);
 livewireTaxonomy('roles', 'role', 'role', Roles::class);
+Route::middleware('module:audit')->group(function () {
+    Route::livewire('audit', App\Livewire\Admin\Audit\Index::class)->name('audit.index');
+});

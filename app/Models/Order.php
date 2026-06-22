@@ -6,6 +6,7 @@ use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentMethod;
 use App\Enums\ShippingMethod;
+use App\Models\Concerns\Auditable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Order extends Model
 {
-    use HasFactory;
+    use Auditable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
