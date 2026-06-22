@@ -144,6 +144,19 @@ it('creates a size with type and ranges', function () {
         ->and($size->max_weight)->toBe(12000);
 });
 
+it('searches across all locale translations, not just the active one', function () {
+    actingAsAdmin();
+    app()->setLocale('en');
+    Brand::factory()->create(['name' => ['ro' => 'Pantofi', 'ru' => 'Обувь', 'en' => 'Shoes']]);
+
+    // Searching the Russian translation while the UI is in English still finds it.
+    Livewire::test(Brands\Index::class)
+        ->set('search', 'Обувь')
+        ->assertSee('Shoes')
+        ->set('search', 'Pantofi')
+        ->assertSee('Shoes');
+});
+
 it('lists care instructions by their title (label attribute)', function () {
     actingAsAdmin();
     CareInstruction::factory()->create([

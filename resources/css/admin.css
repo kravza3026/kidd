@@ -67,15 +67,6 @@
         display: none !important;
     }
 
-    /* Density toggle (data-density on <html>): compact is the default, dense data UI. */
-    html[data-density='comfortable'] .admin-input {
-        @apply px-3.5 py-2.5;
-    }
-
-    html[data-density='comfortable'] .admin-table-cell {
-        @apply py-3;
-    }
-
     .admin-table-cell {
         @apply px-3 py-2;
     }
@@ -101,6 +92,15 @@
 
     .admin-btn--ghost {
         @apply text-ink-muted hover:bg-surface-2 hover:text-ink;
+    }
+
+    /* Compact square icon button for row actions (edit/delete in tables). */
+    .admin-icon-btn {
+        @apply inline-flex size-8 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink;
+    }
+
+    .admin-icon-btn--danger {
+        @apply hover:bg-danger/10 hover:text-danger;
     }
 
     /* Surfaces */
@@ -130,11 +130,6 @@
     /* Keep the dropdown list legible in dark mode (native option styling ignores bg utilities). */
     select.admin-input option {
         @apply bg-surface text-ink;
-    }
-
-    /* Comfortable density widens .admin-input padding; keep the chevron's right padding. */
-    html[data-density='comfortable'] select.admin-input {
-        @apply pr-9;
     }
 
     .admin-label {

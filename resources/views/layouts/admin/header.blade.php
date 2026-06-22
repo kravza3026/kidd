@@ -46,22 +46,6 @@
                     </svg>
                 </button>
 
-                {{-- Density toggle --}}
-                <button
-                    type="button"
-                    x-data="{ comfortable: document.documentElement.dataset.density === 'comfortable' }"
-                    @click="comfortable = !comfortable; document.documentElement.dataset.density = comfortable ? 'comfortable' : 'compact'; localStorage.setItem('admin-density', document.documentElement.dataset.density)"
-                    class="hidden size-9 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-2 hover:text-ink sm:flex"
-                    :aria-label="comfortable ? '{{ __('Compact density') }}' : '{{ __('Comfortable density') }}'"
-                >
-                    <svg x-show="!comfortable" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-5">
-                        <path d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <svg x-show="comfortable" x-cloak viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-5">
-                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-
                 {{-- Notifications (wired up in Phase 7) --}}
                 <button type="button" class="flex size-9 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-2 hover:text-ink">
                     <span class="sr-only">View notifications</span>

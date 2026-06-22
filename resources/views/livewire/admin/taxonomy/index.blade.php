@@ -39,14 +39,7 @@
                                 <td class="admin-table-cell text-ink-muted">{{ $col['value']($row) }}</td>
                             @endforeach
                             <td class="admin-table-cell">
-                                <div class="flex items-center justify-end gap-1">
-                                    @can("{$resource}.update")
-                                        <a href="{{ route($routePrefix.'.edit', $row->id) }}" wire:navigate class="admin-btn admin-btn--ghost">{{ __('Edit') }}</a>
-                                    @endcan
-                                    @can("{$resource}.delete")
-                                        <button type="button" wire:click="delete({{ $row->id }})" wire:confirm="{{ __('Delete this item?') }}" class="admin-btn admin-btn--ghost text-danger hover:bg-danger/10">{{ __('Delete') }}</button>
-                                    @endcan
-                                </div>
+                                <x-admin.row-actions :resource="$resource" :edit-url="route($routePrefix.'.edit', $row->id)" :delete-id="$row->id" />
                             </td>
                         </tr>
                     @empty

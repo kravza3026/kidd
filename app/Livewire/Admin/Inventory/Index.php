@@ -44,7 +44,13 @@ class Index extends Component
                 $q->where(fn ($q) => $q
                     ->where('sku', 'ilike', $term)
                     ->orWhere('barcode', 'ilike', $term)
-                    ->orWhereHas('product', fn ($p) => $p->where('name->'.app()->getLocale(), 'ilike', $term)));
+                    ->orWhereHas('product', function ($p) use ($term) {
+                        $p->where(function ($p) use ($term) {
+                            foreach (array_keys(config('app.locales')) as $loc) {
+                                $p->orWhere('name->'.$loc, 'ilike', $term);
+                            }
+                        });
+                    }));
             })
             ->when($this->lowStockOnly, fn ($q) => $q->where('quantity', '<=', $threshold))
             ->orderBy(in_array($this->sortField, ['quantity', 'sku']) ? $this->sortField : 'quantity', $this->safeSortDirection())

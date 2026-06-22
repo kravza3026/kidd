@@ -194,7 +194,14 @@ abstract class TaxonomyIndex extends Component
         if ($this->countRelation()) {
             $query->withCount($this->countRelation());
         }
-        $query->when($this->search !== '', fn ($q) => $q->where("{$label}->{$locale}", 'ilike', '%'.$this->search.'%'));
+        // Search every locale's translation, not just the active one.
+        $query->when($this->search !== '', function ($q) use ($label) {
+            $q->where(function ($q) use ($label) {
+                foreach (array_keys(config('app.locales')) as $loc) {
+                    $q->orWhere("{$label}->{$loc}", 'ilike', '%'.$this->search.'%');
+                }
+            });
+        });
 
         // The catalog attributes (which opt into groups) get the grouped, drag-sortable view;
         // every other taxonomy keeps the paginated table.

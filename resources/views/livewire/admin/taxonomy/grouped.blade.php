@@ -58,17 +58,41 @@
         <p class="text-xs text-ink-muted">{{ __('Reordering is disabled while searching.') }}</p>
     @endif
 
-    {{-- Grouped, drag-sortable items --}}
+    {{-- Grouped, drag-sortable items — one table with a shared header and per-group sections. --}}
     @php($ungrouped = $items->whereNull('attribute_group_id'))
-    <div class="space-y-4">
-        @foreach ($groups as $group)
-            <x-admin.card :title="$group->getTranslation('name', app()->getLocale())">
-                @include('livewire.admin.taxonomy._item-list', ['list' => $items->where('attribute_group_id', $group->id), 'groupId' => $group->id])
-            </x-admin.card>
-        @endforeach
+    @php($span = count($columns) + 3)
+    <div class="admin-card overflow-x-auto">
+        <table class="min-w-full divide-y divide-line text-sm">
+            <thead class="bg-surface-2 text-xs tracking-wide text-ink-muted uppercase">
+                <tr>
+                    <th class="admin-table-cell w-8"></th>
+                    <th class="admin-table-cell text-left font-medium">{{ $labelHeading }}</th>
+                    @foreach ($columns as $col)
+                        <th class="admin-table-cell text-left font-medium">{{ $col['label'] }}</th>
+                    @endforeach
+                    <th class="admin-table-cell text-right font-medium">{{ __('Actions') }}</th>
+                </tr>
+            </thead>
 
-        <x-admin.card :title="$groups->isNotEmpty() ? __('Ungrouped') : null">
+            @foreach ($groups as $group)
+                <tbody>
+                    <tr class="border-t border-line bg-surface-2/60">
+                        <td colspan="{{ $span }}" class="admin-table-cell text-xs font-semibold tracking-wide text-ink uppercase">
+                            {{ $group->getTranslation('name', app()->getLocale()) }}
+                        </td>
+                    </tr>
+                </tbody>
+                @include('livewire.admin.taxonomy._item-list', ['list' => $items->where('attribute_group_id', $group->id), 'groupId' => $group->id])
+            @endforeach
+
+            @if ($groups->isNotEmpty())
+                <tbody>
+                    <tr class="border-t border-line bg-surface-2/60">
+                        <td colspan="{{ $span }}" class="admin-table-cell text-xs font-semibold tracking-wide text-ink-muted uppercase">{{ __('Ungrouped') }}</td>
+                    </tr>
+                </tbody>
+            @endif
             @include('livewire.admin.taxonomy._item-list', ['list' => $ungrouped, 'groupId' => ''])
-        </x-admin.card>
+        </table>
     </div>
 </div>
