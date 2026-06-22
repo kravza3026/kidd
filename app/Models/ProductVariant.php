@@ -19,6 +19,7 @@ class ProductVariant extends Model
         'is_visible',
 
         'sku',
+        'barcode',
         'quantity',
 
         'price_vendor',

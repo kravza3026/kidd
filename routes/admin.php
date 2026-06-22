@@ -82,6 +82,9 @@ Route::livewire('/', Dashboard::class)->name('home');
 
 livewireResource('categories', 'category', 'category', Categories::class);
 livewireResource('products', 'product', 'product', Products::class);
+Route::middleware('module:product')->group(function () {
+    Route::livewire('products/{product:id}/variants', Products\Variants::class)->name('products.variants');
+});
 livewireResource('customers', 'customer', 'customer', Customers::class);
 
 // Catalog taxonomy (simple translatable resources).

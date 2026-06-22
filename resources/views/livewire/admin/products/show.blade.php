@@ -7,6 +7,7 @@
     <x-admin.page-header :title="$product->getTranslation('name', app()->getLocale())" :subtitle="__('Product')">
         <x-slot:actions>
             @can('update', $product)
+                <x-admin.button :href="route('admin.products.variants', $product->id)" wire:navigate variant="secondary">{{ __('Variants') }}</x-admin.button>
                 <x-admin.button :href="route('admin.products.edit', $product)" wire:navigate>{{ __('Edit') }}</x-admin.button>
             @endcan
         </x-slot:actions>

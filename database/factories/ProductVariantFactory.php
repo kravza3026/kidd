@@ -3,12 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Support\Barcode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Money\Currency;
 use Money\Money;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductVariant>
+ * @extends Factory<ProductVariant>
  */
 class ProductVariantFactory extends Factory
 {
@@ -28,6 +30,7 @@ class ProductVariantFactory extends Factory
             'size_id' => rand(1, 8),
 
             'sku' => fake()->unique()->regexify('[A-Z]{2}[0-9]{4}'), // Stock Keeping Unit
+            'barcode' => Barcode::randomEan13(), // 1D EAN-13 barcode
 
             'quantity' => rand(10, 100), // Quantity
 
