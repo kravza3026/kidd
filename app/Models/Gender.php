@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAttributeGroup;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Gender extends Model
 {
-    use HasFactory, HasTranslations;
+    use BelongsToAttributeGroup, HasFactory, HasTranslations;
 
     public const UNISEX = 1;
 

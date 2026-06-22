@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAttributeGroup;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -10,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Color extends Model
 {
-    use HasFactory, HasTranslatableSlug, HasTranslations;
+    use BelongsToAttributeGroup, HasFactory, HasTranslatableSlug, HasTranslations;
 
     public array $translatable = [
         'name',

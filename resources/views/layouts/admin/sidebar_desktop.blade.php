@@ -6,6 +6,10 @@
         'Catalog' => [
             ['route' => 'admin.products.index', 'label' => __('Products'), 'permission' => 'product.viewAny', 'feature' => 'admin.product', 'icon' => 'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6Zm9.75 0A2.25 2.25 0 0 1 15.75 3.75H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6Zm-9.75 9.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25Zm9.75 0a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'],
             ['route' => 'admin.categories.index', 'label' => __('Categories'), 'permission' => 'category.viewAny', 'feature' => 'admin.category', 'icon' => 'M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z'],
+            ['route' => 'admin.tags.index', 'label' => __('Tags'), 'permission' => 'tag.viewAny', 'feature' => 'admin.tag', 'icon' => 'M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z'],
+        ],
+        // Catalog attributes — rendered as a collapsible group (see $collapsibleGroups).
+        'Attributes' => [
             ['route' => 'admin.brands.index', 'label' => __('Brands'), 'permission' => 'brand.viewAny', 'feature' => 'admin.brand', 'icon' => 'M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z M6 6h.008v.008H6V6Z'],
             ['route' => 'admin.colors.index', 'label' => __('Colors'), 'permission' => 'color.viewAny', 'feature' => 'admin.color', 'icon' => 'M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z'],
             ['route' => 'admin.sizes.index', 'label' => __('Sizes'), 'permission' => 'size.viewAny', 'feature' => 'admin.size', 'icon' => 'M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3m16.5-9.75h-3.375M8.25 7.5H4.875'],
@@ -13,7 +17,6 @@
             ['route' => 'admin.seasons.index', 'label' => __('Seasons'), 'permission' => 'season.viewAny', 'feature' => 'admin.season', 'icon' => 'M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z'],
             ['route' => 'admin.fabrics.index', 'label' => __('Fabrics'), 'permission' => 'fabric.viewAny', 'feature' => 'admin.fabric', 'icon' => 'M3.75 7.5l16.5 0M3.75 12l16.5 0M3.75 16.5l16.5 0'],
             ['route' => 'admin.care-instructions.index', 'label' => __('Care instructions'), 'permission' => 'careInstruction.viewAny', 'feature' => 'admin.careInstruction', 'icon' => 'M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'],
-            ['route' => 'admin.tags.index', 'label' => __('Tags'), 'permission' => 'tag.viewAny', 'feature' => 'admin.tag', 'icon' => 'M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z'],
         ],
         'Sales' => [
             ['route' => 'admin.orders.index', 'label' => __('Orders'), 'permission' => 'order.viewAny', 'feature' => 'admin.order', 'icon' => 'M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'],
@@ -38,6 +41,9 @@
             ['route' => 'admin.design.index', 'label' => __('Design system'), 'permission' => null, 'feature' => null, 'icon' => 'M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42'],
         ],
     ];
+
+    // Headings rendered as a collapsible disclosure rather than an always-open section.
+    $collapsibleGroups = ['Attributes'];
 @endphp
 
 <div class="relative flex grow flex-col overflow-y-auto border-r border-line bg-surface px-3 py-4">
@@ -67,9 +73,21 @@
                 && (! $i['permission'] || auth()->user()?->can($i['permission']))
                 && (! ($i['feature'] ?? null) || \Laravel\Pennant\Feature::active($i['feature']))))
             @if ($visibleItems->isNotEmpty())
-                <div>
-                    <p x-show="!collapsed" class="px-2.5 pb-1 text-[10px] font-semibold tracking-wider text-ink-subtle uppercase">{{ __($heading) }}</p>
-                    <div class="space-y-0.5">
+                @php($collapsible = in_array($heading, $collapsibleGroups, true))
+                @php($groupActive = collect($items)->contains(fn ($i) => request()->routeIs(\Illuminate\Support\Str::beforeLast($i['route'], '.').'.*')))
+                <div @if ($collapsible) x-data="{ open: @js($groupActive) }" @endif>
+                    @if ($collapsible)
+                        <button type="button" x-show="!collapsed" @click="open = !open"
+                            class="flex w-full items-center justify-between px-2.5 pb-1 text-[10px] font-semibold tracking-wider text-ink-subtle uppercase transition-colors hover:text-ink-muted">
+                            <span>{{ __($heading) }}</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-3 transition-transform" :class="open && 'rotate-90'">
+                                <path d="m9 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    @else
+                        <p x-show="!collapsed" class="px-2.5 pb-1 text-[10px] font-semibold tracking-wider text-ink-subtle uppercase">{{ __($heading) }}</p>
+                    @endif
+                    <div class="space-y-0.5" @if ($collapsible) x-show="open || collapsed" x-collapse @endif>
                         @foreach ($items as $item)
                             <x-admin.nav-item
                                 :route="$item['route']"

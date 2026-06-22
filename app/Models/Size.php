@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAttributeGroup;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -11,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Size extends Model
 {
-    use HasFactory, HasTranslatableSlug, HasTranslations;
+    use BelongsToAttributeGroup, HasFactory, HasTranslatableSlug, HasTranslations;
 
     // TODO - Move to Enum
     public const TYPE_CLOTH = 1;
