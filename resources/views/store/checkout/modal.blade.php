@@ -76,12 +76,22 @@
                 as="button"
                 form="checkoutForm"
                 type="submit"
+                name="create_account"
+                value="0"
                 class="!bg-light-orange !text-olive !shadow-light-orange !border-light-border !my-0 !w-full !border !border-b-2 !text-base"
             >
                 {{-- No, checkout as guest --}}
                 {{ __('auth.login.modal.continue_as_guest') }}
             </x-ui.button>
-            <x-ui.button right_icon="false" as="a" href="{{route('register')}}" class="!my-0 !w-full">
+            <x-ui.button
+                right_icon="false"
+                as="button"
+                form="checkoutForm"
+                type="submit"
+                name="create_account"
+                value="1"
+                class="!my-0 !w-full"
+            >
                 {{-- Yes, create account --}}
                 {{ __('auth.login.modal.create_account') }}
             </x-ui.button>
