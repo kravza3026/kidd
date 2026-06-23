@@ -99,12 +99,12 @@ export default {
                 .then((response) => {
                     this.addresses = response.data.addresses.map((address) => ({
                         ...address,
+                        isNew: false,
+                        editor: { ...this.defaults.editor, isEditing: false },
                         form: useForm('post', '/user/addresses', {
                             ...address,
                         }),
                     }));
-
-                    console.log(this.addresses); // TODO - remove in production
                 })
                 .catch((error) => {
                     console.error('Server error:', error);
@@ -120,7 +120,6 @@ export default {
                 })
                 .then((response) => {
                     this.regions = response.data.regions;
-                    console.log(response.data); // TODO - remove in production
                 })
                 .catch((error) => {
                     console.error('Server error:', error);
@@ -136,7 +135,6 @@ export default {
                 })
                 .then((response) => {
                     this.cities = response.data.cities;
-                    console.log(response.data); // TODO - remove in production
                 })
                 .catch((error) => {
                     console.error('Server error:', error);
@@ -146,8 +144,6 @@ export default {
         addNewAddress(address_type) {
             const exists = this.addresses.some((addr) => addr.isNew && addr.address_type === address_type);
             if (exists) {
-                // TODO - remove in production
-                console.warn(`Address with type ${address_type} already exists as new`);
                 return;
             }
             if (this.isAdding[address_type]) return;
@@ -177,7 +173,6 @@ export default {
                 editor: { ...this.defaults.editor },
                 isNew: true,
             };
-            console.log('newAddress== ', newAddress);
             this.addresses.push(newAddress);
         },
 
@@ -192,10 +187,7 @@ export default {
                 .submit()
                 .then((response) => {
                     newAddress.id = response.data.address.id;
-                    // newAddress.form.id = response.data.address.id;
                     this.form.reset();
-                    console.log('newAddress== ', newAddress);
-                    // this.addresses.push(newAddress);
                     newAddress.isNew = false;
                     this.isAdding[address_type] = false; // показуємо кнопку назад
                     this.getAddresses();
@@ -210,7 +202,6 @@ export default {
                 });
         },
         async updateAddress(id) {
-            console.log(id);
             const index = this.addresses.findIndex((address) => address.id === id);
             if (index === -1) {
                 return;
@@ -301,18 +292,11 @@ export default {
         isAddressFormValid(address) {
             // Список обов’язкових полів
             const requiredFields = ['label', 'region_id', 'city_id', 'street_name', 'building'];
-            console.log('address', address);
-            // Перевірка: всі поля заповнені і не пусті
+
             return requiredFields.every((field) => {
                 const value = address.form[field];
                 return value !== null && value !== undefined && String(value).trim() !== '';
             });
-        },
-        async removeAddress(id) {
-            const index = this.addresses.findIndex((address) => address.id === id);
-            if (index !== -1) {
-                this.addresses.splice(index, 1);
-            }
         },
     },
     mounted() {
@@ -693,8 +677,8 @@ export default {
                             :id="'street_' + address.id"
                             v-model="address.form.street_name"
                             :class="{
-                              'cursor-not-allowed': !address.editor.isEditing,
-                              '!shadow-red-500': address.editor.isEditing && address.form.invalid('street'),
+                                'cursor-not-allowed': !address.editor.isEditing,
+                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('street'),
                             }"
                             :disabled="!address.editor.isEditing"
                             aria-label="street"
@@ -705,8 +689,8 @@ export default {
                         />
                         <label
                             :class="{
-                              'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
-                                address.form.street_name,
+                                'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                    address.form.street_name,
                             }"
                             :for="'street_' + address.id"
                             class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
@@ -743,15 +727,13 @@ export default {
                         </label>
                     </div>
 
-
-
                     <div class="relative col-span-4 lg:col-span-2">
                         <BaseInput
                             :id="'apartment_' + address.id"
                             v-model="address.form.apartment"
                             :class="{
-                              'cursor-not-allowed': !address.editor.isEditing,
-                              '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment'),
+                                'cursor-not-allowed': !address.editor.isEditing,
+                                '!shadow-red-500': address.editor.isEditing && address.form.invalid('apartment'),
                             }"
                             :disabled="!address.editor.isEditing"
                             aria-label="apartment"
@@ -764,7 +746,8 @@ export default {
                         />
                         <label
                             :class="{
-                              'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50': address.form.apartment,
+                                'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                    address.form.apartment,
                             }"
                             :for="'apartment_' + address.id"
                             class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
@@ -805,8 +788,8 @@ export default {
                                 :id="'floor_' + address.id"
                                 v-model="address.form.floor"
                                 :class="{
-                                  'cursor-not-allowed': !address.editor.isEditing,
-                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor'),
+                                    'cursor-not-allowed': !address.editor.isEditing,
+                                    '!shadow-red-500': address.editor.isEditing && address.form.invalid('floor'),
                                 }"
                                 :disabled="!address.editor.isEditing"
                                 aria-label="floor"
@@ -818,8 +801,8 @@ export default {
                             />
                             <label
                                 :class="{
-                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
-                                    address.form.floor,
+                                    'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                        address.form.floor,
                                 }"
                                 :for="'floor_' + address.id"
                                 class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
@@ -827,18 +810,16 @@ export default {
                                 {{ $t('address.floor_short') }}
                             </label>
                         </div>
-
                     </div>
 
                     <div class="relative col-span-4 lg:col-span-2">
-
                         <div class="relative col-span-4 lg:col-span-2">
                             <BaseInput
                                 :id="'entrance_' + address.id"
                                 v-model="address.form.entrance"
                                 :class="{
-                                  'cursor-not-allowed': !address.editor.isEditing,
-                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance'),
+                                    'cursor-not-allowed': !address.editor.isEditing,
+                                    '!shadow-red-500': address.editor.isEditing && address.form.invalid('entrance'),
                                 }"
                                 :disabled="!address.editor.isEditing"
                                 aria-label="entrance"
@@ -850,8 +831,8 @@ export default {
                             />
                             <label
                                 :class="{
-                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
-                                    address.form.entrance,
+                                    'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                        address.form.entrance,
                                 }"
                                 :for="'entrance_' + address.id"
                                 class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
@@ -859,7 +840,6 @@ export default {
                                 {{ $t('address.entrance_short') }}
                             </label>
                         </div>
-
                     </div>
 
                     <div class="relative col-span-4 lg:col-span-2">
@@ -868,8 +848,8 @@ export default {
                                 :id="'intercom_' + address.id"
                                 v-model="address.form.intercom"
                                 :class="{
-                                  'cursor-not-allowed': !address.editor.isEditing,
-                                  '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom'),
+                                    'cursor-not-allowed': !address.editor.isEditing,
+                                    '!shadow-red-500': address.editor.isEditing && address.form.invalid('intercom'),
                                 }"
                                 :disabled="!address.editor.isEditing"
                                 aria-label="intercom"
@@ -881,8 +861,8 @@ export default {
                             />
                             <label
                                 :class="{
-                                  'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
-                                    address.form.intercom,
+                                    'text-scale-200 !-top-2 left-2.5 scale-90 text-xs text-gray-500/50':
+                                        address.form.intercom,
                                 }"
                                 :for="'intercom_' + address.id"
                                 class="absolute top-1 left-2.5 origin-left transform cursor-text bg-white px-1 text-sm text-gray-500/50 transition-all peer-focus:-top-2 peer-focus:left-2.5 peer-focus:scale-90 peer-focus:text-xs"
@@ -890,7 +870,6 @@ export default {
                                 {{ $t('address.intercom_short') }}
                             </label>
                         </div>
-
                     </div>
                 </div>
                 <p v-if="address.form.invalid('label')" class="w-full text-[12px] text-nowrap text-red-500">
