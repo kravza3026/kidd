@@ -2,7 +2,9 @@
 
 use App\Enums\OrderStatus;
 use App\Enums\ReturnReason;
+use App\Enums\ReturnStatus;
 use App\Livewire\Admin\OrderReturns\Index as ReturnsIndex;
+use App\Livewire\Admin\OrderReturns\Show as ReturnShow;
 use App\Models\Color;
 use App\Models\Customer;
 use App\Models\Order;
@@ -125,4 +127,18 @@ it('shows the admin returns inbox to a seller but forbids hr', function () {
     $hr = User::factory()->create();
     $hr->assignRole('hr');
     Livewire::actingAs($hr)->test(ReturnsIndex::class)->assertForbidden();
+});
+
+it('lets staff progress a return through statuses', function () {
+    Notification::fake();
+    $seller = User::factory()->create();
+    $seller->assignRole('seller');
+    $return = OrderReturn::factory()->create(['status' => ReturnStatus::Pending]);
+
+    Livewire::actingAs($seller)
+        ->test(ReturnShow::class, ['orderReturn' => $return])
+        ->call('updateStatus', ReturnStatus::Approved->value)
+        ->assertHasNoErrors();
+
+    expect($return->fresh()->status)->toBe(ReturnStatus::Approved);
 });
