@@ -101,6 +101,33 @@ it('shows an error when transferring more than available', function () {
     expect($variant->fresh()->quantity)->toBe(3);
 });
 
+it('jumps to a variant stock screen when its barcode is scanned', function () {
+    actingAsAdmin();
+    $variant = makeVariant();
+    $variant->forceFill(['barcode' => '2001234567890', 'sku' => 'SC0001'])->save();
+
+    Livewire::test(Index::class)
+        ->set('scan', '2001234567890')
+        ->call('lookupScan')
+        ->assertRedirect(route('admin.inventory.show', $variant->id));
+
+    // SKU also resolves.
+    Livewire::test(Index::class)
+        ->set('scan', 'SC0001')
+        ->call('lookupScan')
+        ->assertRedirect(route('admin.inventory.show', $variant->id));
+});
+
+it('shows an error when a scanned code matches no variant', function () {
+    actingAsAdmin();
+
+    Livewire::test(Index::class)
+        ->set('scan', 'does-not-exist')
+        ->call('lookupScan')
+        ->assertHasErrors('scan')
+        ->assertNoRedirect();
+});
+
 it('forbids a role without any inventory permission from the index', function () {
     $hr = User::factory()->create();
     $hr->assignRole('hr');

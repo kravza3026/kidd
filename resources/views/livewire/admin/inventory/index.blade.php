@@ -3,6 +3,32 @@
 
     <x-admin.page-header :title="__('Inventory')" :subtitle="__('Stock levels per variant across warehouses')" />
 
+    @can('inventory.update')
+        {{-- Scan-to-stock: a USB-wedge scanner types the barcode and presses Enter (submitting
+             this form), jumping straight to that variant's stock screen. --}}
+        <form wire:submit="lookupScan" class="admin-card flex items-center gap-2 p-2.5">
+            <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-olive-soft text-dark-olive dark:text-olive">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-5">
+                    <path d="M3.75 4.875v14.25M7.5 4.875v14.25M11.25 4.875v14.25M15 4.875v14.25M18.75 4.875v14.25M21 4.875v14.25" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </span>
+            <div class="flex-1">
+                <input
+                    type="text"
+                    wire:model="scan"
+                    autofocus
+                    autocomplete="off"
+                    placeholder="{{ __('Scan or enter a barcode / SKU, then press Enter') }}"
+                    class="admin-input"
+                />
+                @error('scan')
+                    <p class="mt-1 text-xs text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <button type="submit" class="admin-btn admin-btn--secondary">{{ __('Go') }}</button>
+        </form>
+    @endcan
+
     <div class="admin-card overflow-hidden">
         <div class="flex flex-wrap items-center gap-3 border-b border-line p-2.5">
             <div class="relative max-w-xs flex-1">

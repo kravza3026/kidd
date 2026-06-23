@@ -20,6 +20,9 @@ class Index extends Component
     #[Url]
     public bool $lowStockOnly = false;
 
+    /** Barcode/SKU captured from a scanner (USB wedge) or typed, to jump straight to a variant. */
+    public string $scan = '';
+
     public function mount(): void
     {
         $this->authorize('viewAny', Inventory::class);
@@ -30,6 +33,34 @@ class Index extends Component
     public function updatedLowStockOnly(): void
     {
         $this->resetPage();
+    }
+
+    /**
+     * Resolve a scanned/typed barcode (or SKU) to its variant and open its stock screen.
+     * USB-wedge scanners "type" the code and press Enter, which submits this.
+     */
+    public function lookupScan(): void
+    {
+        $code = trim($this->scan);
+
+        if ($code === '') {
+            return;
+        }
+
+        $variant = ProductVariant::query()
+            ->where('barcode', $code)
+            ->orWhere('sku', $code)
+            ->first();
+
+        $this->scan = '';
+
+        if (! $variant) {
+            $this->addError('scan', __('No variant matches that barcode or SKU.'));
+
+            return;
+        }
+
+        $this->redirectRoute('admin.inventory.show', $variant->id, navigate: true);
     }
 
     public function render(): View
