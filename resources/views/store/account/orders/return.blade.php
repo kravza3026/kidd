@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-5xl bg-white sm:bg-transparent sm:pt-16 sm:pb-20">
         <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 space-y-4 bg-white py-4 lg:col-span-7 lg:rounded-2xl lg:shadow">
-                @include('store.account.orders.components._tracking-head')
+                @include('store.account.orders.components._tracking-head', ['title' => 'Order return'])
 
                 <form class="px-4">
                     <p class="text-sm font-medium">Select products</p>

@@ -4,7 +4,7 @@
     </a>
     <div class="space-y-2">
         <div class="flex items-center gap-x-2">
-            <p class="text-2xl font-bold">Order tracking</p>
+            <p class="text-2xl font-bold">{{ $title ?? 'Order tracking' }}</p>
             <span class="text-[4px] opacity-10">⬤</span>
             <p class="text-olive text-2xl font-bold">#{{ $order->id }}</p>
             <span class="bg-olive inline-block rounded-2xl px-3 py-1 text-[12px] font-bold text-white">
