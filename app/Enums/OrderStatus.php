@@ -69,6 +69,15 @@ enum OrderStatus: int
         };
     }
 
+    /**
+     * Whether the customer may start a return flow for an order at this status.
+     * Returns are offered once an order has been delivered (matches the storefront design).
+     */
+    public function isReturnable(): bool
+    {
+        return $this === self::Delivered;
+    }
+
     public function label(): string
     {
         return match ($this) {

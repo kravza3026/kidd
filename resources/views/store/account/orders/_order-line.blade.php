@@ -329,25 +329,27 @@
             </div>
         </div>
 
-        <div class="w-full p-3 lg:p-6">
-            <div class="bg-light-orange rounded-2xl p-4">
-                <h2 class="text-bold text-2xl font-bold">
-                    {{ __('order.return.title') }}
-                </h2>
-                <p class="py-4 text-base opacity-60">
-                    {{ __('order.return.description') }}
-                </p>
-                <x-ui.button
-                    as="a"
-                    class="min-w-fit"
-                    href="{{ route('orders.return', $order) }}"
-                    left_icon="false"
-                    right_icon="false"
-                >
-                    <img src="{{ Vite::image('icons/return.svg') }}" alt="return icon" />
-                    {{ __('order.return.return_button') }}
-                </x-ui.button>
+        @if ($order->status->isReturnable())
+            <div class="w-full p-3 lg:p-6">
+                <div class="bg-light-orange rounded-2xl p-4">
+                    <h2 class="text-bold text-2xl font-bold">
+                        {{ __('order.return.title') }}
+                    </h2>
+                    <p class="py-4 text-base opacity-60">
+                        {{ __('order.return.description') }}
+                    </p>
+                    <x-ui.button
+                        as="a"
+                        class="min-w-fit"
+                        href="{{ route('orders.return', $order) }}"
+                        left_icon="false"
+                        right_icon="false"
+                    >
+                        <img src="{{ Vite::image('icons/return.svg') }}" alt="return icon" />
+                        {{ __('order.return.return_button') }}
+                    </x-ui.button>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
