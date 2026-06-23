@@ -67,7 +67,7 @@
                         />
                         <x-input-error :messages="$errors->get('comment')" class="mt-2" />
                     </div>
-                    <x-ui.button as="submit" left_icon="false" right_icon="false" class="text-sm font-bold">
+                    <x-ui.button as="button" type="submit" left_icon="false" right_icon="false" class="text-sm font-bold">
                         {{ __('order.return.send_button') }}
                     </x-ui.button>
                 </form>
