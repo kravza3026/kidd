@@ -2,6 +2,7 @@
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 
+use App\Http\Controllers\Admin\OrderInvoiceController;
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\CareInstructions;
 use App\Livewire\Admin\Categories;
@@ -111,6 +112,7 @@ Route::middleware('module:inventory')->group(function () {
 Route::middleware('module:order')->group(function () {
     Route::livewire('orders', Index::class)->name('orders.index');
     Route::livewire('orders/create', Form::class)->name('orders.create');
+    Route::get('orders/{order:id}/invoice', OrderInvoiceController::class)->name('orders.invoice');
     Route::livewire('orders/{order:id}', Show::class)->name('orders.show');
 });
 

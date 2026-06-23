@@ -6,6 +6,7 @@
 
     <x-admin.page-header :title="$order->order_number" :subtitle="$order->customer?->name ?? __('Guest')">
         <x-slot:actions>
+            <a href="{{ route('admin.orders.invoice', $order->id) }}" class="admin-btn admin-btn--secondary">{{ __('Download invoice') }}</a>
             @can('delete', $order)
                 <button type="button" wire:click="delete" wire:confirm="{{ __('Delete this order?') }}" class="admin-btn admin-btn--danger">{{ __('Delete') }}</button>
             @endcan
