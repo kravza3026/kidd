@@ -114,6 +114,13 @@ return [
         'return_button' => 'Запросить возврат',
         'submitted_title' => 'Возврат запрошен',
         'submitted' => 'Запрос на возврат отправлен.',
+        'select_products' => 'Выберите товары',
+        'reason_label' => 'Выберите причину возврата',
+        'reason_placeholder' => 'Выберите вариант',
+        'comment_label' => 'Оставьте комментарий',
+        'upload_label' => 'Загрузите изображения',
+        'optional' => '(необязательно)',
+        'send_button' => 'Отправить',
         'reasons' => [
             'wrong_size' => 'Неправильный размер',
             'defective' => 'Брак или повреждение',

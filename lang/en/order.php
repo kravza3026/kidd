@@ -114,6 +114,13 @@ return [
         'return_button' => 'Ask for return',
         'submitted_title' => 'Return requested',
         'submitted' => 'Your return request has been submitted.',
+        'select_products' => 'Select products',
+        'reason_label' => 'Select the reason of return',
+        'reason_placeholder' => 'Select an option',
+        'comment_label' => 'Share some comments',
+        'upload_label' => 'Upload images',
+        'optional' => '(optional)',
+        'send_button' => 'Send message',
         'reasons' => [
             'wrong_size' => 'Wrong size',
             'defective' => 'Defective or damaged',

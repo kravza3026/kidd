@@ -114,6 +114,13 @@ return [
         'return_button' => 'Solicită Retur',
         'submitted_title' => 'Retur solicitat',
         'submitted' => 'Cererea de retur a fost trimisă.',
+        'select_products' => 'Selectează produsele',
+        'reason_label' => 'Selectează motivul returnării',
+        'reason_placeholder' => 'Selectează o opțiune',
+        'comment_label' => 'Lasă un comentariu',
+        'upload_label' => 'Încarcă imagini',
+        'optional' => '(opțional)',
+        'send_button' => 'Trimite mesajul',
         'reasons' => [
             'wrong_size' => 'Mărime greșită',
             'defective' => 'Defect sau deteriorat',

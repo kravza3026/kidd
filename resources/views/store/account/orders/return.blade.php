@@ -4,9 +4,14 @@
             <div class="col-span-12 space-y-4 bg-white py-4 lg:col-span-7 lg:rounded-2xl lg:shadow">
                 @include('store.account.orders.components._tracking-head', ['title' => 'Order return'])
 
-                <form class="px-4" method="POST" action="{{ route('orders.return.store', $order) }}" enctype="multipart/form-data">
+                <form
+                    class="px-4"
+                    method="POST"
+                    action="{{ route('orders.return.store', $order) }}"
+                    enctype="multipart/form-data"
+                >
                     @csrf
-                    <p class="text-sm font-medium">Select products</p>
+                    <p class="text-sm font-medium">{{ __('order.return.select_products') }}</p>
                     <x-input-error :messages="$errors->get('items')" class="mt-1" />
                     <div class="mt-4 grid grid-cols-12 gap-x-4">
                         @foreach ($order->items as $product)
@@ -40,10 +45,10 @@
                         <x-custom-select
                             name="reason"
                             id="reason"
-                            label="{{ __('Select the reason of return') }}"
+                            label="{{ __('order.return.reason_label') }}"
                             :options="$reasons"
                             :selected="old('reason')"
-                            placeholder="{{ __('Select a option') }}"
+                            placeholder="{{ __('order.return.reason_placeholder') }}"
                         />
                         <x-input-error :messages="$errors->get('reason')" class="mt-2" />
                     </div>
@@ -54,7 +59,7 @@
                     </div>
                     <div class="mt-4">
                         <x-ui.textarea
-                            label="Share some comments"
+                            label="{{ __('order.return.comment_label') }}"
                             id="comment"
                             name="comment"
                             value="{{ old('comment') }}"
@@ -63,7 +68,7 @@
                         <x-input-error :messages="$errors->get('comment')" class="mt-2" />
                     </div>
                     <x-ui.button as="submit" left_icon="false" right_icon="false" class="text-sm font-bold">
-                        Send message
+                        {{ __('order.return.send_button') }}
                     </x-ui.button>
                 </form>
             </div>

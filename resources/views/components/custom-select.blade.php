@@ -10,16 +10,22 @@
 ])
 
 @php
+    use Illuminate\Support\Js;
     use Illuminate\Support\Str;
 
     $fieldId = $id ?? Str::kebab($name);
 @endphp
 
+{{--
+    v-pre: this is an Alpine island; stop the page-level Vue app (mounted on #app) from
+    compiling its @click/x-for so Alpine can own the subtree.
+--}}
 <div
+    v-pre
     x-data="{
         open: false,
         value: '{{ $selected }}',
-        options: {{ Illuminate\Support\Js::from($options) }},
+        options: {{ Js::from($options) }},
     }"
     class="{{ $customClass }} relative"
 >
