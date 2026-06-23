@@ -49,4 +49,12 @@
             </div>
         </x-admin.card>
     </div>
+
+    <x-admin.card :title="__('Addresses')" :description="__('Shipping & billing addresses for this customer.')">
+        <livewire:admin.addresses.manager
+            :addressable-type="App\Models\Customer::class"
+            :addressable-id="$customer->id"
+            :key="'cust-addr-'.$customer->id"
+        />
+    </x-admin.card>
 </div>
