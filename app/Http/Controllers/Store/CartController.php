@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cart\CartStoreRequest;
+use App\Http\Requests\Cart\CartUpdateRequest;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use LukePOLO\LaraCart\Coupons\Percentage;
@@ -154,7 +156,7 @@ class CartController extends Controller
         return response($response, status: 200);
     }
 
-    public function store(Request $request)
+    public function store(CartStoreRequest $request)
     {
 
         $productVariant = ProductVariant::findOrFail($request->variant_id);
@@ -188,7 +190,7 @@ class CartController extends Controller
 
     }
 
-    public function update(Request $request, $itemHash)
+    public function update(CartUpdateRequest $request, $itemHash)
     {
 
         $variant = ProductVariant::findOrFail($request->input('variant_id'));
