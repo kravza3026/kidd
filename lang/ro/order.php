@@ -112,6 +112,22 @@ return [
         'title' => 'Nu sa potrivit ținuta?',
         'description' => 'Nu sa potrivit ținuta? Poți să ne contactezi în decurs de 14 zile pentru returnare sau schimb!',
         'return_button' => 'Solicită Retur',
+        'submitted_title' => 'Retur solicitat',
+        'submitted' => 'Cererea de retur a fost trimisă.',
+        'reasons' => [
+            'wrong_size' => 'Mărime greșită',
+            'defective' => 'Defect sau deteriorat',
+            'not_as_described' => 'Nu corespunde descrierii',
+            'wrong_item' => 'Produs greșit primit',
+            'changed_mind' => 'M-am răzgândit',
+            'other' => 'Altul',
+        ],
+        'statuses' => [
+            'pending' => 'În așteptare',
+            'approved' => 'Aprobat',
+            'rejected' => 'Respins',
+            'completed' => 'Finalizat',
+        ],
     ],
 
 ];

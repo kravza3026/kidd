@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\ContactInquire;
 use App\Models\Gender;
 use App\Models\Order;
+use App\Models\OrderReturn;
 use App\Models\ProductVariant;
 use App\Models\Region;
 use App\Models\Season;
@@ -15,6 +16,7 @@ use App\Models\Size;
 use App\Models\VacancyApplication;
 use App\Observers\ContactInquireObserver;
 use App\Observers\OrderObserver;
+use App\Observers\OrderReturnObserver;
 use App\Observers\ProductVariantObserver;
 use App\Observers\VacancyApplicationObserver;
 use Carbon\Carbon;
@@ -67,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
 
         ProductVariant::observe(ProductVariantObserver::class);
         Order::observe(OrderObserver::class);
+        OrderReturn::observe(OrderReturnObserver::class);
         ContactInquire::observe(ContactInquireObserver::class);
         VacancyApplication::observe(VacancyApplicationObserver::class);
 

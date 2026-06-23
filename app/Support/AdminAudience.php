@@ -23,7 +23,7 @@ class AdminAudience
         }
 
         $roles = match ($concern) {
-            'order' => ['admin', 'manager', 'seller'],
+            'order', 'return' => ['admin', 'manager', 'seller'],
             'application' => ['admin', 'manager', 'hr'],
             'inquiry', 'stock' => ['admin', 'manager'],
             default => ['admin'],
@@ -40,6 +40,7 @@ class AdminAudience
 
         return match ($concern) {
             'order' => $settings->notify_new_order,
+            'return' => $settings->notify_new_return,
             'inquiry' => $settings->notify_new_inquiry,
             'application' => $settings->notify_new_application,
             'stock' => $settings->notify_low_stock,

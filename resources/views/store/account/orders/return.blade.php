@@ -4,8 +4,10 @@
             <div class="col-span-12 space-y-4 bg-white py-4 lg:col-span-7 lg:rounded-2xl lg:shadow">
                 @include('store.account.orders.components._tracking-head', ['title' => 'Order return'])
 
-                <form class="px-4">
+                <form class="px-4" method="POST" action="{{ route('orders.return.store', $order) }}" enctype="multipart/form-data">
+                    @csrf
                     <p class="text-sm font-medium">Select products</p>
+                    <x-input-error :messages="$errors->get('items')" class="mt-1" />
                     <div class="mt-4 grid grid-cols-12 gap-x-4">
                         @foreach ($order->items as $product)
                             <div class="relative col-span-12 flex items-start lg:col-span-4">
@@ -16,9 +18,11 @@
                                     >
                                         <input
                                             id="return_{{ $product->id }}"
+                                            name="items[]"
                                             value="{{ $product->id }}"
                                             type="checkbox"
                                             class="peer hidden"
+                                            @checked(in_array($product->id, old('items', [])))
                                         />
                                         <img
                                             class="hidden size-4 peer-checked:block"
@@ -33,36 +37,30 @@
                     </div>
 
                     <div class="mt-4 py-6">
-                        @php
-                            $options = [
-                                0 => __('Select a option'),
-                                1 => 'Chisinau',
-                                2 => 'Balti',
-                                3 => 'Tiraspol',
-                            ];
-                        @endphp
-
                         <x-custom-select
-                            name="reason_of_return"
-                            id="reason_of_return"
+                            name="reason"
+                            id="reason"
                             label="{{ __('Select the reason of return') }}"
-                            :options="$options"
-                            :selected="0"
+                            :options="$reasons"
+                            :selected="old('reason')"
                             placeholder="{{ __('Select a option') }}"
                         />
+                        <x-input-error :messages="$errors->get('reason')" class="mt-2" />
                     </div>
                     <div class="mt-4">
                         @include('store.account.orders.components._file-return')
+                        <x-input-error :messages="$errors->get('images')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('images.0')" class="mt-2" />
                     </div>
                     <div class="mt-4">
                         <x-ui.textarea
                             label="Share some comments"
-                            id="message"
-                            name="message"
-                            value="{{ old('message') }}"
+                            id="comment"
+                            name="comment"
+                            value="{{ old('comment') }}"
                             placeholder="{{ __('contacts.form.message_placeholder') }}"
                         />
-                        <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('comment')" class="mt-2" />
                     </div>
                     <x-ui.button as="submit" left_icon="false" right_icon="false" class="text-sm font-bold">
                         Send message

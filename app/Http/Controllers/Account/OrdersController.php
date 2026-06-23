@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Enums\ReturnReason;
+use App\Enums\ReturnStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Account\OrderReturnRequest;
 use App\Models\Company;
 use App\Models\Order;
+use App\Models\OrderReturn;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Spatie\LaravelPdf\Enums\Format;
 use Spatie\LaravelPdf\Enums\Unit;
 use Spatie\LaravelPdf\Facades\Pdf;
@@ -33,7 +38,38 @@ class OrdersController extends Controller
     {
         return view('store.account.orders.return', [
             'order' => $order,
+            'reasons' => ReturnReason::forSelect(),
         ]);
+    }
+
+    /**
+     * Persist a customer return request for a delivered order and attach any uploaded photos.
+     */
+    public function storeReturn(OrderReturnRequest $request, Order $order): RedirectResponse
+    {
+        $return = new OrderReturn([
+            'reason' => $request->integer('reason'),
+            'status' => ReturnStatus::Pending,
+            'item_ids' => $request->collect('items')->map(fn ($id): int => (int) $id)->all(),
+            'comment' => $request->input('comment'),
+        ]);
+        $return->order()->associate($order);
+        $return->customer()->associate($order->customer);
+        $return->save();
+
+        foreach ($request->file('images', []) as $image) {
+            $return->addMedia($image->getRealPath())
+                ->usingFileName($image->getClientOriginalName())
+                ->toMediaCollection('images');
+        }
+
+        return redirect()
+            ->route('orders.track', $order)
+            ->with('toast', [
+                'title' => __('order.return.submitted_title'),
+                'type' => 'success',
+                'message' => __('order.return.submitted'),
+            ]);
     }
 
     public function invoice(Order $order)

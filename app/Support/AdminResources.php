@@ -30,6 +30,7 @@ class AdminResources
         'product' => 'Products',
         'category' => 'Categories',
         'order' => 'Orders',
+        'orderReturn' => 'Order returns',
         'customer' => 'Customers',
         // Inventory
         'warehouse' => 'Warehouses',

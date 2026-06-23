@@ -16,6 +16,7 @@ use App\Livewire\Admin\Fabrics;
 use App\Livewire\Admin\Genders;
 use App\Livewire\Admin\Inventory\Manage;
 use App\Livewire\Admin\Locations;
+use App\Livewire\Admin\OrderReturns;
 use App\Livewire\Admin\Orders\Form;
 use App\Livewire\Admin\Orders\Index;
 use App\Livewire\Admin\Orders\Show;
@@ -123,6 +124,7 @@ livewireTaxonomy('warehouses', 'warehouse', 'warehouse', Warehouses::class);
 livewireTaxonomy('locations', 'location', 'location', Locations::class);
 livewireTaxonomy('regions', 'region', 'region', Regions::class);
 livewireTaxonomy('cities', 'city', 'city', Cities::class);
+livewireInbox('order-returns', 'orderReturn', 'orderReturn', OrderReturns::class);
 livewireInbox('contact-inquiries', 'inquiry', 'contactInquire', ContactInquiries::class);
 livewireInbox('vacancy-applications', 'application', 'vacancyApplication', VacancyApplications::class);
 

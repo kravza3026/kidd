@@ -29,9 +29,9 @@ class PermissionsSeeder extends Seeder
         // Managers run the shop but not the platform (users, roles, settings, companies).
         $this->assign('manager', $this->except(AdminResources::PLATFORM_RESOURCES));
 
-        // Sellers handle orders, customers and read the catalog/inventory.
+        // Sellers handle orders, returns, customers and read the catalog/inventory.
         $this->assign('seller', array_merge(
-            AdminResources::permissionsFor(['order', 'customer']),
+            AdminResources::permissionsFor(['order', 'orderReturn', 'customer']),
             $this->readOnly(['product', 'category', 'inventory', 'warehouse']),
         ));
 

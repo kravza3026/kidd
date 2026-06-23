@@ -12,7 +12,7 @@
                     id="upload-button"
                     class="absolute inset-0 grid place-items-center items-center justify-center"
                 >
-                    <input type="file" id="return" name="return" value="" class="hidden" />
+                    <input type="file" id="return" name="images[]" accept="image/png,image/jpeg" multiple class="hidden" />
                     <label
                         for="return"
                         class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center rounded-lg"

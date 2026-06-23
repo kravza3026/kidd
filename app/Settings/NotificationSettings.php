@@ -12,6 +12,8 @@ class NotificationSettings extends Settings
 {
     public bool $notify_new_order = true;
 
+    public bool $notify_new_return = true;
+
     public bool $notify_new_inquiry = true;
 
     public bool $notify_new_application = true;

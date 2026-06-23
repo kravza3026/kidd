@@ -112,6 +112,22 @@ return [
         'title' => 'Product doesn\'t match of fit?',
         'description' => 'Product doesn\'t match of fit? You can contact us for return within 14 days of receiving it!',
         'return_button' => 'Ask for return',
+        'submitted_title' => 'Return requested',
+        'submitted' => 'Your return request has been submitted.',
+        'reasons' => [
+            'wrong_size' => 'Wrong size',
+            'defective' => 'Defective or damaged',
+            'not_as_described' => 'Not as described',
+            'wrong_item' => 'Wrong item received',
+            'changed_mind' => 'Changed my mind',
+            'other' => 'Other',
+        ],
+        'statuses' => [
+            'pending' => 'Pending',
+            'approved' => 'Approved',
+            'rejected' => 'Rejected',
+            'completed' => 'Completed',
+        ],
     ],
 
 ];
