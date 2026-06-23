@@ -23,10 +23,12 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {{-- Load fonts without blocking render, and without a `preload` that warns when the
+             swap is slow: a print-media stylesheet promoted to all media on load. --}}
         <link
-            rel="preload"
-            as="style"
-            onload="this.rel = 'stylesheet'"
+            rel="stylesheet"
+            media="print"
+            onload="this.media = 'all'"
             href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400..700&family=Inter:wght@400..600&display=swap"
         />
         <noscript>

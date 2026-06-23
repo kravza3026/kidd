@@ -5,6 +5,7 @@
     'permission' => null,
     'feature' => null,
     'params' => [],
+    'collapsible' => true,
 ])
 
 @php
@@ -38,6 +39,6 @@
                 <path d="{{ $icon }}" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
         @endif
-        <span x-show="!collapsed" class="truncate">{{ $label }}</span>
+        <span @if ($collapsible) x-show="!collapsed" @endif class="truncate">{{ $label }}</span>
     </a>
 @endif
