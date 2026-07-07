@@ -1,3 +1,80 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+Multilingual (Romanian / Russian / English) e-commerce storefront, codename **kidd** / "pania store",
+selling apparel. Laravel 13 + PHP 8.4 backend, Vue 3 + Alpine on Blade for the frontend, PostgreSQL,
+prices in MDL (Moldovan Leu). Local dev served by **Laravel Herd** at `https://kidd.test`.
+
+## Commands
+
+```bash
+composer dev      # Run everything: php artisan serve + queue:listen + pail (logs) + npm run dev (Vite)
+composer test     # Clears config cache, then php artisan test
+npm run dev       # Vite dev server only (HMR)
+npm run build     # Production asset build — run this if frontend changes don't appear
+
+php artisan test --compact                                   # all tests
+php artisan test --compact tests/Feature/ExampleTest.php     # one file
+php artisan test --compact --filter=testName                 # one test
+
+vendor/bin/pint --dirty --format agent   # format changed PHP (required before finalizing PHP edits)
+npx prettier --write .                   # format Blade/JS/Vue (blade + tailwind plugins)
+```
+
+Tests run against **SQLite in-memory** (see `phpunit.xml`); app/dev DB is **PostgreSQL** (`kidd`).
+~25 seeders in `database/seeders/` build product/taxonomy/regional fixtures (`php artisan db:seed`).
+There are no custom artisan commands and `app/Console/` is absent — all logic lives in
+controllers/services/models.
+
+## Architecture
+
+**Three URL-driven contexts**, each with its own controller namespace and (for storefront/admin)
+its own Vite entry:
+- **Storefront** — `app/Http/Controllers/Store/`, routes in `routes/web.php`, JS entry `resources/js/app.js`.
+  All web routes are **locale-prefixed** (`/{locale}/...`) via `mcamara/laravel-localization`
+  (locales RO/RU/EN, none hidden; see `config/laravellocalization.php`).
+- **Account** (auth) — `app/Http/Controllers/Account/`: profile, addresses, favorites, order history.
+- **Admin** — `app/Http/Controllers/Admin/`, routes in `routes/admin.php`, JS entry `resources/js/admin.js`
+  (Alpine + `@tailwindplus/elements`, **no Vue**). Gated via Spatie Permission (`User::isAdmin()`).
+- **API/AJAX** — `app/Http/Controllers/Api/`, `routes/api.php`: cart, search, favorites, regions/cities,
+  addresses, family. Sanctum + Laravel Precognition for live validation.
+
+**Frontend is Blade + Vue 3 islands, not Inertia/SPA.** Blade renders layout; Vue mounts to `#app`
+(`resources/views/layouts/app.blade.php`) then `Alpine.start()` runs for lightweight bits. State via
+**Pinia** (`resources/js/stores/`: `cart.ts`, `favorites.ts`); cross-component events via `mitt`
+(`eventBus.js`). UI i18n via **vue-i18n** loading `lang/{locale}/base.js`, kept in sync with the
+Laravel locale. Tailwind **v4** with a custom `@theme` palette in `resources/css/app.css`.
+
+**Domain model** (`app/Models/`):
+- `Product` → `ProductVariant` (1:N; variants carry color/size/SKU/stock and **multi-channel pricing**
+  — vendor/wholesale/online/store/final — all cast through `MoneyCast`).
+- Product taxonomy: `Category` (hierarchical), `Brand`, `Gender`, `Season`, `Fabric`, `Color`, `Size`.
+- `User` (auth entity) vs `Customer` (order entity) — **decoupled** so guests can check out.
+  `User` also has `Family` members and a `product_user` favorites pivot.
+- `Order` → `OrderItem`; orders store a **JSON `cart_snapshot`** plus JSON order/shipping/billing
+  addresses, captured at purchase time for historical accuracy.
+- `Address` is **polymorphic** (morphs to both User and Order), with a Shipping/Billing type enum.
+
+**Translatable content**: product/category name/slug/description are stored as **JSON
+`{locale: value}`** columns via `spatie/laravel-translatable`; slugs auto-generated per-locale by
+`spatie/laravel-sluggable` (`HasTranslatableSlug`). Product/Category implement `LocalizedUrlRoutable`;
+catalog routes resolve via `slug.locale` middleware.
+
+**Checkout** is **session-based** (no DB until completion), orchestrated by two services in
+`app/Services/`: `CheckoutSessionService` (step state: shipping → contact → payment → review) and
+`CheckoutViewDataService` (aggregates LaraCart data + cached regions/cities, returns per-step view).
+Cart itself is `lukepolo/laracart` (amounts in cents).
+
+**Search** uses **Laravel Scout with the `database` driver** (no Algolia/Meilisearch) — `Product` and
+`Category` are `Searchable` with custom `toSearchableArray()`; index prefix `kidd_`, queued sync.
+
+**Other packages in active use**: medialibrary (product `gallery` collection → queued `preview`/`full`
+WebP responsive conversions), money (MDL), phone (E164/MD). Pennant (database driver) and
+broadcasting/Reverb are **configured but not yet wired into models/components**.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
@@ -17,11 +94,13 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/reverb (REVERB) - v1
 - laravel/sanctum (SANCTUM) - v4
 - laravel/scout (SCOUT) - v11
+- livewire/livewire (LIVEWIRE) - v4
 - tightenco/ziggy (ZIGGY) - v2
 - laravel/boost (BOOST) - v2
 - laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
+- pestphp/pest (PEST) - v4
 - phpunit/phpunit (PHPUNIT) - v12
 - alpinejs (ALPINEJS) - v3
 - vue (VUE) - v3
@@ -32,16 +111,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 ## Skills Activation
 
-This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
-
-- `laravel-best-practices` — Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns.
-- `mcp-development` — Use this skill for Laravel MCP development only. Trigger when creating or editing MCP tools, resources, prompts, or servers in Laravel projects. Covers: artisan make:mcp-* generators, mcp:inspector, routes/ai.php, Tool/Resource/Prompt classes, schema validation, shouldRegister(), OAuth setup, URI templates, read-only attributes, and MCP debugging. Do not use for non-Laravel MCP projects or generic AI features without MCP.
-- `pennant-development` — Use when working with Laravel Pennant the official Laravel feature flag package. Trigger whenever the query mentions Pennant by name or involves feature flags or feature toggles in a Laravel project. Tasks include defining feature flags checking whether features are active creating class based features in `app/Features` using Blade `@feature` directives scoping flags to users or teams building custom Pennant storage drivers protecting routes with feature flags testing feature flags with Pest or PHPUnit and implementing A B testing or gradual rollouts with feature flags. Do not trigger for generic Laravel configuration authorization policies authentication or non Pennant feature management systems.
-- `scout-development` — Develops full-text search with Laravel Scout. Activates when installing or configuring Scout; choosing a search engine (Algolia, Meilisearch, Typesense, Database, Collection); adding the Searchable trait to models; customizing toSearchableArray or searchableAs; importing or flushing search indexes; writing search queries with where clauses, pagination, or soft deletes; configuring index settings; troubleshooting search results; or when the user mentions Scout, full-text search, search indexing, or search engines in a Laravel project. Make sure to use this skill whenever the user works with search functionality in Laravel, even if they don't explicitly mention Scout.
-- `tailwindcss-development` — Always invoke when the user's message includes 'tailwind' in any form. Also invoke for: building responsive grid layouts (multi-column card grids, product grids), flex/grid page structures (dashboards with sidebars, fixed topbars, mobile-toggle navs), styling UI components (cards, tables, navbars, pricing sections, forms, inputs, badges), adding dark mode variants, fixing spacing or typography, and Tailwind v3/v4 work. The core use case: writing or fixing Tailwind utility classes in HTML templates (Blade, JSX, Vue). Skip for backend PHP logic, database queries, API routes, JavaScript with no HTML/CSS component, CSS file audits, build tool configuration, and vanilla CSS.
-- `medialibrary-development` — Build and work with spatie/laravel-medialibrary features including associating files with Eloquent models, defining media collections and conversions, generating responsive images, and retrieving media URLs and paths.
-- `laravel-pdf` — Generate PDFs from Blade views or HTML using spatie/laravel-pdf. Covers creating, formatting, saving, downloading, and testing PDFs with the Browsershot, Cloudflare, or DOMPDF driver.
-- `laravel-permission-development` — Build and work with Spatie Laravel Permission features, including roles, permissions, middleware, policies, teams, and Blade directives.
+This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
 ## Conventions
 
@@ -100,7 +170,6 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Run Artisan commands directly via the command line (e.g., `php artisan route:list`). Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
 - Inspect routes with `php artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
 - Read configuration values using dot notation: `php artisan config:show app.name`, `php artisan config:show database.default`. Or read config files directly from the `config/` directory.
-- To check environment variables, read the `.env` file directly.
 
 ## Tinker
 
@@ -119,12 +188,25 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
 - Use array shape type definitions in PHPDoc blocks.
 
+=== deployments rules ===
+
+# Deployment
+
+- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
+
 === herd rules ===
 
 # Laravel Herd
 
 - The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
 - Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
+
+=== tests rules ===
+
+# Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
 
 === laravel/core rules ===
 
@@ -156,6 +238,14 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
 
+=== livewire/core rules ===
+
+# Livewire
+
+- Livewire allow to build dynamic, reactive interfaces in PHP without writing JavaScript.
+- You can use Alpine.js for client-side interactions instead of JavaScript frameworks.
+- Keep state server-side so the UI reflects it. Validate and authorize in actions as you would in HTTP requests.
+
 === pint/core rules ===
 
 # Laravel Pint Code Formatter
@@ -163,23 +253,14 @@ This project has domain-specific skills available. You MUST activate the relevan
 - If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
 - Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
 
-=== phpunit/core rules ===
+=== pest/core rules ===
 
-# PHPUnit
+## Pest
 
-- This application uses PHPUnit for testing. All tests must be written as PHPUnit classes. Use `php artisan make:test --phpunit {name}` to create a new test.
-- If you see a test using "Pest", convert it to PHPUnit.
-- Every time a test has been updated, run that singular test.
-- When the tests relating to your feature are passing, ask the user if they would like to also run the entire test suite to make sure everything is still passing.
-- Tests should cover all happy paths, failure paths, and edge cases.
-- You must not remove any tests or test files from the tests directory without approval. These are not temporary or helper files; these are core to the application.
-
-## Running Tests
-
-- Run the minimal number of tests, using an appropriate filter, before finalizing.
-- To run all tests: `php artisan test --compact`.
-- To run all tests in a file: `php artisan test --compact tests/Feature/ExampleTest.php`.
-- To filter on a particular test name: `php artisan test --compact --filter=testName` (recommended after making a change to a related file).
+- This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
+- The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
+- Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
+- Do NOT delete tests without approval.
 
 === spatie/laravel-activitylog rules ===
 

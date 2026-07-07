@@ -61,14 +61,15 @@ export default {
             item.sizeDropdownOpen = false;
             updateAvailableColors(item);
             updateSelectedPrice(item);
-            updateItem(item);
+            // Changing the variant re-creates the cart line (new hash) — resync to pick it up.
+            updateItem(item, { resync: true });
         };
         // Коли обирають колір
         const selectColor = (item, colorId) => {
             item.selectedColorId = colorId;
             item.colorDropdownOpen = false;
             updateSelectedPrice(item);
-            updateItem(item);
+            updateItem(item, { resync: true });
         };
         // Отримати список унікальних розмірів (для dropdown)
         const getUniqueSizes = (item) => {
@@ -98,7 +99,6 @@ export default {
         // Після вибору розміру, оновлюємо список доступних кольорів
         const updateAvailableColors = (item) => {
             const colors = getAvailableColors(item);
-            console.log(colors);
             item.selectedColorId = colors.length ? colors[0].id : null;
         };
         const getAllColorsWithAvailability = (item) => {
@@ -165,13 +165,16 @@ export default {
                 return acc + discount * item.quantity;
             }, 0);
         });
-        const updateItem = async (item) => {
+        const updateItem = async (item, { resync = false } = {}) => {
             const variant = item.product.variants.find(
                 (v) => v.size.id === item.selectedSizeId && v.color.id === item.selectedColorId,
             );
             if (!variant) return;
             try {
                 await cartStore.updateItem(item.hash, variant.id, item.quantity);
+                // After a variant change the line's hash changes server-side; re-map the local
+                // rows so later edits target the current hash and the new size/colour show.
+                if (resync) await proxy.getCartItems();
             } catch (err) {
                 console.error('Server error:', err);
             }

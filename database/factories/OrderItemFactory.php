@@ -16,10 +16,14 @@ class OrderItemFactory extends Factory
      */
     public function definition(): array
     {
+        $quantity = $this->faker->numberBetween(1, 5);
+        $unitPrice = $this->faker->numberBetween(5000, 50000); // minor units (MDL)
+
         return [
-            'variant_snapshot' => $this->faker->words(),
-            'quantity' => $this->faker->randomNumber(),
-            'price' => $this->faker->randomNumber(),
+            'variant_snapshot' => ['sku' => $this->faker->bothify('??####'), 'name' => $this->faker->words(2, true)],
+            'quantity' => $quantity,
+            'unit_price' => $unitPrice,
+            'total_price' => $unitPrice * $quantity,
 
             'order_id' => Order::factory(),
             'product_variant_id' => ProductVariant::factory(),

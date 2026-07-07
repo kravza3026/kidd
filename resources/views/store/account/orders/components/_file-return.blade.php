@@ -2,32 +2,33 @@
     <div class="w-full">
         <div class="mt-3 flex flex-col gap-3">
             <label for="return" class="text-sm font-medium">
-                Upload images <span class="opacity-40">(optional)</span>
+                {{ __('order.return.upload_label') }}
+                <span class="opacity-40">{{ __('order.return.optional') }}</span>
             </label>
             <div
                 id="upload-area"
                 class="border-light-border relative rounded-xl border border-dashed px-5 py-24 text-center"
             >
-                <div
-                    id="upload-button"
-                    class="absolute inset-0 grid place-items-center items-center justify-center"
-                >
-                    <input type="file" id="return" name="return" value="" class="hidden" />
+                <div id="upload-button" class="absolute inset-0 grid place-items-center items-center justify-center">
+                    <input
+                        type="file"
+                        id="return"
+                        name="images[]"
+                        accept="image/png,image/jpeg"
+                        multiple
+                        class="hidden"
+                    />
                     <label
                         for="return"
                         class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center rounded-lg"
                     >
-                        <img
-                            src="{{ Vite::image('icons/olive/file.png') }}"
-                            class="mx-auto mb-4 size-10"
-                            alt=""
-                        />
+                        <img src="{{ Vite::image('icons/olive/file.png') }}" class="mx-auto mb-4 size-10" alt="" />
                         <span>
-                                                {{ __('careers.form.resume.file_label') }}
-                                            </span>
+                            {{ __('careers.form.resume.file_label') }}
+                        </span>
                         <span class="block text-[12px] opacity-40">
-                                                {{ __('careers.form.resume.file_label_desc') }}
-                                            </span>
+                            {{ __('careers.form.resume.file_label_desc') }}
+                        </span>
                     </label>
                 </div>
 
@@ -38,14 +39,7 @@
                 >
                     <div class="relative grid justify-items-center">
                         <svg class="duration-150" width="80" height="80">
-                            <circle
-                                cx="40"
-                                cy="40"
-                                r="35"
-                                stroke="#e5e7eb"
-                                stroke-width="4"
-                                fill="none"
-                            />
+                            <circle cx="40" cy="40" r="35" stroke="#e5e7eb" stroke-width="4" fill="none" />
                             <circle
                                 id="progress-circle"
                                 cx="40"
@@ -62,10 +56,7 @@
                         <p>
                             {{ __('careers.form.resume.uploading') }}
                         </p>
-                        <div
-                            id="progress-text"
-                            class="absolute top-[23%] left-[39%] mt-2 text-sm font-bold opacity-65"
-                        >
+                        <div id="progress-text" class="absolute top-[23%] left-[39%] mt-2 text-sm font-bold opacity-65">
                             0%
                         </div>
                     </div>
@@ -78,10 +69,7 @@
                 </div>
 
                 <!-- result -->
-                <div
-                    id="upload-result"
-                    class="my-4 flex hidden items-center justify-between gap-x-2"
-                >
+                <div id="upload-result" class="my-4 flex hidden items-center justify-between gap-x-2">
                     <div id="upload-result-file" class="flex items-center gap-x-4"></div>
                     <div>
                         <button
@@ -95,7 +83,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <script>
     const uploadArea = document.getElementById('upload-area');

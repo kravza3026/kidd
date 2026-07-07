@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAttributeGroup;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -10,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Brand extends Model
 {
-    use HasTranslatableSlug, HasTranslations, SoftDeletes;
+    use BelongsToAttributeGroup, HasFactory, HasTranslatableSlug, HasTranslations, SoftDeletes;
 
     public array $translatable = [
         'name',

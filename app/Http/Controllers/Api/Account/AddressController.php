@@ -44,8 +44,7 @@ class AddressController extends Controller
 
     public function destroy(Address $address)
     {
-
-        // TODO - Check if the user owns the address
+        $this->authorizeOwnership($address);
 
         $address->delete();
 
@@ -55,7 +54,7 @@ class AddressController extends Controller
 
     public function default(Request $request, Address $address)
     {
-        // TODO - Check if the user owns the address
+        $this->authorizeOwnership($address);
 
         $request->user()->addresses()->type($address->address_type)->update(['is_default' => false]);
         $address->update(['is_default' => true]);
@@ -66,11 +65,26 @@ class AddressController extends Controller
 
     public function update(AddressUpdateRequest $request, Address $address)
     {
-        // TODO - Check if the user owns the address
-
+        // Ownership is enforced by AddressUpdateRequest::authorize() before validation.
         $address->update($request->validated());
 
         return response()->json(compact('address'), 200);
 
+    }
+
+    /**
+     * Ensure the address belongs to the authenticated user (it is polymorphic, so guard
+     * against acting on another account's — or a non-user — address).
+     */
+    private function authorizeOwnership(Address $address): void
+    {
+        $user = auth()->user();
+
+        abort_unless(
+            $user !== null
+                && $address->addressable_type === $user->getMorphClass()
+                && (int) $address->addressable_id === (int) $user->getKey(),
+            403,
+        );
     }
 }

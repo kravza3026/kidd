@@ -47,6 +47,37 @@ enum OrderStatus: int
         ];
     }
 
+    /**
+     * Statuses at which the order is considered fulfilled and should consume stock.
+     */
+    public function consumesStock(): bool
+    {
+        return match ($this) {
+            self::Processed, self::OutForDelivery, self::Shipped, self::Delivered, self::Completed => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Statuses at which a previously-fulfilled order returns its stock.
+     */
+    public function restoresStock(): bool
+    {
+        return match ($this) {
+            self::Canceled, self::Returned, self::Refunded, self::Failed, self::Expired => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Whether the customer may start a return flow for an order at this status.
+     * Returns are offered once an order has been delivered (matches the storefront design).
+     */
+    public function isReturnable(): bool
+    {
+        return $this === self::Delivered;
+    }
+
     public function label(): string
     {
         return match ($this) {

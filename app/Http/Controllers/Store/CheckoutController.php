@@ -12,13 +12,18 @@ use App\Http\Requests\Checkout\PaymentStoreRequest;
 use App\Http\Requests\Checkout\ShippingStoreRequest;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\CheckoutSessionService;
 use App\Services\CheckoutViewDataService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use LukePOLO\LaraCart\Facades\LaraCart;
 use Throwable;
@@ -108,6 +113,12 @@ class CheckoutController extends Controller
         $cart = LaraCart::setInstance('default');
         $cart = $cart->cart;
 
+        // Guests who chose "Yes, create account" get a passwordless account created and are
+        // logged in, so the order is attributed to them and they can manage it afterwards.
+        if (! auth()->check() && $request->boolean('create_account')) {
+            $this->createPasswordlessAccount($checkout);
+        }
+
         $customer = Customer::firstOrCreate([
             'email' => $checkout['contact_email'],
             'phone' => $checkout['contact_phone'],
@@ -117,6 +128,11 @@ class CheckoutController extends Controller
             'first_name' => $checkout['contact_first_name'],
             'last_name' => $checkout['contact_last_name'],
         ]);
+
+        // A guest customer record from a prior order gets linked to the new account.
+        if (auth()->check() && $customer->user_id === null) {
+            $customer->update(['user_id' => auth()->id()]);
+        }
 
         DB::transaction(function () use ($checkout, $cart, $customer) {
 
@@ -195,5 +211,32 @@ class CheckoutController extends Controller
         return auth()->check()
             ? redirect()->route('orders.index')
             : redirect()->route('home');
+    }
+
+    /**
+     * Create a passwordless account from the checkout contact details, log the guest in, and
+     * email them a link to set their password. No-op when the email already has an account
+     * (they should sign in instead). The design collects no password at checkout, so the
+     * customer sets one via the emailed link.
+     *
+     * @param  array<string, mixed>  $checkout
+     */
+    private function createPasswordlessAccount(array $checkout): void
+    {
+        if (User::where('email', $checkout['contact_email'])->exists()) {
+            return;
+        }
+
+        $user = User::create([
+            'company_id' => 1, // TODO - implement tenant...
+            'first_name' => $checkout['contact_first_name'],
+            'last_name' => $checkout['contact_last_name'],
+            'phone' => $checkout['contact_phone'],
+            'email' => $checkout['contact_email'],
+            'password' => Hash::make(Str::random(40)),
+        ]);
+
+        Auth::login($user);
+        Password::sendResetLink(['email' => $user->email]);
     }
 }

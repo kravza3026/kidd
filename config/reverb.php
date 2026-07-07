@@ -34,7 +34,12 @@ return [
             'path' => env('REVERB_SERVER_PATH', ''),
             'hostname' => env('REVERB_HOST'),
             'options' => [
-                'tls' => [],
+                // Serve secure WebSockets (wss) directly when a cert is provided — locally this
+                // points at Herd's certificate for the site so the browser trusts wss://host:port.
+                'tls' => array_filter([
+                    'local_cert' => env('REVERB_TLS_CERT'),
+                    'local_pk' => env('REVERB_TLS_KEY'),
+                ], fn ($value) => $value !== null),
             ],
             'max_request_size' => env('REVERB_MAX_REQUEST_SIZE', 10_000),
             'scaling' => [

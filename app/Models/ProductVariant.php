@@ -6,6 +6,7 @@ use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductVariant extends Model
 {
@@ -19,6 +20,7 @@ class ProductVariant extends Model
         'is_visible',
 
         'sku',
+        'barcode',
         'quantity',
 
         'price_vendor',
@@ -72,5 +74,15 @@ class ProductVariant extends Model
         return $this->belongsTo(Size::class)
             ->orderBy('sort_order', 'asc')
             ->orderBy('id', 'asc');
+    }
+
+    public function inventories(): HasMany
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class);
     }
 }

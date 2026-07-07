@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cart\CartStoreRequest;
+use App\Http\Requests\Cart\CartUpdateRequest;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use LukePOLO\LaraCart\Coupons\Percentage;
@@ -131,7 +133,7 @@ class CartController extends Controller
             $response['items'][] = [
                 'hash' => $hash,
                 'name' => $cartItem->options['name'],
-                'quantity' => $cartItem->options['qty'],
+                'quantity' => $cartItem->qty,
                 'price' => $cartItem->options['price'],
                 'color' => [
                     'id' => $cartItem->options['variant']->color->id,
@@ -154,7 +156,7 @@ class CartController extends Controller
         return response($response, status: 200);
     }
 
-    public function store(Request $request)
+    public function store(CartStoreRequest $request)
     {
 
         $productVariant = ProductVariant::findOrFail($request->variant_id);
@@ -188,21 +190,30 @@ class CartController extends Controller
 
     }
 
-    public function update(Request $request, $itemHash)
+    public function update(CartUpdateRequest $request, $itemHash)
     {
 
         $variant = ProductVariant::findOrFail($request->input('variant_id'));
 
-        LaraCart::updateItem($itemHash, 'itemID', $variant->product);
+        // Changing the size/colour means a different variant, which changes the item's options
+        // (and therefore its hash). LaraCart::updateItem can't reliably rewrite nested option
+        // values, so replace the line: drop the old item and re-add the chosen variant exactly
+        // as store() does. This keeps the cart item's data and hash consistent.
+        LaraCart::removeItem($itemHash);
 
-        LaraCart::updateItem($itemHash, 'qty', $request->quantity);
-        LaraCart::updateItem($itemHash, 'price', $variant->price_final);
-        LaraCart::updateItem($itemHash, 'options.price', $variant->price_final);
-        LaraCart::updateItem($itemHash, 'price_online', $variant->price_online);
-        LaraCart::updateItem($itemHash, 'price_final', $variant->price_final);
-        LaraCart::updateItem($itemHash, 'variant', $variant);
-        LaraCart::updateItem($itemHash, 'color', $variant->color);
-        LaraCart::updateItem($itemHash, 'size', $variant->size);
+        LaraCart::add(
+            itemID: $variant->product,
+            price: (int) $variant->price_final,
+            qty: $request->integer('quantity'),
+            options: [
+                'variant' => $variant,
+                'color' => $variant->color,
+                'size' => $variant->size,
+                'price' => (int) $variant->price_final,
+                'price_online' => (int) $variant->price_online,
+                'price_final' => (int) $variant->price_final,
+            ]
+        );
 
         return response([
             'alert' => [

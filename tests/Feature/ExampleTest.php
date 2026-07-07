@@ -1,19 +1,7 @@
 <?php
 
-namespace Tests\Feature;
-
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
-}
+it('redirects the root path to the localized home', function () {
+    // The storefront is locale-prefixed (mcamara/laravel-localization), so the
+    // bare root redirects to the default locale (e.g. /ro).
+    $this->get('/')->assertRedirect();
+});

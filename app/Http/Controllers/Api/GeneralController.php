@@ -19,8 +19,16 @@ class GeneralController extends Controller
     {
 
         if (auth()->check()) {
-            $favorites = json_decode($request->cookie('favorites', '[]'));
-            $request->user()->favorites()->sync($favorites);
+            // The favorites cookie is client-controlled — only sync ids that are real products.
+            $decoded = json_decode($request->cookie('favorites', '[]'), true);
+
+            $ids = collect(is_array($decoded) ? $decoded : [])
+                ->filter(fn ($id): bool => is_numeric($id))
+                ->map(fn ($id): int => (int) $id);
+
+            $validIds = Product::whereKey($ids)->pluck('id')->all();
+
+            $request->user()->favorites()->sync($validIds);
         }
 
         return response(null, 204);

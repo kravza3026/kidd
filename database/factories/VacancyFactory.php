@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\Location;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -13,8 +15,8 @@ class VacancyFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => 1,
-            'location_id' => rand(1, 2),
+            'company_id' => Company::query()->inRandomOrder()->value('id') ?? Company::factory(),
+            'location_id' => Location::query()->inRandomOrder()->value('id') ?? Location::factory(),
 
             'title' => [
                 'ro' => fake('ro_RO')->jobTitle(),

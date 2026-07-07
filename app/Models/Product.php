@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
 use Arr;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia, LocalizedUrlRoutable
 {
-    use HasFactory, HasTranslatableSlug, HasTranslations, InteractsWithMedia, Searchable, SoftDeletes;
+    use Auditable, HasFactory, HasTranslatableSlug, HasTranslations, InteractsWithMedia, Searchable, SoftDeletes;
 
     /**
      * The attributes that are translatable.
@@ -286,7 +287,9 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     public function searchableAs(): string
     {
-        return 'products_index';
+        // Include the Scout prefix so the engine's index name matches the one
+        // scout:sync-index-settings configures (it prefixes the config key).
+        return config('scout.prefix').'products_index';
     }
 
     /**
@@ -294,10 +297,37 @@ class Product extends Model implements HasMedia, LocalizedUrlRoutable
      */
     public function toSearchableArray(): array
     {
+        // Scout's database engine queries real model columns, so it only gets the indexed
+        // text columns. Meilisearch gets the full faceted document (filterable/sortable
+        // attributes are declared in config/scout.php under the products_index settings).
+        if (config('scout.driver') !== 'meilisearch') {
+            return [
+                'id' => (int) $this->id,
+                'name' => (array) $this->name,
+            ];
+        }
+
+        $variants = $this->variants;
+
         return [
             'id' => (int) $this->id,
-            'name' => (array) $this->name,
-            //            'description' => (array) $this->description,
+            // Index every locale so search matches RO/RU/EN names, not just the active one.
+            'name' => $this->getTranslations('name'),
+            'description' => $this->getTranslations('description'),
+            'category_id' => $this->category_id,
+            'brand_id' => $this->brand_id,
+            'gender_id' => $this->gender_id,
+            'season_id' => $this->season_id,
+            'fabric_id' => $this->fabric_id,
+            'color_ids' => $variants->pluck('color_id')->unique()->values()->all(),
+            'size_ids' => $variants->pluck('size_id')->unique()->values()->all(),
+            'min_price' => (int) ($variants->min('price_final') ?? 0),
+            'is_visible' => (bool) $this->is_visible,
+            'is_new' => (bool) $this->is_new,
+            'has_discount' => (bool) $this->has_discount,
+            'is_featured' => (bool) $this->is_featured,
+            'is_bestseller' => (bool) $this->is_bestseller,
+            'created_at' => $this->created_at?->getTimestamp(),
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentMethod;
 use App\Enums\ShippingMethod;
+use App\Models\Concerns\Auditable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Order extends Model
 {
-    use HasFactory;
+    use Auditable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +30,7 @@ class Order extends Model
         'order_number',
         'total_amount',
         'status',
+        'stock_committed',
         'shipping_method',
         'payment_method',
         'shipping_address',
@@ -66,6 +68,7 @@ class Order extends Model
         'shipping_method' => ShippingMethod::class,
         'payment_method' => PaymentMethod::class,
         'status' => OrderStatus::class,
+        'stock_committed' => 'boolean',
         'cart_snapshot' => 'json',
 
         'placed_at' => 'datetime',

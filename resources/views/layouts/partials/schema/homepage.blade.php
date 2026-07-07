@@ -18,7 +18,7 @@
         ],
         'potentialAction' => [
             '@type' => 'ViewAction',
-            'name' => __('menu.catalog', [], $locale),
+            'name' => __('header.menu.catalog', [], $locale),
             'target' => LaravelLocalization::localizeURL(route('products.index'), $locale),
         ],
     ];

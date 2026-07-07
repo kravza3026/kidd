@@ -15,12 +15,12 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => Company::factory(),
+            'company_id' => Company::query()->inRandomOrder()->value('id') ?? Company::factory(),
             'user_id' => User::factory(),
-            'first_name' => $this->faker->locale('ro_RO')->firstName(),
-            'last_name' => $this->faker->locale('ro_RO')->lastName(),
-            'phone' => $this->faker->locale('ro_MD')->phoneNumber(),
-            'email' => $this->faker->locale('ro_RO')->unique()->safeEmail(),
+            'first_name' => fake('ro_RO')->firstName(),
+            'last_name' => fake('ro_RO')->lastName(),
+            'phone' => fake()->unique()->numerify('+373########'),
+            'email' => fake('ro_RO')->unique()->safeEmail(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

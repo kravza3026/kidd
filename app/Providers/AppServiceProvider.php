@@ -5,17 +5,26 @@ namespace App\Providers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\ContactInquire;
 use App\Models\Gender;
+use App\Models\Order;
+use App\Models\OrderReturn;
 use App\Models\ProductVariant;
 use App\Models\Region;
 use App\Models\Season;
 use App\Models\Size;
+use App\Models\VacancyApplication;
+use App\Observers\ContactInquireObserver;
+use App\Observers\OrderObserver;
+use App\Observers\OrderReturnObserver;
 use App\Observers\ProductVariantObserver;
+use App\Observers\VacancyApplicationObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -52,7 +61,17 @@ class AppServiceProvider extends ServiceProvider
         Model::automaticallyEagerLoadRelationships();
         Model::preventLazyLoading();
 
+        // The `admin` role is the all-access super-role: it short-circuits every
+        // authorization check, so finer roles only need explicit permission subsets.
+        Gate::before(function ($user, string $ability) {
+            return method_exists($user, 'hasRole') && $user->hasRole('admin') ? true : null;
+        });
+
         ProductVariant::observe(ProductVariantObserver::class);
+        Order::observe(OrderObserver::class);
+        OrderReturn::observe(OrderReturnObserver::class);
+        ContactInquire::observe(ContactInquireObserver::class);
+        VacancyApplication::observe(VacancyApplicationObserver::class);
 
         Vite::prefetch(5);
         Vite::useWaterfallPrefetching(5);

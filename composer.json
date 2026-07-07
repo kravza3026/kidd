@@ -15,9 +15,12 @@
         "laravel/sanctum": "^4.1",
         "laravel/scout": "^11.0",
         "laravel/tinker": "^3.0",
+        "livewire/livewire": "^4.3",
         "lukepolo/laracart": "^2.6",
         "mcamara/laravel-localization": "^2.3",
+        "meilisearch/meilisearch-php": "^1.16",
         "moneyphp/money": "^4.7",
+        "picqer/php-barcode-generator": "^3.2",
         "propaganistas/laravel-phone": "^6.0",
         "spatie/browsershot": "^5.2",
         "spatie/laravel-activitylog": "^5.0",
@@ -25,6 +28,7 @@
         "spatie/laravel-one-time-passwords": "^1.0",
         "spatie/laravel-pdf": "^2.0",
         "spatie/laravel-permission": "^7.0",
+        "spatie/laravel-settings": "^3.9",
         "spatie/laravel-sluggable": "^3.7",
         "spatie/laravel-tags": "^4.10",
         "spatie/laravel-translatable": "^6.11",
@@ -36,12 +40,14 @@
         "fakerphp/faker": "^1.23",
         "laradumps/laradumps": "^5.0",
         "laradumps/laradumps-core": "^4.0",
-        "laravel/boost": "^2.0",
+        "laravel/boost": "^2.4",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
+        "pestphp/pest": "^4.7",
+        "pestphp/pest-plugin-browser": "^4.3",
         "phpunit/phpunit": "^12.0"
     },
     "autoload": {
@@ -62,7 +68,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan boost:update --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
